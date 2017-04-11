@@ -1,0 +1,34 @@
+{
+  "name": "lerna-relinker",
+  "version": "1.0.0",
+  "description": "Adds deps of deps links.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*-test.js"
+  },
+  "bin": {
+    "lr-idea": "./src/idea.js",
+    "lr-link": "./src/link.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jspears/lerna-relinker.git"
+  },
+  "keywords": [
+    "lerna",
+    "link",
+    "dependencies"
+  ],
+  "author": "Justin Spears <speajus@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jspears/lerna-relinker/issues"
+  },
+  "homepage": "https://github.com/jspears/lerna-relinker#readme",
+  "peerDependencies": {
+    "lerna": "^2.0.0-rc.1"
+  },
+  "dependencies": {
+    "xml2js": "^0.4.17"
+  }
+}
