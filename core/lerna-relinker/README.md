@@ -23,7 +23,7 @@ You can run it directly, but your better off putting it in your npm scripts.
 
 
 ## Idea helpers.
-If you use webstorm will fix your setup.  
+If you use webstorm this will fix your setup, (prevent the infite indexing, and generally do the right excludes)
 
 ```js
 ./node_modules/.bin/lr-idea
