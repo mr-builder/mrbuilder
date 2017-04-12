@@ -1,9 +1,12 @@
 Lerna Relinker
 ==
-Basically fixes the deps of deps for lerna.  It runs through your project and creates links for dependencies within
+Basically [fixes](https://github.com/lerna/lerna/issues/696) the deps of deps for [lerna](https://github.com/lerna).  It runs through your project and creates links for dependencies within
 your project.
 
+Of course you know this but...
 *** Use at your own risk***
+
+
 ## Installation
 ```js
 npm i lerna-relinker --save-dev
