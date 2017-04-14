@@ -1,6 +1,6 @@
 {
   "name": "lerna-relinker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Adds deps of deps links.",
   "main": "index.js",
   "scripts": {
