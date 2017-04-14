@@ -25,13 +25,14 @@ function addIfNotExists(arr, name) {
     if (arr.find(function (obj) {
             return obj.$.url === url;
         })) {
-        return;
+        return false;
     }
     arr.push({
         $: {
             url: url
         }
-    })
+    });
+    return true;
 }
 
 function isIncludedPackage(name) {
@@ -42,21 +43,22 @@ function addExcludesToWorkspace(idea, done) {
     fs.readFile(idea, function (err, data) {
         if (err) return done(err);
         const links = buildLinks();
+        let add = false;
         parser.parseString(data, function (err, result) {
             if (err) return done(err);
             try {
                 //uses this to pass in the array to muck.
                 const excludeFolders = result.module.component[0].content[0].excludeFolder;
-                Object.keys(links).forEach(function(key){
+                Object.keys(links).forEach(function (key) {
                     const deps = links[key];
                     addIfNotExists(excludeFolders, `${key}/lib`);
-                    Object.keys(deps).forEach(function(depKey){
-                        addIfNotExists(excludeFolders, `${key}/node_modules/${deps[depKey]}`);
+                    Object.keys(deps).forEach(function (depKey) {
+                        add |= addIfNotExists(excludeFolders, `${key}/node_modules/${deps[depKey]}`);
 
                     })
                 });
-                // pkgs.forEach(eachPackage, );
-                done(null, builder.buildObject(result));
+                if (add) return done(null, builder.buildObject(result));
+                return done();
             } catch (e) {
                 return done(e);
             }
@@ -119,29 +121,33 @@ function updateIntellij(done) {
         if (err || !filename) return done();
         if (fs.existsSync(filename)) {
             var backupFile = filename + '.' + Date.now()
-            copyFile(filename, backupFile, function (err) {
-                if (err) return done(err);
-                console.log(`Backing up ${filename} into ${backupFile}`);
-                addExcludesToWorkspace(filename, function (err, content) {
-                    fs.writeFile(filename, content, 'utf8', function (err) {
+            addExcludesToWorkspace(filename, function (err, content) {
+                if (content) {
+                    console.log(`Backing up ${filename} into ${backupFile}`);
+                    copyFile(filename, backupFile, function (err) {
                         if (err) return done(err);
-                        done(null, `Updated file ignores in workspace`);
+                        fs.writeFile(filename, content, 'utf8', function (err) {
+                            if (err) return done(err);
+                            done(null, `Updated file ignores in workspace`);
+                        });
                     });
-                });
+                } else {
+                    done(null, `No changes made.`);
+                }
             });
         } else {
             return done(new Error(`file does not exist ${filename}`));
         }
     }
 }
-function relative(name){
+function relative(name) {
     return path.relative(process.cwd(), name);
 }
 function buildLinks() {
     var LINKS = {};
 
     function link(from, dep, linkTo) {
-        from =  relative(from);
+        from = relative(from);
         linkTo = relative(linkTo);
         if (!LINKS[from]) {
             LINKS[from] = {};
