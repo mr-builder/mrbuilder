@@ -35,7 +35,12 @@ function realLink() {
     return Promise.all(Object.keys(LINKS).map(function (project) {
         const modulesPath = path.join(project, 'node_modules');
         const deps = LINKS[project];
-        return mkdirp(modulesPath).then(Promise.all(Object.keys(deps).map(function (modName) {
+        if (deps == null)
+            return;
+        let depKeys = Object.keys(deps);
+        if (depKeys.length == 0)
+            return;
+        return mkdirp(modulesPath).then(Promise.all(depKeys.map(function (modName) {
             const newModPath = path.relative(process.cwd(), path.join(modulesPath, modName));
             const existingPath = path.relative(process.cwd(), deps[modName]);
             if (!fs.existsSync(newModPath)) {
