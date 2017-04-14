@@ -9,6 +9,9 @@ var fs = require('fs'),
     xml2js = require('xml2js'),
     path = require('path'),
     LsCommand = require('lerna/lib/commands/LsCommand');
+
+LsCommand = LsCommand.default || LsCommand;
+
 var builder = new xml2js.Builder();
 var ls = new LsCommand(null, {}, process.cwd());
 ls.runPreparations();
