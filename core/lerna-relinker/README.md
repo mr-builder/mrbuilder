@@ -29,3 +29,7 @@ If you use webstorm this will fix your setup, (prevent the infite indexing, and 
 ./node_modules/.bin/lr-idea
 
 ```
+
+## Muck
+This a tool for mucking with json files within projects. Mostly package.json.
+-h gives the help
