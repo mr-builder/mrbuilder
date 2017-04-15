@@ -1,10 +1,16 @@
 #!/usr/bin/env node
 import LsCommand from 'lerna/lib/commands/LsCommand'
 import set from 'lodash/set';
+import has from 'lodash/has';
 import get from 'lodash/get';
+import unset from 'lodash/set';
 import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
+
+const write = (filename, json) => new Promise((resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2), 'utf8', (e, o) => e ? reject(e) : resolve(o)));
+const empty = (obj, key) => !has(obj, key);
+const read = filename => new Promise((resolve, reject) => fs.readFile(filename, 'utf8', (e, o) => e ? reject(e) : resolve(JSON.parse(o))));
 
 function parse(value) {
     value = value.trim();
@@ -20,33 +26,40 @@ function parse(value) {
         return JSON.parse(value);
     return JSON.parse(`"${value}"`)
 }
-function empty(json, key) {
-    return get(json, key) !== void(0);
+
+
+async function confirm(message, value) {
+    const answer = await inquirer.prompt([{message, type: 'confirm', name: 'confirm', default: value}]);
+    return answer.confirm;
 }
+
 
 async function _set(json, [key, value], filename, opts) {
     if (get(json, key) === value) {
         return false;
     }
-    if (empty(json, key) || (opts.confirm ? await confirm(`are you sure you want to change ${key}`) : true))
-        set(json, key, value);
+    if (has(json, key) && opts.confirm && !await confirm(`Are you sure you want to change ${key} in '${filename}?'`)) {
+        return false;
+    }
+    set(json, key, value);
     return true;
 }
 
 function __get(key) {
     return JSON.stringify(get(this, key));
 }
+
 async function _move(json, keys, filename, opts) {
     const [from, to] = keys;
     if (!from || !to) {
         console.warn(`move requires an argument`, from, to);
     }
-    const f = get(json, from);
-    if (f !== void(0)) {
-        if (opts.confirm && !(await confirm(`Are you sure you want to move '${from}' to '${to}'`))) {
+    if (has(json, from)) {
+        if (opts.confirm && !(await confirm(`Are you sure you want to move '${from}' to '${to}' in '${filename}?'`))) {
             return false;
         }
-        set(json, from, void(0));
+        const f = get(json, from);
+        unset(json, from);
         //Merge objects if there is a destination
         if (typeof f === 'object' && get(json, to)) {
             for (const key of Object.keys(f)) {
@@ -55,30 +68,28 @@ async function _move(json, keys, filename, opts) {
         } else {
             set(json, to, f);
         }
+        return true;
     }
+    return false;
 }
 
 function _get(json, keys, filename, opts) {
-    const str = _keys.map(__get, json).join(',');
+    const str = keys.map(__get, json).join(',');
     console.log(this.name, '=', str);
     return false;
 }
-async function confirm(message, value) {
-    const answer = await inquirer.prompt([{message, type: 'confirm', name: 'confirm', default: value}]);
-    return answer.confirm;
-}
 async function _delete(json, keys, filename, opts) {
+    let ret = false;
     for (const key of keys) {
-        const value = get(json, key);
-        if (value === void(0) || (opts.confirm && !(await confirm(`Are you sure you want to delete '${key}'`)))) {
-            return false;
+        if (has(json, key)) {
+            if (opts.confirm && !(await confirm(`Are you sure you want to delete '${key}'`))) {
+                continue;
+            }
         }
-        if (get(json, keys[0]) === void(0)) {
-            return false;
-        }
-        set(json, keys[0], void(0));
+        unset(json, key);
+        ret |= true;
     }
-    return true;
+    return ret;
 }
 async function muckFile(pkg, file, opts) {
     let saveMuck = false;
@@ -180,6 +191,10 @@ function makeOptions(name, args) {
         let [arg, val] = args[i].split('=', 2);
         switch (arg) {
             //actions
+            case '--prompt':
+            case '-p':
+                commands.push([_prompt, (val || args[++i]).split('=', 2)]);
+                break;
             case '-s':
             case '--set':
                 const [key, value] = (val || args[++i]).split('=', 2);
@@ -196,10 +211,6 @@ function makeOptions(name, args) {
             case '-m':
             case '--move':
                 commands.push([_move, (val || args[++i]).split(/\s*=\s*/, 2)]);
-                break;
-            case '--prompt':
-            case '-p':
-                commands.push([_prompt, (val || args[++i]).split('=', 2)]);
                 break;
             //options
             case '-k':
@@ -254,9 +265,6 @@ function makeOptions(name, args) {
     return opts;
 }
 
-
-const write = (filename, json) => new Promise((resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2), 'utf8', (e, o) => e ? reject(e) : resolve(o)));
-const read = filename => new Promise((resolve, reject) => fs.readFile(filename, 'utf8', (e, o) => e ? reject(e) : resolve(JSON.parse(o))));
 
 async function muck(opts) {
 
