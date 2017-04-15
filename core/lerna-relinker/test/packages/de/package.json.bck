@@ -1,8 +1,4 @@
 {
-  "filename": "/Users/jspear1/walmart/lerna-relinker/test/packages/de/package.json",
-  "json": {
-    "name": "0.0.0",
-    "description": "Really Good"
-  },
-  "description": "A new description"
+  "name": "0.0.0",
+  "description": ""
 }
