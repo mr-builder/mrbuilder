@@ -100,7 +100,7 @@ async function muckFile(pkg, file, opts) {
         let newfile = fullname + opts.extension;
         if (!opts.noExtension && fs.existsSync(newfile)) {
             if (!(await confirm(`a file named ${newfile} already, do want to overwrite?`))) {
-                return;
+                return false;
             }
         }
         try {
@@ -145,9 +145,7 @@ async function _prompt(json, args, filename, options) {
     }
 }
 
-async function muck(name, args) {
-
-
+function makeOptions(name, args) {
     function help(msg) {
         if (msg) console.error(msg);
         console.log(`${name}   [-sdgihfe] <files>
@@ -165,7 +163,7 @@ async function muck(name, args) {
       -n\t--no-lerna\tJust use the file don't iterate over lerna projects
       --no-extension\tuse in place
     `);
-        return 1;
+        process.exit(1);
     }
 
     const opts = {
@@ -246,15 +244,25 @@ async function muck(name, args) {
         }
     }
     if (commands.length == 0) {
-        return help(`need a command ${args}`);
+        help(`need a command ${args}`);
     }
 
     opts.files = opts.files.concat(args.slice(i));
     if (opts.files.length == 0) {
         opts.files.push('package.json');
     }
+    return opts;
+}
+
+
+const write = (filename, json) => new Promise((resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2), 'utf8', (e, o) => e ? reject(e) : resolve(o)));
+const read = filename => new Promise((resolve, reject) => fs.readFile(filename, 'utf8', (e, o) => e ? reject(e) : resolve(JSON.parse(o))));
+
+async function muck(opts) {
+
+
     if (!opts.noLerna) {
-        const ls = new LsCommand(null, options, process.cwd());
+        const ls = new LsCommand(null, opts.options, process.cwd());
         ls.runPreparations();
         for (const pkg of ls.filteredPackages) {
             for (const file of opts.files) {
@@ -267,30 +275,8 @@ async function muck(name, args) {
         }
     }
 }
-
-function write(filename, json) {
-    return new Promise(function (resolve, reject) {
-        fs.writeFile(filename, JSON.stringify(json, null, 2), 'utf8', function (e, o) {
-            if (e) return reject(e);
-            resolve(o);
-        });
-    })
-}
-function read(filename) {
-    return new Promise(function (resolve, reject) {
-        fs.readFile(filename, 'utf8', function (e, o) {
-            if (e) return reject(e);
-            try {
-                resolve(JSON.parse(o));
-            } catch (e) {
-                reject(e);
-            }
-        })
-    })
-}
-
 if (require.main === module) {
-    muck(process.argv[1], process.argv.slice(2)).then(function (res) {
+    muck(makeOptions(process.argv[1], process.argv.slice(2))).then(function (res) {
         process.exit(res);
     }, function (e) {
         console.trace(e);
