@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import LsCommand from 'lerna/lib/commands/LsCommand'
 import set from 'lodash/set';
 import get from 'lodash/get';
@@ -113,7 +114,7 @@ async function muck(name, args) {
         if (msg) console.error(msg);
         console.log(`${name}   [-sdgihfe] <files>
       -s\t--set\t\tkey=value sets key to value
-      -d\t--delete\ttdeletes values (comma)
+      -d\t--delete\tdeletes values (comma)
       -g\t--get\t\tvalue gets the value
       -i\t--ignore\tpackages to ignore
       -h\t--help\t\tthis helpful message
@@ -121,7 +122,7 @@ async function muck(name, args) {
       -e\t--extension\tuse a different extension
       -p\t--prompt\tkey=question\tprompt 
       -k\t--skip-if-exists\tSkip the question if it has value
-      -n\t--no-lerna\tJust use the file don't iterate of lerna projects
+      -n\t--no-lerna\tJust use the file don't iterate over lerna projects
       --no-extension\tuse in place
     `);
         return 1;
