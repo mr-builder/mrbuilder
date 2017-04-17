@@ -126,6 +126,25 @@ async function _prompt(json, args, filename, options) {
         return false;
     }
 }
+async function _dependency(json, key, filename, options) {
+    const {filteredPackages = []} = options;
+    const choices = filteredPackages.map(v => v.name).filter(v => v != this.name);
+
+    const answer = await inquirer.prompt([{
+        type: 'list',
+        name: 'value',
+        choices,
+        message: `Do you want to add one of these dependencies to '${this.name}/${filename}'?`
+    }]);
+
+    let version = filteredPackages.find(v => v.name == answer.value).version;
+    if (get(key + '.' + answer.value != version)) {
+        set(json, key + '.' + answer.value, version);
+        return true;
+    }
+    return false;
+
+}
 
 
 async function muckFile(pkg, file, opts) {
@@ -197,7 +216,7 @@ function makeOptions(name, args) {
     const options = opts.options;
     //need this to suck up files at the end.
     let i = 0;
-    for (let l = args.length; i < l; i++) {
+    ARGS: for (let l = args.length; i < l; i++) {
         let [arg, val] = args[i].split('=', 2);
         switch (arg) {
             //actions
@@ -222,6 +241,15 @@ function makeOptions(name, args) {
             case '-m':
             case '--move':
                 commands.push([_move, (val || args[++i]).split(/\s*=\s*/, 2)]);
+                break;
+            case '-D':
+            case '--dependency':
+                commands.push([_dependency, 'dependency']);
+                break;
+
+            case '-V':
+            case '--devDependency':
+                commands.push([_dependency, 'devDependency']);
                 break;
             //options
             case '-k':
@@ -258,7 +286,6 @@ function makeOptions(name, args) {
             case '--no-backup':
                 opts.noExtension = true;
                 break;
-
             case '-n':
             case '--no-lerna':
                 opts.noLerna = true;
@@ -266,13 +293,16 @@ function makeOptions(name, args) {
             case '-h':
             case '--help':
                 return help();
+            default: {
+                break ARGS;
+            }
 
         }
     }
     if (commands.length == 0) {
         help(`need a command ${args}`);
     }
-    opts.files = opts.files.concat(args.slice(i - 1));
+    opts.files = opts.files.concat(args.slice(i));
     if (opts.files.length == 0) {
         opts.files.push('package.json');
     }
@@ -286,6 +316,7 @@ async function muck(opts) {
     if (!opts.noLerna) {
         const ls = new LsCommand(null, opts.options, process.cwd());
         ls.runPreparations();
+        opts.filteredPackages = ls.filteredPackages;
         for (const pkg of ls.filteredPackages) {
             for (const file of opts.files) {
                 await muckFile(pkg, file, opts);
