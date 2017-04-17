@@ -94,39 +94,7 @@ async function _delete(json, keys, filename, opts) {
     }
     return ret;
 }
-async function muckFile(pkg, file, opts) {
-    let saveMuck = false;
-    const fullname = path.join(pkg._location, file);
-    let json;
-    try {
-        json = await
-            read(fullname);
-    } catch (e) {
-        console.warn(`Error reading ${fullname}`, e);
-        return false
-    }
-    for (const cmd of opts.commands) {
-        saveMuck |= await
-            cmd[0].call(pkg, json, cmd[1], file, opts);
-    }
 
-    if (saveMuck && json) {
-        let newfile = fullname + opts.extension;
-        if (!opts.noExtension && fs.existsSync(newfile)) {
-            if (!(await confirm(`a file named ${newfile} already, do want to overwrite?`, opts))) {
-                return false;
-            }
-        }
-        try {
-            await
-                write(newfile, json);
-        } catch (e) {
-            console.warn(`Error writing ${newfile}`, e)
-        }
-    }
-    return true;
-
-}
 async function _prompt(json, args, filename, options) {
     const
         [key, vmessage = 'Do you want to change the property'] = args,
@@ -137,13 +105,13 @@ async function _prompt(json, args, filename, options) {
     if (options.skipIfExists && _default != null) {
         return;
     }
-    const change = await confirm(message, {confirm: true});
+    const change = has(json, key) ? await confirm(message, {confirm: true}) : true;
 
     if (change) {
         const answer = await inquirer.prompt([{
             type: 'input',
             name: 'value',
-            message: `OK what would like to change it to?`
+            message: has(json, key) ? `OK what would like to change it to?` : vmessage
         }]);
         if (answer.value === _default) {
             return false;
@@ -159,22 +127,61 @@ async function _prompt(json, args, filename, options) {
     }
 }
 
+
+async function muckFile(pkg, file, opts) {
+    let saveMuck = false;
+    const fullname = path.join(pkg._location, file);
+    let json;
+    try {
+        json = await read(fullname);
+    } catch (e) {
+        if (opts.createIfNotExists && !fs.existsSync(fullname)) {
+            json = {};
+        } else {
+            console.warn(`Error reading ${fullname}`, e);
+            return false
+        }
+    }
+    for (const cmd of opts.commands) {
+        saveMuck |= await
+            cmd[0].call(pkg, json, cmd[1], file, opts);
+    }
+    if (saveMuck && json) {
+
+        let newfile = fullname + (fs.existsSync(fullname) ? opts.extension : '');
+        const exists = fs.existsSync(newfile);
+        if (!opts.noExtension && exists) {
+            if (!(await confirm(`a file named ${newfile} already, do want to overwrite?`, opts))) {
+                return false;
+            }
+        }
+        try {
+            await
+                write(newfile, json);
+        } catch (e) {
+            console.warn(`Error writing ${newfile}`, e)
+        }
+    }
+    return true;
+
+}
 function makeOptions(name, args) {
     function help(msg) {
         if (msg) console.error(msg);
         console.warn(`${name}   [-sdgihfe] <files>
-      -b\t--backup\tuse a different extension
+      -b\t--backup\t<extension>\tuse a different extension
       -p\t--prompt\tkey=question\tprompt for value before changing 
-      -c\t--confirm\tconfirm before dangerous operations
-      -m\t--move\t\tMove property from=to
+      -c\t--confirm\t\tconfirm before dangerous operations
+      -m\t--move\t\tfrom=to\tMove property from=to
       -s\t--set\t\tkey=value sets key to value
-      -d\t--delete\tdeletes values (comma)
-      -g\t--get\t\tvalue gets the value
+      -d\t--delete\tkey\tdeletes values (comma)
+      -g\t--get\t\tvalue\tgets the value
       -i\t--ignore\tpackages to ignore
       -h\t--help\t\tthis helpful message
       -f\t--file\t\tpackage.json default
-      -k\t--skip-if-exists\tSkip the question if it has value
+      -k\t--skip\t\tSkip the question if it has value
       -n\t--no-lerna\tJust use the file don't iterate over lerna projects
+      -C\t--create-file\tCreate the file if it does not exist
       --no-extension\tuse in place
     `);
         process.exit(1);
@@ -218,6 +225,7 @@ function makeOptions(name, args) {
                 break;
             //options
             case '-k':
+            case '--skip':
             case '--skip-if-exists':
                 opts.skipIfExists = true;
                 break;
@@ -233,7 +241,10 @@ function makeOptions(name, args) {
             case '--file':
                 opts.files = opts.files.concat((val || args[++i]).split(/,\s*/));
                 break;
-
+            case '-C':
+            case '--create-file':
+                opts.createIfNotExists = true;
+                break;
             case '-e':
             case '--extension':
             case '-b':
@@ -261,8 +272,7 @@ function makeOptions(name, args) {
     if (commands.length == 0) {
         help(`need a command ${args}`);
     }
-
-    opts.files = opts.files.concat(args.slice(i));
+    opts.files = opts.files.concat(args.slice(i - 1));
     if (opts.files.length == 0) {
         opts.files.push('package.json');
     }
