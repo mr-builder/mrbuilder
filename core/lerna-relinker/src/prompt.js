@@ -28,9 +28,12 @@ function parse(value) {
 }
 
 
-async function confirm(message, value) {
-    const answer = await inquirer.prompt([{message, type: 'confirm', name: 'confirm', default: value}]);
-    return answer.confirm;
+async function confirm(message, {confirm = false}) {
+    if (confirm) {
+        const answer = await inquirer.prompt([{message, type: 'confirm', name: 'confirm'}]);
+        return answer.confirm;
+    }
+    return true;
 }
 
 
@@ -38,7 +41,7 @@ async function _set(json, [key, value], filename, opts) {
     if (get(json, key) === value) {
         return false;
     }
-    if (has(json, key) && opts.confirm && !await confirm(`Are you sure you want to change ${key} in '${filename}?'`)) {
+    if (has(json, key) && await confirm(`Are you sure you want to change ${key} in '${filename}?'`, opts)) {
         return false;
     }
     set(json, key, value);
@@ -55,7 +58,7 @@ async function _move(json, keys, filename, opts) {
         console.warn(`move requires an argument`, from, to);
     }
     if (has(json, from)) {
-        if (opts.confirm && !(await confirm(`Are you sure you want to move '${from}' to '${to}' in '${filename}?'`))) {
+        if (!await confirm(`Are you sure you want to move '${from}' to '${to}' in '${filename}?'`, opts)) {
             return false;
         }
         const f = get(json, from);
@@ -82,7 +85,7 @@ async function _delete(json, keys, filename, opts) {
     let ret = false;
     for (const key of keys) {
         if (has(json, key)) {
-            if (opts.confirm && !(await confirm(`Are you sure you want to delete '${key}'`))) {
+            if (!(await confirm(`Are you sure you want to delete '${key}'`, opts))) {
                 continue;
             }
         }
@@ -110,7 +113,7 @@ async function muckFile(pkg, file, opts) {
     if (saveMuck && json) {
         let newfile = fullname + opts.extension;
         if (!opts.noExtension && fs.existsSync(newfile)) {
-            if (!(await confirm(`a file named ${newfile} already, do want to overwrite?`))) {
+            if (!(await confirm(`a file named ${newfile} already, do want to overwrite?`, opts))) {
                 return false;
             }
         }
@@ -134,7 +137,7 @@ async function _prompt(json, args, filename, options) {
     if (options.skipIfExists && _default != null) {
         return;
     }
-    const change = await confirm(message);
+    const change = await confirm(message, {confirm: true});
 
     if (change) {
         const answer = await inquirer.prompt([{
@@ -149,7 +152,7 @@ async function _prompt(json, args, filename, options) {
             set(json, key, parse(answer.value));
             return true;
         } catch (e) {
-            console.log(`Could not parse the value try again`, e);
+            console.warn(`Could not parse the value try again`, e);
             return _prompt.call(self, json, args, filename, options);
         }
         return false;
@@ -159,7 +162,7 @@ async function _prompt(json, args, filename, options) {
 function makeOptions(name, args) {
     function help(msg) {
         if (msg) console.error(msg);
-        console.log(`${name}   [-sdgihfe] <files>
+        console.warn(`${name}   [-sdgihfe] <files>
       -b\t--backup\tuse a different extension
       -p\t--prompt\tkey=question\tprompt for value before changing 
       -c\t--confirm\tconfirm before dangerous operations
@@ -202,7 +205,8 @@ function makeOptions(name, args) {
                 break;
             case '-d':
             case '--delete':
-                commands.push([_delete, (val || args[++i]).split(/,\s*/)]);
+                const keys = (val || args[++i]).split(/,\s*/);
+                commands.push([_delete, keys]);
                 break;
             case '-g':
             case '--get':
