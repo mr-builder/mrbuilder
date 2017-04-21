@@ -37,15 +37,26 @@ async function confirm(message, {confirm = false}) {
 }
 
 
-async function _set(json, [key, value], filename, opts) {
-    if (get(json, key) === value) {
+async function _set(json, [key, value], filename, options) {
+    const current = get(json, key);
+    if (current === value) {
         return false;
     }
-    if (has(json, key) && await confirm(`Are you sure you want to change ${key} in '${filename}?'`, opts)) {
-        return false;
+    const hasKey = has(json, key);
+    if (hasKey) {
+        if (options.skipIfExists) {
+            return false;
+        }
+    } else {
+        if (options.onlyIfExists)
+            return false
     }
-    set(json, key, value);
-    return true;
+
+    if (await confirm(`Are you sure you want to change ${key} in '${this.name}/${filename}?' [${hasKey ? JSON.stringify(current, null, 2) : 'no key'}]`, options)) {
+        set(json, key, value);
+        return true;
+    }
+    return false;
 }
 
 function __get(key) {
@@ -105,9 +116,17 @@ async function _prompt(json, args, filename, options) {
     if (options.skipIfExists && _default != null) {
         return;
     }
-    const change = has(json, key) ? await confirm(message, {confirm: true}) : true;
+    const hasKey = has(json, key);
+    if (hasKey) {
+        if (options.skipIfExists) {
+            return false;
+        }
+    } else {
+        if (options.onlyIfExists)
+            return false
 
-    if (change) {
+    }
+    if (await confirm(message, {confirm: true})) {
         const answer = await inquirer.prompt([{
             type: 'input',
             name: 'value',
@@ -125,25 +144,6 @@ async function _prompt(json, args, filename, options) {
         }
         return false;
     }
-}
-async function _dependency(json, key, filename, options) {
-    const {filteredPackages = []} = options;
-    const choices = filteredPackages.map(v => v.name).filter(v => v != this.name);
-
-    const answer = await inquirer.prompt([{
-        type: 'list',
-        name: 'value',
-        choices,
-        message: `Do you want to add one of these dependencies to '${this.name}/${filename}'?`
-    }]);
-
-    let version = filteredPackages.find(v => v.name == answer.value).version;
-    if (get(key + '.' + answer.value != version)) {
-        set(json, key + '.' + answer.value, version);
-        return true;
-    }
-    return false;
-
 }
 
 
@@ -184,12 +184,13 @@ async function muckFile(pkg, file, opts) {
     return true;
 
 }
+
 function makeOptions(name, args) {
     function help(msg) {
         if (msg) console.error(msg);
         console.warn(`${name}   [-sdgihfe] <files>
       -b\t--backup\t<extension>\tuse a different extension
-      -p\t--prompt\tkey=question\tprompt for value before changing 
+      -p\t--prompt\tkey=question\tprompt for value before changing
       -c\t--confirm\t\tconfirm before dangerous operations
       -m\t--move\t\tfrom=to\tMove property from=to
       -s\t--set\t\tkey=value sets key to value
@@ -222,7 +223,11 @@ function makeOptions(name, args) {
             //actions
             case '--prompt':
             case '-p':
-                commands.push([_prompt, (val || args[++i]).split('=', 2)]);
+                const message = (val || args[++i]) ;
+                if (!message){
+                    throw new Error(`message must be defined for "${arg}"`);
+                }
+                commands.push([_prompt, message.split('=', 2)]);
                 break;
             case '-s':
             case '--set':
@@ -242,21 +247,17 @@ function makeOptions(name, args) {
             case '--move':
                 commands.push([_move, (val || args[++i]).split(/\s*=\s*/, 2)]);
                 break;
-            case '-D':
-            case '--dependency':
-                commands.push([_dependency, 'dependency']);
-                break;
 
-            case '-V':
-            case '--devDependency':
-                commands.push([_dependency, 'devDependency']);
-                break;
             //options
             case '-k':
             case '--skip':
             case '--skip-if-exists':
                 opts.skipIfExists = true;
                 break;
+            case '-u':
+            case '--unless':
+            case '--only-if-it-exists':
+                opts.onlyIfExists = true;
             case '--confirm':
             case '-c':
                 opts.confirm = true;
@@ -328,6 +329,7 @@ async function muck(opts) {
         }
     }
 }
+
 if (require.main === module) {
     muck(makeOptions(process.argv[1], process.argv.slice(2))).then(function (res) {
         process.exit(res);
