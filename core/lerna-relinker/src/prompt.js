@@ -166,18 +166,33 @@ async function muckFile(pkg, file, opts) {
             cmd[0].call(pkg, json, cmd[1], file, opts);
     }
     if (saveMuck && json) {
-
-        let newfile = fullname + (fs.existsSync(fullname) ? opts.extension : '');
-        const exists = fs.existsSync(newfile);
-        if (!opts.noExtension && exists) {
-            if (!(await confirm(`a file named ${newfile} already, do want to overwrite?`, opts))) {
+        const backup = fullname + opts.extension;
+        let newfile = fullname;
+        if (opts.preview) {
+            console.log(JSON.stringify(json, null, 2));
+            if (!await confirm(`Does above look correct for ${fullname}`, {confirm: true})) {
                 return false;
             }
         }
+        if (!opts.noExtension) {
+            if (fs.existsSync(backup) && !await confirm(`a file named ${newfile} already, do want to overwrite?`, opts)) {
+                return false;
+            }
+            //rename the current file.
+            fs.renameSync(newfile, backup);
+        }
+
         try {
-            await
-                write(newfile, json);
+            await write(newfile, json);
         } catch (e) {
+            if (backup != newfile && fs.existsSync(backup)) {
+                try {
+                    fs.renameSync(backup, newfile);
+                } catch (ee) {
+                    console.warn(`Error renaming ${backup} back to ${newfile}`, e)
+
+                }
+            }
             console.warn(`Error writing ${newfile}`, e)
         }
     }
@@ -202,6 +217,7 @@ function makeOptions(name, args) {
       -k\t--skip\t\tSkip the question if it has value
       -n\t--no-lerna\tJust use the file don't iterate over lerna projects
       -C\t--create-file\tCreate the file if it does not exist
+      -P\t--preview\tPreview files if there are changes, before writing.
       --no-extension\tuse in place
     `);
         process.exit(1);
@@ -223,8 +239,8 @@ function makeOptions(name, args) {
             //actions
             case '--prompt':
             case '-p':
-                const message = (val || args[++i]) ;
-                if (!message){
+                const message = (val || args[++i]);
+                if (!message) {
                     throw new Error(`message must be defined for "${arg}"`);
                 }
                 commands.push([_prompt, message.split('=', 2)]);
@@ -290,6 +306,10 @@ function makeOptions(name, args) {
             case '-n':
             case '--no-lerna':
                 opts.noLerna = true;
+                break;
+            case '--preview':
+            case '-P':
+                opts.preview = true;
                 break;
             case '-h':
             case '--help':
