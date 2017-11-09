@@ -1,36 +1,47 @@
 #!/usr/bin/env node
 import LsCommand from 'lerna/lib/commands/LsCommand'
 import set from 'lodash/set';
+import unset from 'lodash/unset';
 import has from 'lodash/has';
 import get from 'lodash/get';
-import unset from 'lodash/set';
 import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 
-const write = (filename, json) => new Promise((resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2), 'utf8', (e, o) => e ? reject(e) : resolve(o)));
-const empty = (obj, key) => !has(obj, key);
-const read = filename => new Promise((resolve, reject) => fs.readFile(filename, 'utf8', (e, o) => e ? reject(e) : resolve(JSON.parse(o))));
+const write = (filename, json) => new Promise(
+    (resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2),
+        'utf8', (e, o) => e ? reject(e) : resolve(o)));
+
+const read = filename => new Promise(
+    (resolve, reject) => fs.readFile(filename, 'utf8',
+        (e, o) => e ? reject(e) : resolve(JSON.parse(o))));
 
 function parse(value) {
     value = value.trim();
     if (value === 'true' || value === 'false') {
         return JSON.parse(value);
     }
-    if (value === 'null') return null;
-    if (value === '') return value;
+    if (value === 'null') {
+        return null;
+    }
+    if (value === '') {
+        return value;
+    }
     if ((value.startsWith('{') && value.endsWith('}')) ||
         (value.startsWith('[') && value.endsWith(']')) ||
         (value.startsWith('"') && value.endsWith('"')) ||
-        /^((?:NaN|-?(?:(?:\d+|\d*\.\d+)(?:[E|e][+|-]?\d+)?|Infinity)))$/.test(value))
+        /^((?:NaN|-?(?:(?:\d+|\d*\.\d+)(?:[E|e][+|-]?\d+)?|Infinity)))$/.test(
+            value)) {
         return JSON.parse(value);
+    }
     return JSON.parse(`"${value}"`)
 }
 
 
-async function confirm(message, {confirm = false}) {
+async function confirm(message, { confirm = false }) {
     if (confirm) {
-        const answer = await inquirer.prompt([{message, type: 'confirm', name: 'confirm'}]);
+        const answer = await inquirer.prompt(
+            [{ message, type: 'confirm', name: 'confirm' }]);
         return answer.confirm;
     }
     return true;
@@ -48,11 +59,14 @@ async function _set(json, [key, value], filename, options) {
             return false;
         }
     } else {
-        if (options.onlyIfExists)
+        if (options.onlyIfExists) {
             return false
+        }
     }
 
-    if (await confirm(`Are you sure you want to change ${key} in '${this.name}/${filename}?' [${hasKey ? JSON.stringify(current, null, 2) : 'no key'}]`, options)) {
+    if (await confirm(
+            `Are you sure you want to change ${key} in '${this.name}/${filename}?' ${hasKey
+                ? `[${JSON.stringify(current, null, 2)}]` : ''}`, options)) {
         set(json, key, value);
         return true;
     }
@@ -69,7 +83,9 @@ async function _move(json, keys, filename, opts) {
         console.warn(`move requires an argument`, from, to);
     }
     if (has(json, from)) {
-        if (!await confirm(`Are you sure you want to move '${from}' to '${to}' in '${filename}?'`, opts)) {
+        if (!await confirm(
+                `Are you sure you want to move '${from}' to '${to}' in '${filename}?'`,
+                opts)) {
             return false;
         }
         const f = get(json, from);
@@ -87,16 +103,28 @@ async function _move(json, keys, filename, opts) {
     return false;
 }
 
-function _get(json, keys, filename, opts) {
+function _get(json, keys, filename, opts = {}) {
     const str = keys.map(__get, json).join(',');
+    if (str) {
+        if (opts.skipIfExists) {
+            return false;
+        }
+    } else {
+        if (opts.onlyIfExists) {
+            return false;
+        }
+    }
     console.log(this.name, '=', str);
     return false;
 }
+
+// noinspection JSUnusedLocalSymbols
 async function _delete(json, keys, filename, opts) {
     let ret = false;
     for (const key of keys) {
         if (has(json, key)) {
-            if (!(await confirm(`Are you sure you want to delete '${key}'`, opts))) {
+            if (!(await confirm(`Are you sure you want to delete '${key}'`,
+                    opts))) {
                 continue;
             }
         }
@@ -107,14 +135,15 @@ async function _delete(json, keys, filename, opts) {
 }
 
 async function _prompt(json, args, filename, options) {
-    const
-        [key, vmessage = 'Do you want to change the property'] = args,
-        self = this,
-        _default = get(json, key),
-        message = `${vmessage} '${key}' in '${this.name}/${filename}'?`;
+    const [key,
+              vmessage = 'Do you want to change the property'
+          ]            = args,
+          self         = this,
+          _default     = get(json, key),
+          message      = `${vmessage} '${key}' in '${this.name}/${filename}'?`;
 
     if (options.skipIfExists && _default != null) {
-        return;
+        return false;
     }
     const hasKey = has(json, key);
     if (hasKey) {
@@ -122,15 +151,16 @@ async function _prompt(json, args, filename, options) {
             return false;
         }
     } else {
-        if (options.onlyIfExists)
+        if (options.onlyIfExists) {
             return false
-
+        }
     }
-    if (await confirm(message, {confirm: true})) {
+    if (await confirm(message, { confirm: true })) {
         const answer = await inquirer.prompt([{
-            type: 'input',
-            name: 'value',
-            message: has(json, key) ? `OK what would like to change it to?` : vmessage
+            type   : 'input',
+            name   : 'value',
+            message: has(json, key) ? `OK what would like to change it to?`
+                : vmessage
         }]);
         if (answer.value === _default) {
             return false;
@@ -140,16 +170,15 @@ async function _prompt(json, args, filename, options) {
             return true;
         } catch (e) {
             console.warn(`Could not parse the value try again`, e);
-            return _prompt.call(self, json, args, filename, options);
         }
-        return false;
+        return _prompt.call(self, json, args, filename, options);
     }
 }
 
 
-async function muckFile(pkg, file, opts) {
-    let saveMuck = false;
-    const fullname = path.join(pkg._location, file);
+export async function muckFile(pkg, file, opts) {
+    let saveMuck   = false;
+    const fullname = path.resolve(pkg._location, file);
     let json;
     try {
         json = await read(fullname);
@@ -162,20 +191,25 @@ async function muckFile(pkg, file, opts) {
         }
     }
     for (const cmd of opts.commands) {
-        saveMuck |= await
-            cmd[0].call(pkg, json, cmd[1], file, opts);
+        if (await cmd[0].call(pkg, json, cmd[1], file, opts)) {
+            saveMuck = true;
+        }
     }
+
     if (saveMuck && json) {
         const backup = fullname + opts.extension;
-        let newfile = fullname;
+        let newfile  = fullname;
         if (opts.preview) {
             console.log(JSON.stringify(json, null, 2));
-            if (!await confirm(`Does above look correct for ${fullname}`, {confirm: true})) {
+            if (!await confirm(`Does above look correct for ${fullname}`,
+                    { confirm: true })) {
                 return false;
             }
         }
         if (!opts.noExtension) {
-            if (fs.existsSync(backup) && !await confirm(`a file named ${newfile} already, do want to overwrite?`, opts)) {
+            if (fs.existsSync(backup) && !await confirm(
+                    `a file named ${newfile} already, do want to overwrite?`,
+                    opts)) {
                 return false;
             }
             //rename the current file.
@@ -189,7 +223,8 @@ async function muckFile(pkg, file, opts) {
                 try {
                     fs.renameSync(backup, newfile);
                 } catch (ee) {
-                    console.warn(`Error renaming ${backup} back to ${newfile}`, e)
+                    console.warn(`Error renaming ${backup} back to ${newfile}`,
+                        e)
 
                 }
             }
@@ -200,9 +235,11 @@ async function muckFile(pkg, file, opts) {
 
 }
 
-function makeOptions(name, args) {
+export function makeOptions(name, args) {
     function help(msg) {
-        if (msg) console.error(msg);
+        if (msg) {
+            console.error(msg);
+        }
         console.warn(`${name}   [-sdgihfe] <files>
       -b\t--backup\t<extension>\tuse a different extension
       -p\t--prompt\tkey=question\tprompt for value before changing
@@ -218,21 +255,22 @@ function makeOptions(name, args) {
       -n\t--no-lerna\tJust use the file don't iterate over lerna projects
       -C\t--create-file\tCreate the file if it does not exist
       -P\t--preview\tPreview files if there are changes, before writing.
+      -u\t--unless\tDo the action only if it has a value 
       --no-extension\tuse in place
     `);
         process.exit(1);
     }
 
-    const opts = {
+    const opts     = {
         extension: '.bck',
-        files: [],
-        commands: [],
-        options: {}
+        files    : [],
+        commands : [],
+        options  : {}
     };
     const commands = opts.commands;
-    const options = opts.options;
+    const options  = opts.options;
     //need this to suck up files at the end.
-    let i = 0;
+    let i          = 0;
     ARGS: for (let l = args.length; i < l; i++) {
         let [arg, val] = args[i].split('=', 2);
         switch (arg) {
@@ -272,10 +310,11 @@ function makeOptions(name, args) {
                 break;
             case '-u':
             case '--unless':
-            case '--only-if-it-exists':
+            case '--only-if-exists':
                 opts.onlyIfExists = true;
-            case '--confirm':
+                break;
             case '-c':
+            case '--confirm':
                 opts.confirm = true;
                 break;
             case '-i':
@@ -284,7 +323,8 @@ function makeOptions(name, args) {
                 break;
             case '-f':
             case '--file':
-                opts.files = opts.files.concat((val || args[++i]).split(/,\s*/));
+                opts.files =
+                    opts.files.concat((val || args[++i]).split(/,\s*/));
                 break;
             case '-C':
             case '--create-file':
@@ -296,9 +336,11 @@ function makeOptions(name, args) {
             case '--backup':
                 opts['extension'] = (val || args[++i]).trim();
                 if (!opts['extension']) {
-                    return help(`--backup requires an extension use --no-backup to rename in place`)
+                    return help(
+                        `--backup requires an extension use --no-backup to rename in place`)
                 }
                 break;
+            case '-X':
             case '--no-extension':
             case '--no-backup':
                 opts.noExtension = true;
@@ -320,18 +362,18 @@ function makeOptions(name, args) {
 
         }
     }
-    if (commands.length == 0) {
+    if (commands.length === 0) {
         help(`need a command ${args}`);
     }
     opts.files = opts.files.concat(args.slice(i));
-    if (opts.files.length == 0) {
+    if (opts.files.length === 0) {
         opts.files.push('package.json');
     }
     return opts;
 }
 
 
-async function muck(opts) {
+export async function muck(opts) {
 
 
     if (!opts.noLerna) {
@@ -345,16 +387,17 @@ async function muck(opts) {
         }
     } else {
         for (const file of opts.files) {
-            await  muckFile({name: '.', _location: process.cwd()}, file, opts);
+            await muckFile({ name: '.', _location: process.cwd() }, file, opts);
         }
     }
 }
 
 if (require.main === module) {
-    muck(makeOptions(process.argv[1], process.argv.slice(2))).then(function (res) {
-        process.exit(res);
-    }, function (e) {
-        console.trace(e);
-        process.exit(1);
-    });
+    muck(makeOptions(process.argv[1], process.argv.slice(2)))
+        .then(function (res) {
+            process.exit(res);
+        }, function (e) {
+            console.trace(e);
+            process.exit(1);
+        });
 }
