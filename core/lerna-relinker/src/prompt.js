@@ -256,6 +256,7 @@ export function makeOptions(name, args) {
       -C\t--create-file\tCreate the file if it does not exist
       -P\t--preview\tPreview files if there are changes, before writing.
       -u\t--unless\tDo the action only if it has a value 
+      -S\t--scope packages,\t Only apply to these packages (glob).
       --no-extension\tuse in place
     `);
         process.exit(1);
@@ -353,6 +354,11 @@ export function makeOptions(name, args) {
             case '-P':
                 opts.preview = true;
                 break;
+            case '--scope':
+            case '-S':
+                opts.scope =
+                    opts.files.concat((val || args[++i]).split(/,\s*/));
+                break;
             case '-h':
             case '--help':
                 return help();
@@ -374,12 +380,14 @@ export function makeOptions(name, args) {
 
 
 export async function muck(opts) {
-
-
     if (!opts.noLerna) {
-        const ls = new LsCommand(null, opts.options, process.cwd());
+
+        const ls = new LsCommand(null, opts.files ? {
+            scope: opts.scope,
+        } : {}, process.cwd());
         ls.runPreparations();
         opts.filteredPackages = ls.filteredPackages;
+
         for (const pkg of ls.filteredPackages) {
             for (const file of opts.files) {
                 await muckFile(pkg, file, opts);
@@ -387,6 +395,7 @@ export async function muck(opts) {
         }
     } else {
         for (const file of opts.files) {
+
             await muckFile({ name: '.', _location: process.cwd() }, file, opts);
         }
     }
