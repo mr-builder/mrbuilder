@@ -1,8 +1,12 @@
 {
   "name": "mrbuilder",
+  "private": true,
   "version": "0.0.1",
   "description": "A tool for building monorepos",
   "main": "src/index.js",
   "author": "Justin Spears <speajus@gmail.com>",
-  "license": "BSD"
+  "license": "BSD",
+  "workspaces": [
+    "plugins/*"
+  ]
 }

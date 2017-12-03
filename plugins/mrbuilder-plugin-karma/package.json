@@ -1,0 +1,32 @@
+{
+  "name": "mrbuilder-plugin-karma",
+  "version": "0.0.1",
+  "description": "Tools for developing with mrbuilder and karma",
+  "scripts": {
+    "test": "mrbuilder-mocha"
+  },
+  "bin": {
+    "mrbuilder-karma": "bin/mrbuilder-karma.js"
+  },
+  "dependencies": {
+    "mrbuilder-plugin-webpack": "^0.0.1",
+    "mrbuilder-plugin-mocha": "^0.0.1",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-cli": "^1.0.1",
+    "karma-coverage-istanbul-reporter": "^1.3.0",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-mocha": "^1.3.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "^0.0.31",
+    "karma-webpack": "^2.0.5"
+  },
+  "source": "src",
+  "main": "src",
+  "mrbuilder": {
+    "plugins": [
+      "mrbuilder-plugin-webpack",
+      "mrbuilder-plugin-mocha"
+    ]
+  }
+}

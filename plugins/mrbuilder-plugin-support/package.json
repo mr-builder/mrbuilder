@@ -1,0 +1,79 @@
+{
+  "name": "mrbuilder-plugin-support",
+  "version": "0.0.1",
+  "description": "Tools for developing with mrbuilder and webpack",
+  "dependencies": {
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "mrbuilder-plugin-mocha": "^0.0.1",
+    "mrbuilder-plugin-browserslist": "^0.0.1",
+    "mrbuilder-plugin-karma": "^0.0.1",
+    "mrbuilder-plugin-webpack": "^0.0.1",
+    "mrbuilder-plugin-webpack-dev-server": "^0.0.1",
+    "mrbuilder-plugin-fonts": "^0.0.1",
+    "mrbuilder-plugin-filetypes": "^0.0.1",
+    "mrbuilder-plugin-uglify": "^0.0.1",
+    "mrbuilder-plugin-css": "^0.0.1",
+    "mrbuilder-plugin-less": "^0.0.1",
+    "mrbuilder-plugin-hot": "^0.0.1",
+    "mrbuilder-plugin-analyze": "^0.0.1"
+  },
+  "bin": {
+    "mrbuilder-babel": "bin/mrbuilder-babel.js",
+    "mrbuilder-clean": "bin/mrbuilder-clean.js",
+    "mrbuilder-karma": "bin/mrbuilder-karma.js",
+    "mrbuilder-mocha": "bin/mrbuilder-mocha.js",
+    "mrbuilder-webpack": "bin/mrbuilder-webpack.js",
+    "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js"
+  },
+  "mrbuilder": {
+    "options": {
+      "loader": false
+    },
+    "plugins": [
+      "mrbuilder-plugin-fonts",
+      "mrbuilder-plugin-css",
+      "mrbuilder-plugin-less",
+      "mrbuilder-plugin-filetypes",
+      "mrbuilder-plugin-babel",
+      "mrbuilder-plugin-browserslist"
+    ],
+    "env": {
+      "development": {
+        "plugins": [
+          "mrbuilder-plugin-fonts",
+          "mrbuilder-plugin-css",
+          "mrbuilder-plugin-less",
+          "mrbuilder-plugin-filetypes",
+          "mrbuilder-plugin-babel",
+          "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-webpack-dev-server",
+          "mrbuilder-plugin-html",
+          "mrbuilder-plugin-hot"
+        ]
+      },
+      "test": {
+        "plugins": [
+          "mrbuilder-plugin-fonts",
+          "mrbuilder-plugin-css",
+          "mrbuilder-plugin-less",
+          "mrbuilder-plugin-filetypes",
+          "mrbuilder-plugin-babel",
+          "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-karma"
+        ]
+      },
+      "production": {
+        "plugins": [
+          "mrbuilder-plugin-fonts",
+          "mrbuilder-plugin-css",
+          "mrbuilder-plugin-less",
+          "mrbuilder-plugin-filetypes",
+          "mrbuilder-plugin-babel",
+          "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-html"
+        ]
+      }
+    }
+  }
+}
