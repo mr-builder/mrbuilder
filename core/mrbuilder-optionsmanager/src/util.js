@@ -1,6 +1,6 @@
 import {
     configOrBool, info, parseJSON, parseValue, set, warn
-} from 'mrbuilder-dev-utils';
+} from 'mrbuilder-utils';
 
 export const select = (...args) => {
     for (let i = 0, l = args.length; i < l; i++) {

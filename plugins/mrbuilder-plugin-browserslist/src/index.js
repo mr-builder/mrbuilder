@@ -1,4 +1,4 @@
-const { cwd } = require('mrbuilder-plugin-utils');
+const { cwd } = require('mrbuilder-utils');
 const path    = require('path');
 const { env } = process;
 

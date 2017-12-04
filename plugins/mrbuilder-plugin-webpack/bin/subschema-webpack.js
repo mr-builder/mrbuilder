@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-const optionsManager        = require('mrbuilder-dev-optionsmanager/lib/instance');
+const optionsManager        = require('mrbuilder-optionsmanager/lib/instance');
 const path                  = require('path');
-const { configOrBool, cwd } = require('mrbuilder-dev-utils');
+const { configOrBool, cwd } = require('mrbuilder-utils');
 const { argv, env }         = process;
 
 const slice = Function.call.bind(Array.prototype.slice);

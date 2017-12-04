@@ -1,27 +1,27 @@
 // Karma configuration
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 
-const webpack = require('mrbuilder-dev-webpack');
+const webpack = require('mrbuilder-plugin-webpack');
 const path    = require('path');
-const { cwd } = require('mrbuilder-dev-utils');
+const { cwd } = require('mrbuilder-utils');
 
 const {
-          SUBSCHEMA_KARMA_FILES  = '',
-          SUBSCHEMA_COVERAGE     = '',
-          SUBSCHEMA_COVERAGE_DIR = '',
-          SUBSCHEMA_DEBUG,
-          SUBSCHEMA_CHROME_DIR   = path.resolve(process.env.HOME,
+          MRBUILDER_KARMA_FILES  = '',
+          MRBUILDER_COVERAGE     = '',
+          MRBUILDER_COVERAGE_DIR = '',
+          MRBUILDER_DEBUG,
+          MRBUILDER_CHROME_DIR   = path.resolve(process.env.HOME,
               '.mrbuilder-chrome'),
           TRAVIS
       } = process.env;
 
 
-const useCoverage = !!SUBSCHEMA_COVERAGE || !!SUBSCHEMA_COVERAGE_DIR;
+const useCoverage = !!MRBUILDER_COVERAGE || !!MRBUILDER_COVERAGE_DIR;
 console.log('karma webpack', webpack.entry);
 const files = Object.values(webpack.entry);
 console.log('not here');
-if (SUBSCHEMA_KARMA_FILES) {
-    files.unshift(...SUBSCHEMA_KARMA_FILES.split(/,\s*/));
+if (MRBUILDER_KARMA_FILES) {
+    files.unshift(...MRBUILDER_KARMA_FILES.split(/,\s*/));
     console.warn(`using files ${files}`);
 }
 
@@ -43,7 +43,7 @@ module.exports = function (config) {
         customLaunchers: {
             Chrome_with_debugging: {
                 base         : 'Chrome',
-                chromeDataDir: SUBSCHEMA_CHROME_DIR
+                chromeDataDir: MRBUILDER_CHROME_DIR
             },
             Chrome_travis_ci     : {
                 base : 'Chrome',
@@ -52,9 +52,10 @@ module.exports = function (config) {
         },
 
         // list of preprocessors
-        preprocessors: {
-            [webpack.entry.test]: ['webpack', 'sourcemap']
-        },
+        preprocessors: Object.keys(webpack.entry).reduce(function (ret, key) {
+            ret[webpack.entry[key]] = ['webpack', 'sourcemap'];
+            return ret;
+        }, {}),
 
 
         webpack,
@@ -127,14 +128,14 @@ module.exports = function (config) {
             reports                : ['lcovonly', 'text-summary'],
             fixWebpackSourcePaths  : true,
             skipFilesWithNoCoverage: true,
-            dir                    : SUBSCHEMA_COVERAGE_DIR
+            dir                    : MRBUILDER_COVERAGE_DIR
         };
         karmaConf.plugins.push('karma-coverage-istanbul-reporter')
     }
     if (TRAVIS) {
         karmaConf.browsers = ['Firefox'];
     }
-    if (SUBSCHEMA_DEBUG) {
+    if (MRBUILDER_DEBUG) {
         console.log('karma-conf');
         console.dir(karmaConf);
     }

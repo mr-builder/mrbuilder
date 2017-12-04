@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path              = require('path');
-const { cwd }           = require('mrbuilder-plugin-utils');
 
 /**
  *   title     : (deps.description ? deps.description : deps.name),

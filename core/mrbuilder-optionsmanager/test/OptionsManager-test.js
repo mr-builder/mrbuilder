@@ -14,7 +14,7 @@ const isDirectory = sourceDir => {
 
 
 const odir = __dirname;
-describe('mrbuilder-dev-optionsmanager', function () {
+describe('mrbuilder-optionsmanager', function () {
     const argv   = (...argv) => ['fake-interpreter', 'fake-script'].concat(
         ...argv);
     const afters = [];
@@ -50,13 +50,15 @@ describe('mrbuilder-dev-optionsmanager', function () {
             prefix: 'tester',
             cwd   : cwd('boot')
         });
+        expect(om).to.exist;
     });
 
     it('should configure with plugin', function () {
-        const om = new OptionsManager({
+        const conf = {
             prefix: 'tester',
             cwd   : cwd('with-plugin')
-        });
+        }
+        const om   = new OptionsManager(conf);
         expect(om.enabled('whatever')).to.be.true;
     });
 

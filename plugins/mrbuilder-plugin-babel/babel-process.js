@@ -1,4 +1,4 @@
-require('mrbuilder-dev-browserslist');
+require('mrbuilder-plugin-browserslist');
 
 const path = require('path');
 

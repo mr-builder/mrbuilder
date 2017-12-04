@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 const path               = require('path');
 const { env, argv, cwd } = process;
+env.MRBUILDER_INTERNAL_PRESETS=[env.MRBUILDER_INTERNAL_PRESETS, 'mrbuilder-plugin-babel', 'mrbuilder-plugin-karma', 'mrbuilder-plugin-enzyme'].join(',');
+
 if (!env.NODE_ENV) {
     env.NODE_ENV = 'test';
 }
 const {
-          SUBSCHEMA_COVERAGE,
-          SUBSCHEMA_COVERAGE_DIR,
-          SUBSCHEMA_COVERAGE_USE_GLOBAL,
+          MRBUILDER_COVERAGE,
+          MRBUILDER_COVERAGE_DIR,
+          MRBUILDER_COVERAGE_USE_GLOBAL,
           npm_lifecycle_event,
       } = env;
 
@@ -36,14 +38,14 @@ if (npm_lifecycle_event === 'test' || npm_lifecycle_event === 'prepublish') {
         argv.push('--single-run');
     }
 }
-if (SUBSCHEMA_COVERAGE || SUBSCHEMA_COVERAGE_DIR
-    || SUBSCHEMA_COVERAGE_USE_GLOBAL) {
-    env.SUBSCHEMA_COVERAGE = 1;
+if (MRBUILDER_COVERAGE || MRBUILDER_COVERAGE_DIR
+    || MRBUILDER_COVERAGE_USE_GLOBAL) {
+    env.MRBUILDER_COVERAGE = 1;
     if (!argv.includes('--single-run', 2)) {
         argv.push('--single-run');
     }
-    if (SUBSCHEMA_COVERAGE_USE_GLOBAL) {
-        env.SUBSCHEMA_COVERAGE_DIR = path.resolve(cwd(), '..', 'coverage',
+    if (MRBUILDER_COVERAGE_USE_GLOBAL) {
+        env.MRBUILDER_COVERAGE_DIR = path.resolve(cwd(), '..', 'coverage',
             path.basename(cwd()))
     }
 }
@@ -54,7 +56,6 @@ if (argv.includes('--single-run', 2) && !argv.includes('--browser', 2)) {
 if (!env.NODE_ENV) {
     env.NODE_ENV = 'test';
 }
-env.SUBSCHEMA_MAIN_FIELDS = 1;
-env.SUBSCHEMA_KARMA       = 1;
-
+env.MRBUILDER_MAIN_FIELDS = 1;
+env.MRBUILDER_KARMA       = 1;
 require('karma-cli/bin/karma');

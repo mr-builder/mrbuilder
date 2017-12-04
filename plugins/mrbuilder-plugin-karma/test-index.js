@@ -1,10 +1,5 @@
-import { configure, mount as _mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
-
 describe(
-    `started '${SUBSCHEMA_TEST_MODULE}'`,
+    `started '${MRBUILDER_TEST_MODULE}'`,
     () => it('😀', () => {
     }));
 
@@ -14,7 +9,7 @@ describe(
     });
 }))(require.context("test", true));
 
-describe(`finished '${SUBSCHEMA_TEST_MODULE}'`, function () {
+describe(`finished '${MRBUILDER_TEST_MODULE}'`, function () {
     it('🙄', () => {
     });
 });

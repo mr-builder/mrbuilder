@@ -5,17 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.merge = exports.mergeArgs = exports.mergeEnv = exports.parse = exports.camel = exports.nameConfig = exports.select = undefined;
 
-var _assign = require('babel-runtime/core-js/object/assign');
-
-var _assign2 = _interopRequireDefault(_assign);
-
-var _keys = require('babel-runtime/core-js/object/keys');
-
-var _keys2 = _interopRequireDefault(_keys);
-
-var _mrbuilderDevUtils = require('mrbuilder-dev-utils');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _mrbuilderUtils = require('mrbuilder-utils');
 
 var select = exports.select = function select() {
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -44,7 +34,7 @@ var camel = exports.camel = function camel() {
 
 var parse = exports.parse = function parse(value, name) {
     try {
-        return (0, _mrbuilderDevUtils.parseValue)(value);
+        return (0, _mrbuilderUtils.parseValue)(value);
     } catch (e) {
         console.warn('error parsing "%s" in [%s]', value, name);
         return;
@@ -62,12 +52,12 @@ var mergeEnv = exports.mergeEnv = function mergeEnv(plugin) {
     }
 
     var upperPlugin = plugin.toUpperCase();
-    var keys = (0, _keys2.default)(env);
-    var ret = (0, _assign2.default)({}, options);
+    var keys = Object.keys(env);
+    var ret = Object.assign({}, options);
     for (var i = 0, l = keys.length; i < l; i++) {
         var key = keys[i];
         if (key === upperPlugin) {
-            var value = (0, _mrbuilderDevUtils.configOrBool)(env[key]);
+            var value = (0, _mrbuilderUtils.configOrBool)(env[key]);
             if (value === false) {
                 return false;
             } else {
@@ -77,7 +67,7 @@ var mergeEnv = exports.mergeEnv = function mergeEnv(plugin) {
         if (key.startsWith(upperPlugin)) {
             var keyPart = key.substring(upperPlugin.length + 1);
             var camelName = keyPart.split('_').map(camel).join('');
-            (0, _mrbuilderDevUtils.set)(ret, camelName, parse(env[key], plugin));
+            (0, _mrbuilderUtils.set)(ret, camelName, parse(env[key], plugin));
         }
     }
     return ret;
@@ -92,7 +82,7 @@ var mergeArgs = exports.mergeArgs = function mergeArgs(plugin, options) {
     }
 
     var copy = [];
-    var ret = (0, _assign2.default)({}, options);
+    var ret = Object.assign({}, options);
 
     for (var i = 2, l = argv.length; i < l; i++) {
         var arg = argv[i];
@@ -104,7 +94,7 @@ var mergeArgs = exports.mergeArgs = function mergeArgs(plugin, options) {
             if (arg.startsWith(plugin)) {
                 var parts = arg.substring(plugin.length + 1).split('=', 2);
                 var key = parts.shift().split('-').map(camel).join('');
-                (0, _mrbuilderDevUtils.set)(ret, key, parts[0] ? parse(parts[0], arg) : false);
+                (0, _mrbuilderUtils.set)(ret, key, parts[0] ? parse(parts[0], arg) : false);
                 continue;
             }
         }
@@ -139,4 +129,3 @@ var merge = exports.merge = function merge(plugin, options, process) {
     }
     return mergeEnv(plugin, ret, process);
 };
-//# sourceMappingURL=util.js.map

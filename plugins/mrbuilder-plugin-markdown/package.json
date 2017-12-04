@@ -10,7 +10,10 @@
   "dependencies": {
     "markdown-it": "^8.4.0",
     "react-syntax-highlighter": "^6.0.4",
-    "mrbuilder-plugin-utils": "^0.0.1",
+    "mrbuilder-utils": "^0.0.1",
+    "mrbuilder-plugin-babel": "^0.0.1"
+  },
+  "devDependencies": {
     "mrbuilder-plugin-karma": "^0.0.1"
   },
   "source": "src",

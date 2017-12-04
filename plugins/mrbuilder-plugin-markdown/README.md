@@ -1,8 +1,8 @@
-mrbuilder-dev-markdown
+mrbuilder-plugin-markdown
 ===
 
 ## Installation
 ```shell
- $ yarn install mrbuilder-dev-markdown -D
+ $ yarn install mrbuilder-plugin-markdown -D
 ```
 

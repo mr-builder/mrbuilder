@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/instance.js"],"names":[],"mappings":";;;;;;AAAA;;;;;;kBAEe,6BAAmB,EAAnB,C","file":"instance.js","sourcesContent":["import OptionsManager from './OptionsManager';\n\nexport default new OptionsManager({});\n"]}

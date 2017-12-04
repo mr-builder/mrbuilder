@@ -5,29 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DEFAULT_ALL = undefined;
 
-var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-
-var _map = require('babel-runtime/core-js/map');
-
-var _map2 = _interopRequireDefault(_map);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _path = require('path');
 
-var _mrbuilderDevUtils = require('mrbuilder-dev-utils');
+var _mrbuilderUtils = require('mrbuilder-utils');
 
 var _util = require('./util');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var split = function split() {
     var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -53,7 +41,6 @@ var OptionsManager = function () {
             argv = _ref$argv === undefined ? process.argv : _ref$argv,
             _ref$cwd = _ref.cwd,
             cwd = _ref$cwd === undefined ? process.cwd : _ref$cwd,
-            webpackFilePath = _ref.webpackFilePath,
             _ref$info = _ref.info,
             info = _ref$info === undefined ? console.info || console.warn : _ref$info,
             _ref$warn = _ref.warn,
@@ -61,15 +48,17 @@ var OptionsManager = function () {
             _ref$_require = _ref._require,
             _require = _ref$_require === undefined ? require : _ref$_require;
 
-        (0, _classCallCheck3.default)(this, OptionsManager);
-        this.plugins = new _map2.default();
+        _classCallCheck(this, OptionsManager);
 
+        this.plugins = new Map();
+
+        if (!prefix) {
+            prefix = (0, _path.basename)(argv[1]).split('-').shift();
+        }
         prefix = prefix.toUpperCase();
         envPrefix = envPrefix || prefix.toUpperCase();
         confPrefix = confPrefix || prefix.toLowerCase();
         rcFile = '.' + confPrefix + 'rc';
-
-        var webpackFile = webpackFilePath || envPrefix.toLowerCase() + '-webpack.config.js';
 
         this.env = function (key, def) {
             var ret = env[key.toUpperCase()];
@@ -106,7 +95,7 @@ var OptionsManager = function () {
             }
         };
 
-        this.info('NODE_ENV is', env.NODE_ENV);
+        this.info('NODE_ENV is', env.NODE_ENV || 'not set');
 
         var resolveFromPkgDir = function resolveFromPkgDir(pkg, file) {
             for (var _len4 = arguments.length, relto = Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {
@@ -115,7 +104,7 @@ var OptionsManager = function () {
 
             if (!pkg || _this.topPackage.name === pkg) {
                 if (file === 'package.json') {
-                    return _this.topPackage;
+                    pkg = _this.cwd(file);
                 }
                 return _this.cwd.apply(_this, [file].concat(relto));
             }
@@ -127,16 +116,19 @@ var OptionsManager = function () {
 
         var resolveConfig = function resolveConfig(pkg) {
             if (typeof pkg === 'string') {
-                pkg = _require(pkg + '/package.json');
+                if (pkg === _this.topPackage.name) {
+                    pkg = _this.topPackage;
+                } else {
+                    pkg = _require(pkg + '/package.json');
+                }
             }
-            var pluginConfig = pkg[confPrefix] || (0, _mrbuilderDevUtils.parseJSON)(resolveFromPkgDir(pkg.name, rcFile)) || {};
+            var pluginConfig = pkg[confPrefix] || (0, _mrbuilderUtils.parseJSON)(resolveFromPkgDir(pkg.name, rcFile)) || {};
 
             var envOverride = pluginConfig.env && pluginConfig.env[env.NODE_ENV] || {};
             return {
                 presets: (0, _util.select)(envOverride.presets, pluginConfig.presets),
                 options: (0, _util.select)(envOverride.options, pluginConfig.options),
                 plugins: (0, _util.select)(envOverride.plugins, pluginConfig.plugins),
-                webpack: (0, _util.select)(envOverride.webpack, pluginConfig.webpack),
                 ignoreRc: (0, _util.select)(envOverride.ignoreRc, pluginConfig.ignoreRc)
             };
         };
@@ -152,10 +144,10 @@ var OptionsManager = function () {
 
         var processOpts = function processOpts(name) {
             var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+                plugin = _ref2.plugin,
                 presets = _ref2.presets,
                 plugins = _ref2.plugins,
-                ignoreRc = _ref2.ignoreRc,
-                webpack = _ref2.webpack;
+                ignoreRc = _ref2.ignoreRc;
 
             var options = arguments[2];
             var pkg = arguments[3];
@@ -170,20 +162,25 @@ var OptionsManager = function () {
                 _this.plugins.set(name, false);
                 return;
             } else {
-                var plugin = void 0;
-                if (webpack) {
-                    plugin = require(resolveFromPkgDir(name, webpack === true ? webpackFile : webpack));
-                }
-                _this.plugins.set(name, newOption(name, plugin, options, pkg));
-            }
+                if (plugin !== false) {
+                    plugin = plugin || name;
+                    if (name === _this.topPackage.name) {
 
+                        plugin = resolveFromPkgDir(_this.topPackage.name, _this.topPackage.main || './index.js');
+                    }
+                    _this.plugins.set(name, newOption(name, plugin, options, pkg));
+                }
+            }
             if (plugins) {
                 plugins.map(function (plugin) {
                     var _nameConfig = (0, _util.nameConfig)(plugin),
-                        _nameConfig2 = (0, _slicedToArray3.default)(_nameConfig, 2),
+                        _nameConfig2 = _slicedToArray(_nameConfig, 2),
                         pluginName = _nameConfig2[0],
                         pluginOpts = _nameConfig2[1];
 
+                    if (pluginName === _this.topPackage.name) {
+                        return;
+                    }
                     if (pluginOpts === false) {
                         _this.plugins.set(pluginName, false);
                         return;
@@ -191,12 +188,12 @@ var OptionsManager = function () {
                     var isLocal = pluginName.startsWith('.');
                     if (isLocal) {
                         var localName = (0, _path.join)(name, pluginName);
-                        _this.plugins.set(localName, newOption(localName, require(localName), pluginOpts, pkg));
+                        _this.plugins.set(localName, newOption(localName, require.resolve(localName), pluginOpts, pkg));
                         return;
                     }
                     return [pluginName, override || pluginOpts];
                 }).filter(Boolean).forEach(function (_ref3) {
-                    var _ref4 = (0, _slicedToArray3.default)(_ref3, 2),
+                    var _ref4 = _slicedToArray(_ref3, 2),
                         pluginName = _ref4[0],
                         pluginOpts = _ref4[1];
 
@@ -208,7 +205,7 @@ var OptionsManager = function () {
                 //presets all get the same configuration.
                 presets.forEach(function (preset) {
                     var _nameConfig3 = (0, _util.nameConfig)(preset),
-                        _nameConfig4 = (0, _slicedToArray3.default)(_nameConfig3, 2),
+                        _nameConfig4 = _slicedToArray(_nameConfig3, 2),
                         presetName = _nameConfig4[0],
                         config = _nameConfig4[1];
 
@@ -225,7 +222,7 @@ var OptionsManager = function () {
             var presets = split(_this.env(presetsName, ''));
             if (plugins.length || presets.length) {
                 _this.info('process from env', pluginsName, plugins, presetsName, presets);
-                processOpts(envPrefix + '_' + prefix + 'ENV', { plugins: plugins, presets: presets }, void 0, _this.topPackage);
+                processOpts(envPrefix + '_' + prefix + 'ENV', { plugins: plugins, presets: presets, plugin: false }, void 0, _this.topPackage);
             }
         };
         var scan = function scan(ignoreRc, parent, name, options, override) {
@@ -249,16 +246,17 @@ var OptionsManager = function () {
         processEnv('INTERNAL_');
     }
 
-    (0, _createClass3.default)(OptionsManager, [{
+    _createClass(OptionsManager, [{
         key: 'config',
         value: function config(name, def) {
             var parts = name.split('.', 2);
             var key = parts.shift();
             if (!this.enabled(key)) {
-                return false;
+                //if not enabled no default.
+                return;
             }
             var config = this.plugins.get(key).config;
-            return (0, _mrbuilderDevUtils.get)(config, parts.shift(), def);
+            return (0, _mrbuilderUtils.get)(config, parts.shift(), def);
         }
     }, {
         key: 'enabled',
@@ -277,6 +275,7 @@ var OptionsManager = function () {
             };
         }
     }]);
+
     return OptionsManager;
 }();
 
@@ -284,7 +283,7 @@ exports.default = OptionsManager;
 
 var Option = function () {
     function Option(name, plugin, config, parent) {
-        (0, _classCallCheck3.default)(this, Option);
+        _classCallCheck(this, Option);
 
         this.name = name;
         this.plugin = plugin;
@@ -292,7 +291,7 @@ var Option = function () {
         this.parent = parent;
     }
 
-    (0, _createClass3.default)(Option, [{
+    _createClass(Option, [{
         key: 'info',
         value: function info() {
             var _ref5;
@@ -325,6 +324,6 @@ var Option = function () {
             };
         }
     }]);
+
     return Option;
 }();
-//# sourceMappingURL=OptionsManager.js.map

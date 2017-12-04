@@ -1,6 +1,6 @@
-const mod        = require('../mrbuilder-webpack.config');
+const mod        = require('../src');
 const { expect } = require('chai');
-describe('mrbuilder-dev-html', function () {
+describe('mrbuilder-plugin-html', function () {
 
     it('should init', function () {
         const webpack = {

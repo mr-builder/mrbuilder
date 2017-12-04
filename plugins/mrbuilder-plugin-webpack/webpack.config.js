@@ -1,7 +1,7 @@
-require('mrbuilder-dev-browserslist');
+require('mrbuilder-plugin-browserslist');
 const path           = require('path');
-const optionsManager = require('mrbuilder-dev-optionsmanager/lib/instance').default;
-const webpackUtils   = require('mrbuilder-dev-utils');
+const optionsManager = require('mrbuilder-optionsmanager/lib/instance').default;
+const webpackUtils   = require('mrbuilder-utils');
 const {
           DefinePlugin,
           optimize: {
@@ -19,42 +19,42 @@ const {
           NODE_ENV         = process.argv.includes('-p')
               ? 'production'
               : 'development',
-          SUBSCHEMA_DEBUG,
-          SUBSCHEMA_TARGET = 'web',
-          SUBSCHEMA_OUTPUT_PATH,
-          SUBSCHEMA_MAIN_FIELDS,
-          SUBSCHEMA_OUTPUT_FILENAME,
-          SUBSCHEMA_ENTRY,
-          SUBSCHEMA_LIBRARY,
-          SUBSCHEMA_LIBRARY_TARGET,
-          SUBSCHEMA_USE_HOT,
-          SUBSCHEMA_DEV_SERVER,
-          SUBSCHEMA_KARMA,
-          SUBSCHEMA_DEMO,
-          SUBSCHEMA_PUBLIC,
-          SUBSCHEMA_USE_NAME_HASH,
-          SUBSCHEMA_ANALYZE,
-          SUBSCHEMA_USE_ANALYTICS
+          MRBUILDER_DEBUG,
+          MRBUILDER_TARGET = 'web',
+          MRBUILDER_OUTPUT_PATH,
+          MRBUILDER_MAIN_FIELDS,
+          MRBUILDER_OUTPUT_FILENAME,
+          MRBUILDER_ENTRY,
+          MRBUILDER_LIBRARY,
+          MRBUILDER_LIBRARY_TARGET,
+          MRBUILDER_USE_HOT,
+          MRBUILDER_DEV_SERVER,
+          MRBUILDER_KARMA,
+          MRBUILDER_DEMO,
+          MRBUILDER_PUBLIC,
+          MRBUILDER_USE_NAME_HASH,
+          MRBUILDER_ANALYZE,
+          MRBUILDER_USE_ANALYTICS
       } = process.env;
 
 
 const plugins = [];
 const opts    = {
     isProduction : NODE_ENV === 'production',
-    isKarma      : optionsManager.enabled('mrbuilder-dev-karma'),
-    isDemo       : optionsManager.enabled('mrbuilder-dev-server'),
-    isDevServer  : optionsManager.enabled('mrbuilder-dev-webpack'),
-    publicPath   : configOrBool(SUBSCHEMA_PUBLIC, '/'),
+    isKarma      : optionsManager.enabled('mrbuilder-plugin-karma'),
+    isDemo       : optionsManager.enabled('mrbuilder-plugin-server'),
+    isDevServer  : optionsManager.enabled('mrbuilder-plugin-webpack'),
+    publicPath   : configOrBool(MRBUILDER_PUBLIC, '/'),
     useScopeHoist: true,
-    useTarget    : SUBSCHEMA_TARGET,
-    analyze      : configOrBool(SUBSCHEMA_ANALYZE, 'static'),
+    useTarget    : MRBUILDER_TARGET,
+    analyze      : configOrBool(MRBUILDER_ANALYZE, 'static'),
 };
 
 
 const output = {
-    filename: configOrBool(SUBSCHEMA_OUTPUT_FILENAME, opts.useNameHash)
+    filename: configOrBool(MRBUILDER_OUTPUT_FILENAME, opts.useNameHash)
               || opts.useNameHash || '[name].js',
-    path    : configOrBool(SUBSCHEMA_OUTPUT_PATH, cwd('lib'))
+    path    : configOrBool(MRBUILDER_OUTPUT_PATH, cwd('lib'))
               || cwd('lib')
 };
 
@@ -62,8 +62,8 @@ const output = {
 let externals = [];
 if (!(opts.isKarma || opts.isDevServer || opts.isDemo)) {
     opts.isLibrary      = true;
-    const library       = configOrBool(SUBSCHEMA_LIBRARY),
-          libraryTarget = configOrBool(SUBSCHEMA_LIBRARY_TARGET, 'umd');
+    const library       = configOrBool(MRBUILDER_LIBRARY),
+          libraryTarget = configOrBool(MRBUILDER_LIBRARY_TARGET, 'umd');
 
     if (library === true || library === false) {
         output.library = camelCased(pkg().name);
@@ -114,8 +114,8 @@ webpack.resolve.alias = Object.assign(webpack.resolve.alias,
     resolveMap('react', 'react-dom'));
 
 
-//if (SUBSCHEMA_MAIN_FIELDS) {
-const mainFields = configOrBool(SUBSCHEMA_MAIN_FIELDS,
+//if (MRBUILDER_MAIN_FIELDS) {
+const mainFields = configOrBool(MRBUILDER_MAIN_FIELDS,
     opts.useTarget === 'web' ? ['source', 'browser', 'main']
         : ['source', 'main']);
 if (mainFields) {
@@ -128,7 +128,7 @@ if (mainFields) {
 //}
 
 
-opts.useHot = configOrBool(SUBSCHEMA_USE_HOT);
+opts.useHot = configOrBool(MRBUILDER_USE_HOT);
 
 
 ((idx) => {
@@ -140,13 +140,13 @@ opts.useHot = configOrBool(SUBSCHEMA_USE_HOT);
 
 
 //we take this away from webpack so we an expose it to the config.
-if (SUBSCHEMA_ENTRY) {
+if (MRBUILDER_ENTRY) {
     let entry = {};
     let entryNoParse;
     try {
-        entryNoParse = JSON.parse(SUBSCHEMA_ENTRY);
+        entryNoParse = JSON.parse(MRBUILDER_ENTRY);
     } catch (e) {
-        entryNoParse = JSON.parse('"' + SUBSCHEMA_ENTRY + '"');
+        entryNoParse = JSON.parse('"' + MRBUILDER_ENTRY + '"');
     }
     const isStr = typeof entryNoParse === 'string';
     if (isStr || Array.isArray(entryNoParse)) {
@@ -174,7 +174,7 @@ if (SUBSCHEMA_ENTRY) {
     }
     webpack.entry = entry;
 } else {
-    if (opts.isDemo || configOrBool(SUBSCHEMA_DEV_SERVER)) {
+    if (opts.isDemo || configOrBool(MRBUILDER_DEV_SERVER)) {
         if (!webpack.entry || (Object.keys(webpack.entry).length === 1)) {
             webpack.entry = { index: cwd('public', 'index') };
         }
@@ -187,15 +187,16 @@ if (SUBSCHEMA_ENTRY) {
 try {
     optionsManager.plugins.forEach((option, key) => {
         if (option.plugin) {
-            console.warn('loading webpack plugin', key);
-            if (typeof option.plugin === 'function') {
-                const tmpWebpack = option.plugin.call(opts, option.config || {},
+            console.warn('loading webpack plugin %s=%O', key, option.config);
+            const plugin = require(option.plugin);
+            if (typeof plugin === 'function') {
+                const tmpWebpack = plugin.call(opts, option.config || {},
                     webpack,
                     optionsManager);
                 if (tmpWebpack) {
                     webpack = tmpWebpack;
                 }
-            } else if (option.plugin) {
+            } else if (plugin) {
                 //TODO - better merge.
               //  webpack = Object.assign({}, webpack, option.plugin);
             }
@@ -222,7 +223,7 @@ if (opts.useScopeHoist) {
     webpack.plugins.push(new ModuleConcatenationPlugin());
 }
 
-if (SUBSCHEMA_DEBUG) {
+if (MRBUILDER_DEBUG) {
     /* console.log('webpack opts %s, webpack %O', JSON.stringify(opts), JSON.stringify(webpack));*/
     console.log('DEBUG is on');
     console.log('optionsManager');

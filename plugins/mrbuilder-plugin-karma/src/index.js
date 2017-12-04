@@ -1,4 +1,4 @@
-const { cwd }     = require('mrbuilder-plugin-utils');
+const { cwd }     = require('mrbuilder-utils');
 const {ContextReplacementPlugin, DefinePlugin}  = require('webpack');
 const { resolve } = require('path');
 const toRegex     = (val) => {
@@ -19,8 +19,8 @@ module.exports = function ({
                                pattern = /.*-test\.jsx?$/,
                                useCoverage = false,
                                 include = [cwd('src'), cwd('public')],
-                               testIndex = resolve(__dirname,
-                                   'test-babel-config.js')
+                               testIndex = resolve(__dirname, '..',
+                                   'test-index.js')
                            }, webpack) {
     if (useCoverage) {
         console.warn(`enabling code coverage for karma`);
@@ -60,7 +60,7 @@ module.exports = function ({
     webpack.output.pathinfo = true;
     webpack.entry           = { test: testIndex };
     webpack.plugins.unshift(new DefinePlugin({
-        SUBSCHEMA_TEST_MODULE: JSON.stringify(testDir)
+        MRBUILDER_TEST_MODULE: JSON.stringify(testDir)
     }));
     return webpack;
 };

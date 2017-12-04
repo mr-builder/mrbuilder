@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { cwd, configOrBool, resolvePkgDir } = require('mrbuilder-plugin-utils');
+const { cwd, configOrBool, resolvePkgDir } = require('mrbuilder-utils');
 const path                                 = require('path');
 const fs                                   = require('fs');
 const { env, argv }                        = process;
@@ -74,7 +74,7 @@ if (configOrBool(MRBUILDER_COVERAGE)
 } else {
     argv.push('-r', require.resolve('babel-polyfill'));
 }
-argv.push('-r', require.resolve('mrbuilder-dev-babel/babel-register'));
+argv.push('-r', require.resolve('mrbuilder-plugin-babel/babel-register'));
 argv.push(MRBUILDER_MOCHA_TEST);
 if (MRBUILDER_DEBUG) {
     console.log(`[mrbuilder-mocha] running with args `, argv);

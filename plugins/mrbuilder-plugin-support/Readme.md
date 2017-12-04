@@ -6,7 +6,7 @@ monorepos.   This is meant to hold all common dev dependencies.
 ## Installation
 Typical npm/yarn installation.
 ```sh
-$ npm install mrbuilder-dev-support --save-dev
+$ npm install mrbuilder-plugin-support --save-dev
 ```
 
 ## Configuration
@@ -24,7 +24,7 @@ package.json like this
     "clean": "rimraf ./lib ./dist"
 },
 "devDependencies":{
- "mrbuilder-dev-support":"^2.2.3"
+ "mrbuilder-plugin-support":"^2.2.3"
 }
 ```
 

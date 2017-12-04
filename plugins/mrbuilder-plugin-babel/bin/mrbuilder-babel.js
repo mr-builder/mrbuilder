@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { plugins, presets } = require('../');
+const { plugins, presets } = require('mrbuilder-plugin-babel/babel-config');
 const { argv }             = process;
 if (!argv.includes('-s')) {
     argv.push('-s', 'true');

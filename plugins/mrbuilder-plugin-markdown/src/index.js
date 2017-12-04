@@ -1,4 +1,4 @@
-const babel = require('mrbuilder-dev-babel');
+const babel = require('mrbuilder-plugin-babel/babel-config');
 /**
  * {
         "extensions": {
@@ -19,7 +19,10 @@ const babel = require('mrbuilder-dev-babel');
  */
 module.exports =
     function ({
-                  test = /\.md$/, include, exclude, extensions = {
+                  test = /\.md$/,
+                  include,
+                  exclude,
+                  extensions = {
                       'sh'  : 'shell',
                       'js'  : 'javascript',
                       'es6' : 'javascript',
@@ -27,7 +30,9 @@ module.exports =
                       'css' : 'stylesheets',
                       'less': 'less',
                       'styl': 'stylus'
-                  }, highlighter = 'hljs', theme = 'atom-one-light'
+                  },
+                  highlighter = 'hljs',
+                  theme = 'atom-one-light'
               },
               webpack) {
         webpack.module.rules.push(
@@ -39,7 +44,7 @@ module.exports =
                     loader : 'babel-loader',
                     options: babel
                 }, {
-                    loader : require.resolve('mrbuilder-dev-markdown'),
+                    loader : require.resolve('./markdown-loader'),
                     options: {
                         extensions,
                         highlighter,

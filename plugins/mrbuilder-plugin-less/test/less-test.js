@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const mod        = require('../mrbuilder-webpack.config');
+const mod        = require('../src');
 
 describe('susbchema-dev-less', function () {
     it('should load', function () {

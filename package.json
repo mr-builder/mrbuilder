@@ -7,6 +7,13 @@
   "author": "Justin Spears <speajus@gmail.com>",
   "license": "BSD",
   "workspaces": [
+    "core/*",
     "plugins/*"
-  ]
+  ],
+  "dependencies": {
+    "lerna": "^2.5.1"
+  },
+  "scripts": {
+    "test": "lerna run test"
+  }
 }

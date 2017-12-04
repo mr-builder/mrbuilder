@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "webpack dev server for mrbuilder",
   "dependencies": {
-    "mrbuilder-plugin-utils": "^0.0.1",
+    "mrbuilder-utils": "^0.0.1",
     "webpack-dev-server": "^2.9.5",
     "mrbuilder-plugin-webpack": "^0.0.1"
   },

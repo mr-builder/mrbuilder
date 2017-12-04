@@ -16,7 +16,8 @@
     "mrbuilder-plugin-css": "^0.0.1",
     "mrbuilder-plugin-less": "^0.0.1",
     "mrbuilder-plugin-hot": "^0.0.1",
-    "mrbuilder-plugin-analyze": "^0.0.1"
+    "mrbuilder-plugin-analyze": "^0.0.1",
+    "mrbuilder-plugin-enzyme": "^0.0.1"
   },
   "bin": {
     "mrbuilder-babel": "bin/mrbuilder-babel.js",
@@ -60,7 +61,8 @@
           "mrbuilder-plugin-filetypes",
           "mrbuilder-plugin-babel",
           "mrbuilder-plugin-browserslist",
-          "mrbuilder-plugin-karma"
+          "mrbuilder-plugin-karma",
+          "mrbuilder-plugin-enzyme"
         ]
       },
       "production": {

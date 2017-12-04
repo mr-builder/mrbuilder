@@ -1,7 +1,7 @@
 import { basename, join, resolve } from 'path';
 import {
     configOrBool, get, info, parseJSON, parseValue, set, warn
-} from 'mrbuilder-dev-utils';
+} from 'mrbuilder-utils';
 import { merge, nameConfig, select } from './util';
 
 const split = (value = '') => (Array.isArray(value) ? value
@@ -33,10 +33,9 @@ export default class OptionsManager {
                     _require = require
                 } = {}) {
         if (!prefix) {
-            prefix = basename(argv[1]).split('-').shift().toUpperCase()
-        } else {
-            prefix = prefix.toUpperCase();
+            prefix = basename(argv[1]).split('-').shift()
         }
+        prefix     = prefix.toUpperCase();
         envPrefix  = envPrefix || prefix.toUpperCase();
         confPrefix = confPrefix || prefix.toLowerCase();
         rcFile     = `.${confPrefix}rc`;
@@ -66,12 +65,12 @@ export default class OptionsManager {
             }
         };
 
-        this.info('NODE_ENV is', env.NODE_ENV);
+        this.info('NODE_ENV is', env.NODE_ENV || 'not set');
 
         const resolveFromPkgDir = (pkg, file, ...relto) => {
             if (!pkg || this.topPackage.name === pkg) {
                 if (file === 'package.json') {
-                    return this.topPackage;
+                    pkg = this.cwd(file);
                 }
                 return this.cwd(file, ...relto);
             }
@@ -84,7 +83,11 @@ export default class OptionsManager {
 
         const resolveConfig = (pkg) => {
             if (typeof pkg === 'string') {
-                pkg = _require(`${pkg}/package.json`);
+                if (pkg === this.topPackage.name) {
+                    pkg = this.topPackage;
+                } else {
+                    pkg = _require(`${pkg}/package.json`);
+                }
             }
             const pluginConfig = pkg[confPrefix]
                                  || parseJSON(
@@ -112,6 +115,7 @@ export default class OptionsManager {
         };
 
         const processOpts = (name, {
+            plugin,
             presets,
             plugins,
             ignoreRc
@@ -120,14 +124,30 @@ export default class OptionsManager {
                 return;
             }
 
+
             if (options === false) {
                 this.plugins.set(name, false);
                 return;
-            }
+            } else {
+                if (plugin !== false) {
+                    plugin = plugin || name;
+                    if (name === this.topPackage.name) {
 
+                        plugin = resolveFromPkgDir(
+                            this.topPackage.name, this.topPackage.main
+                                                  || './index.js');
+
+                    }
+                    this.plugins.set(name,
+                        newOption(name, plugin, options, pkg));
+                }
+            }
             if (plugins) {
                 plugins.map(plugin => {
                     const [pluginName, pluginOpts] = nameConfig(plugin);
+                    if (pluginName === this.topPackage.name) {
+                        return;
+                    }
                     if (pluginOpts === false) {
                         this.plugins.set(pluginName, false);
                         return;
@@ -136,7 +156,8 @@ export default class OptionsManager {
                     if (isLocal) {
                         const localName = join(name, pluginName);
                         this.plugins.set(localName,
-                            newOption(localName, require(localName), pluginOpts,
+                            newOption(localName, require.resolve(localName),
+                                pluginOpts,
                                 pkg));
                         return;
                     }
@@ -163,7 +184,7 @@ export default class OptionsManager {
                 this.info('process from env', pluginsName, plugins,
                     presetsName, presets);
                 processOpts(`${envPrefix}_${prefix}ENV`,
-                    { plugins, presets },
+                    { plugins, presets, plugin: false },
                     void(0),
                     this.topPackage);
             }
@@ -201,7 +222,8 @@ export default class OptionsManager {
         const parts = name.split('.', 2);
         const key   = parts.shift();
         if (!this.enabled(key)) {
-            return false;
+            //if not enabled no default.
+            return;
         }
         const config = this.plugins.get(key).config;
         return get(config, parts.shift(), def);

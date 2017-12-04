@@ -1,4 +1,4 @@
-const { cwd }    = require('mrbuilder-dev-utils');
+const { cwd }    = require('mrbuilder-utils');
 const DEV_SERVER = {
     filename          : 'index.js',
     historyApiFallback: true,

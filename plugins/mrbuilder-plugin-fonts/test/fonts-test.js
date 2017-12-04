@@ -1,6 +1,6 @@
-const m          = require('../mrbuilder-webpack.config');
+const m          = require('../src');
 const { expect } = require('chai')
-describe('mrbuilder-dev-fonts', function () {
+describe('mrbuilder-plugin-fonts', function () {
     it('should add rules', function () {
         const webpack = {
             module: {
