@@ -1,5 +1,5 @@
 {
-  "name": "mrbuilder",
+  "name": "mrbuilder-repository",
   "private": true,
   "version": "0.0.1",
   "description": "A tool for building monorepos",
