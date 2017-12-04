@@ -6,6 +6,10 @@ module.exports = ({
 
     webpack.devtool = 'cheap-module-source-map';
     babel.plugins.unshift(require.resolve("react-hot-loader/babel"));
+    if (!webpack.devServer) {
+        webpack.devServer = {};
+    }
+    webpack.devServer.hot = true;
 
     webpack.resolve.alias['webpack/hot/dev-server'] =
         require.resolve('webpack/hot/dev-server.js');
