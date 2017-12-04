@@ -1,5 +1,5 @@
 {
-  "name": "mrbuilder-plugin-support",
+  "name": "mrbuilder",
   "version": "0.0.1",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {

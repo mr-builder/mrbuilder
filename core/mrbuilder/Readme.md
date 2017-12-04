@@ -1,12 +1,14 @@
-Subschema Dev Support
+mrbuilder
 ===
 These tools help develop mrbuilder, they could be used in other multimodule,
-monorepos.   This is meant to hold all common dev dependencies.  
+monorepos.   This is meant to hold all common dev dependencies.   This dependency
+has all of the mrbuilder tools. You can use the plugins for more specific
+tools.
 
 ## Installation
 Typical npm/yarn installation.
 ```sh
-$ npm install mrbuilder-plugin-support --save-dev
+$ npm install mrbuilder --save-dev
 ```
 
 ## Configuration
@@ -49,15 +51,28 @@ $ npm run server
 
 
 Included tools-
+  * (mrbuilder-plugin-analyze)[./plugins/mrbuilder-plugin-analyze]
+  * (mrbuilder-plugin-babel)[./plugins/mrbuilder-plugin-babel]
+  * (mrbuilder-plugin-browserslist)[./plugins/mrbuilder-plugin-browserslist]
+  * (mrbuilder-plugin-css)[./plugins/mrbuilder-plugin-css]
+  * (mrbuilder-plugin-enzyme)[./plugins/mrbuilder-plugin-enzyme]
+  * (mrbuilder-plugin-eslint)[./plugins/mrbuilder-plugin-eslint]
+  * (mrbuilder-plugin-filetypes)[./plugins/mrbuilder-plugin-filetypes]
+  * (mrbuilder-plugin-fonts)[./plugins/mrbuilder-plugin-fonts]
+  * (mrbuilder-plugin-hot)[./plugins/mrbuilder-plugin-hot]
+  * (mrbuilder-plugin-html)[./plugins/mrbuilder-plugin-html]
+  * (mrbuilder-plugin-karma)[./plugins/mrbuilder-plugin-karma]
+  * (mrbuilder-plugin-less)[./plugins/mrbuilder-plugin-less]
+  * (mrbuilder-plugin-markdown)[./plugins/mrbuilder-plugin-markdown]
+  * (mrbuilder-plugin-mocha)[./plugins/mrbuilder-plugin-mocha]
+  * (mrbuilder-plugin-uglify)[./plugins/mrbuilder-plugin-uglify]
+  * (mrbuilder-plugin-webpack)[./plugins/mrbuilder-plugin-webpack]
+  * (mrbuilder-plugin-webpack-dev-server)[./plugins/mrbuilder-plugin-webpack-dev-server]
 
- * [Babel](#user-content-babel)
- * [Webpack](#user-content-webpack)
- * [Webpack DevServer](#user-content-webpack-dev-server)
- * [Mocha](#user-content-mocha)
- * [Karma](#user-content-karma)
+
 
 ## Babel
-Subschema uses babel to compile source code.  This command is for when you don't need webpack to do the compiling. The arguments are the same as [babel-cli](https://babeljs.io/docs/usage/cli/) but are defaulted to
+Mrbuilder uses babel to compile source code.  This command is for when you don't need webpack to do the compiling. The arguments are the same as [babel-cli](https://babeljs.io/docs/usage/cli/) but are defaulted to
 
 ```sh
 $ mrbuilder-babel -s true &&\
@@ -94,11 +109,11 @@ Environmental Variables
 
 | Name                        |  Default   | Description
 | --------------------------- |:----------:|:-----------
-| SUBSCHEMA\_USE\_NAME\_HASH  |            | Use hashes in filenames
-| SUBSCHEMA\_NO\_STYLE\_LOADER| 1          | Disable style loader.
-| SUBSCHEMA\_USE\_HTML        | 1          | Use html templates
-| SUBSCHEMA\_USE\_STATS\_FILE | 1          | Use stats file
-| SUBSCHEMA\_USE\_EXTERNALS   | 1          | Use externals react,react-dom,prop-types
+| MRBUILDER\_USE\_NAME\_HASH  |            | Use hashes in filenames
+| MRBUILDER\_NO\_STYLE\_LOADER| 1          | Disable style loader.
+| MRBUILDER\_USE\_HTML        | 1          | Use html templates
+| MRBUILDER\_USE\_STATS\_FILE | 1          | Use stats file
+| MRBUILDER\_USE\_EXTERNALS   | 1          | Use externals react,react-dom,prop-types
 
 
 Cli Arguments
@@ -137,8 +152,7 @@ package.json
 ```json 
 {
   "mrbuilder":{
-     "include":["mrbuilder-*"],
-     "exclude":["whatever"]
+     "plugins":["your_plugins"],
   }
 }
 ```
@@ -148,8 +162,8 @@ package.json
 ## Mocha
 For non browser testing we use plain mocha. Its faster and easier to run than Karma but can not do browsery things. It uses the same babel configuration as mrbuilder-babel. It uses a combination of environmental variables and arguments for configuration, though typically it takes neither.
 
-* SUBSCHEMA_COVERAGE_DIR=./converage turns on test coverage
-* SUBSCHEMA_COVERAGE=1 turns on coverage
+* MRBUILDER_COVERAGE_DIR=./converage turns on test coverage
+* MRBUILDER_COVERAGE=1 turns on coverage
 
 ## Karma
 Karma testing is useful for testing in browser.  This configuration
