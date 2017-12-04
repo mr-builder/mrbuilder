@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-webpack-dev-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "webpack dev server for mrbuilder",
   "dependencies": {
-    "mrbuilder-utils": "^0.0.1",
-    "webpack-dev-server": "^2.9.5",
-    "mrbuilder-plugin-webpack": "^0.0.1"
+    "mrbuilder-plugin-webpack": "^0.0.2",
+    "mrbuilder-utils": "^0.0.2",
+    "webpack-dev-server": "^2.9.5"
   },
   "bin": {
     "mrbuilder-webpack-server": "./bin/mrbuilder-webpack-dev-server.js"

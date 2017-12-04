@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-optionsmanager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "test": "mocha -r babel-register test/**",
     "clean": "rimraf lib",
@@ -10,12 +10,11 @@
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"
   },
   "dependencies": {
-    "mrbuilder-utils": "^0.0.1"
+    "mrbuilder-utils": "^0.0.2"
   },
   "devDependencies": {
-    "babel-plugin-transform-class-properties": "^6.24.1",
-
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",

@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-eslint",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "eslint": "^4.12.1",
-    "eslint-plugin-react": "^7.5.1",
-    "eslint-loader": "^1.9.0"
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-react": "^7.5.1"
   },
-  "source":"src",
-  "main":"src"
+  "source": "src",
+  "main": "src"
 }

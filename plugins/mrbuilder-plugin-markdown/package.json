@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-markdown",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "test": "mrbuilder-karma",
     "karma": "mrbuilder-karma",
@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "markdown-it": "^8.4.0",
-    "react-syntax-highlighter": "^6.0.4",
-    "mrbuilder-utils": "^0.0.1",
-    "mrbuilder-plugin-babel": "^0.0.1"
+    "mrbuilder-plugin-babel": "^0.0.2",
+    "mrbuilder-utils": "^0.0.2",
+    "react-syntax-highlighter": "^6.0.4"
   },
   "devDependencies": {
-    "mrbuilder-plugin-karma": "^0.0.1"
+    "mrbuilder-plugin-karma": "^0.0.2"
   },
   "source": "src",
   "main": "lib"

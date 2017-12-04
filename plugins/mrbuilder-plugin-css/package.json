@@ -1,19 +1,19 @@
 {
   "name": "mrbuilder-plugin-css",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Loadin css  via webpack",
   "dependencies": {
-    "postcss-loader": "^2.0.9",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "style-loader": "^0.19.0",
     "autoprefixer": "^7.1.6",
-    "css-loader": "^0.28.4"
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "postcss-loader": "^2.0.9",
+    "style-loader": "^0.19.0"
   },
   "scripts": {
     "test": "mrbuilder-mocha"
   },
   "devDependencies": {
-    "mrbuilder-plugin-mocha": "^0.0.1"
+    "mrbuilder-plugin-mocha": "^0.0.2"
   },
   "main": "src",
   "source": "src"
