@@ -15,10 +15,10 @@ const isDirectory = sourceDir => {
 
 const odir = __dirname;
 describe('mrbuilder-optionsmanager', function () {
-    const argv   = (...argv) => ['fake-interpreter', 'fake-script'].concat(
+    const argv                 = (...argv) => ['fake-interpreter', 'fake-script'].concat(
         ...argv);
-    const afters = [];
-    const cwd    = (name) => {
+    const afters               = [];
+    const cwd                  = (name) => {
         const ret           = join(__dirname, 'fixtures', name);
         const sourceNodeDir = join(ret, 'node_modules');
         if (isDirectory(sourceNodeDir)) {
@@ -39,50 +39,63 @@ describe('mrbuilder-optionsmanager', function () {
         process.chdir(ret);
         return () => ret;
     };
+    const newOptionManagerTest = (name, config, assert) => {
+        if (!assert) {
+            assert = config;
+            config = {};
+        }
+        it(`should ${name}`, function () {
+            assert(new OptionsManager(Object.assign({
+                prefix: 'tester',
+                cwd   : cwd(name),
+            }, config)));
+        });
+    }
 
     afterEach(() => {
         afters.forEach(c => c());
         process.chdir(odir)
     });
 
-    it('should configure boot', function () {
-        const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('boot')
-        });
-        expect(om).to.exist;
-    });
+    newOptionManagerTest('boot', om => expect(om).to.exist);
+    newOptionManagerTest('with-plugin',
+        om => expect(om.enabled('whatever')).to.be.true);
 
-    it('should configure with plugin', function () {
-        const conf = {
-            prefix: 'tester',
-            cwd   : cwd('with-plugin')
-        }
-        const om   = new OptionsManager(conf);
+    newOptionManagerTest('with-plugin-and-config', om => {
         expect(om.enabled('whatever')).to.be.true;
+        expect(om.config('whatever.someValue')).to.be.true;
     });
-
-    it('should configure with plugin rc', function () {
+    it('should configure with-plugin-plugin', function() {
         const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('with-rc')
+            prefix:'tester',
+            cwd:cwd('with-plugin-plugin'),
         });
+        expect(om.enabled('plugin-plugin')).to.be.true;
+        expect(require(om.plugins.get('plugin-plugin').plugin)('a')).to.eql(['a']);
+    });
+    it('should configure with-plugin-plugin-opts', function() {
+        const om = new OptionsManager({
+            prefix:'tester',
+            cwd:cwd('with-plugin-plugin-opts'),
+        });
+        expect(om.enabled('plugin-plugin-opts')).to.be.true;
+        expect(om.config('plugin-plugin-opts.something')).to.be.true;
+
+    });
+    newOptionManagerTest('with-rc', function (om) {
         expect(om.enabled('metest')).to.be.true;
     });
 
-    it('should configure with plugin env and rc', function () {
-        const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('with-env'),
-            env   : {
-                TESTER_PLUGINS: 'metest',
-                METEST_STUFF  : "1"
-
-            }
-        });
+    newOptionManagerTest('with-env', {
+        env: {
+            TESTER_PLUGINS: 'metest',
+            METEST_STUFF  : "1"
+        }
+    }, (om) => {
         expect(om.enabled('metest')).to.be.true;
         expect(om.config('metest.stuff')).to.eq(1);
-    })
+    });
+
     it('should configure with plugin env and rc and argv', function () {
         const om = new OptionsManager({
             prefix: 'tester',

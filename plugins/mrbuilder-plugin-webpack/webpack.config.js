@@ -1,6 +1,9 @@
 require('mrbuilder-plugin-browserslist');
 const path           = require('path');
-const optionsManager = require('mrbuilder-optionsmanager/lib/instance').default;
+const optionsManager =  global._MRBUILDER_OPTIONS_MANAGER
+                        || (    global._MRBUILDER_OPTIONS_MANAGER =
+        new (require('mrbuilder-optionsmanager').default)(
+            { prefix: 'mrbuilder', _require: require }));
 const webpackUtils   = require('mrbuilder-utils');
 const {
           DefinePlugin,
@@ -187,8 +190,8 @@ if (MRBUILDER_ENTRY) {
 try {
     optionsManager.plugins.forEach((option, key) => {
         if (option.plugin) {
-            console.warn('loading webpack plugin %s=%O', key, option.config);
-            const plugin = require(option.plugin);
+            console.warn('loading webpack plugin %s=%O from ', key, option.config, option.plugin);
+            const plugin = optionsManager.require(option.plugin);
             if (typeof plugin === 'function') {
                 const tmpWebpack = plugin.call(opts, option.config || {},
                     webpack,

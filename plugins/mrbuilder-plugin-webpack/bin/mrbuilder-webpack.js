@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-const optionsManager        = require('mrbuilder-optionsmanager/lib/instance');
-const path                  = require('path');
-const { configOrBool, cwd } = require('mrbuilder-utils');
-const { argv, env }         = process;
+const path               = require('path');
+const { configOrBool }   = require('mrbuilder-utils');
+const { argv, env, cwd } = process;
 
 const slice = Function.call.bind(Array.prototype.slice);
 
@@ -62,45 +61,48 @@ if ((idx = argv.indexOf('--entry')) !== -1) {
         entryArgs.push(argv[i]);
     }
     argv.splice(idx, entryArgs.length + 1);
-    env.SUBSCHEMA_ENTRY = JSON.stringify(entryArgs).replace(/^"(.+?)"$/, '$1');
+    env.MRBUILDER_ENTRY = JSON.stringify(entryArgs).replace(/^"(.+?)"$/, '$1');
 }
 
 
 if (hasArg('-p', '--production')) {
     env.NODE_ENV = 'production';
 }
+if (!env.NDOE_ENV) {
+    env.NODE_ENV = 'development';
+}
 
 if (!hasArg('--config')) {
     argv.push('--config', path.resolve(__dirname, '..', 'webpack.config.js'));
 }
-if (envSplice('SUBSCHEMA_DEMO', '--demo')) {
-    env.SUBSCHEMA_USE_NAME_HASH   = 1;
-    env.SUBSCHEMA_NO_STYLE_LOADER = 1;
-    env.SUBSCHEMA_USE_HTML        = 1;
+if (envSplice('MRBUILDER_DEMO', '--demo')) {
+    env.MRBUILDER_USE_NAME_HASH   = 1;
+    env.MRBUILDER_NO_STYLE_LOADER = 1;
+    env.MRBUILDER_USE_HTML        = 1;
 
-    const demo = configOrBool(env.SUBSCHEMA_DEMO);
+    const demo = configOrBool(env.MRBUILDER_DEMO);
     if (demo) {
-        env.SUBSCHEMA_OUTPUT_PATH = cwd(demo === true ? 'demo' : demo);
+        env.MRBUILDER_OUTPUT_PATH = cwd(demo === true ? 'demo' : demo);
     }
 
 } else {
 
-    if (!envRemove('SUBSCHEMA_EXTERNALIZE_PEERS', '--externalize-peers')) {
+    if (!envRemove('MRBUILDER_EXTERNALIZE_PEERS', '--externalize-peers')) {
         //By default we externalize peer dependencies.
-        env.SUBSCHEMA_EXTERNALIZE_PEERS = 1;
+        env.MRBUILDER_EXTERNALIZE_PEERS = 1;
     }
-    if (envRemove('SUBSCHEMA_EXTERNALIZE_PEERS', '--no-externalize-peers')) {
-        env.SUBSCHEMA_EXTERNALIZE_PEERS = '';
+    if (envRemove('MRBUILDER_EXTERNALIZE_PEERS', '--no-externalize-peers')) {
+        env.MRBUILDER_EXTERNALIZE_PEERS = '';
     }
-    envMap('SUBSCHEMA_OUTPUT_PATH', '--output-path');
-    envMap('SUBSCHEMA_OUTPUT_FILENAME', '--output-filename');
-    envMap('SUBSCHEMA_OUTPUT_LIBRARY', '--output-library');
-    envMap('SUBSCHEMA_OUTPUT_LIBRARY_TARGET', '--output-library-target');
-    envMap('SUBSCHEMA_TARGET', '--target');
-    envSplice('SUBSCHEMA_PUBLIC', '--public');
-    envRemove('SUBSCHEMA_NO_STYLE_LOADER', '--no-style-loader');
-    envSplice('SUBSCHEMA_USE_STATS_FILE', '--use-stats-file');
-    envSplice('SUBSCHEMA_USE_EXTERNALS', '--use-externals');
+    envMap('MRBUILDER_OUTPUT_PATH', '--output-path');
+    envMap('MRBUILDER_OUTPUT_FILENAME', '--output-filename');
+    envMap('MRBUILDER_OUTPUT_LIBRARY', '--output-library');
+    envMap('MRBUILDER_OUTPUT_LIBRARY_TARGET', '--output-library-target');
+    envMap('MRBUILDER_TARGET', '--target');
+    envSplice('MRBUILDER_PUBLIC', '--public');
+    envRemove('MRBUILDER_NO_STYLE_LOADER', '--no-style-loader');
+    envSplice('MRBUILDER_USE_STATS_FILE', '--use-stats-file');
+    envSplice('MRBUILDER_USE_EXTERNALS', '--use-externals');
 
 }
 

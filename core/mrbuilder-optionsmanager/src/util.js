@@ -27,7 +27,7 @@ export const parse = (value, name) => {
     try {
         return parseValue(value);
     } catch (e) {
-        console.warn('error parsing "%s" in [%s]', value, name);
+        console.warn('error parsing "%s" in [%s]', value, name, e);
         return;
     }
 };

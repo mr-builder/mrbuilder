@@ -29,6 +29,7 @@ module.exports = function ({
 
     let useStyle;
     if (!isUseStyleLoader) {
+        console.log('useNameHash', useNameHash);
         useNameHash             = useNameHash === true ? '[hash].style.css'
             : typeof useNameHash === 'string' ? useNameHash.replace(/(\.js)$/,
                 '.css') : 'style.css';

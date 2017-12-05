@@ -35,11 +35,11 @@ export default class OptionsManager {
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
-        prefix     = prefix.toUpperCase();
-        envPrefix  = envPrefix || prefix.toUpperCase();
-        confPrefix = confPrefix || prefix.toLowerCase();
-        rcFile     = `.${confPrefix}rc`;
-
+        prefix       = prefix.toUpperCase();
+        envPrefix    = envPrefix || prefix.toUpperCase();
+        confPrefix   = confPrefix || prefix.toLowerCase();
+        rcFile       = `.${confPrefix}rc`;
+        this.require = _require;
 
         this.env = (key, def) => {
             const ret = env[key.toUpperCase()];
@@ -66,6 +66,7 @@ export default class OptionsManager {
         };
 
         this.info('NODE_ENV is', env.NODE_ENV || 'not set');
+        this.info('topPackage is ', this.topPackage.name);
 
         const resolveFromPkgDir = (pkg, file, ...relto) => {
             if (!pkg || this.topPackage.name === pkg) {
@@ -75,7 +76,7 @@ export default class OptionsManager {
                 return this.cwd(file, ...relto);
             }
             if (file === 'package.json') {
-                return _require.resolve(join(pkg, file))
+                return resolve(join(pkg, file))
             }
             return resolve(_require.resolve(join(pkg, 'package.json')), '..',
                 file, ...relto);
@@ -86,7 +87,16 @@ export default class OptionsManager {
                 if (pkg === this.topPackage.name) {
                     pkg = this.topPackage;
                 } else {
-                    pkg = _require(`${pkg}/package.json`);
+                    try {
+                        pkg = _require(join(pkg, 'package.json'));
+                    } catch (e) {
+                        console.warn(
+                            'could not require "%s/package.json" from "%s"',
+                            pkg,
+                            process.cwd()
+                            );
+                        throw e;
+                    }
                 }
             }
             const pluginConfig = pkg[confPrefix]
@@ -101,6 +111,7 @@ export default class OptionsManager {
                 options : select(envOverride.options, pluginConfig.options),
                 plugins : select(envOverride.plugins, pluginConfig.plugins),
                 ignoreRc: select(envOverride.ignoreRc, pluginConfig.ignoreRc),
+                plugin  : select(envOverride.plugin, pluginConfig.plugin),
             };
         };
 
@@ -114,56 +125,53 @@ export default class OptionsManager {
             return opt;
         };
 
+        const processPlugin = (includedFrom, plugin, override, parent) => {
+            let [pluginName, pluginOpts = override] = nameConfig(plugin);
+            let pluginSrc               = pluginName;
+            let ret                     = pluginName;
+            if (pluginName.startsWith('.')) {
+                pluginSrc = join(includedFrom, pluginName);
+                ret       = false;
+            } else {
+                const pConfig = resolveConfig(plugin);
+                if (pConfig) {
+                    let [rPluginName, rPluginOpts = pluginOpts] = nameConfig(
+                        pConfig.plugin);
+                    if (rPluginName) {
+                        pluginSrc  = join(plugin, rPluginName);
+                        pluginOpts = rPluginOpts;
+                    }
+                }
+            }
+
+            if (this.plugins.has(pluginName)) {
+                return;
+            }
+            //nothing enables a disabled plugin.
+            if (pluginOpts === false) {
+                this.plugins.set(pluginName, false);
+                return;
+            }
+
+
+            pluginOpts = merge(pluginName, pluginOpts, { env, argv });
+
+
+            this.plugins.set(pluginName,
+                newOption(pluginName, pluginSrc, pluginOpts, parent));
+            return ret;
+        };
+
         const processOpts = (name, {
-            plugin,
             presets,
             plugins,
             ignoreRc
         } = {}, options, pkg, parent, override) => {
-            if (this.plugins.has(name)) {
-                return;
-            }
-
-
-            if (options === false) {
-                this.plugins.set(name, false);
-                return;
-            } else {
-                if (plugin !== false) {
-                    plugin = plugin || name;
-                    if (name === this.topPackage.name) {
-
-                        plugin = resolveFromPkgDir(
-                            this.topPackage.name, this.topPackage.main
-                                                  || './index.js');
-
-                    }
-                    this.plugins.set(name,
-                        newOption(name, plugin, options, pkg));
-                }
-            }
             if (plugins) {
                 plugins.map(plugin => {
-                    const [pluginName, pluginOpts] = nameConfig(plugin);
-                    if (pluginName === this.topPackage.name) {
-                        return;
-                    }
-                    if (pluginOpts === false) {
-                        this.plugins.set(pluginName, false);
-                        return;
-                    }
-                    const isLocal = pluginName.startsWith('.');
-                    if (isLocal) {
-                        const localName = join(name, pluginName);
-                        this.plugins.set(localName,
-                            newOption(localName, require.resolve(localName),
-                                pluginOpts,
-                                pkg));
-                        return;
-                    }
-                    return [pluginName, override || pluginOpts];
-                }).filter(Boolean).forEach(([pluginName, pluginOpts]) => {
-                    scan(ignoreRc, pkg, pluginName, pluginOpts);
+                    return processPlugin(pkg.name, plugin, override, pkg);
+                }).filter(Boolean).forEach((pluginName) => {
+                    scan(ignoreRc, pkg, pluginName, void(0), override);
                 })
             }
 
@@ -203,7 +211,6 @@ export default class OptionsManager {
 
             const pluginConf = resolveConfig(pkg);
 
-            options = merge(name, options || pluginConf.options, { env, argv });
 
             processOpts(name, pluginConf, options, pkg, parent,
                 override);

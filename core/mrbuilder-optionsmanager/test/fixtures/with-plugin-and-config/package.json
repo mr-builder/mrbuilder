@@ -1,0 +1,17 @@
+{
+  "name": "with-plugin",
+  "version": "1",
+  "dependencies": {
+    "whatever": "1"
+  },
+  "tester": {
+    "plugins": [
+      [
+        "whatever",
+        {
+          "someValue": true
+        }
+      ]
+    ]
+  }
+}

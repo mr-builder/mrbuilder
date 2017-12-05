@@ -18,8 +18,10 @@ const {
 
 const useCoverage = !!MRBUILDER_COVERAGE || !!MRBUILDER_COVERAGE_DIR;
 console.log('karma webpack', webpack.entry);
+console.log('webpack');
+console.dir(webpack);
+
 const files = Object.values(webpack.entry);
-console.log('not here');
 if (MRBUILDER_KARMA_FILES) {
     files.unshift(...MRBUILDER_KARMA_FILES.split(/,\s*/));
     console.warn(`using files ${files}`);

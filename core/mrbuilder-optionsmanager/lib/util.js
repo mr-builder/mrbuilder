@@ -36,7 +36,7 @@ var parse = exports.parse = function parse(value, name) {
     try {
         return (0, _mrbuilderUtils.parseValue)(value);
     } catch (e) {
-        console.warn('error parsing "%s" in [%s]', value, name);
+        console.warn('error parsing "%s" in [%s]', value, name, e);
         return;
     }
 };

@@ -59,6 +59,7 @@ var OptionsManager = function () {
         envPrefix = envPrefix || prefix.toUpperCase();
         confPrefix = confPrefix || prefix.toLowerCase();
         rcFile = '.' + confPrefix + 'rc';
+        this.require = _require;
 
         this.env = function (key, def) {
             var ret = env[key.toUpperCase()];
@@ -96,6 +97,7 @@ var OptionsManager = function () {
         };
 
         this.info('NODE_ENV is', env.NODE_ENV || 'not set');
+        this.info('topPackage is ', this.topPackage.name);
 
         var resolveFromPkgDir = function resolveFromPkgDir(pkg, file) {
             for (var _len4 = arguments.length, relto = Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {
@@ -109,7 +111,7 @@ var OptionsManager = function () {
                 return _this.cwd.apply(_this, [file].concat(relto));
             }
             if (file === 'package.json') {
-                return _require.resolve((0, _path.join)(pkg, file));
+                return (0, _path.resolve)((0, _path.join)(pkg, file));
             }
             return _path.resolve.apply(undefined, [_require.resolve((0, _path.join)(pkg, 'package.json')), '..', file].concat(relto));
         };
@@ -119,7 +121,12 @@ var OptionsManager = function () {
                 if (pkg === _this.topPackage.name) {
                     pkg = _this.topPackage;
                 } else {
-                    pkg = _require(pkg + '/package.json');
+                    try {
+                        pkg = _require((0, _path.join)(pkg, 'package.json'));
+                    } catch (e) {
+                        console.warn('could not require "%s/package.json" from "%s"', pkg, process.cwd());
+                        throw e;
+                    }
                 }
             }
             var pluginConfig = pkg[confPrefix] || (0, _mrbuilderUtils.parseJSON)(resolveFromPkgDir(pkg.name, rcFile)) || {};
@@ -129,7 +136,8 @@ var OptionsManager = function () {
                 presets: (0, _util.select)(envOverride.presets, pluginConfig.presets),
                 options: (0, _util.select)(envOverride.options, pluginConfig.options),
                 plugins: (0, _util.select)(envOverride.plugins, pluginConfig.plugins),
-                ignoreRc: (0, _util.select)(envOverride.ignoreRc, pluginConfig.ignoreRc)
+                ignoreRc: (0, _util.select)(envOverride.ignoreRc, pluginConfig.ignoreRc),
+                plugin: (0, _util.select)(envOverride.plugin, pluginConfig.plugin)
             };
         };
 
@@ -142,9 +150,51 @@ var OptionsManager = function () {
             return opt;
         };
 
+        var processPlugin = function processPlugin(includedFrom, plugin, override, parent) {
+            var _nameConfig = (0, _util.nameConfig)(plugin),
+                _nameConfig2 = _slicedToArray(_nameConfig, 2),
+                pluginName = _nameConfig2[0],
+                _nameConfig2$ = _nameConfig2[1],
+                pluginOpts = _nameConfig2$ === undefined ? override : _nameConfig2$;
+
+            var pluginSrc = pluginName;
+            var ret = pluginName;
+            if (pluginName.startsWith('.')) {
+                pluginSrc = (0, _path.join)(includedFrom, pluginName);
+                ret = false;
+            } else {
+                var pConfig = resolveConfig(plugin);
+                if (pConfig) {
+                    var _nameConfig3 = (0, _util.nameConfig)(pConfig.plugin),
+                        _nameConfig4 = _slicedToArray(_nameConfig3, 2),
+                        rPluginName = _nameConfig4[0],
+                        _nameConfig4$ = _nameConfig4[1],
+                        rPluginOpts = _nameConfig4$ === undefined ? pluginOpts : _nameConfig4$;
+
+                    if (rPluginName) {
+                        pluginSrc = (0, _path.join)(plugin, rPluginName);
+                        pluginOpts = rPluginOpts;
+                    }
+                }
+            }
+
+            if (_this.plugins.has(pluginName)) {
+                return;
+            }
+            //nothing enables a disabled plugin.
+            if (pluginOpts === false) {
+                _this.plugins.set(pluginName, false);
+                return;
+            }
+
+            pluginOpts = (0, _util.merge)(pluginName, pluginOpts, { env: env, argv: argv });
+
+            _this.plugins.set(pluginName, newOption(pluginName, pluginSrc, pluginOpts, parent));
+            return ret;
+        };
+
         var processOpts = function processOpts(name) {
             var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-                plugin = _ref2.plugin,
                 presets = _ref2.presets,
                 plugins = _ref2.plugins,
                 ignoreRc = _ref2.ignoreRc;
@@ -154,60 +204,21 @@ var OptionsManager = function () {
             var parent = arguments[4];
             var override = arguments[5];
 
-            if (_this.plugins.has(name)) {
-                return;
-            }
-
-            if (options === false) {
-                _this.plugins.set(name, false);
-                return;
-            } else {
-                if (plugin !== false) {
-                    plugin = plugin || name;
-                    if (name === _this.topPackage.name) {
-
-                        plugin = resolveFromPkgDir(_this.topPackage.name, _this.topPackage.main || './index.js');
-                    }
-                    _this.plugins.set(name, newOption(name, plugin, options, pkg));
-                }
-            }
             if (plugins) {
                 plugins.map(function (plugin) {
-                    var _nameConfig = (0, _util.nameConfig)(plugin),
-                        _nameConfig2 = _slicedToArray(_nameConfig, 2),
-                        pluginName = _nameConfig2[0],
-                        pluginOpts = _nameConfig2[1];
-
-                    if (pluginName === _this.topPackage.name) {
-                        return;
-                    }
-                    if (pluginOpts === false) {
-                        _this.plugins.set(pluginName, false);
-                        return;
-                    }
-                    var isLocal = pluginName.startsWith('.');
-                    if (isLocal) {
-                        var localName = (0, _path.join)(name, pluginName);
-                        _this.plugins.set(localName, newOption(localName, require.resolve(localName), pluginOpts, pkg));
-                        return;
-                    }
-                    return [pluginName, override || pluginOpts];
-                }).filter(Boolean).forEach(function (_ref3) {
-                    var _ref4 = _slicedToArray(_ref3, 2),
-                        pluginName = _ref4[0],
-                        pluginOpts = _ref4[1];
-
-                    scan(ignoreRc, pkg, pluginName, pluginOpts);
+                    return processPlugin(pkg.name, plugin, override, pkg);
+                }).filter(Boolean).forEach(function (pluginName) {
+                    scan(ignoreRc, pkg, pluginName, void 0, override);
                 });
             }
 
             if (presets) {
                 //presets all get the same configuration.
                 presets.forEach(function (preset) {
-                    var _nameConfig3 = (0, _util.nameConfig)(preset),
-                        _nameConfig4 = _slicedToArray(_nameConfig3, 2),
-                        presetName = _nameConfig4[0],
-                        config = _nameConfig4[1];
+                    var _nameConfig5 = (0, _util.nameConfig)(preset),
+                        _nameConfig6 = _slicedToArray(_nameConfig5, 2),
+                        presetName = _nameConfig6[0],
+                        config = _nameConfig6[1];
 
                     scan(ignoreRc, pkg, presetName, void 0, config);
                 });
@@ -234,8 +245,6 @@ var OptionsManager = function () {
             }
 
             var pluginConf = resolveConfig(pkg);
-
-            options = (0, _util.merge)(name, options || pluginConf.options, { env: env, argv: argv });
 
             processOpts(name, pluginConf, options, pkg, parent, override);
         };
@@ -294,24 +303,24 @@ var Option = function () {
     _createClass(Option, [{
         key: 'info',
         value: function info() {
-            var _ref5;
+            var _ref3;
 
             for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
                 args[_key5] = arguments[_key5];
             }
 
-            (_ref5 = this.optionsManager || console).info.apply(_ref5, ['- ' + this.name].concat(args));
+            (_ref3 = this.optionsManager || console).info.apply(_ref3, ['- ' + this.name].concat(args));
         }
     }, {
         key: 'warn',
         value: function warn() {
-            var _ref6;
+            var _ref4;
 
             for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
                 args[_key6] = arguments[_key6];
             }
 
-            (_ref6 = this.optionsManager || console).warn.apply(_ref6, ['- ' + this.name].concat(args));
+            (_ref4 = this.optionsManager || console).warn.apply(_ref4, ['- ' + this.name].concat(args));
         }
     }, {
         key: 'toJSON',

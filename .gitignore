@@ -4,3 +4,4 @@ node_modules
 lerna-debug.log
 *.log
 lib
+**/lib
