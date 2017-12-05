@@ -26,5 +26,10 @@
     "rimraf": "^2.6.2"
   },
   "source": "src",
-  "main": "src"
+  "main": "src",
+  "mrbuilder": {
+    "alias": {
+      "coverage": "Run with code coverage, not for production"
+    }
+  }
 }

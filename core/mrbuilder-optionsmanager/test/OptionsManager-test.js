@@ -1,6 +1,7 @@
 import OptionsManager from '../src/OptionsManager';
 import { join } from 'path';
 import { expect } from 'chai';
+import { stringify } from 'mrbuilder-utils';
 import { existsSync, readdirSync, statSync, symlinkSync, unlinkSync } from 'fs';
 
 const isDirectory = sourceDir => {
@@ -42,15 +43,16 @@ describe('mrbuilder-optionsmanager', function () {
     const newOptionManagerTest = (name, config, assert) => {
         if (!assert) {
             assert = config;
-            config = {};
+            config = null;
         }
-        it(`should ${name}`, function () {
+        it(`should configure "${name}"${config ? ` and env ${stringify(
+            config)}` : ''}`, function () {
             assert(new OptionsManager(Object.assign({
                 prefix: 'tester',
                 cwd   : cwd(name),
             }, config)));
         });
-    }
+    };
 
     afterEach(() => {
         afters.forEach(c => c());
@@ -58,6 +60,7 @@ describe('mrbuilder-optionsmanager', function () {
     });
 
     newOptionManagerTest('boot', om => expect(om).to.exist);
+
     newOptionManagerTest('with-plugin',
         om => expect(om.enabled('whatever')).to.be.true);
 
@@ -65,24 +68,19 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.enabled('whatever')).to.be.true;
         expect(om.config('whatever.someValue')).to.be.true;
     });
-    it('should configure with-plugin-plugin', function() {
-        const om = new OptionsManager({
-            prefix:'tester',
-            cwd:cwd('with-plugin-plugin'),
-        });
+
+    newOptionManagerTest('with-plugin-plugin', om => {
+
         expect(om.enabled('plugin-plugin')).to.be.true;
-        expect(require(om.plugins.get('plugin-plugin').plugin)('a')).to.eql(['a']);
+        expect(require(om.plugins.get('plugin-plugin').plugin)('a')).to
+                                                                    .eql(['a']);
     });
-    it('should configure with-plugin-plugin-opts', function() {
-        const om = new OptionsManager({
-            prefix:'tester',
-            cwd:cwd('with-plugin-plugin-opts'),
-        });
+    newOptionManagerTest('with-plugin-plugin-opts', om => {
         expect(om.enabled('plugin-plugin-opts')).to.be.true;
         expect(om.config('plugin-plugin-opts.something')).to.be.true;
 
     });
-    newOptionManagerTest('with-rc', function (om) {
+    newOptionManagerTest('with-rc', om => {
         expect(om.enabled('metest')).to.be.true;
     });
 
@@ -96,69 +94,48 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.config('metest.stuff')).to.eq(1);
     });
 
-    it('should configure with plugin env and rc and argv', function () {
-        const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('with-env'),
-            env   : {
-                TESTER_PLUGINS: 'metest',
+    newOptionManagerTest('with-env', {
+        env : {
+            TESTER_PLUGINS: 'metest',
 
-            },
-            argv  : argv(
-                '--metest-stuff=3',
-                '--metest-stuff-or="stuff"'
-            )
-        });
+        },
+        argv: argv(
+            '--metest-stuff=3',
+            '--metest-stuff-or="stuff"'
+        )
+    }, om => {
         expect(om.enabled('metest')).to.be.true;
         expect(om.config('metest.stuff')).to.eq(3);
         expect(om.config('metest.stuffOr')).to.eq('stuff');
 
     });
 
-    it('should configure with plugin with-disabled', function () {
-        const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('with-disabled'),
-            env   : {},
-            argv  : argv(
-                '--metest-stuff=3',
-                '--metest-stuff-or="stuff"'
-            )
-        });
+    newOptionManagerTest('with-disabled', {
+        argv: argv('--metest-stuff=3', '--metest-stuff-or="stuff"')
+    }, om => {
         expect(om.enabled('metest')).to.be.false;
         expect(om.enabled('enabled')).to.be.true;
     });
 
-    it('should configure with plugin with-presets', function () {
-        const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('with-presets'),
-            env   : {},
-            argv  : argv(
-                '--p1-stuff=3',
-                '--p2-stuff-or="stuff"',
-                '--preset-pp="abc"'
-            )
-        });
+    newOptionManagerTest('with-presets', {
+        argv: argv(
+            '--p1-stuff=3',
+            '--p2-stuff-or="stuff"',
+            '--preset-pp="abc"'
+        )
+    }, om => {
         expect(om.enabled('p1')).to.be.true;
         expect(om.enabled('p2')).to.be.true;
 
     });
-    it('should configure with plugin with-presets and config', function () {
-        const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('with-presets-and-config'),
-            env   : {},
-            argv  : argv(
 
-            )
-        });
+    newOptionManagerTest('with-presets-and-config', om => {
         expect(om.enabled('p1')).to.be.eql(true);
         expect(om.enabled('p2')).to.be.eql(true);
         expect(om.config('p1.ppe')).to.be.eql(2);
         expect(om.config('p2.ppe')).to.be.eql(2);
-
     });
+
     it('should log from option', function () {
         const calls   = [];
         const capture = (...args) => calls.push(args);

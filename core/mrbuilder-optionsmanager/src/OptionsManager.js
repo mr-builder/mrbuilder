@@ -2,7 +2,7 @@ import { basename, join, resolve } from 'path';
 import {
     configOrBool, get, info, parseJSON, parseValue, set, warn
 } from 'mrbuilder-utils';
-import { merge, nameConfig, select } from './util';
+import { merge, mergeAlias, nameConfig, select } from './util';
 
 const split = (value = '') => (Array.isArray(value) ? value
     : value.split(/,\s*/)).filter(Boolean);
@@ -116,15 +116,16 @@ export default class OptionsManager {
         };
 
 
-        const newOption = (name, plugin, config, parent) => {
+        const newOption     = (name, plugin, config, parent, alias) => {
             if (config === false) {
                 return false;
             }
-            const opt          = new Option(name, plugin, config, parent);
+            const opt          = new Option(name, plugin, config, parent,
+                alias);
             opt.optionsManager = this;
             return opt;
         };
-
+        let aliasObj        = {};
         const processPlugin = (includedFrom, plugin, override, parent) => {
             let [pluginName, pluginOpts = override] = nameConfig(plugin);
             let pluginSrc               = pluginName;
@@ -158,10 +159,11 @@ export default class OptionsManager {
 
 
             pluginOpts = merge(pluginName, pluginOpts, { env, argv });
-
-
+            if (alias) {
+                pluginOpts = mergeAlias(alias, aliasObj, { env, argv });
+            }
             this.plugins.set(pluginName,
-                newOption(pluginName, pluginSrc, pluginOpts, parent));
+                newOption(pluginName, pluginSrc, pluginOpts, parent, alias));
             return ret;
         };
 
@@ -256,11 +258,13 @@ class Option {
     constructor(name,
                 plugin,
                 config,
-                parent) {
+                parent,
+                alias) {
         this.name   = name;
         this.plugin = plugin;
         this.config = config;
         this.parent = parent;
+        this.alias  = alias;
     }
 
     info(...args) {

@@ -1,0 +1,11 @@
+{
+  "name": "mrbuilder-plugin-env",
+  "version": "0.0.3",
+  "main": "src",
+  "source": "src",
+  "mrbuilder": {
+    "alias": {
+      "p": "Sets the build to production mode"
+    }
+  }
+}

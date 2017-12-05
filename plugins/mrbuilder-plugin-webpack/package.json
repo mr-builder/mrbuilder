@@ -21,5 +21,19 @@
   "peerDependencies": {
     "react": "16.x || 15.x",
     "react-dom": "16.x || 15.x"
+  },
+  "mrbuilder": {
+    "alias": {
+      "useNameHash": "Use hash in the name of output files",
+      "useScopeHoist": "Use ModuleConcatenationPlugin"
+      "library": "Library name for output",
+      "libraryTarget":"Output type of library",
+      "public": "public path resource",
+      "entry": "Entry point",
+      "useExternals": "Externalize peer dependencies",
+      "useTarget": "Type of build, web, node, electron,etc.",
+      "useMainFields": "What main fields to use usually [browser, main]",
+      "useExtension":"What extensions to use"
+    }
   }
 }

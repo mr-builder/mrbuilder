@@ -12,6 +12,9 @@ describe('mrbuilder-utils', function () {
         expect(parseValue('[]')).to.eql([]);
         expect(parseValue('1.23')).to.eql(1.23);
         expect(parseValue('{"a":1}')).to.eql({ a: 1 })
+        expect(parseValue('true')).to.eql(true);
+        expect(parseValue('false')).to.eql(false);
+
         const re = parseValue('/a/g');
         expect(re).to.be.instanceof(RegExp);
         expect(re+'').to.eql('/a/g');

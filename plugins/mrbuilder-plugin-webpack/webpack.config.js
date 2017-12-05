@@ -31,12 +31,8 @@ const {
           MRBUILDER_LIBRARY_TARGET,
           MRBUILDER_USE_HOT,
           MRBUILDER_DEV_SERVER,
-          MRBUILDER_KARMA,
-          MRBUILDER_DEMO,
           MRBUILDER_PUBLIC,
-          MRBUILDER_USE_NAME_HASH,
           MRBUILDER_ANALYZE,
-          MRBUILDER_USE_ANALYTICS
       } = process.env;
 
 

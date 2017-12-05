@@ -166,11 +166,27 @@ function resolveMap(...args) {
     }, {});
 }
 
+function parseRe(key, value) {
+    if (typeof value !== 'string') {
+        return value;
+    }
+    if (/^\/.*\/[gim]*$/.test(value)) {
+        const parts = /^\/(.*)\/([gim]*)$/.exec(value);
+        if (parts.length === 3) {
+            return new RegExp(parts[1], parts[2]);
+        }
+        return new RegExp(parts[1]);
+    }
+    return value;
+}
+
 function parseValue(value) {
     if (/^".*"$/.test(value)) {
         return JSON.parse(value)
     }
-
+    if (/^(true|false)$/.test(value)) {
+        return JSON.parse(value);
+    }
     if (/^\/.*\/[gim]*$/.test(value)) {
         const parts = value.split(/^\/(.*)\/([gim]*)$/);
         const re    = parts[1];
@@ -191,14 +207,24 @@ function parseValue(value) {
 
     }
     if (/^\{(.*)\}$/.test(value)) {
-        return JSON.parse(value);
+        return JSON.parse(value, parseRe);
 
     }
-    return JSON.parse(`"${value}"`);
+    return JSON.parse(`"${value}"`, parseRe);
+}
+
+function stringify(value, indent = 2) {
+    return JSON.stringify(value, function (key, value) {
+        if (value instanceof RegExp) {
+            return value.toString();
+        }
+        return value;
+    }, indent);
 }
 
 module.exports = {
     parseValue,
+    stringify,
     get,
     set,
     camelCased,
