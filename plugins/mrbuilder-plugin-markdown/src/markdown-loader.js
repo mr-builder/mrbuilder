@@ -1,5 +1,5 @@
-import Renderer from './markdown';
-import MarkdownIt from 'markdown-it';
+const Renderer  = require('./markdown');
+const MarkdownIt = require('markdown-it');
 
 const stringify = (str) => {
     if (str == null) {

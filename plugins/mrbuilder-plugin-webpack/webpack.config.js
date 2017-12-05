@@ -1,9 +1,8 @@
 require('mrbuilder-plugin-browserslist');
 const path           = require('path');
-const optionsManager =  global._MRBUILDER_OPTIONS_MANAGER
-                        || (    global._MRBUILDER_OPTIONS_MANAGER =
-        new (require('mrbuilder-optionsmanager').default)(
-            { prefix: 'mrbuilder', _require: require }));
+const optionsManager =  global._MRBUILDER_OPTIONS_MANAGER;
+
+console.log('optionsManager', JSON.stringify(optionsManager,null,2));
 const webpackUtils   = require('mrbuilder-utils');
 const {
           DefinePlugin,

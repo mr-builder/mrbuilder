@@ -124,7 +124,7 @@ default_rules.html_inline = function (tokens, idx /*, options, env */) {
  *
  * Creates new [[Renderer]] instance and fill [[Renderer#rules]] with defaults.
  **/
-export default function Renderer() {
+function Renderer() {
 
     /**
      * Renderer#rules -> Object
@@ -371,3 +371,4 @@ function renderImport(key) {
 }
 
 
+module.exports = Renderer;

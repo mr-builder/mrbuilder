@@ -23,6 +23,8 @@ module.exports = function ({
                                testIndex = resolve(__dirname, '..',
                                    'test-index.js')
                            }, webpack) {
+
+    console.log('loading karma using ', testIndex);
     if (useCoverage) {
         console.warn(`enabling code coverage for karma`);
         webpack.module.rules.unshift(

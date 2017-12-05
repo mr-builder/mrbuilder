@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 const path                     = require('path');
 const { env, argv, cwd }       = process;
-env.MRBUILDER_INTERNAL_PLUGUINS =
-    [env.MRBUILDER_INTERNAL_PLUGUINS, 'mrbuilder-plugin-babel', 'mrbuilder-plugin-karma', 'mrbuilder-plugin-enzyme'].join(
+env.MRBUILDER_INTERNAL_PLUGINS =
+    [env.MRBUILDER_INTERNAL_PLUGINS, 'mrbuilder-plugin-babel', 'mrbuilder-plugin-karma', 'mrbuilder-plugin-enzyme'].join(
         ',');
 
 if (!env.NODE_ENV) {
     env.NODE_ENV = 'test';
 }
-
-const optionsManager = global._MRBUILDER_OPTIONS_MANAGER
+global._MRBUILDER_OPTIONS_MANAGER
                        || (    global._MRBUILDER_OPTIONS_MANAGER =
         new (require('mrbuilder-optionsmanager').default)(
             { prefix: 'mrbuilder', _require: require }));

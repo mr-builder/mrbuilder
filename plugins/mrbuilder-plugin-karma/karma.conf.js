@@ -1,7 +1,7 @@
 // Karma configuration
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 
-const webpack = require('mrbuilder-plugin-webpack');
+const webpack = require('mrbuilder-plugin-webpack/webpack.config');
 const path    = require('path');
 const { cwd } = require('mrbuilder-utils');
 

@@ -2,7 +2,7 @@
   "name": "mrbuilder-plugin-markdown",
   "version": "0.0.2",
   "scripts": {
-    "test": "mrbuilder-karma",
+    "test": "mrbuilder-babel && mrbuilder-karma",
     "karma": "mrbuilder-karma",
     "clean": "mrbuilder-clean",
     "prepublish": "mrbuilder-babel"
@@ -17,5 +17,10 @@
     "mrbuilder-plugin-karma": "^0.0.2"
   },
   "source": "src",
-  "main": "lib"
+  "main": "lib",
+  "mrbuilder":{
+    "plugins":[
+      "./lib"
+    ]
+  }
 }
