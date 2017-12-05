@@ -1,15 +1,15 @@
 {
   "name": "mrbuilder-plugin-html",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "html plugin for mrbuilder",
   "dependencies": {
     "html-webpack-plugin": "^2.30.1",
     "html-webpack-template": "^6.0.2",
-    "mrbuilder-plugin-babel": "^0.0.2",
-    "mrbuilder-utils": "^0.0.2"
+    "mrbuilder-plugin-babel": "^0.0.3",
+    "mrbuilder-utils": "^0.0.3"
   },
   "devDependencies": {
-    "mrbuilder-plugin-mocha": "^0.0.2"
+    "mrbuilder-plugin-mocha": "^0.0.3"
   },
   "scripts": {
     "test": "mrbuilder-mocha"
