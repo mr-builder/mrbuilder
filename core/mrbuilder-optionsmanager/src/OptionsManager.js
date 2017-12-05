@@ -94,7 +94,7 @@ export default class OptionsManager {
                             'could not require "%s/package.json" from "%s"',
                             pkg,
                             process.cwd()
-                            );
+                        );
                         throw e;
                     }
                 }
@@ -129,6 +129,7 @@ export default class OptionsManager {
             let [pluginName, pluginOpts = override] = nameConfig(plugin);
             let pluginSrc               = pluginName;
             let ret                     = pluginName;
+            let alias;
             if (pluginName.startsWith('.')) {
                 pluginSrc = join(includedFrom, pluginName);
                 ret       = false;
@@ -141,7 +142,9 @@ export default class OptionsManager {
                         pluginSrc  = join(plugin, rPluginName);
                         pluginOpts = rPluginOpts;
                     }
+                    alias = pConfig.alias;
                 }
+
             }
 
             if (this.plugins.has(pluginName)) {

@@ -152,7 +152,7 @@ function configOrBool(value, defaultValue) {
 
 const camelCased = function (str) {
     return str.replace(/[.-]([a-z])/g, function (g) {
-        return g[1] && g[1].toUpperCase() ;
+        return g[1] && g[1].toUpperCase();
     })
 };
 
@@ -180,8 +180,19 @@ function parseValue(value) {
         }
         return new RegExp(re);
     }
-    if (/^\d+?(?:\.\d*)?$/) {
+    if (/^\d+?(?:\.\d*)?$/.test(value)) {
         return JSON.parse(value);
+    }
+    if (/^\[(.*)\]$/.test(value)) {
+        return value.replace(/^\[(.*)\]$/, '$1')
+                    .split(/,\s*/)
+                    .filter(Boolean)
+                    .map(parseValue);
+
+    }
+    if (/^\{(.*)\}$/.test(value)) {
+        return JSON.parse(value);
+
     }
     return JSON.parse(`"${value}"`);
 }
