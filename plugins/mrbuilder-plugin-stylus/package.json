@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-stylus",
-  "version": "0.0.17",
+  "version": "0.0.3",
   "description": "Stylus plugin for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
