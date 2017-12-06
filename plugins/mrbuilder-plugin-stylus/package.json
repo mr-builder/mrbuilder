@@ -1,40 +1,18 @@
 {
-  "name": "ch-subschema-stylus-plugin",
+  "name": "mrbuilder-plugin-stylus",
   "version": "0.0.17",
-  "description": "Stylus plugin for subschema-dev-support projects",
+  "description": "Stylus plugin for mrbuilder",
   "main": "./src/index",
-  "author": "Justin Spears <jspears@netflix.com>",
+  "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
-    "bh-ui-styles": "^5.0.0",
     "loader-utils": "^1.1.0",
     "nib": "^1.1.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1"
   },
   "keywords": [
-    "cpe",
-    "ch",
-    "contenthub",
-    "beehive",
     "subschema",
-    "stylus"
-  ],
-  "license": "SEE LICENSE IN LICENSE.md",
-  "devDependencies": {
-    "react": "16.x || 15.x",
-    "react-dom": "16.x || 15.x",
-    "subschema-dev-support": "^3.0.0-b12"
-  },
-  "scripts": {
-    "test": "subschema-mocha",
-    "server": "subschema-webpack-dev-server --entry index=./examples/src/index.jsx",
-    "examples": "subschema-webpack --demo ./examples/dist --entry index=./examples/src/index.jsx",
-    "prepublish": "subschema-mocha"
-  },
-  "homepage": "https://stash.corp.netflix.com/projects/OPE/repos/bh-components/browse",
-  "repository": {
-    "url": "ssh://git@stash.corp.netflix.com:7999/ope/bh-components.git",
-    "type": "git",
-    "projectUrl": "https://stash.corp.netflix.com/projects/OPE/repos/bh-components/browse"
-  }
+    "stylus",
+    "mrbuilder"
+  ]
 }
