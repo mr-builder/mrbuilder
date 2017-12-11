@@ -2,18 +2,7 @@ import { basename, join, resolve } from 'path';
 import {
     configOrBool, get, info, parseJSON, parseValue, set, warn
 } from 'mrbuilder-utils';
-import { merge, mergeAlias, nameConfig, select } from './util';
-
-const split = (value = '') => (Array.isArray(value) ? value
-    : value.split(/,\s*/)).filter(Boolean);
-
-export const DEFAULT_ALL = ['DEBUG',
-    'ENABLE',
-    'DISABLE',
-    'PLUGINS',
-    'PRESETS',
-    'MODULE_DIR'
-];
+import { merge, mergeAlias, nameConfig, select, split } from './util';
 
 export default class OptionsManager {
 
@@ -24,21 +13,23 @@ export default class OptionsManager {
                     envPrefix,
                     confPrefix,
                     rcFile,
-                    all = DEFAULT_ALL,
                     env = process.env,
                     argv = process.argv,
                     cwd = process.cwd,
                     info = console.info || console.warn,
                     warn = console.warn,
-                    _require = require
+                    _require = require,
+                    //Object of collected aliases, may be modified
+                    aliasObj = {},
                 } = {}) {
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
-        prefix       = prefix.toUpperCase();
-        envPrefix    = envPrefix || prefix.toUpperCase();
-        confPrefix   = confPrefix || prefix.toLowerCase();
-        rcFile       = `.${confPrefix}rc`;
+        prefix     = prefix.toUpperCase();
+        envPrefix  = envPrefix || prefix.toUpperCase();
+        confPrefix = confPrefix || prefix.toLowerCase();
+        rcFile     = `.${confPrefix}rc`;
+
         this.require = _require;
 
         this.env = (key, def) => {
@@ -99,10 +90,10 @@ export default class OptionsManager {
                     }
                 }
             }
-            const pluginConfig = pkg[confPrefix]
-                                 || parseJSON(
-                    resolveFromPkgDir(pkg.name, rcFile))
-                                 || {};
+            const pluginConfig = pkg[confPrefix] ? parseValue(
+                JSON.stringify(pkg[confPrefix]))
+                : parseJSON(resolveFromPkgDir(pkg.name, rcFile))
+                  || {};
 
             const envOverride = pluginConfig.env
                                 && pluginConfig.env[env.NODE_ENV] || {};
@@ -112,11 +103,13 @@ export default class OptionsManager {
                 plugins : select(envOverride.plugins, pluginConfig.plugins),
                 ignoreRc: select(envOverride.ignoreRc, pluginConfig.ignoreRc),
                 plugin  : select(envOverride.plugin, pluginConfig.plugin),
+                alias   : pluginConfig.alias
+
             };
         };
 
 
-        const newOption     = (name, plugin, config, parent, alias) => {
+        const newOption = (name, plugin, config, parent, alias) => {
             if (config === false) {
                 return false;
             }
@@ -125,7 +118,7 @@ export default class OptionsManager {
             opt.optionsManager = this;
             return opt;
         };
-        let aliasObj        = {};
+
         const processPlugin = (includedFrom, plugin, override, parent) => {
             let [pluginName, pluginOpts = override] = nameConfig(plugin);
             let pluginSrc               = pluginName;
@@ -135,13 +128,20 @@ export default class OptionsManager {
                 pluginSrc = join(includedFrom, pluginName);
                 ret       = false;
             } else {
-                const pConfig = resolveConfig(plugin);
+                let [rPluginName, rPluginOpts = pluginOpts] = nameConfig(
+                    plugin);
+
+                const pConfig = resolveConfig(rPluginName);
                 if (pConfig) {
-                    let [rPluginName, rPluginOpts = pluginOpts] = nameConfig(
-                        pConfig.plugin);
-                    if (rPluginName) {
-                        pluginSrc  = join(plugin, rPluginName);
-                        pluginOpts = rPluginOpts;
+
+                    if (pConfig.plugin) {
+                        let [pluginPath, rPluginOpts = pluginOpts] = nameConfig(
+                            pConfig.plugin);
+
+                        if (pluginPath) {
+                            pluginSrc  = join(rPluginName, pluginPath);
+                            pluginOpts = rPluginOpts;
+                        }
                     }
                     alias = pConfig.alias;
                 }
@@ -160,7 +160,7 @@ export default class OptionsManager {
 
             pluginOpts = merge(pluginName, pluginOpts, { env, argv });
             if (alias) {
-                pluginOpts = mergeAlias(alias, aliasObj, { env, argv });
+                mergeAlias(pluginOpts, alias, aliasObj, { env, argv });
             }
             this.plugins.set(pluginName,
                 newOption(pluginName, pluginSrc, pluginOpts, parent, alias));
@@ -229,6 +229,39 @@ export default class OptionsManager {
 
     }
 
+    help() {
+        let str = '';
+        const aliasMap = {};
+
+        this.forEach((option,key)=>{
+            if (option.alias){
+                Object.keys(option.alias).reduce(function(ret,a){
+                    (aliasMap[a] || (aliasMap[a]=[])).push(option);
+                }, aliasMap)
+            }
+        });
+
+        this.forEach((option, key) => {
+            str += `${key} - [${this.enabled(key)
+                ? 'enabled' : 'disabled'}]\n`;
+            if (option.alias) {
+                const keys = Object.keys(option.alias);
+                str        = keys.reduce(function (ret, key) {
+                    const val = option.alias[key];
+                    return str +=
+                        key.length === 1 ? `\v\t-${key}\v\t${val}\n`
+                            : `\v\t\--${key}\v\t${val}\n`;
+                }, str)
+            }
+        });
+        return str;
+    }
+
+    forEach(fn, scope = {}) {
+        this.plugins.forEach((...args) => {
+            fn.call(scope, ...args);
+        });
+    }
 
     config(name, def) {
         const parts = name.split('.', 2);

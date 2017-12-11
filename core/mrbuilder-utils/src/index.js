@@ -18,7 +18,7 @@ const parseJSON = (filename) => {
         return;
     }
     const file = readFileSync(filename) + '';
-    return JSON.parse(file);
+    return JSON.parse(file, parseRe);
 };
 
 function resolvePkgDir(name, pkg, ...rest) {
@@ -59,10 +59,6 @@ function pkg() {
 }
 
 
-function keys$unique(ret, key) {
-    ret[key] = true;
-    return ret;
-}
 
 function debug(...args) {
     if (configOrBool(SUBSCHEMA_DEBUG)) {
@@ -182,7 +178,7 @@ function parseRe(key, value) {
 
 function parseValue(value) {
     if (/^".*"$/.test(value)) {
-        return JSON.parse(value)
+        return JSON.parse(value, parseRe)
     }
     if (/^(true|false)$/.test(value)) {
         return JSON.parse(value);

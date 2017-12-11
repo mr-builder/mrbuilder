@@ -1,0 +1,10 @@
+{
+  "name": "with-alias",
+  "version": "1",
+  "tester": {
+    "plugins": [
+      "alias-1",
+      "alias-2"
+    ]
+  }
+}

@@ -9,7 +9,8 @@ export const select = (...args) => {
         }
     }
 };
-
+export const split  = (value = []) => (Array.isArray(value) ? value
+    : value.split(/,\s*/)).filter(Boolean);
 
 export const nameConfig = (value) => {
     if (Array.isArray(value)) {
@@ -68,6 +69,7 @@ export const mergeArgs     = (plugin, options, { argv } = process) => {
     let ret    = Object.assign({}, options);
     for (let i = 2, l = argv.length; i < l; i++) {
         let arg = argv[i];
+
         if (arg.startsWith('--')) {
             const argPart = arg.substring(2);
             if (argPart.startsWith(plugin)) {
@@ -84,7 +86,7 @@ export const mergeArgs     = (plugin, options, { argv } = process) => {
                          i++, j++) {
                         collect.push(parse(argv[j], arg));
                     }
-                    set(options, key,
+                    set(ret, key,
                         collect.length === 1 ? collect[0] : collect.length === 0
                             ? true : collect);
                 }
@@ -166,21 +168,20 @@ export const mergeAliasArgs = (aliases, options, { argv } = process) => {
 export const mergeAlias = (options,
                            alias = [],
                            aliasObj,
-                           process) => (Array.isArray(alias) ? alias
-    : Object.keys(alias)).reduce(function (ret, key) {
+                           process) => {
 
-        //already got the value;
-        if (key in aliasObj) {
-            ret[key] = aliasObj[key];
-            return ret;
-        }
-        aliasObj = mergeAliasArgs(alias, aliasObj, process);
-        aliasObj = mergeAliasEnv(alias, aliasObj, process);
-        if (key in aliasObj) {
-            ret[key] = aliasObj[key];
-        }
-        return ret;
-    }, options);
+    const aliases = (Array.isArray(alias) ? alias
+        : Object.keys(alias));
+
+    //already got the value;
+
+    aliasObj = mergeAliasArgs(aliases, aliasObj, process);
+    aliasObj = mergeAliasEnv(aliases, aliasObj, process);
+    aliases.forEach(function (key) {
+        options[key] = aliasObj[key];
+    });
+    return options;
+}
 
 /**
  * Merge the env and args into the options.

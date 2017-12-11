@@ -16,10 +16,15 @@ const isDirectory = sourceDir => {
 
 const odir = __dirname;
 describe('mrbuilder-optionsmanager', function () {
-    const argv                 = (...argv) => ['fake-interpreter', 'fake-script'].concat(
+    const argv   = (...argv) => ['fake-interpreter', 'fake-script'].concat(
         ...argv);
-    const afters               = [];
-    const cwd                  = (name) => {
+    const afters = [];
+    const re     = (obj, assert) => {
+        expect(obj).to.be.instanceof(RegExp);
+        expect(obj + '').to.eql(assert);
+    };
+
+    const cwd = (name) => {
         const ret           = join(__dirname, 'fixtures', name);
         const sourceNodeDir = join(ret, 'node_modules');
         if (isDirectory(sourceNodeDir)) {
@@ -40,20 +45,33 @@ describe('mrbuilder-optionsmanager', function () {
         process.chdir(ret);
         return () => ret;
     };
-    const newOptionManagerTest = (name, config, assert) => {
+
+    function newOptionManagerTest(name, config, assert, fn = it) {
+        if (name == null) {
+            throw 'name can not be null';
+        }
         if (!assert) {
             assert = config;
             config = null;
         }
-        it(`should configure "${name}"${config ? ` and env ${stringify(
+        fn(`should configure "${name}"${config ? ` and env ${stringify(
             config)}` : ''}`, function () {
             assert(new OptionsManager(Object.assign({
                 prefix: 'tester',
                 cwd   : cwd(name),
-            }, config)));
+            }, config)), config);
         });
-    };
 
+        newOptionManagerTest.only =
+            (_name, _config, _assert) => newOptionManagerTest(_name, _config,
+                _assert, it.only);
+
+        newOptionManagerTest.skip =
+            (_name, _config, _assert) => newOptionManagerTest(_name, _config,
+                _assert, it.skip);
+
+        return newOptionManagerTest;
+    };
     afterEach(() => {
         afters.forEach(c => c());
         process.chdir(odir)
@@ -135,7 +153,39 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.config('p1.ppe')).to.be.eql(2);
         expect(om.config('p2.ppe')).to.be.eql(2);
     });
+    newOptionManagerTest('with-regex', {
+        argv: argv("--regex-argv=/argv/g", "--realias=/realias/",
+            "--regex-split", "/split/"),
+        env : { "REGEX_ENV": "/env/i" }
+    }, (om, config) => {
+        expect(om.enabled("regex")).to.be.true;
+        re(om.config('regex.argv'), "/argv/g");
+        re(om.config('regex.env'), "/env/i");
+        re(om.config('regex.config'), "/config/");
+        re(om.config('regex.split'), "/split/");
+        re(om.config('regex.realias'), "/realias/");
 
+        expect(config.argv).to.eql(argv());
+
+    });
+    newOptionManagerTest("with-alias", {
+        argv: argv('--stuff', 'whatever')
+    }, function (om) {
+
+        expect(om.enabled("alias-1")).to.be.true;
+        expect(om.enabled("alias-2")).to.be.true;
+        expect(om.config('alias-1.stuff')).to.eql('whatever');
+        expect(om.config('alias-2.stuff')).to.eql('whatever');
+
+        expect(om.help()).to.eql(`alias-1 - [enabled]
+	--stuff	Here is stuff
+	--astuff	Here is alias-1-stuff
+alias-2 - [enabled]
+	--stuff	Here is stuff
+	--other	Other description
+	--astuff	Here is alias-2-stuff\n`);
+
+    });
     it('should log from option', function () {
         const calls   = [];
         const capture = (...args) => calls.push(args);
