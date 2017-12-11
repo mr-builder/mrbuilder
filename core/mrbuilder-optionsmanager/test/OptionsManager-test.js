@@ -153,6 +153,12 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.config('p1.ppe')).to.be.eql(2);
         expect(om.config('p2.ppe')).to.be.eql(2);
     });
+    newOptionManagerTest('with-self-plugin', om => {
+        expect(om.enabled('with-self-plugin')).to.be.eql(true);
+        const plugin = om.plugins.get('with-self-plugin').plugin;
+        const ret    = require(plugin);
+        expect(ret()).to.be.eql('Hi, whatever');
+    });
     newOptionManagerTest('with-regex', {
         argv: argv("--regex-argv=/argv/g", "--realias=/realias/",
             "--regex-split", "/split/"),

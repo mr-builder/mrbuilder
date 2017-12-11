@@ -1,6 +1,6 @@
 module.exports = ({
                       preEntry = ['only-dev-server'],
-                      babel = require('mrbuilder-babel/babel-config'),
+                      babel = require('mrbuilder-plugin-babel/babel-config'),
                   }, webpack) => {
 
 

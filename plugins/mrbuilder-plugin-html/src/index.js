@@ -31,19 +31,25 @@ HtmlWebpackPlugin.prototype.generateAssetTags = function (assets) {
 
 
 module.exports =
-    ({ pages = {}, title, template, filename, analytics, publicPath },
+    ({
+         pages = {}, title,
+         entry = 'index',
+         publicPath = path.join(process.cwd(), 'public'),
+         template,
+         filename, analytics
+     },
      webpack) => {
         if (!title) {
             const pkg = require(path.join(process.cwd(), 'package.json'));
             title     = `${pkg.name}: ${pkg.description || ''}`
         }
         if (!template) {
-            template = path.resolve(__dirname, 'public',
+            template = path.resolve(__dirname, '..', 'public',
                 analytics ? 'index_analytics.ejs' : 'index.ejs');
         }
 
         if (!publicPath) {
-            publicPath = path.resolve(__dirname, 'public');
+            publicPath = path.resolve(__dirname, '..', 'public');
         }
 
         function charset(ele) {
@@ -55,7 +61,10 @@ module.exports =
             }
         }
 
-
+        if (entry) {
+            webpack.entry = path.join(publicPath, entry);
+        }
+        console.log('using entry', webpack.entry)
         /**
          * Allows for a page per entry.
          */

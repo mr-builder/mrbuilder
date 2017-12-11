@@ -17,10 +17,5 @@
     "mrbuilder-plugin-karma": "^0.0.4"
   },
   "source": "src",
-  "main": "lib",
-  "mrbuilder": {
-    "plugins": [
-      "./lib"
-    ]
-  }
+  "main": "lib"
 }

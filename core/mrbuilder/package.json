@@ -15,6 +15,7 @@
     "mrbuilder-plugin-mocha": "^0.0.4",
     "mrbuilder-plugin-uglify": "^0.0.4",
     "mrbuilder-plugin-webpack": "^0.0.4",
+    "mrbuilder-plugin-html": "^0.0.4",
     "mrbuilder-plugin-webpack-dev-server": "^0.0.4",
     "react": "^16.1.1",
     "react-dom": "^16.1.1"
@@ -25,7 +26,8 @@
     "mrbuilder-karma": "bin/mrbuilder-karma.js",
     "mrbuilder-mocha": "bin/mrbuilder-mocha.js",
     "mrbuilder-webpack": "bin/mrbuilder-webpack.js",
-    "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js"
+    "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js",
+    "mrbuilder-require-test": "bin/require-test.js"
   },
   "mrbuilder": {
     "options": {

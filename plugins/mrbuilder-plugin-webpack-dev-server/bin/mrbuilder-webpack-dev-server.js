@@ -8,6 +8,10 @@ env.MRBUILDER_MAIN_FIELDS = env.MRBUILDER_MAIN_FIELDS || 1;
 if (!env.NODE_ENV) {
     env.NODE_ENV = 'development';
 }
+if (!global._MRBUILDER_OPTIONS_MANAGER){
+    console.log('creating mrbuilder');
+    global._MRBUILDER_OPTIONS_MANAGER = new (require('mrbuilder-optionsmanager').default)({ prefix: 'mrbuilder', _require: require });
+}
 
 if (!argv.includes('--config')) {
     argv.push('--config',

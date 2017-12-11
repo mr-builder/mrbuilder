@@ -1,0 +1,13 @@
+{
+  "name": "with-self-plugin",
+  "version": "1",
+  "dependencies": {
+    "whatever": "1"
+  },
+  "tester": {
+    "plugin": "./whatever",
+    "plugins": [
+      "with-self-plugin"
+    ]
+  }
+}

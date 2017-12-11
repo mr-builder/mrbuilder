@@ -22,6 +22,9 @@ export default class OptionsManager {
                     //Object of collected aliases, may be modified
                     aliasObj = {},
                 } = {}) {
+        if (_require === require){
+            console.warn('require is not set, using default require');
+        }
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
@@ -125,8 +128,12 @@ export default class OptionsManager {
             let ret                     = pluginName;
             let alias;
             if (pluginName.startsWith('.')) {
-                pluginSrc = join(includedFrom, pluginName);
-                ret       = false;
+                if (includedFrom === this.topPackage.name) {
+                    pluginSrc = this.cwd(pluginName);
+                } else {
+                    pluginSrc = join(includedFrom, pluginName);
+                }
+                ret = false;
             } else {
                 let [rPluginName, rPluginOpts = pluginOpts] = nameConfig(
                     plugin);
@@ -135,12 +142,16 @@ export default class OptionsManager {
                 if (pConfig) {
 
                     if (pConfig.plugin) {
-                        let [pluginPath, rPluginOpts = pluginOpts] = nameConfig(
+                        let [pluginPath, prPluginOpts = rPluginOpts] = nameConfig(
                             pConfig.plugin);
 
                         if (pluginPath) {
-                            pluginSrc  = join(rPluginName, pluginPath);
-                            pluginOpts = rPluginOpts;
+                            if (rPluginName === this.topPackage.name) {
+                                pluginSrc = this.cwd(pluginPath);
+                            } else {
+                                pluginSrc = join(rPluginName, pluginPath);
+                            }
+                            pluginOpts = prPluginOpts;
                         }
                     }
                     alias = pConfig.alias;
@@ -230,13 +241,13 @@ export default class OptionsManager {
     }
 
     help() {
-        let str = '';
+        let str        = '';
         const aliasMap = {};
 
-        this.forEach((option,key)=>{
-            if (option.alias){
-                Object.keys(option.alias).reduce(function(ret,a){
-                    (aliasMap[a] || (aliasMap[a]=[])).push(option);
+        this.forEach((option, key) => {
+            if (option.alias) {
+                Object.keys(option.alias).reduce(function (ret, a) {
+                    (aliasMap[a] || (aliasMap[a] = [])).push(option);
                 }, aliasMap)
             }
         });
