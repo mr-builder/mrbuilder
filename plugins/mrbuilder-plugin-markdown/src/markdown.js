@@ -6,347 +6,97 @@
  * rules if you create plugin and adds new token types.
  **/
 'use strict';
+const { camelCased } = require('mrbuilder-utils');
 
+const escapeHtml = require('markdown-it/lib/common/utils').escapeHtml;
+const _Renderer  = require('markdown-it/lib/renderer');
 
-const assign      = require('markdown-it/lib/common/utils').assign;
-const unescapeAll = require('markdown-it/lib/common/utils').unescapeAll;
-const escapeHtml  = require('markdown-it/lib/common/utils').escapeHtml;
+class Renderer extends _Renderer {
+    constructor(...args) {
+        super(...args);
 
-////////////////////////////////////////////////////////////////////////////////
-
-const default_rules = {};
-
-
-default_rules.code_inline = function (tokens, idx, options, env, slf) {
-    const token = tokens[idx];
-
-    return '<code' + slf.renderAttrs(token) + '>{' + JSON.stringify(
-        tokens[idx].content) + '}</code>';
-};
-
-
-default_rules.code_block = function (tokens, idx, options, env, slf) {
-    const token = tokens[idx];
-
-    return '<pre' + slf.renderAttrs(token) + '><code>{' + JSON.stringify(
-        tokens[idx].content) + '}</code></pre>\n';
-};
-
-
-default_rules.fence = function (tokens, idx, options, env, slf) {
-    const token = tokens[idx],
-          info  = token.info ? unescapeAll(token.info).trim() : '';
-
-    let langName = '',
-        highlighted, i, tmpAttrs, tmpToken;
-
-    if (info) {
-        langName = info.split(/\s+/g)[0];
-    }
-
-    if (options.highlight) {
-        highlighted = options.highlight(token.content, langName) || escapeHtml(
-            token.content);
-    } else {
-        highlighted = escapeHtml(token.content);
-    }
-
-    if (highlighted.indexOf('<pre') === 0) {
-        return highlighted + '\n';
-    }
-
-    // If language exists, inject class gently, without mudofying original
-    // token. May be, one day we will add .clone() for token and simplify this
-    // part, but now we prefer to keep things local.
-    if (info) {
-        i        = token.attrIndex('class');
-        tmpAttrs = token.attrs ? token.attrs.slice() : [];
-
-        if (i < 0) {
-            tmpAttrs.push(['className', options.langPrefix + langName]);
-        } else {
-            tmpAttrs[i][1] += ' ' + options.langPrefix + langName;
-        }
-
-        // Fake token just to render attributes
-        tmpToken = {
-            attrs: tmpAttrs
+        this.prelude       = {};
+        this.imports       = {
+            'React, {Component as $MDComponent}': 'react'
         };
-
-        return highlighted;
+        this.renderImport  = this._renderImport.bind(this);
+        this.renderPrelude = this._renderPrelude.bind(this);
     }
 
-
-    return '<pre><code' + slf.renderAttrs(token) + '>'
-           + highlighted
-           + '</code></pre>\n';
-};
-
-
-default_rules.image = function (tokens, idx, options, env, slf) {
-    const token = tokens[idx];
-
-    // "alt" attr MUST be set, even if empty. Because it's mandatory and
-    // should be placed on proper position for tests.
-    //
-    // Replace content with actual value
-
-    token.attrs[token.attrIndex('alt')][1] =
-        slf.renderInlineAsText(token.children, options, env);
-
-    return slf.renderToken(tokens, idx, options);
-};
-
-
-default_rules.hardbreak = function (tokens, idx, options /*, env */) {
-    return '<br />\n';
-};
-default_rules.softbreak = function (tokens, idx, options /*, env */) {
-    return '<br />';
-};
-
-
-default_rules.text = function (tokens, idx /*, options, env */) {
-    return '{' + JSON.stringify(tokens[idx].content) + '}';
-};
-
-
-default_rules.html_block  = function (tokens, idx /*, options, env */) {
-    return tokens[idx].content;
-};
-default_rules.html_inline = function (tokens, idx /*, options, env */) {
-    return tokens[idx].content;
-};
-
-
-/**
- * new Renderer()
- *
- * Creates new [[Renderer]] instance and fill [[Renderer#rules]] with defaults.
- **/
-function Renderer() {
 
     /**
-     * Renderer#rules -> Object
+     * Renderer.renderAttrs(token) -> String
      *
-     * Contains render rules for tokens. Can be updated and extended.
-     *
-     * ##### Example
-     *
-     * ```javascript
-     * const md = require('markdown-it')();
-     *
-     * md.renderer.rules.strong_open  = function () { return '<b>'; };
-     * md.renderer.rules.strong_close = function () { return '</b>'; };
-     *
-     * const result = md.renderInline(...);
-     * ```
-     *
-     * Each rule is called as independed static function with fixed signature:
-     *
-     * ```javascript
-     * function my_token_render(tokens, idx, options, env, renderer) {
-   *   // ...
-   *   return renderedHTML;
-   * }
-     * ```
-     *
-     * See [source
-     * code](https://github.com/markdown-it/markdown-it/blob/master/lib/renderer.js)
-     * for more details and examples.
+     * Render token attributes to string.
      **/
-    this.rules = assign({}, default_rules);
-    this.imports = {
-        'React, {Component as $MDComponent}': 'react'
-    };
-    this.prelude = {};
-}
+    renderAttrs(token) {
+        let i, l, result;
 
-
-/**
- * Renderer.renderAttrs(token) -> String
- *
- * Render token attributes to string.
- **/
-Renderer.prototype.renderAttrs = function renderAttrs(token) {
-    let i, l, result;
-
-    if (!token.attrs) {
-        return '';
-    }
-
-    result = '';
-
-    for (i = 0, l = token.attrs.length; i < l; i++) {
-        let name = token.attrs[i][0];
-        switch (name) {
-            case 'class':
-                name = 'className';
-                break;
-            case 'for':
-                name = 'htmlFor';
-                break;
+        if (!token.attrs) {
+            return '';
         }
-        result +=
-            ' ' + escapeHtml(name) + '="' + escapeHtml(token.attrs[i][1]) + '"';
+
+        result      = '';
+        const attrs = [];
+        for (i = 0, l = token.attrs.length; i < l; i++) {
+            let [name, value] = token.attrs[i];
+            switch (name) {
+                case 'class':
+                    name  = 'className';
+                    value = `"${escapeHtml(value)}"`;
+                    break;
+                case 'for':
+                    name  = 'htmlFor';
+                    value = `"${escapeHtml(value)}"`;
+                    break;
+                case 'style':
+                    value = JSON.stringify(
+                        value.split(/;/g).reduce(function (ret, key) {
+
+                            const parts = key.split(':', 2);
+
+                            ret[camelCased(parts[0])] = parts[1];
+
+                            return ret;
+                        }, {})).replace(/^"(.*)"$/, '$1');
+                    value = `{${value}}`;
+                    break;
+                default:
+                    value = `"${escapeHtml(value)}"`;
+                    break;
+            }
+            attrs.push([name, value]);
+        }
+
+        for (i = 0, l = attrs.length; i < l; i++) {
+            const [name, value] = attrs[i];
+            result += ' ' + escapeHtml(name) + '=' + value;
+        }
+
+        return result;
     }
 
-    return result;
-};
 
+    render(tokens, options, env) {
+        let i, len, type,
+            result = ``,
+            rules  = this.rules;
 
-/**
- * Renderer.renderToken(tokens, idx, options) -> String
- * - tokens (Array): list of tokens
- * - idx (Numbed): token index to render
- * - options (Object): params of parser instance
- *
- * Default token renderer. Can be overriden by custom function
- * in [[Renderer#rules]].
- **/
-Renderer.prototype.renderToken = function renderToken(tokens, idx, options) {
-    let nextToken,
-        result = '',
-        needLf = false,
-        token  = tokens[idx];
+        for (i = 0, len = tokens.length; i < len; i++) {
+            type = tokens[i].type;
 
-    // Tight list paragraphs
-    if (token.hidden) {
-        return '';
-    }
-
-    // Insert a newline between hidden paragraph and subsequent opening
-    // block-level tag.
-    //
-    // For example, here we should insert a newline before blockquote:
-    //  - a
-    //    >
-    //
-    if (token.block && token.nesting !== -1 && idx && tokens[idx - 1].hidden) {
-        result += '\n';
-    }
-
-    // Add token name, e.g. `<img`
-    result += (token.nesting === -1 ? '</' : '<') + token.tag;
-
-    // Encode attributes, e.g. `<img src="foo"`
-    result += this.renderAttrs(token);
-
-    // Add a slash for self-closing tags, e.g. `<img src="foo" /`
-    if (token.nesting === 0 && options.xhtmlOut) {
-        result += ' /';
-    }
-
-    // Check if we need to add a newline after this tag
-    if (token.block) {
-        needLf = true;
-
-        if (token.nesting === 1) {
-            if (idx + 1 < tokens.length) {
-                nextToken = tokens[idx + 1];
-
-                if (nextToken.type === 'inline' || nextToken.hidden) {
-                    // Block-level tag containing an inline tag.
-                    //
-                    needLf = false;
-
-                } else if (nextToken.nesting === -1 && nextToken.tag
-                                                       === token.tag) {
-                    // Opening tag + closing tag of the same type. E.g.
-                    // `<li></li>`.
-                    needLf = false;
-                }
+            if (type === 'inline') {
+                result += this.renderInline(tokens[i].children, options, env);
+            } else if (typeof rules[type] !== 'undefined') {
+                result += rules[tokens[i].type](tokens, i, options, env, this);
+            } else {
+                result += this.renderToken(tokens, i, options, env);
             }
         }
-    }
 
-    result += needLf ? '>\n' : '>';
-
-    return result;
-};
-
-
-/**
- * Renderer.renderInline(tokens, options, env) -> String
- * - tokens (Array): list on block tokens to renter
- * - options (Object): params of parser instance
- * - env (Object): additional data from parsed input (references, for example)
- *
- * The same as [[Renderer.render]], but for single token of `inline` type.
- **/
-Renderer.prototype.renderInline = function (tokens, options, env) {
-    let type,
-        result = '',
-        rules  = this.rules;
-
-    for (let i = 0, len = tokens.length; i < len; i++) {
-        type = tokens[i].type;
-
-        if (typeof rules[type] !== 'undefined') {
-            result += rules[type](tokens, i, options, env, this);
-        } else {
-            result += this.renderToken(tokens, i, options);
-        }
-    }
-
-    return result;
-};
-
-
-/** internal
- * Renderer.renderInlineAsText(tokens, options, env) -> String
- * - tokens (Array): list on block tokens to renter
- * - options (Object): params of parser instance
- * - env (Object): additional data from parsed input (references, for example)
- *
- * Special kludge for image `alt` attributes to conform CommonMark spec.
- * Don't try to use it! Spec requires to show `alt` content with stripped
- * markup, instead of simple escaping.
- **/
-Renderer.prototype.renderInlineAsText = function (tokens, options, env) {
-    let result = '';
-
-    for (let i = 0, len = tokens.length; i < len; i++) {
-        if (tokens[i].type === 'text') {
-            result += tokens[i].content;
-        } else if (tokens[i].type === 'image') {
-            result += this.renderInlineAsText(tokens[i].children, options, env);
-        }
-    }
-
-    return result;
-};
-
-
-/**
- * Renderer.render(tokens, options, env) -> String
- * - tokens (Array): list on block tokens to renter
- * - options (Object): params of parser instance
- * - env (Object): additional data from parsed input (references, for example)
- *
- * Takes token stream and generates HTML. Probably, you will never need to call
- * this method directly.
- **/
-Renderer.prototype.render = function (tokens, options, env) {
-    let i, len, type,
-        result = ``,
-        rules  = this.rules;
-
-    for (i = 0, len = tokens.length; i < len; i++) {
-        type = tokens[i].type;
-
-        if (type === 'inline') {
-            result += this.renderInline(tokens[i].children, options, env);
-        } else if (typeof rules[type] !== 'undefined') {
-            result += rules[tokens[i].type](tokens, i, options, env, this);
-        } else {
-            result += this.renderToken(tokens, i, options, env);
-        }
-    }
-
-    return `
-${Object.keys(this.imports).map(renderImport, this.imports).join(';\n')}
-${Object.keys(this.prelude).map(renderPrelude, this.prelude).join('')}
+        return `
+${Object.keys(this.imports).map(this.renderImport, this.imports).join(';\n')}
+${Object.keys(this.prelude).map(this.renderPrelude, this.prelude).join('')}
 //autogenerated class
 export default class Markdown extends $MDComponent {
 
@@ -354,21 +104,20 @@ export default class Markdown extends $MDComponent {
           return (<div>${result}</div>);
         }
 }`;
-};
-
-function renderPrelude(key) {
-    const value = this[key];
-    if (!value) {
-        return '';
     }
-    return key;
+
+
+    _renderPrelude(key) {
+        const value = this.prelude[key];
+        if (!value) {
+            return '';
+        }
+        return key;
+    }
+
+    _renderImport(key) {
+        return `import ${key} from '${ this.imports[key]}'`;
+    }
 }
-
-function renderImport(key) {
-    const value = this[key];
-
-    return `import ${key} from '${value}'`;
-}
-
 
 module.exports = Renderer;

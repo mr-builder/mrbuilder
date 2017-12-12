@@ -7,7 +7,7 @@ describe('mrbuilder-plugin-markdown', function () {
     it('should render README', function () {
         const attachTo = document.createElement('div');
         document.body.appendChild(attachTo);
-        const root = mount(<Readme/>, { attachTo });
+        const root = mount(<Readme className='readme'/>, { attachTo });
         expect(root.find('h1').at(0).text()).to.eql('mrbuilder-plugin-markdown');
 
     })

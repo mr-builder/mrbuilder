@@ -17,5 +17,14 @@
     "mrbuilder-plugin-karma": "^0.0.4"
   },
   "source": "src",
-  "main": "lib"
+  "main": "src",
+  "mrbuilder": {
+    "env": {
+      "test": {
+        "plugins": [
+          "mrbuilder-plugin-markdown"
+        ]
+      }
+    }
+  }
 }
