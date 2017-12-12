@@ -1,8 +1,8 @@
 {
   "name": "mrbuilder-plugin-browserslist",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
-    "mrbuilder-utils": "^0.0.4"
+    "mrbuilder-utils": "^0.0.5"
   },
   "source": "src",
   "main": "src"
