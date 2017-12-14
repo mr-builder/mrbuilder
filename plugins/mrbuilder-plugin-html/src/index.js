@@ -65,7 +65,7 @@ module.exports = function ({
      * Allows for a page per entry.
      */
     if (typeof entry === 'string') {
-        webpack.entry = entry;
+        webpack.entry = path.resolve(publicPath, entry);
         (this.info || console.log)('using entry', webpack.entry);
         webpack.plugins.push(new HtmlWebpackPlugin(Object.assign({}, {
             filename: filename || `index.html`,
@@ -75,7 +75,7 @@ module.exports = function ({
         }, pages['index'])));
     } else if (entry) {
         webpack.entry = entry;
-        const keys    = Object.keys(entry);
+        const keys = Object.keys(entry);
         (this.info || console.log)('using entry', keys);
         webpack.plugins.push(...keys.map(key => {
             return new HtmlWebpackPlugin(Object.assign({}, {
