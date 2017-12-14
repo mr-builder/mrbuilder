@@ -27,5 +27,5 @@ Should be rendered as
 
 
 ## This shows line breaks
-Hello
-break
+Hello and ' are escaped {this to}'
+world
