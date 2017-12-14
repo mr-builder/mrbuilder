@@ -205,8 +205,8 @@ alias-2 - [enabled]
         });
         om.plugins.get('p1').info('test');
         om.plugins.get('p1').warn('test');
-        expect(calls.pop().join(' ')).to.eql('WARN [tester] - p1 test');
-        expect(calls.pop().join(' ')).to.eql('INFO [tester] - p1 test');
+        expect(calls.pop().join(' ')).to.eql('WARN [tester:p1] test');
+        expect(calls.pop().join(' ')).to.eql('INFO [tester:p1] test');
     });
     it('should only load with-node-env test', function () {
         const calls   = [];

@@ -14,5 +14,16 @@
     "mrbuilder-plugin-babel": "^0.0.5"
   },
   "main": "src",
-  "source": "src"
+  "source": "src",
+  "mrbuilder": {
+    "alias": {
+      "coverageDir": "Output directory for code coverage",
+      "testDir": "Directory to test",
+      "filePattern": "Pattern of files to test",
+      "timeout": "Time allowed to run test"
+    },
+    "plugins":[
+      "mrbuilder-plugin-mocha"
+    ]
+  }
 }

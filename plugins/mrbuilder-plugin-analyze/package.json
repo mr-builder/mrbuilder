@@ -12,5 +12,14 @@
     "test": "mrbuilder-mocha"
   },
   "source": "src",
-  "main": "src"
+  "main": "src",
+  "mrbuilder": {
+    "env": {
+      "test": {
+        "plugins": [
+          "mrbuilder-plugin-mocha"
+        ]
+      }
+    }
+  }
 }

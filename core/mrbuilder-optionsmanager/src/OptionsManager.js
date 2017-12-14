@@ -17,12 +17,13 @@ export default class OptionsManager {
                     argv = process.argv,
                     cwd = process.cwd,
                     info = console.info || console.warn,
+                    debug = console.info || console.warn,
                     warn = console.warn,
                     _require = require,
                     //Object of collected aliases, may be modified
                     aliasObj = {},
                 } = {}) {
-        if (_require === require){
+        if (_require === require) {
             console.warn('require is not set, using default require');
         }
         if (!prefix) {
@@ -50,17 +51,20 @@ export default class OptionsManager {
 
         this.warn = (...args) => {
             warn(`WARN [${prefix.toLowerCase()}]`, ...args);
-
         };
 
-        this.info = (...args) => {
+        this.debug = (...args) => {
             if (this.env(`${envPrefix}_DEBUG`)) {
-                info(`INFO [${prefix.toLowerCase()}]`, ...args);
+                debug(`DEBUG [${prefix.toLowerCase()}]`, ...args);
             }
         };
 
+        this.info = (...args) => {
+            info(`INFO [${prefix.toLowerCase()}]`, ...args);
+        };
+
         this.info('NODE_ENV is', env.NODE_ENV || 'not set');
-        this.info('topPackage is ', this.topPackage.name);
+        this.debug('topPackage is ', this.topPackage.name);
 
         const resolveFromPkgDir = (pkg, file, ...relto) => {
             if (!pkg || this.topPackage.name === pkg) {
@@ -84,7 +88,7 @@ export default class OptionsManager {
                     try {
                         pkg = _require(join(pkg, 'package.json'));
                     } catch (e) {
-                        console.warn(
+                        this.warn(
                             'could not require "%s/package.json" from "%s"',
                             pkg,
                             process.cwd()
@@ -119,6 +123,22 @@ export default class OptionsManager {
             const opt          = new Option(name, plugin, config, parent,
                 alias);
             opt.optionsManager = this;
+
+            opt.info = (...args) => {
+                info(`INFO [${prefix.toLowerCase()}:${name}]`,
+                    ...args);
+            };
+
+            opt.debug = (...args) => {
+                if (this.env(`${envPrefix}_DEBUG`)) {
+                    debug(`DEBUG [${prefix.toLowerCase()}:${name}]`,
+                        ...args);
+                }
+            };
+
+            opt.warn  = (...args) => {
+                warn(`WARN [${prefix.toLowerCase()}:${name}]`, ...args);
+            };
             return opt;
         };
 
@@ -205,7 +225,7 @@ export default class OptionsManager {
             const plugins     = split(this.env(pluginsName, ''));
             const presets     = split(this.env(presetsName, ''));
             if ((plugins.length || presets.length)) {
-                this.info('process from env', pluginsName, plugins,
+                this.debug('process from env', pluginsName, plugins,
                     presetsName, presets);
                 processOpts(`${envPrefix}_${prefix}ENV`,
                     { plugins, presets, plugin: false },
@@ -214,7 +234,7 @@ export default class OptionsManager {
             }
         };
         const scan        = (ignoreRc, parent, name, options, override) => {
-            this.info('scanning', name);
+            this.debug('scanning', name);
 
             const pkg = name === this.topPackage.name ? this.topPackage
                 : _require(`${name}/package.json`);
@@ -311,14 +331,6 @@ class Option {
         this.alias  = alias;
     }
 
-    info(...args) {
-        (this.optionsManager || console).info(`- ${this.name}`,
-            ...args);
-    }
-
-    warn(...args) {
-        (this.optionsManager || console).warn(`- ${this.name}`, ...args);
-    }
 
     toJSON() {
         return {

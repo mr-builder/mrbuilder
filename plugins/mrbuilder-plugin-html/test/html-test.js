@@ -4,10 +4,9 @@ describe('mrbuilder-plugin-html', function () {
 
     it('should init', function () {
         const webpack = {
-            plugins: [],
-            entry  : { 'index': 'index.js', other: 'other' }
+            plugins: []
         };
-        mod({ title: 'whatever' }, webpack);
+        mod.call({}, { title: 'whatever', entry: { 'index': 'index.js', other: 'other' } }, webpack);
         expect(webpack.plugins).to.have.length(2);
 
     });
@@ -17,7 +16,7 @@ describe('mrbuilder-plugin-html', function () {
             plugins: [],
             entry  : 'index.js'
         };
-        mod({ title: 'whatever' }, webpack);
+        mod.call({}, { title: 'whatever' }, webpack);
         expect(webpack.plugins).to.have.length(1);
     })
 })

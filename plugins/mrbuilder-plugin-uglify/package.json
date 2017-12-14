@@ -7,8 +7,5 @@
   },
   "devDependencies": {
     "mrbuilder-plugin-mocha": "^0.0.5"
-  },
-  "scripts": {
-    "test": "mrbuilder-mocha"
   }
 }
