@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
     "mrbuilder-plugin-analyze": "^0.0.6",
@@ -10,7 +10,7 @@
     "mrbuilder-plugin-filetypes": "^0.0.6",
     "mrbuilder-plugin-fonts": "^0.0.6",
     "mrbuilder-plugin-hot": "^0.0.6",
-    "mrbuilder-plugin-html": "^0.0.6",
+    "mrbuilder-plugin-html": "^0.0.7",
     "mrbuilder-plugin-karma": "^0.0.6",
     "mrbuilder-plugin-less": "^0.0.6",
     "mrbuilder-plugin-mocha": "^0.0.6",
