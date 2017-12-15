@@ -1,32 +1,28 @@
 const { cwd }                                    = require('mrbuilder-utils');
 const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
-const { resolve, relative }                      = require('path');
-const toRegex                                    = (val) => {
-    if (val instanceof RegExp) {
-        return val;
-    }
-    const parts = val.split(/^\/(.*)\/$/).slice(1);
-    const re    = parts[0];
-    const opt   = parts[1];
-    if (opt) {
-        return new RegExp(re, opt);
-    }
-    return new RegExp(re);
-};
+const { resolve }                                = require('path');
+
 
 module.exports = function ({
                                testDir = cwd('test'),
                                pattern = /.*-test\.jsx?$/,
                                useCoverage = false,
                                pathinfo = true,
+                               node = {
+                                   fs     : 'empty',
+                                   net    : 'empty',
+                                   console: false,
+                                   util   : true
+                               },
                                include = [cwd('src'), cwd('public')],
                                testIndex = resolve(__dirname, '..',
                                    'test-index.js')
                            }, webpack) {
 
-    (this.info || console.log)('loading karma using ', testIndex);
+    const info = (this.info || console.log);
+
     if (useCoverage) {
-        (this.info || console.info)(`enabling code coverage for karma`);
+        info(`enabling code coverage for karma`);
         webpack.module.rules.unshift(
             {
                 test   : /\.jsx?$/,
@@ -43,23 +39,17 @@ module.exports = function ({
         );
     }
     webpack.plugins.push(new ContextReplacementPlugin(
-        /^mrbuilder-karma-test-context$/,
-        toRegex(pattern)));
+        /^mrbuilder-karma-test-context$/, pattern));
 
     //muck with webpack
     webpack.resolve.alias['mrbuilder-karma-test-context'] = testDir;
 
-    console.info('running tests in ', testDir);
+    info('running tests in ', testDir);
 
     webpack.devtool = 'inline-source-map';
     webpack.target  = 'web';
     webpack.node    = webpack.node || {};
-    Object.assign(webpack.node, {
-        fs     : 'empty',
-        net    : 'empty',
-        console: false,
-        util   : true
-    });
+    Object.assign(webpack.node, node);
     webpack.output          = {};
     webpack.output.pathinfo = pathinfo;
     webpack.entry           = { test: testIndex };

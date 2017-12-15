@@ -1,5 +1,5 @@
 import React from 'react';
-import Example from 'example-lib-webpack';
+import Everything from 'example-lib-everything';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
@@ -9,10 +9,10 @@ const into = (node) => {
     return mount(node, { attachTo });
 };
 
-describe('example-lib-webpack', function () {
+describe('example-lib-everything', function () {
 
     it('should render', function () {
-        const ret = into(<Example/>)
-        expect(ret.text()).to.eql('Hello from webpack example.')
+        const ret = into(<Everything/>);
+        expect(ret.find('#header').text()).to.eql('Hello')
     })
 });

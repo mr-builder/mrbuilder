@@ -120,7 +120,6 @@ if (MRBUILDER_ENTRY) {
 try {
     optionsManager.plugins.forEach((option, key) => {
         if (option.plugin) {
-            option.info('loading...');
             const plugin = optionsManager.require(option.plugin);
             if (typeof plugin === 'function') {
                 opts.warn        = option.warn;
@@ -132,7 +131,9 @@ try {
                 if (tmpWebpack) {
                     webpack = tmpWebpack;
                 }
+                option.info('loaded.');
             } else if (plugin) {
+                option.info('not loaded');
                 //TODO - better merge.
                 //  webpack = Object.assign({}, webpack, option.plugin);
             }

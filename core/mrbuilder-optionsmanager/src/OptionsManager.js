@@ -1,8 +1,7 @@
 import { basename, join, resolve } from 'path';
-import {
-    configOrBool, get, info, parseJSON, parseValue, set, warn
-} from 'mrbuilder-utils';
+import { get, parseJSON, parseValue } from 'mrbuilder-utils';
 import { merge, mergeAlias, nameConfig, select, split } from './util';
+import _help from './help';
 
 export default class OptionsManager {
 
@@ -61,13 +60,15 @@ export default class OptionsManager {
             }
         };
 
-        this.info = (...args) => {
+        this.info     = (...args) => {
             if (!this.env('QUIET')) {
                 info(`INFO [${prefix.toLowerCase()}]`, ...args);
             }
         };
+        const ENV_VAR = `${envPrefix}_ENV`;
+        const ENV     = this.env(ENV_VAR) || env.NODE_ENV;
 
-        this.info('NODE_ENV is', env.NODE_ENV || 'not set');
+        this.info(ENV_VAR, 'is ', ENV || 'not set');
         this.debug('topPackage is ', this.topPackage.name);
 
         const resolveFromPkgDir = (pkg, file, ...relto) => {
@@ -107,7 +108,7 @@ export default class OptionsManager {
                   || {};
 
             const envOverride = pluginConfig.env
-                                && pluginConfig.env[env.NODE_ENV] || {};
+                                && pluginConfig.env[ENV] || {};
             return {
                 presets : select(envOverride.presets, pluginConfig.presets),
                 options : select(envOverride.options, pluginConfig.options),
@@ -264,33 +265,16 @@ export default class OptionsManager {
 
     }
 
-    help() {
-        let str        = '';
-        const aliasMap = {};
-
-        this.forEach((option, key) => {
-            if (option.alias) {
-                Object.keys(option.alias).reduce(function (ret, a) {
-                    (aliasMap[a] || (aliasMap[a] = [])).push(option);
-                }, aliasMap)
-            }
-        });
-
-        this.forEach((option, key) => {
-            str += `${key} - [${this.enabled(key)
-                ? 'enabled' : 'disabled'}]\n`;
-            if (option.alias) {
-                const keys = Object.keys(option.alias);
-                str        = keys.reduce(function (ret, key) {
-                    const val = option.alias[key];
-                    return str +=
-                        key.length === 1 ? `\v\t-${key}\v\t${val}\n`
-                            : `\v\t\--${key}\v\t${val}\n`;
-                }, str)
-            }
-        });
-        return str;
+    logger(plugin) {
+        const { warn, info, debug } = this.plugins.get(plugin) || this;
+        return {
+            warn,
+            info,
+            debug
+        }
     }
+
+    help = _help(this);
 
     forEach(fn, scope = {}) {
         this.plugins.forEach((...args) => {

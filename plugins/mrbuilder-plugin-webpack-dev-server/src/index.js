@@ -5,18 +5,26 @@ const DEV_SERVER = {
     inline            : true,
     contentBase       : cwd('public'),
     port              : 8082,
+    public            : '/public/'
 
 };
 
 module.exports = function (opts, webpack) {
-    const devServer = Object.assign({}, opts);
+    const devServer = Object.assign({}, DEV_SERVER, opts);
     delete devServer.loader;
-    this.useHtml            = true;
-    if (opts.devtool == null){
-        webpack.devtool = 'eval'
+    if (devServer.entry) {
+        webpack.entry = devServer.entry;
     }
-    delete devServer.devtool;
-    webpack.devServer = Object.assign({}, DEV_SERVER, devServer);
-
+    this.useHtml = true;
+    if (devServer.devtool == null) {
+        webpack.devtool = 'eval-source-map'
+    } else {
+        webpack.devtool = devServer.devtool;
+        delete devServer.devtool;
+    }
+    delete devServer.entry;
+    webpack.devServer = devServer;
+    delete devServer['useExternals'];
+    delete devServer['noHot'];
     return webpack;
 };

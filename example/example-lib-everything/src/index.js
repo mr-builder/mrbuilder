@@ -42,7 +42,7 @@ export default class WebpackExample extends Component {
 
 
         return (<div>
-            <span className={container}>Hello</span> from webpack
+            <span id="header" className={container}>Hello</span> from webpack
             everything example.
             <h2 className={less.user}>Hi {USER}! Your running with NODE_ENV: "{NODE_ENV}"</h2>
             <Readme className={stylus.readme}/>

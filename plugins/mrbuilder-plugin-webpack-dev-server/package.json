@@ -13,6 +13,13 @@
     "mrbuilder-webpack-server": "./bin/mrbuilder-webpack-dev-server.js"
   },
   "mrbuilder": {
+    "alias":{
+      "hot":"Run with HMR",
+      "noHot":"Disable HMR",
+      "public":"Webpack dev server public path",
+      "useExternals":"Externalize a list of dependencies for use with libraries",
+      "entry":"Entry point or points"
+    },
     "env": {
       "development": {
         "plugins": [

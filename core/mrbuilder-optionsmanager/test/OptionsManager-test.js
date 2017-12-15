@@ -112,6 +112,7 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.config('metest.stuff')).to.eq(1);
     });
 
+
     newOptionManagerTest('with-env', {
         env : {
             TESTER_PLUGINS: 'metest',
@@ -216,6 +217,19 @@ alias-2 - [enabled]
             prefix: 'tester',
             cwd   : cwd('with-node-env'),
             env   : { NODE_ENV: "test" },
+            info  : capture,
+            warn  : capture
+        });
+        expect(om.enabled("webtest")).to.be.true;
+    });
+    it('should only load with-mrb-env test using TESTER_ENV', function () {
+        const calls   = [];
+        const capture = (...args) => calls.push(args);
+
+        const om = new OptionsManager({
+            prefix: 'tester',
+            cwd   : cwd('with-mrb-env'),
+            env   : { TESTER_ENV: "whatever" },
             info  : capture,
             warn  : capture
         });
