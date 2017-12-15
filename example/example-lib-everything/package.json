@@ -14,7 +14,7 @@
     "mrbuilder-plugin-worker": "^0.0.5"
   },
   "scripts": {
-    "analyze": "MRBUILDER_INTERNAL_PLUGINS=mrbuilder-plugin-analyze mrbuilder-webpack",
+    "analyze": "MRBUILDER_PLUGINS=mrbuilder-plugin-analyze mrbuilder-webpack",
     "prepublish": "mrbuilder-webpack --mrbuilder-plugin-env-environment=[NODE_ENV,USER]",
     "start": "mrbuilder-webpack-dev-server --mrbuilder-plugin-env-environment=[NODE_ENV,USER]",
     "test": "mrbuilder-karma",
