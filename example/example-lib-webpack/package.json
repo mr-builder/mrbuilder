@@ -1,0 +1,19 @@
+{
+  "name": "example-lib-webpack",
+  "version": "0.0.8",
+  "devDependencies": {
+    "mrbuilder": "^0.0.7"
+  },
+  "scripts": {
+    "prepublish": "mrbuilder-webpack",
+    "start": "mrbuilder-webpack-dev-server",
+    "test": "mrbuilder-karma",
+    "karma": "mrbuilder-karma"
+  },
+  "peerDependencies": {
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
+  "source": "src",
+  "main": "lib"
+}

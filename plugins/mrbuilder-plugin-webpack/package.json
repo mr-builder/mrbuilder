@@ -5,7 +5,8 @@
   "scripts": {
     "clean": "mrbuilder-clean"
   },
-  "main": "webpack.config.js",
+  "main": "src",
+  "source": "src",
   "bin": {
     "mrbuilder-webpack": "./bin/mrbuilder-webpack.js"
   },
@@ -24,6 +25,8 @@
   },
   "mrbuilder": {
     "alias": {
+      "app": "compile as a top level app ",
+      "demo": "compile as a demo <outputdir>",
       "useNameHash": "Use hash in the name of output files",
       "useScopeHoist": "Use ModuleConcatenationPlugin",
       "library": "Library name for output",

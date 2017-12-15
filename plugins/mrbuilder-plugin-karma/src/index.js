@@ -24,9 +24,9 @@ module.exports = function ({
                                    'test-index.js')
                            }, webpack) {
 
-    console.log('loading karma using ', testIndex);
+    (this.info || console.log)('loading karma using ', testIndex);
     if (useCoverage) {
-        console.warn(`enabling code coverage for karma`);
+        (this.info || console.info)(`enabling code coverage for karma`);
         webpack.module.rules.unshift(
             {
                 test   : /\.jsx?$/,
@@ -49,7 +49,7 @@ module.exports = function ({
     //muck with webpack
     webpack.resolve.alias['mrbuilder-karma-test-context'] = testDir;
 
-    console.warn('running tests in ', testDir);
+    console.info('running tests in ', testDir);
 
     webpack.devtool = 'inline-source-map';
     webpack.target  = 'web';
@@ -66,6 +66,6 @@ module.exports = function ({
     webpack.plugins.unshift(new DefinePlugin({
         MRBUILDER_TEST_MODULE: JSON.stringify(testDir)
     }));
-
+    webpack.externals = [];
     return webpack;
 };

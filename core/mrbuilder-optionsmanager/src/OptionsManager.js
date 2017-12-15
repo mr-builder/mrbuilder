@@ -49,18 +49,22 @@ export default class OptionsManager {
         this.topPackage = _require(this.cwd('package.json'));
 
 
-        this.warn = (...args) => {
-            warn(`WARN [${prefix.toLowerCase()}]`, ...args);
-        };
+        this.warn =
+            (...args) => warn(`WARN [${prefix.toLowerCase()}]`, ...args);
+
 
         this.debug = (...args) => {
-            if (this.env(`${envPrefix}_DEBUG`)) {
-                debug(`DEBUG [${prefix.toLowerCase()}]`, ...args);
+            if (!this.env('QUIET')) {
+                if (this.env(`${envPrefix}_DEBUG`)) {
+                    debug(`DEBUG [${prefix.toLowerCase()}]`, ...args);
+                }
             }
         };
 
         this.info = (...args) => {
-            info(`INFO [${prefix.toLowerCase()}]`, ...args);
+            if (!this.env('QUIET')) {
+                info(`INFO [${prefix.toLowerCase()}]`, ...args);
+            }
         };
 
         this.info('NODE_ENV is', env.NODE_ENV || 'not set');
@@ -136,7 +140,7 @@ export default class OptionsManager {
                 }
             };
 
-            opt.warn  = (...args) => {
+            opt.warn = (...args) => {
                 warn(`WARN [${prefix.toLowerCase()}:${name}]`, ...args);
             };
             return opt;

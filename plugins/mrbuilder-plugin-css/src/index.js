@@ -21,18 +21,32 @@
  */
 module.exports = function ({
                                isUseStyleLoader,
-                               useNameHash = '[hash].style.css',
+                               useNameHash,
                                publicPath = '/public',
                                modules = false,
                                autoprefixer = true,
                            }, webpack) {
 
     let useStyle;
+    if (useNameHash == null) {
+        if (this.useHtml) {
+            useNameHash = '[hash].style.css';
+        } else {
+            useNameHash = 'style.css';
+        }
+    } else if (useNameHash === true) {
+        useNameHash = '[hash].style.css';
+    } else if (useNameHash === false) {
+        useNameHash = 'style.css';
+    }
+    //So if its not turned on and its Karma than let's say that
+    // we don't use it.
+    if (isUseStyleLoader == null && !this.useHtml){
+        isUseStyleLoader = true;
+    }
+
     if (!isUseStyleLoader) {
-        console.log('useNameHash', useNameHash);
-        useNameHash             = useNameHash === true ? '[hash].style.css'
-            : typeof useNameHash === 'string' ? useNameHash.replace(/(\.js)$/,
-                '.css') : 'style.css';
+        (this.info || console.log)('useNameHash', useNameHash);
         const ExtractTextPlugin = require('extract-text-webpack-plugin');
         const extractCSS        = new ExtractTextPlugin(useNameHash);
 

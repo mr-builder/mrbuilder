@@ -38,6 +38,10 @@ module.exports = function ({
                                filename, analytics,
                            },
                            webpack) {
+    if (!this.useHtml) {
+        (this.info || console.log)('not using html as not in app,demo or development mode')
+        return webpack;
+    }
     if (!title) {
         const pkg = require(path.join(process.cwd(), 'package.json'));
         title     = `${pkg.name}: ${pkg.description || ''}`
@@ -75,7 +79,7 @@ module.exports = function ({
         }, pages['index'])));
     } else if (entry) {
         webpack.entry = entry;
-        const keys = Object.keys(entry);
+        const keys    = Object.keys(entry);
         (this.info || console.log)('using entry', keys);
         webpack.plugins.push(...keys.map(key => {
             return new HtmlWebpackPlugin(Object.assign({}, {

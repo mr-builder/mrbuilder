@@ -1,0 +1,22 @@
+{
+  "name": "example-app",
+  "version": "0.0.8",
+  "private": true,
+  "dependencies": {
+    "example-lib": "^0.0.8",
+    "example-lib-webpack": "^0.0.8"
+  },
+  "devDependencies": {
+    "mrbuilder": "^0.0.7"
+  },
+  "peerDependencies": {
+    "react": "16.2.0",
+    "react-dom": "16.2.0"
+  },
+  "scripts": {
+    "start":"mrbuilder-webpack-dev-server",
+    "prepublish": "mrbuilder-webpack --demo demo",
+    "test": "mrbuilder-karma",
+    "karma": "mrbuilder-karma"
+  }
+}

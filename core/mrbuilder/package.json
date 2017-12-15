@@ -34,47 +34,52 @@
       "loader": false
     },
     "plugins": [
+      "mrbuilder-plugin-browserslist",
+      "mrbuilder-plugin-webpack",
       "mrbuilder-plugin-fonts",
       "mrbuilder-plugin-css",
       "mrbuilder-plugin-less",
       "mrbuilder-plugin-filetypes",
       "mrbuilder-plugin-babel",
-      "mrbuilder-plugin-browserslist"
+      "mrbuilder-plugin-html"
     ],
     "env": {
       "development": {
         "plugins": [
+          "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-webpack",
           "mrbuilder-plugin-fonts",
           "mrbuilder-plugin-css",
           "mrbuilder-plugin-less",
           "mrbuilder-plugin-filetypes",
           "mrbuilder-plugin-babel",
-          "mrbuilder-plugin-browserslist",
-          "mrbuilder-plugin-webpack-dev-server",
           "mrbuilder-plugin-html",
+          "mrbuilder-plugin-webpack-dev-server",
           "mrbuilder-plugin-hot"
         ]
       },
       "test": {
         "plugins": [
+          "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-webpack",
           "mrbuilder-plugin-fonts",
           "mrbuilder-plugin-css",
           "mrbuilder-plugin-less",
           "mrbuilder-plugin-filetypes",
           "mrbuilder-plugin-babel",
-          "mrbuilder-plugin-browserslist",
           "mrbuilder-plugin-karma",
           "mrbuilder-plugin-enzyme"
         ]
       },
       "production": {
         "plugins": [
+          "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-webpack",
           "mrbuilder-plugin-fonts",
           "mrbuilder-plugin-css",
           "mrbuilder-plugin-less",
           "mrbuilder-plugin-filetypes",
           "mrbuilder-plugin-babel",
-          "mrbuilder-plugin-browserslist",
           "mrbuilder-plugin-html"
         ]
       }

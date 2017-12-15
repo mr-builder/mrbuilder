@@ -11,7 +11,5 @@
     "transform-async-to-generator",
     "transform-export-extensions",
     "transform-runtime"
-  ],
-  "babelrc": false,
-  "ignore": "**/lib/**"
+  ]
 }

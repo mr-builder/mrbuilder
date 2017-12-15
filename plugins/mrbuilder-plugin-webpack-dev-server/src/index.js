@@ -10,6 +10,7 @@ const DEV_SERVER = {
 module.exports = function (opts, webpack) {
     const devServer = Object.assign({}, opts);
     delete devServer.loader;
+    this.useHtml            = true;
 
     webpack.devServer = Object.assign({}, DEV_SERVER, devServer);
 

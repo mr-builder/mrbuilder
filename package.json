@@ -6,6 +6,7 @@
   "author": "Justin Spears <speajus@gmail.com>",
   "license": "BSD",
   "workspaces": [
+    "example/*",
     "core/*",
     "plugins/*"
   ],

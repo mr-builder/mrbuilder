@@ -21,26 +21,18 @@ const parseJSON = (filename) => {
     return JSON.parse(file, parseRe);
 };
 
-function resolvePkgDir(name, pkg, ...rest) {
+function resolvePkgDir(name, file, ...rest) {
 
-    try {
-        if (pkg === 'package.json') {
-            return require.resolve(path.join(name, 'package.json'));
-        }
-        if (pkg) {
-            return path.resolve(
-                require.resolve(path.join(name, 'package.json')), '..', pkg,
-                ...rest);
-        }
-        return path.resolve(require.resolve(path.join(name, 'package.json')),
-            '..');
-
-    } catch (e) {
-        if (pkg().name === name) {
-            return cwd();
-        }
+    if (file === 'package.json') {
+        return require.resolve(path.join(name, 'package.json'));
     }
-    throw new Error(`could not resolve package.json in ${name} or ${cwd()}`)
+    if (file) {
+        return path.resolve(
+            require.resolve(path.join(name, 'package.json')), '..', file,
+            ...rest);
+    }
+    return path.resolve(require.resolve(path.join(name, 'package.json')),
+        '..');
 }
 
 const PKG_CACHE = {};
@@ -57,7 +49,6 @@ function pkg() {
     return (PKG_CACHE[_pkg] = require(_pkg));
 
 }
-
 
 
 function debug(...args) {
