@@ -7,5 +7,7 @@
   },
   "devDependencies": {
     "mrbuilder-plugin-mocha": "^0.0.6"
-  }
+  },
+  "main": "src",
+  "source": "src"
 }

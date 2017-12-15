@@ -1,0 +1,5 @@
+.readme
+    color darkcyan
+    border 1px solid cyan
+    background lightcyan
+    border-radius 5px

@@ -1,3 +1,4 @@
+const {LoaderOptionsPlugin} = require('webpack');
 module.exports = ({
                       test = /\.worker\.jsx?/,
                       use = ['worker-loader'],
@@ -8,7 +9,7 @@ module.exports = ({
         test,
         use
     });
-    webpack.plugins.push(new options.webpack.LoaderOptionsPlugin({
+    webpack.plugins.push(new LoaderOptionsPlugin({
         options: {
             worker: {
                 output: {

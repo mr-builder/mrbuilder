@@ -72,9 +72,10 @@ const mod = function ({
             demo === true ? cwd(outputPath) : cwd(demo);
         webpack.output.filename = '[name].[hash].js';
         info('using demo entry', webpack.entry.index);
+
     } else if (this.isDevServer) {
-        this.useHtml            = true;
-        webpack.entry.index     =
+        this.useHtml        = true;
+        webpack.entry.index =
             !demo || demo === true ? cwd('public', 'index') : demo;
 
         info('using dev server entry', webpack.entry.index);

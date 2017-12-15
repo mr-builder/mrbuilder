@@ -1,4 +1,6 @@
-const { env }  = process;
+const { env }               = process;
+const { EnvironmentPlugin } = require('webpack');
+
 module.exports = function ({ p = false, environment = ['NODE_ENV'] }, webpack) {
     if (p) {
         if (env.NODE_ENV && env.NODE_ENV !== 'production') {
@@ -9,10 +11,11 @@ module.exports = function ({ p = false, environment = ['NODE_ENV'] }, webpack) {
             this.nodeEnv = env.NODE_ENV = 'production';
         }
     } else if (!env.NODE_ENV) {
-        env.NODE_ENV = 'development';
+        env.NODE_ENV = this.isKarma ? 'test' : 'development';
     }
 
     this.nodeEnv = env.NODE_ENV;
 
-    webpack.plulgins.push(new webpack.EnvironmentPlugin(environment));
+    webpack.plugins.push(new EnvironmentPlugin(environment));
+    return webpack;
 };

@@ -4619,6 +4619,82 @@ move-concurrently@^1.0.1:
     rimraf "^2.5.4"
     run-queue "^1.0.3"
 
+mrbuilder-plugin-babel@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-babel/-/mrbuilder-plugin-babel-0.0.5.tgz#c86534e2dc581b82908fb6d90eacdb7ee7ed238d"
+  dependencies:
+    babel-cli "^6.26.0"
+    babel-core "^6.26.0"
+    babel-loader "^7.1.2"
+    babel-plugin-istanbul "^4.1.1"
+    babel-plugin-transform-async-to-generator "^6.24.1"
+    babel-plugin-transform-class-properties "^6.24.1"
+    babel-plugin-transform-export-extensions "^6.22.0"
+    babel-plugin-transform-function-bind "^6.22.0"
+    babel-plugin-transform-runtime "^6.23.0"
+    babel-preset-env "^1.6.1"
+    babel-preset-react "^6.24.1"
+    babel-preset-stage-2 "^6.24.1"
+    babel-runtime "^6.26.0"
+    mrbuilder-plugin-browserslist "^0.0.5"
+    rimraf "^2.6.2"
+
+mrbuilder-plugin-browserslist@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-browserslist/-/mrbuilder-plugin-browserslist-0.0.5.tgz#5ac1b4caea9beaa47ad5aab62b9c38f94b0483e4"
+  dependencies:
+    mrbuilder-utils "^0.0.5"
+
+mrbuilder-plugin-env@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-env/-/mrbuilder-plugin-env-0.0.5.tgz#bfa7277586e6d12eed1d62a75e0870835891362e"
+
+mrbuilder-plugin-lodash@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-lodash/-/mrbuilder-plugin-lodash-0.0.5.tgz#478ba5d81475577c928b1c1c3c5304f0dfbdf594"
+  dependencies:
+    lodash-es "^4.17.4"
+
+mrbuilder-plugin-markdown@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-markdown/-/mrbuilder-plugin-markdown-0.0.5.tgz#71dc4aa47e189d21e75418e1b62ad1d2f1ca9e4f"
+  dependencies:
+    markdown-it "^8.4.0"
+    mrbuilder-plugin-babel "^0.0.5"
+    mrbuilder-utils "^0.0.5"
+    react-syntax-highlighter "^6.0.4"
+
+mrbuilder-plugin-moment@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-moment/-/mrbuilder-plugin-moment-0.0.5.tgz#052c11d218ed3c87c5c5cb48f36fb4cdf54262c6"
+  dependencies:
+    moment "^2.19.3"
+
+mrbuilder-plugin-stylus@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-stylus/-/mrbuilder-plugin-stylus-0.0.5.tgz#8d596e0e5aade014d812d5d8873d19f5ef16ce53"
+  dependencies:
+    loader-utils "^1.1.0"
+    nib "^1.1.2"
+    stylus "^0.54.5"
+    stylus-loader "^3.0.1"
+
+mrbuilder-plugin-uglify@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-uglify/-/mrbuilder-plugin-uglify-0.0.5.tgz#1e692eb647bff0ea5844878d29c6356afd8053bb"
+  dependencies:
+    uglifyjs-webpack-plugin "^1.1.1"
+
+mrbuilder-plugin-worker@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-worker/-/mrbuilder-plugin-worker-0.0.5.tgz#10bec38757ffa3a368894750b8a97b82bc91e87e"
+  dependencies:
+    worker-loader "^1.1.0"
+
+mrbuilder-utils@^0.0.5:
+  version "0.0.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-utils/-/mrbuilder-utils-0.0.5.tgz#3a71409f2cb47d6fef1991dc28f0cba173a1d937"
+
 ms@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"

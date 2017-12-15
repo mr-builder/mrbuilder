@@ -8,11 +8,17 @@
     "loader-utils": "^1.1.0",
     "nib": "^1.1.2",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1"
+    "stylus-loader": "^3.0.1",
+    "mrbuilder-plugin-css": "^0.0.5"
   },
   "keywords": [
     "subschema",
     "stylus",
     "mrbuilder"
-  ]
+  ],
+  "mrbuilder": {
+    "plugins": [
+      "mrbuilder-plugin-css"
+    ]
+  }
 }

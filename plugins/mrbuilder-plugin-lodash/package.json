@@ -3,5 +3,7 @@
   "version": "0.0.6",
   "dependencies": {
     "lodash-es": "^4.17.4"
-  }
+  },
+  "main": "src",
+  "source": "src"
 }

@@ -2,7 +2,7 @@ const { readdirSync }   = require('fs');
 const { resolve, join } = require('path');
 
 function isMod(v) {
-    return v => !/^_/.test(v) && /\.js$/.test(v);
+    return !/^_/.test(v) && /\.js$/.test(v);
 }
 
 module.exports =
