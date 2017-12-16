@@ -1,3 +1,5 @@
+const { NamedModulesPlugin, HotModuleReplacementPlugin } = require('webpack');
+
 module.exports = ({
                       preEntry = ['only-dev-server'],
                       babel = require('mrbuilder-plugin-babel/babel-config'),
@@ -31,4 +33,7 @@ module.exports = ({
         console.warn(
             `could not find an webpack.entry, hot loading may not work`);
     }
+    webpack.plugins.push(new NamedModulesPlugin(),
+        new HotModuleReplacementPlugin());
+
 };

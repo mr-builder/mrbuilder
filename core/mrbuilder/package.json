@@ -8,6 +8,7 @@
     "mrbuilder-plugin-css": "^0.0.6",
     "mrbuilder-plugin-enzyme": "^0.0.6",
     "mrbuilder-plugin-filetypes": "^0.0.6",
+    "mrbuilder-plugin-babel": "^0.0.6",
     "mrbuilder-plugin-fonts": "^0.0.6",
     "mrbuilder-plugin-hot": "^0.0.6",
     "mrbuilder-plugin-html": "^0.0.7",
@@ -35,24 +36,24 @@
     },
     "plugins": [
       "mrbuilder-plugin-browserslist",
+      "mrbuilder-plugin-babel",
       "mrbuilder-plugin-webpack",
       "mrbuilder-plugin-fonts",
       "mrbuilder-plugin-css",
       "mrbuilder-plugin-less",
       "mrbuilder-plugin-filetypes",
-      "mrbuilder-plugin-babel",
       "mrbuilder-plugin-html"
     ],
     "env": {
       "development": {
         "plugins": [
           "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-babel",
           "mrbuilder-plugin-webpack",
           "mrbuilder-plugin-fonts",
           "mrbuilder-plugin-css",
           "mrbuilder-plugin-less",
           "mrbuilder-plugin-filetypes",
-          "mrbuilder-plugin-babel",
           "mrbuilder-plugin-html",
           "mrbuilder-plugin-webpack-dev-server",
           "mrbuilder-plugin-hot"
@@ -61,12 +62,12 @@
       "test": {
         "plugins": [
           "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-babel",
           "mrbuilder-plugin-webpack",
           "mrbuilder-plugin-fonts",
           "mrbuilder-plugin-css",
           "mrbuilder-plugin-less",
           "mrbuilder-plugin-filetypes",
-          "mrbuilder-plugin-babel",
           "mrbuilder-plugin-karma",
           "mrbuilder-plugin-enzyme"
         ]
@@ -74,12 +75,12 @@
       "production": {
         "plugins": [
           "mrbuilder-plugin-browserslist",
+          "mrbuilder-plugin-babel",
           "mrbuilder-plugin-webpack",
           "mrbuilder-plugin-fonts",
           "mrbuilder-plugin-css",
           "mrbuilder-plugin-less",
           "mrbuilder-plugin-filetypes",
-          "mrbuilder-plugin-babel",
           "mrbuilder-plugin-html"
         ]
       }

@@ -1,6 +1,4 @@
-import {
-    configOrBool, info, parseJSON, parseValue, set, toUnderscore, warn
-} from 'mrbuilder-utils';
+import { configOrBool, parseValue, set, toUnderscore } from 'mrbuilder-utils';
 
 export const select = (...args) => {
     for (let i = 0, l = args.length; i < l; i++) {
@@ -178,7 +176,9 @@ export const mergeAlias = (options,
     aliasObj = mergeAliasArgs(aliases, aliasObj, process);
     aliasObj = mergeAliasEnv(aliases, aliasObj, process);
     aliases.forEach(function (key) {
-        options[key] = aliasObj[key];
+        if (!(key in options)) {
+            options[key] = aliasObj[key];
+        }
     });
     return options;
 }

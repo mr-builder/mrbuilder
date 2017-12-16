@@ -29,6 +29,9 @@
   "source": "src",
   "main": "lib",
   "mrbuilder": {
+    "presets": [
+      "mrbuilder"
+    ],
     "plugins": [
       "mrbuilder-plugin-css",
       "mrbuilder-plugin-markdown",
@@ -37,7 +40,11 @@
       "mrbuilder-plugin-moment",
       "mrbuilder-plugin-stylus",
       "mrbuilder-plugin-uglify",
-      "mrbuilder-plugin-worker"
+      "mrbuilder-plugin-worker",
+      [
+        "mrbuilder-plugin-html",
+        false
+      ]
     ],
     "env": {
       "test": {

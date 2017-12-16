@@ -22,9 +22,7 @@ export default class OptionsManager {
                     //Object of collected aliases, may be modified
                     aliasObj = {},
                 } = {}) {
-        if (_require === require) {
-            console.warn('require is not set, using default require');
-        }
+
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
@@ -65,6 +63,10 @@ export default class OptionsManager {
                 info(`INFO [${prefix.toLowerCase()}]`, ...args);
             }
         };
+
+        if (_require === require) {
+            this.warn('require is not set, using default require');
+        }
         const ENV_VAR = `${envPrefix}_ENV`;
         const ENV     = this.env(ENV_VAR) || env.NODE_ENV;
 
@@ -277,8 +279,10 @@ export default class OptionsManager {
     help = _help(this);
 
     forEach(fn, scope = {}) {
-        this.plugins.forEach((...args) => {
-            fn.call(scope, ...args);
+        this.plugins.forEach((value, key, ...args) => {
+            if (value) {
+                fn.call(scope, value, key, ...args);
+            }
         });
     }
 
@@ -290,7 +294,8 @@ export default class OptionsManager {
             return;
         }
         const config = this.plugins.get(key).config;
-        return get(config, parts.shift(), def);
+        const ret    = parts.length ? get(config, parts) : config;
+        return ret == null ? def : ret;
     }
 
     enabled(name) {

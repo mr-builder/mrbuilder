@@ -1,7 +1,7 @@
 const options  = require('../babel-config');
 module.exports = ({
                       test = /\.jsx?$/,
-                      include = [/\/test\/*/, /\/src\/*/, /\/public\/*/, /mrbuilder[^/]*\/src\/*/],
+                      include = [/\/test\/*/, /\/src\/*/, /\/public\/*/],
                       use = {
                           loader: 'babel-loader',
                           options

@@ -87,7 +87,7 @@ function get(obj, key, def) {
     if (obj == null) {
         return def;
     }
-    const paths = key.split('.');
+    const paths = Array.isArray(key) ? key.concat() : key.split('.');
     let ret     = obj;
     while (paths.length) {
         if (!obj) {

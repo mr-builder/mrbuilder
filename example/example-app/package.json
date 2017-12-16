@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "example-lib": "^0.0.8",
-    "example-lib-webpack": "^0.0.8"
+    "example-lib-webpack": "^0.0.8",
+    "example-lib-everything": "^0.0.8"
   },
   "devDependencies": {
     "mrbuilder": "^0.0.7"
@@ -14,9 +15,18 @@
     "react-dom": "16.2.0"
   },
   "scripts": {
-    "start":"mrbuilder-webpack-dev-server",
-    "prepublish": "mrbuilder-webpack --demo demo",
+    "prepublish": "mrbuilder-webpack --demo ./demo",
+    "start": "mrbuilder-webpack-dev-server",
     "test": "mrbuilder-karma",
     "karma": "mrbuilder-karma"
+  },
+  "mrbuilder": {
+    "plugins": [
+      "mrbuilder-plugin-html"
+    ],
+    "presets": [
+      "mrbuilder",
+      "example-lib-everything"
+    ]
   }
 }

@@ -4,5 +4,10 @@
   "main": "src",
   "dependencies": {
     "worker-loader": "^1.1.0"
+  },
+  "mrbuilder": {
+    "alias": {
+      "publicPath": "The public path to webworker source"
+    }
   }
 }

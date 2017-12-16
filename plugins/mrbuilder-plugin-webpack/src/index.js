@@ -50,34 +50,28 @@ const mod = function ({
         webpack.output.path = outputPath;
     }
 
-    if (!(app || demo || this.isKarma || this.isDevServer)) {
+    demo = app || demo;
+
+    if (!(entry || demo || this.isKarma || this.isDevServer)) {
         webpack.output.library       =
             typeof library == 'string' ? library : camelCased(pkg.name);
         webpack.output.libraryTarget = libraryTarget;
     }
-    if (app) {
-        this.useHtml            = true;
-        webpack.entry.index     =
-            !app || app === true ? cwd('public', 'index') : cwd(app);
-        webpack.output.path     =
-            !app || app === true ? cwd(outputPath) : cwd(app);
-        webpack.output.filename = '[name].[hash].js';
-        info('using app entry', webpack.entry.index);
 
-    } else if (demo) {
-        this.useHtml            = true;
-        webpack.entry.index     =
-            !demo || demo === true ? cwd('public', 'index') : demo;
-        webpack.output.path     =
-            demo === true ? cwd(outputPath) : cwd(demo);
+    webpack.entry = entry && Object.keys(entry).reduce(function (ret, key) {
+        ret[key] = cwd(entry[key]);
+        return ret;
+    }, {});
+
+    if (demo) {
+        webpack.output.path     = demo === true ? cwd('demo') : cwd(demo);
         webpack.output.filename = '[name].[hash].js';
-        info('using demo entry', webpack.entry.index);
+        info('using entry', webpack.entry.index, webpack.output.path);
 
     } else if (this.isDevServer) {
-        this.useHtml        = true;
-        webpack.entry.index =
-            !demo || demo === true ? cwd('public', 'index') : demo;
-
+        if (!webpack.entry.index) {
+            webpack.entry.index = cwd('public', 'index');
+        }
         info('using dev server entry', webpack.entry.index);
     } else {
         webpack.output.filename = '[name].js';

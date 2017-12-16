@@ -31,15 +31,17 @@ HtmlWebpackPlugin.prototype.generateAssetTags = function (assets) {
 
 
 module.exports = function ({
-                               pages = {}, title,
-                               entry = 'index',
+                               pages = {},
+                               title,
+                               entry,
                                publicPath = path.join(process.cwd(), 'public'),
                                template,
                                filename, analytics,
                            },
                            webpack) {
+    const info = this.info || console.log;
     if (!this.useHtml) {
-        (this.info || console.log)('not using html as not in app,demo or development mode')
+        info('not using html as not in app,demo or development mode')
         return webpack;
     }
     if (!title) {
@@ -64,7 +66,7 @@ module.exports = function ({
         }
     }
 
-    entry = entry || webpack.entry || path.join(publicPath, entry);
+    entry = entry || webpack.entry || path.join(publicPath, 'index');
     /**
      * Allows for a page per entry.
      */
@@ -76,14 +78,15 @@ module.exports = function ({
             title,
             template,
             publicPath,
-        }, pages['index'])));
+        }, pages['index'] || pages)));
     } else if (entry) {
         webpack.entry = entry;
         const keys    = Object.keys(entry);
-        (this.info || console.log)('using entry', keys);
+        info('using entry', keys);
         webpack.plugins.push(...keys.map(key => {
             return new HtmlWebpackPlugin(Object.assign({}, {
                 filename: filename || `${key}.html`,
+                chunks  : [key],
                 title,
                 template,
                 publicPath,

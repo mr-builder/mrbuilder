@@ -15,13 +15,15 @@ let {
         debug = console.warn
     } = optionsManager;
 
-
-const opts = {
+const isKarma =
+          optionsManager.enabled('mrbuilder-plugin-karma')
+const opts    = {
     isProduction  : process.env.NODE_ENV === 'production',
-    isKarma       : optionsManager.enabled('mrbuilder-plugin-karma'),
+    isKarma,
     isDemo        : optionsManager.config('mrbuilder-plugin-webpack.demo'),
     isApp         : optionsManager.config('mrbuilder-plugin-webpack.app'),
-    isDevServer   : optionsManager.enabled('mrbuilder-plugin-webpack'),
+    isDevServer   : optionsManager.enabled(
+        'mrbuilder-plugin-webpack-dev-server'),
     isHot         : optionsManager.enabled('mrbuilder-plugin-hot'),
     publicPath    : optionsManager.config('mrbuilder-plugin-webpack.public',
         '/'),
@@ -33,7 +35,14 @@ const opts = {
     useScopeHoist : optionsManager.config(
         'mrbuilder-plugin-webpack.useScopeHoist', true),
     useTarget     : optionsManager.config('mrbuilder-plugin-webpack.target',
-        'web')
+        'web'),
+    entry         : optionsManager.config('mrbuilder-plugin-webpack.entry'),
+    useHtml       : !isKarma &&
+                    (optionsManager.enabled(
+                            'mrbuilder-plugin-webpack-dev-server')
+                     || optionsManager.config('mrbuilder-plugin-webpack.app') ||
+                     optionsManager.config('mrbuilder-plugin-webpack.demo')
+                    )
 };
 debug('using options', stringify(opts));
 
@@ -118,7 +127,7 @@ if (MRBUILDER_ENTRY) {
 
 //This is where the magic happens
 try {
-    optionsManager.plugins.forEach((option, key) => {
+    optionsManager.forEach((option, key) => {
         if (option.plugin) {
             const plugin = optionsManager.require(option.plugin);
             if (typeof plugin === 'function') {

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import ExampleLib from 'example-lib';
-import ExampleWebpacked from 'example-lib-webpack';
+import ExampleWebpack from 'example-lib-webpack';
+import ExampleEverything from 'example-lib-everything';
 
 export default class App extends Component {
 
     render() {
-        return <div>
+        return (<div>
             <h1>Hello from App</h1>
             <ExampleLib/>
-            <ExampleWebpacked/>
-        </div>
+            <ExampleWebpack/>
+            <ExampleEverything/>
+        </div>)
     }
 }
