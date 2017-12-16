@@ -66,13 +66,7 @@ const mod = function ({
     if (demo) {
         webpack.output.path     = demo === true ? cwd('demo') : cwd(demo);
         webpack.output.filename = '[name].[hash].js';
-        info('using entry', webpack.entry.index, webpack.output.path);
-
-    } else if (this.isDevServer) {
-        if (!webpack.entry.index) {
-            webpack.entry.index = cwd('public', 'index');
-        }
-        info('using dev server entry', webpack.entry.index);
+        info('using entry',  webpack.output.path);
     } else {
         webpack.output.filename = '[name].js';
     }

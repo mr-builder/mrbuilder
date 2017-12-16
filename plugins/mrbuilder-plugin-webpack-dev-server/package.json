@@ -20,12 +20,10 @@
       "useExternals": "Externalize a list of dependencies for use with libraries",
       "entry": "Entry point or points"
     },
-    "env": {
-      "development": {
-        "plugins": [
-          "mrbuilder-plugin-webpack"
-        ]
-      }
-    }
+    "plugins": [
+      "mrbuilder-plugin-webpack",
+      "mrbuilder-plugin-html",
+      "mrbuilder-plugin-hot"
+    ]
   }
 }

@@ -1,6 +1,7 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path              = require('path');
-
+const HtmlWebpackPlugin  = require('html-webpack-plugin');
+const path               = require('path');
+const { existsSync }     = require('fs');
+const babelConfig        = require('mrbuilder-plugin-babel/babel-config');
 /**
  *   title     : (deps.description ? deps.description : deps.name),
  hash      : opts.useNameHash,
@@ -40,13 +41,14 @@ module.exports = function ({
                            },
                            webpack) {
     const info = this.info || console.log;
+    const pkg  = require(path.join(process.cwd(), 'package.json'));
+
     if (!this.useHtml) {
-        info('not using html as not in app,demo or development mode')
+        info('not using html as not in app,demo or development mode');
         return webpack;
     }
     if (!title) {
-        const pkg = require(path.join(process.cwd(), 'package.json'));
-        title     = `${pkg.name}: ${pkg.description || ''}`
+        title = `${pkg.name}: ${pkg.description || ''}`
     }
     if (!template) {
         template = path.resolve(__dirname, '..', 'public',
@@ -66,7 +68,25 @@ module.exports = function ({
         }
     }
 
-    entry = entry || webpack.entry || path.join(publicPath, 'index');
+    if (entry || webpack.entry) {
+        entry = entry || webpack.entry
+    } else {
+        entry = path.join(publicPath, 'index');
+        if (!existsSync(entry)) {
+            info('entry', entry, 'does not exist using default');
+            webpack.entry = entry = `${__dirname}/app.js`;
+            webpack.module.rules.push({
+                test: new RegExp(entry),
+                use : [{
+                    loader : 'val-loader',
+                    options: pkg
+                }, {
+                    loader : 'babel-loader',
+                    options: babelConfig
+                }]
+            });
+        }
+    }
     /**
      * Allows for a page per entry.
      */

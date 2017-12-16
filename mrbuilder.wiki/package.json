@@ -1,0 +1,18 @@
+{
+  "name": "mrbuilder.wiki",
+  "version": "0.0.10",
+  "dependencies": {
+    "mrbuilder": "^0.0.10",
+    "mrbuilder-plugin-markdown": "^0.0.10"
+  },
+  "scripts": {
+    "prepublish": "mrbuilder-webpack --app docs",
+    "start": "mrbuilder-webpack-dev-server"
+  },
+  "mrbuilder": {
+    "plugins": [
+      "mrbuilder",
+      "mrbuilder-plugin-markdown"
+    ]
+  }
+}
