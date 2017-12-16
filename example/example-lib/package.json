@@ -1,14 +1,14 @@
 {
   "name": "example-lib",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.0.7"
+    "mrbuilder": "^0.0.9"
   },
   "source": "src",
-  "main":"lib",
+  "main": "lib",
   "scripts": {
-    "start":"mrbuilder-webpack-dev-server",
+    "start": "mrbuilder-webpack-dev-server",
     "prepublish": "mrbuilder-babel",
     "test": "mrbuilder-mocha"
   }

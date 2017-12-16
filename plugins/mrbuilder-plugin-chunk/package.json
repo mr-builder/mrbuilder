@@ -1,8 +1,8 @@
 {
   "name": "mrbuilder-plugin-chunk",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "main": "src",
   "dependencies": {
-    "mrbuilder-utils": "^0.0.6"
+    "mrbuilder-utils": "^0.0.9"
   }
 }

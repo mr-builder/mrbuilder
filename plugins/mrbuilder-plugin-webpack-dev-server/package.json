@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-plugin-webpack-dev-server",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "description": "webpack dev server for mrbuilder",
   "dependencies": {
-    "mrbuilder-plugin-webpack": "^0.0.6",
-    "mrbuilder-utils": "^0.0.6",
+    "mrbuilder-plugin-webpack": "^0.0.9",
+    "mrbuilder-utils": "^0.0.9",
     "webpack-dev-server": "^2.9.5"
   },
   "source": "src",
@@ -13,12 +13,12 @@
     "mrbuilder-webpack-server": "./bin/mrbuilder-webpack-dev-server.js"
   },
   "mrbuilder": {
-    "alias":{
-      "hot":"Run with HMR",
-      "noHot":"Disable HMR",
-      "public":"Webpack dev server public path",
-      "useExternals":"Externalize a list of dependencies for use with libraries",
-      "entry":"Entry point or points"
+    "alias": {
+      "hot": "Run with HMR",
+      "noHot": "Disable HMR",
+      "public": "Webpack dev server public path",
+      "useExternals": "Externalize a list of dependencies for use with libraries",
+      "entry": "Entry point or points"
     },
     "env": {
       "development": {
