@@ -29,4 +29,3 @@ This is one of the cases where the ENV configuration is a better option.
   }
 
 }
-```

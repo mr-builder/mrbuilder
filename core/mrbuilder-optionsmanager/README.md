@@ -51,7 +51,7 @@ const optionsManager = new OptionsManager({prefix:'whatever'});
 ```
 
 
- * prefix - the prefix to use for internal ie. MRBUILDER.
+ * prefix - the prefix to use for internal ie.[mrbuilder](https://github.com/jspears/mrbuilder)
  * envPrefix - the environment prefix to use, defaults to prefix.toUpperCase();
  * confPrefix - the prefix to configure things.
  * rcFile - the rc file to use for preferences, uses .${prefix}rc as default.
