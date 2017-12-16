@@ -1,6 +1,11 @@
 #!/usr/bin/env node
-const { plugins, presets } = require('mrbuilder-plugin-babel/babel-config');
-const { argv }             = process;
+if (!global._MRBUILDER_OPTIONS_MANAGER) {
+    global._MRBUILDER_OPTIONS_MANAGER =
+        new (require('mrbuilder-optionsmanager').default)
+}
+const { plugins, presets }        = require(
+    'mrbuilder-plugin-babel/babel-config');
+const { argv }                    = process;
 if (!argv.includes('-s')) {
     argv.push('-s', 'true');
 }

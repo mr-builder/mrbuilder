@@ -1,7 +1,4 @@
-const optionsManager = global._MRBUILDER_OPTIONS_MANAGER || (
-    global._MRBUILDER_OPTIONS_MANAGER =
-        new (require('mrbuilder-optionsmanager').default)(
-            { prefix: 'mrbuilder', _require: require }));
+const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
 
 const logger = optionsManager.logger('mrbuilder-plugin-babel');
 
@@ -20,7 +17,7 @@ if (babelrc && fs.existsSync(babelrc)) {
     logger.info('using local .babelrc', babelrc);
     conf = JSON.parse(fs.readFileSync(babelrc, 'utf8'));
 } else {
-    const defConf = mrb('babelConfig', `${__dirname}/babelrc.json`);
+    const defConf = mrb('babelConfig', `${__dirname}/babelrc.json`) || './babelrc.json';
     logger.info('loading', optionsManager.enabled('mrbuilder-plugin-babel'), defConf)
     conf = require(defConf);
 }

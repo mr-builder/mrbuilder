@@ -4689,16 +4689,6 @@ move-concurrently@^1.0.1:
     rimraf "^2.5.4"
     run-queue "^1.0.3"
 
-mrbuilder-plugin-css@^0.0.5:
-  version "0.0.5"
-  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-css/-/mrbuilder-plugin-css-0.0.5.tgz#72d41b5c87f1a0a0b744435d3aab9394289b2aa1"
-  dependencies:
-    autoprefixer "^7.1.6"
-    css-loader "^0.28.4"
-    extract-text-webpack-plugin "^3.0.2"
-    postcss-loader "^2.0.9"
-    style-loader "^0.19.0"
-
 ms@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
