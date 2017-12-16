@@ -7,13 +7,14 @@
   },
   "scripts": {
     "start": "mrbuilder-webpack-dev-server",
-    "prepublish": "mrbuilder-webpack --app app"
+    "prepublish": "mrbuilder-webpack"
   },
   "mrbuilder": {
     "plugins": [
       [
         "mrbuilder-plugin-webpack",
         {
+          "app": "app",
           "entry": {
             "index": "public/index",
             "other": "public/other"
