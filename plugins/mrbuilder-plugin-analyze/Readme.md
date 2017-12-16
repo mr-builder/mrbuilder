@@ -14,6 +14,8 @@ you probably want to see what webpack is doing for a particular env.
 This is one of the cases where the ENV configuration is a better option.
 
 // in package.json
+
+```json
 {
   "name":"your-project",
   ...
@@ -27,3 +29,4 @@ This is one of the cases where the ENV configuration is a better option.
   }
 
 }
+```
