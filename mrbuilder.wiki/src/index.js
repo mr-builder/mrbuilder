@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-const context = (er) => er.keys().map(
-    key => [key.replace(/.*\/(.*)\.md$/), er(key).default])
+const context = (er) => er.keys().map(key => [key, er(key).default]);
 
-const errors = context(require.context('./errors', true, /\.md$/));
+const errors  = context(require.context('./errors', true, /\.md$/));
 const recipes = context(require.context('./recipes', true, /\.md$/));
+const plugins = context(require.context('../../plugins', true, /Readme\.md$/))
 
-export default class App extends React.Component {
+export default class App extends Component {
     render() {
         return <div>
             <h2>Common Errors</h2>
@@ -17,7 +17,11 @@ export default class App extends React.Component {
             <h2>Recipes</h2>
             {recipes.map(
                 ([key, Recipe]) => <Recipe className='help-for-recipe'
-                                         key={key}/>)}
+                                           key={key}/>)}
+
+            <h2>Plugins</h2>
+            {plugins.map(([key, Plugin]) => <Plugin className='plugin' id={key}
+                                                    key={key}/>)}
         </div>
     }
 }
