@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-css",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Loadin css  via webpack",
   "dependencies": {
     "autoprefixer": "^7.1.6",
@@ -13,7 +13,7 @@
     "test": "mrbuilder-mocha"
   },
   "devDependencies": {
-    "mrbuilder-plugin-mocha": "^0.0.10"
+    "mrbuilder-plugin-mocha": "^0.0.11"
   },
   "main": "src",
   "source": "src"
