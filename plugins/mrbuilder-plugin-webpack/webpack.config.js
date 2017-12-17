@@ -10,10 +10,11 @@ const {
           }
       }                                   = require('webpack');
 
-let {
-        warn  = console.warn,
-        debug = console.warn
-    } = optionsManager;
+const {
+          warn  = console.warn,
+          debug = console.warn,
+          info  = console.log,
+      } = optionsManager.logger('mrbuilder-plugin-webpack');
 
 const isKarma =
           optionsManager.enabled('mrbuilder-plugin-karma')
