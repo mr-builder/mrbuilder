@@ -70,7 +70,7 @@ export default class OptionsManager {
         const ENV_VAR = `${envPrefix}_ENV`;
         const ENV     = this.env(ENV_VAR) || env.NODE_ENV;
 
-        this.info(ENV_VAR, 'is ', ENV || 'not set');
+        this.info(ENV_VAR, 'is', ENV || 'not set');
         this.debug('topPackage is', this.topPackage.name);
 
         const resolveFromPkgDir = (pkg, file, ...relto) => {

@@ -14,6 +14,7 @@ module.exports = function ({
                                    console: false,
                                    util   : true
                                },
+                               mainFields = ['source', 'browser', 'main'],
                                include = [cwd('src'), cwd('public')],
                                testIndex = resolve(__dirname, '..',
                                    'test-index.js')
@@ -56,6 +57,9 @@ module.exports = function ({
     webpack.plugins.unshift(new DefinePlugin({
         MRBUILDER_TEST_MODULE: JSON.stringify(testDir)
     }));
+    if (mainFields) {
+        webpack.mainFields = mainFields;
+    }
     webpack.externals = [];
     return webpack;
 };

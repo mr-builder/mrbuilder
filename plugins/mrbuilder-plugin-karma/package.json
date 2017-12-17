@@ -26,6 +26,9 @@
   "source": "src",
   "main": "src",
   "mrbuilder": {
+    "alias": {
+      "mainFields": "Sets main fields for easier debugging"
+    },
     "plugins": [
       "mrbuilder-plugin-webpack",
       "mrbuilder-plugin-mocha"
