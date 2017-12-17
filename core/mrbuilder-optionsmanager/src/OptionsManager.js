@@ -71,7 +71,7 @@ export default class OptionsManager {
         const ENV     = this.env(ENV_VAR) || env.NODE_ENV;
 
         this.info(ENV_VAR, 'is ', ENV || 'not set');
-        this.debug('topPackage is ', this.topPackage.name);
+        this.debug('topPackage is', this.topPackage.name);
 
         const resolveFromPkgDir = (pkg, file, ...relto) => {
             if (!pkg || this.topPackage.name === pkg) {

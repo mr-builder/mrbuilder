@@ -169,6 +169,10 @@ if (opts.useScopeHoist) {
     webpack.plugins.push(new ModuleConcatenationPlugin());
 }
 
+if (!webpack.entry) {
+    webpack.entry = cwd('src', 'index');
+    info('using default entry', webpack.entry)
+}
 debug('DEBUG is on');
 debug('optionsManager', stringify(optionsManager.plugins));
 debug('webpack configuration', stringify(webpack));
