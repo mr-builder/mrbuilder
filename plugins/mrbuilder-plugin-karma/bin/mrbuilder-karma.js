@@ -2,7 +2,7 @@
 const path                     = require('path');
 const { env, argv, cwd }       = process;
 env.MRBUILDER_INTERNAL_PLUGINS =
-    [env.MRBUILDER_INTERNAL_PLUGINS, 'mrbuilder-plugin-babel', 'mrbuilder-plugin-karma', 'mrbuilder-plugin-enzyme'].join(
+    [env.MRBUILDER_INTERNAL_PLUGINS, 'mrbuilder-plugin-babel', 'mrbuilder-plugin-webpack', 'mrbuilder-plugin-karma', 'mrbuilder-plugin-enzyme'].join(
         ',');
 
 if (!env.NODE_ENV) {

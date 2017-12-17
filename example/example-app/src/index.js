@@ -7,7 +7,7 @@ export default class App extends Component {
 
     render() {
         return (<div>
-            <h1>Hello from App</h1>
+            <h1 id='hello-from-app'>Hello from App</h1>
             <ExampleLib/>
             <ExampleWebpack/>
             <ExampleEverything/>

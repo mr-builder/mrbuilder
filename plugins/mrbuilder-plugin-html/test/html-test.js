@@ -5,9 +5,12 @@ describe('mrbuilder-plugin-html', function () {
 
     it('should init', function () {
         const webpack = {
-            plugins: []
+            plugins: [],
+            module:{
+                rules:[]
+            },
         };
-        mod.call({}, {
+        mod.call({useHtml:true}, {
             title: 'whatever',
             entry: { 'index': 'index.js', other: 'other' }
         }, webpack);
@@ -19,11 +22,14 @@ describe('mrbuilder-plugin-html', function () {
     it('should entry string', function () {
         const webpack = {
             plugins   : [],
+            module:{
+                rules:[]
+            },
             publicPath: 'public/'
         };
-        mod.call({}, { title: 'whatever' }, webpack);
+        mod.call({useHtml:true}, { title: 'whatever' }, webpack);
         expect(webpack.plugins).to.have.length(1);
-        expect(path.relative(__dirname,  webpack.entry)).to.eql('../public/index');
+        expect(path.relative(__dirname,  webpack.entry)).to.eql('../src/app.js');
     })
 })
 ;

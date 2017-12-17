@@ -10,7 +10,7 @@ describe('mrbuilder-plugin-karma', function () {
             }
         };
 
-        mod({}, webpack);
+        mod.call({info(){}, warn(){}}, {}, webpack);
 
         expect(webpack.plugins).to.have.length(2);
         expect(webpack.node).to.eql({

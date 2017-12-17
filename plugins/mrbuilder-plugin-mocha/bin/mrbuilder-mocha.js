@@ -3,16 +3,17 @@ process.env.NODE_ENV                   = process.env.NODE_ENV || 'test';
 process.env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-mocha';
 
 
-const optionsManager = global._MRBUILDER_OPTIONS_MANAGER ||
-                       new (require('mrbuilder-optionsmanager').default)({
-                           prefix  : 'mrbuilder',
-                           _require: require
-                       });
+const optionsManager = global._MRBUILDER_OPTIONS_MANAGER || (
+    global._MRBUILDER_OPTIONS_MANAGER =
+        new (require('mrbuilder-optionsmanager').default)({
+            prefix  : 'mrbuilder',
+            _require: require
+        }));
 
 const { cwd }  = require('mrbuilder-utils');
 const path     = require('path');
 const { argv } = process;
-const {info}  = optionsManager.plugins.get('mrbuilder-plugin-mocha');
+const { info } = optionsManager.plugins.get('mrbuilder-plugin-mocha');
 
 const coverageDir    = optionsManager.config(
     'mrbuilder-plugin-mocha.coverageDir');
