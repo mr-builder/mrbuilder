@@ -176,10 +176,20 @@ describe('mrbuilder-optionsmanager', function () {
 
     });
     newOptionManagerTest('with-alias-override', {
-        argv:argv('--alias-2.stuff=whatever')
+        argv: argv('--alias-2.stuff=whatever')
     }, function (om) {
         expect(om.config('alias-1.stuff')).to.eql('Override');
         expect(om.config('alias-2.stuff')).to.eql('whatever');
+    });
+    newOptionManagerTest.only('with-merge-alias-override', {
+        argv: argv('--alias-2.stuff=whatever'),
+        env : {
+            ALIAS_1_MORE: "stuff",
+        }
+    }, function (om) {
+        expect(om.config('alias-1.stuff')).to.eql('Override');
+        expect(om.config('alias-2.stuff')).to.eql('whatever');
+        console.log(om.config('alias-1'), om.config('alias-2'));
     });
 
     newOptionManagerTest("with-alias", {

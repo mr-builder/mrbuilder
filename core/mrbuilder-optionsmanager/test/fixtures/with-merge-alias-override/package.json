@@ -1,0 +1,21 @@
+{
+  "name": "with-alias-override",
+  "version": "1",
+  "tester": {
+    "plugins": [
+      [
+        "alias-1",
+        {
+          "stuff": "Override"
+        }
+      ],
+      [
+        "alias-2",
+        {
+          "stuff": "nevermind",
+          "other": true
+        }
+      ]
+    ]
+  }
+}
