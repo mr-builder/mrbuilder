@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-worker",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "src",
   "dependencies": {
     "worker-loader": "^1.1.0"
