@@ -37,20 +37,22 @@ module.exports = function (source) {
 
 
     if (!md) {
-        const langMap     = this.query.extensions;
-        const highlighter = this.query.highlighter;
-        const theme       = this.query.theme;
-        const xhtmlOut    = this.query.xhtmlOut || true;
-        const linkify     = this.query.linkify;
-        const typographer = this.query.typographer;
-        const quotes      = this.query.quotes;
-        const renderer    = new Renderer();
-
+        const langMap         = this.query.extensions;
+        const highlighter     = this.query.highlighter;
+        const theme           = this.query.theme;
+        const xhtmlOut        = this.query.xhtmlOut || true;
+        const linkify         = this.query.linkify;
+        const typographer     = this.query.typographer;
+        const quotes          = this.query.quotes;
+        const markdownPlugins = this.query.markdownPlugins;
+        const html             =this.query.html || true;
+        const renderer        = new Renderer();
         md = MarkdownIt({
             xhtmlOut,
             linkify,
             typographer,
             quotes,
+            html,
             highlight: function (str, lang) {
                 lang = lang && lang.trim() || 'text';
 
@@ -87,7 +89,15 @@ module.exports = function (source) {
             }
         });
 
-
+        if (markdownPlugins) {
+            markdownPlugins.forEach(value => {
+                if (Array.isArray(value)) {
+                    md = md.use(require(value[0]), value[1]);
+                } else {
+                    md = md.use(require(value));
+                }
+            })
+        }
         md.renderer = renderer;
     }
     this.cacheable && this.cacheable();

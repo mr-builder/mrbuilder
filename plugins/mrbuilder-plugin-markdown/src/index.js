@@ -60,8 +60,10 @@ module.exports = function (conf = {},
             'styl': 'stylus'
         },
         highlighter: 'hljs',
-        theme      : 'atom-one-light'
+        theme      : 'atom-one-light',
+        html       : true,
     }, omit(conf, ['test', 'include', 'exclude']));
+
 
     webpack.module.rules.push(
         {

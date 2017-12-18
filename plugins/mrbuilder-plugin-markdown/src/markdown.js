@@ -8,31 +8,65 @@
 'use strict';
 const { camelCased } = require('mrbuilder-utils');
 
-const escapeHtml = require('markdown-it/lib/common/utils').escapeHtml;
-const _Renderer  = require('markdown-it/lib/renderer');
+const escapeHtml   = require('markdown-it/lib/common/utils').escapeHtml;
+const _Renderer    = require('markdown-it/lib/renderer');
+const reactReplace = (str) => str.replace(/'/g, "\\'")
+                                 .replace(/\${/g, "${'${'}");
+
+const reactStyle = (value) => {
+    return `{${JSON.stringify(
+        value.split(/;/g).reduce(function (ret, key) {
+
+            const parts = key.split(':', 2);
+
+            ret[camelCased(parts[0])] = parts[1];
+
+            return ret;
+        }, {})).replace(/^"(.*)"$/, '$1')}}`;
+};
 
 class Renderer extends _Renderer {
     constructor(...args) {
         super(...args);
 
-        this.prelude       = {};
-        this.imports       = {
+        this.prelude              = {};
+        this.imports              = {
             'React, {Component as $MDComponent}': 'react'
         };
-        this.renderImport  = this._renderImport.bind(this);
-        this.renderPrelude = this._renderPrelude.bind(this);
-        this.rules['text'] = this.text;
-
-     /*   this.default_rules.html_block = function (tokens, idx /!*, options, env *!/) {
-            return tokens[idx].content;
-        };
-        default_rules.html_inline = function (tokens, idx /!*, options, env *!/) {
-            return tokens[idx].content;
-        };
-*/
+        this.renderImport         = this._renderImport.bind(this);
+        this.renderPrelude        = this._renderPrelude.bind(this);
+        this.rules['text']        = this.text;
+        this.rules['html_inline'] = this.inlineHtml.bind(this);
+        this.rules['html_block']  = this.blockHtml.bind(this);
     }
-    text(tokens, idx /*, options, env */){
-        return `{'${escapeHtml(tokens[idx].content.replace(/'/g, "\\'").replace(/\${/g, "${'${'}"))}'}`;
+
+    blockHtml(tokens, idx) {
+        const current = tokens[idx];
+
+        console.log('tokens', current);
+        return current.content;
+    }
+
+    inlineHtml(tokens, idx) {
+        const content  = tokens[idx].content;
+        const tagParts = /^<(.*)\s+?(.*)\/?>$/.exec(content);
+        if (tagParts == null) {
+            return content;
+        }
+        const tag   = tagParts[1];
+        const attrs = (tagParts[2] || '').replace(
+            /((\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?)/g,
+            (m, i2, k, v) => {
+                if (k === 'style') {
+                    return `style=${reactStyle(v)}`;
+                }
+                return m;
+            });
+        return `<${tag} ${attrs}>`;
+    };
+
+    text(tokens, idx /*, options, env */) {
+        return `{'${escapeHtml(reactReplace(tokens[idx].content))}'}`;
     }
 
 
@@ -62,16 +96,7 @@ class Renderer extends _Renderer {
                     value = `"${escapeHtml(value)}"`;
                     break;
                 case 'style':
-                    value = JSON.stringify(
-                        value.split(/;/g).reduce(function (ret, key) {
-
-                            const parts = key.split(':', 2);
-
-                            ret[camelCased(parts[0])] = parts[1];
-
-                            return ret;
-                        }, {})).replace(/^"(.*)"$/, '$1');
-                    value = `{${value}}`;
+                    value = reactStyle(value);
                     break;
                 default:
                     value = `"${escapeHtml(value)}"`;

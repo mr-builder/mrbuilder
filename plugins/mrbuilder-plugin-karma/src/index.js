@@ -58,7 +58,7 @@ module.exports = function ({
         MRBUILDER_TEST_MODULE: JSON.stringify(testDir)
     }));
     if (mainFields) {
-        webpack.mainFields = mainFields;
+        webpack.resolve.mainFields = mainFields;
     }
     webpack.externals = [];
     return webpack;

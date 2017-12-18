@@ -29,3 +29,6 @@ Should be rendered as
 ## This shows line breaks
 Hello and ' are escaped {this to}'
 world
+
+## This shows inline html
+It needs to be inline <span className='inline-hello' style="font-weight:bold;color:red">Hello</span>
