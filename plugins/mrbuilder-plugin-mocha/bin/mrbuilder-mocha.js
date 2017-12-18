@@ -54,7 +54,7 @@ argv.push('--require',
 
 if (optionsManager.enabled('mrbuilder-plugin-enzyme')) {
     argv.push('--require', path.join(__dirname, '..', 'src', 'cli-helpers'));
-    argv.push('--require', 'mrbuilder-plugin-enzyme/src/enzyme');
+    argv.push('--require', 'mrbuilder-plugin-enzyme/src/enzyme-mocha');
 }
 
 argv.push(testDir);
