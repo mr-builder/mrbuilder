@@ -42,8 +42,6 @@ class Renderer extends _Renderer {
 
     blockHtml(tokens, idx) {
         const current = tokens[idx];
-
-        console.log('tokens', current);
         return current.content;
     }
 

@@ -18,7 +18,7 @@ if (babelrc && fs.existsSync(babelrc)) {
     conf = JSON.parse(fs.readFileSync(babelrc, 'utf8'));
 } else {
     const defConf = mrb('babelConfig', `${__dirname}/babelrc.json`) || './babelrc.json';
-    logger.info('loading', optionsManager.enabled('mrbuilder-plugin-babel'), defConf)
+    logger.info('loading', optionsManager.enabled('mrbuilder-plugin-babel'), defConf);
     conf = require(defConf);
 }
 
