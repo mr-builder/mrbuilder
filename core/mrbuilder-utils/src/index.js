@@ -209,6 +209,42 @@ function stringify(value, indent = 2) {
     }, indent);
 }
 
+function parseEntry(entryNoParse) {
+    if (!entryNoParse) {
+        return;
+    }
+    if (!(typeof entryNoParse === 'string' || Array.isArray(entryNoParse))) {
+        return Object.keys(entryNoParse).reduce(function (ret, key) {
+            ret[key] = cwd(entryNoParse[key]);
+            return ret;
+        }, {});
+    }
+    let entry        = {};
+    const entryArray = Array.isArray(entryNoParse) ? entryNoParse
+        : typeof entryNoParse === 'string' ? entryNoParse.split(/,\s*/)
+                           : entryNoParse;
+
+
+    for (let i = 0, l = entryArray.length; i < l; i++) {
+        const parts = entryArray[i].split('=', 2);
+        let key     = parts[0], value = parts[1];
+        if (!value) {
+            value = key;
+            key   = path.basename(key).replace(/([^.]*$)/, '');
+        }
+        if (entry[key]) {
+            if (Array.isArray(entry[key])) {
+                entry[key].push(cwd(value));
+            } else {
+                entry[key] = [entry[key], cwd(value)];
+            }
+        } else {
+            entry[key] = cwd(value);
+        }
+    }
+    return entry;
+}
+
 module.exports = {
     parseValue,
     stringify,
@@ -219,6 +255,7 @@ module.exports = {
     pkg,
     configOrBool,
     applyFuncs,
+    parseEntry,
     debug,
     warn,
     parseJSON,

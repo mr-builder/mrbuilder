@@ -1,4 +1,4 @@
-const { cwd }    = require('mrbuilder-utils');
+const { cwd, parseEntry }    = require('mrbuilder-utils');
 const DEV_SERVER = {
     filename          : 'index.js',
     historyApiFallback: true,
@@ -13,7 +13,7 @@ module.exports = function (opts, webpack) {
     const devServer = Object.assign({}, DEV_SERVER, opts);
     delete devServer.loader;
     if (devServer.entry) {
-        webpack.entry = devServer.entry;
+        webpack.entry = parseEntry(devServer.entry);
     }
     this.useHtml = true;
     if (devServer.devtool == null) {

@@ -1,7 +1,7 @@
 require('mrbuilder-plugin-browserslist');
 const path                                = require('path');
 const optionsManager                      = global._MRBUILDER_OPTIONS_MANAGER;
-const { stringify, pkg, cwd, resolveMap } = require('mrbuilder-utils');
+const { stringify, pkg, cwd, resolveMap,parseEntry } = require('mrbuilder-utils');
 const { MRBUILDER_ENTRY }                 = process.env;
 const {
           DefinePlugin,
@@ -37,7 +37,6 @@ const opts    = {
         'mrbuilder-plugin-webpack.useScopeHoist', true),
     useTarget     : optionsManager.config('mrbuilder-plugin-webpack.target',
         'web'),
-    entry         : optionsManager.config('mrbuilder-plugin-webpack.entry'),
     useHtml       : !isKarma &&
                     (optionsManager.enabled(
                             'mrbuilder-plugin-webpack-dev-server')
@@ -45,23 +44,17 @@ const opts    = {
                      optionsManager.config('mrbuilder-plugin-webpack.demo')
                     )
 };
-debug('using options', stringify(opts));
-
-
-//if its not anything else its a library.
 
 const packageJson = pkg();
 let webpack       = {
 
-    resolve      : {
+    resolve: {
         alias: {
             [packageJson.name]: cwd(packageJson.source || packageJson.main
                                     || 'src')
         }
     },
-    entry        : {
-        index: cwd('src/index')
-    },
+
     resolveLoader: {
         modules: [
             'node_modules',
@@ -91,40 +84,12 @@ let webpack       = {
 
 
 //we take this away from webpack so we an expose it to the config.
-if (MRBUILDER_ENTRY) {
-    let entry = {};
-    let entryNoParse;
-    try {
-        entryNoParse = JSON.parse(MRBUILDER_ENTRY);
-    } catch (e) {
-        entryNoParse = JSON.parse('"' + MRBUILDER_ENTRY + '"');
+(entryNoParse => {
+    if (!entryNoParse) {
+        return;
     }
-    const isStr = typeof entryNoParse === 'string';
-    if (isStr || Array.isArray(entryNoParse)) {
-        entryNoParse = isStr ? entryNoParse.split(/,\s*/) : entryNoParse;
-
-        for (let i = 0, l = entryNoParse.length; i < l; i++) {
-            const parts = entryNoParse[i].split('=', 2);
-            let key     = parts[0], value = parts[1];
-            if (!value) {
-                value = key;
-                key   = path.basename(key);
-            }
-            if (entry[key]) {
-                if (Array.isArray(entry[key])) {
-                    entry[key].push(value);
-                } else {
-                    entry[key] = [entry[key], value];
-                }
-            } else {
-                entry[key] = value;
-            }
-        }
-    } else {
-        entry = entryNoParse;
-    }
-    webpack.entry = entry;
-}
+    webpack.entry = Object.freeze(parseEntry(entryNoParse))
+})(optionsManager.config('mrbuilder-plugin-webpack.entry'));
 
 //This is where the magic happens
 try {

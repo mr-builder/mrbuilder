@@ -12,6 +12,7 @@ const mod = function ({
                           demo,
                           outputPath = cwd('lib'),
                           useExternals,
+                          devtool = 'source-maps',
                           alias = [
                               'react',
                               'react-dom'
@@ -57,15 +58,11 @@ const mod = function ({
         webpack.output.libraryTarget = libraryTarget;
     }
 
-    webpack.entry = entry && Object.keys(entry).reduce(function (ret, key) {
-        ret[key] = cwd(entry[key]);
-        return ret;
-    }, {});
 
     if (demo) {
         webpack.output.path     = demo === true ? cwd('demo') : cwd(demo);
         webpack.output.filename = '[name].[hash].js';
-        info('using entry',  webpack.output.path);
+        info('using entry', webpack.output.path);
     } else {
         webpack.output.filename = '[name].js';
     }
@@ -94,6 +91,9 @@ const mod = function ({
         webpack.resolve.mainFields = mainFields;
         info(`using mainFields`, mainFields);
     }
+
+    webpack.devtool = devtool;
+
     return webpack;
 
 

@@ -2,6 +2,7 @@ const HtmlWebpackPlugin  = require('html-webpack-plugin');
 const path               = require('path');
 const { existsSync }     = require('fs');
 const babelConfig        = require('mrbuilder-plugin-babel/babel-config');
+const { parseEntry }     = require('mrbuilder-utils');
 /**
  *   title     : (deps.description ? deps.description : deps.name),
  hash      : opts.useNameHash,
@@ -68,15 +69,14 @@ module.exports = function ({
         }
     }
 
-    if (entry || webpack.entry) {
-        entry = entry || webpack.entry
-    } else {
-        entry = path.join(publicPath, 'index');
-        if (!existsSync(entry)) {
+    entry = entry  ? parseEntry(entry) : webpack.entry;
+    if (!entry) {
+        webpack.entry = { index: path.join(publicPath, 'index') };
+        if (!existsSync(entry.index)) {
             info('entry', entry, 'does not exist using default');
-            webpack.entry = entry = `${__dirname}/app.js`;
+            webpack.entry = entry = { index: `${__dirname}/app.js` };
             webpack.module.rules.push({
-                test: new RegExp(entry),
+                test: new RegExp(entry.index),
                 use : [{
                     loader : 'val-loader',
                     options: pkg
