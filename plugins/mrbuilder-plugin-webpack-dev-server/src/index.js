@@ -26,5 +26,8 @@ module.exports = function (opts, webpack) {
     webpack.devServer = devServer;
     delete devServer['useExternals'];
     delete devServer['noHot'];
+    //webpack dev server started, not being able to find loglevel.
+    // google didn't show much, so... this is the thing now.
+    webpack.resolve.alias.loglevel = require.resolve('loglevel');
     return webpack;
 };

@@ -3,9 +3,10 @@
   "version": "0.2.0",
   "description": "webpack dev server for mrbuilder",
   "dependencies": {
+    "loglevel": "^1.6.0",
     "mrbuilder-plugin-webpack": "^0.2.0",
     "mrbuilder-utils": "^0.2.0",
-    "webpack-dev-server": "^2.9.5"
+    "webpack-dev-server": "^2.9.7"
   },
   "source": "src",
   "main": "src",

@@ -3,11 +3,13 @@
   "version": "0.2.0",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.2.0"
+    "mrbuilder": "^0.2.0",
+    "mrbuilder-plugin-chunk": "^0.2.0"
   },
   "scripts": {
+    "clean": "mrbuilder-clean app",
     "start": "mrbuilder-webpack-dev-server",
-    "prepublish": "mrbuilder-webpack"
+    "prepublish": "mrbuilder-webpack --app app"
   },
   "mrbuilder": {
     "plugins": [
@@ -21,6 +23,7 @@
           }
         }
       ],
+      "mrbuilder-plugin-chunk",
       [
         "mrbuilder-plugin-html",
         {

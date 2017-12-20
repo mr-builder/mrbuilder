@@ -60,15 +60,6 @@ module.exports = function ({
         publicPath = path.resolve(__dirname, '..', 'public');
     }
 
-    function charset(ele) {
-        if (!ele.attributes) {
-            ele.attributes = {};
-        }
-        if (!ele.attributes.charset) {
-            ele.attributes.charset = 'UTF-8';
-        }
-    }
-
     entry = entry ? parseEntry(entry) : webpack.entry;
     if (!entry) {
         entry = webpack.entry = { index: path.join(publicPath, 'index') };
@@ -76,7 +67,7 @@ module.exports = function ({
             entry = webpack.entry = { index: `${__dirname}/app.js` };
             info('entry', entry.index, 'does not exist using default');
             webpack.module.rules.push({
-                test: new RegExp(entry.index),
+                test: new RegExp(webpack.entry.index),
                 use : [{
                     loader : 'val-loader',
                     options: pkg
