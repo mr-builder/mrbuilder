@@ -106,7 +106,7 @@ module.exports = function ({
         webpack.plugins.push(...keys.map(key => {
             const chunks = [key];
             //html plugin is kinda borked, so this is a nasty workaround.
-            if (om.enabled('mrbuilder-plugin-chunk')) {
+            if (om && om.enabled('mrbuilder-plugin-chunk')) {
                 const { manifest = 'manifest', vendors = 'vendors' } = om.config(
                     'mrbuilder-plugin-chunk');
                 if (manifest) {

@@ -4,9 +4,9 @@ const SOURCE_MAIN_FIELDS              = ['source', 'browser', 'marin'];
 
 const mod = function ({
                           library,
-                          libraryTarget = 'umd',
+                          libraryTarget = 'commonjs2',
                           extensions = ['.js', '.jsx'],
-                          mainFields,
+                          mainFields = true,
                           app,
                           entry,
                           demo,
@@ -52,14 +52,14 @@ const mod = function ({
 
     demo = app || demo;
 
-    if (!(entry || demo || this.isKarma || this.isDevServer)) {
+    if (this.isLibrary) {
         webpack.output.library       =
             typeof library == 'string' ? library : camelCased(pkg.name);
         webpack.output.libraryTarget = libraryTarget;
     }
 
 
-    if (demo) {
+    if (!this.isDevServer && demo) {
         webpack.output.path     = demo === true ? cwd('demo') : cwd(demo);
         webpack.output.filename = '[name].[hash].js';
         info('using entry', webpack.output.path);
@@ -70,7 +70,7 @@ const mod = function ({
         webpack.resolve.extensions = extensions;
     }
 
-    if (useExternals || !this.useHtml) {
+    if (this.isLibrary && useExternals !== false) {
         if (Array.isArray(useExternals)) {
             webpack.useExternals = useExternals;
         } else if (typeof useExternals === 'string') {
@@ -87,7 +87,9 @@ const mod = function ({
                 : mainFields;
         mainFields                 =
             Array.isArray(mainFields) ? mainFields : mainFields === true
-                ? SOURCE_MAIN_FIELDS : DEFAULT_MAIN_FIELDS;
+                ? webpack.target == 'node' ? ['source', 'main']
+                                                         : SOURCE_MAIN_FIELDS
+                : DEFAULT_MAIN_FIELDS;
         webpack.resolve.mainFields = mainFields;
         info(`using mainFields`, mainFields);
     }
