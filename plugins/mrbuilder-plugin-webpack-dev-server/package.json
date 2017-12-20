@@ -12,7 +12,7 @@
   "source": "src",
   "main": "src",
   "bin": {
-    "mrbuilder-webpack-server": "./bin/mrbuilder-webpack-dev-server.js"
+    "mrbuilder-webpack-server-cli": "./bin/cli.js"
   },
   "mrbuilder": {
     "alias": {

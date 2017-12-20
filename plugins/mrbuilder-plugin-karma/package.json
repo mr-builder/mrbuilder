@@ -6,7 +6,7 @@
     "test": "mrbuilder-mocha"
   },
   "bin": {
-    "mrbuilder-karma": "bin/mrbuilder-karma.js"
+    "mrbuilder-karma-cli": "bin/cli.js"
   },
   "dependencies": {
     "karma": "^1.7.1",

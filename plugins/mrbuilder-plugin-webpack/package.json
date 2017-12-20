@@ -5,11 +5,11 @@
   "scripts": {
     "clean": "mrbuilder-clean"
   },
+  "bin": {
+    "mrbuilder-webpack-cli": "./bin/cli"
+  },
   "main": "src",
   "source": "src",
-  "bin": {
-    "mrbuilder-webpack": "./bin/mrbuilder-webpack.js"
-  },
   "dependencies": {
     "json-loader": "^0.5.7",
     "mrbuilder-optionsmanager": "^0.2.1",

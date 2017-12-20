@@ -6,7 +6,7 @@
     "clean": "mrbuilder-clean"
   },
   "bin": {
-    "mrbuilder-mocha": "bin/mrbuilder-mocha.js"
+    "mrbuilder-mocha-cli": "bin/cli.js"
   },
   "dependencies": {
     "chai": "^4.1.2",

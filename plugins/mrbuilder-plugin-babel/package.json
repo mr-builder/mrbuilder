@@ -6,7 +6,8 @@
     "clean": "mrbuilder-clean"
   },
   "bin": {
-    "mrbuilder-babel": "bin/mrbuilder-babel.js"
+    "mrbuilder-babel-cli": "bin/babel-cli.js",
+    "mrbuilder-clean-cli": "bin/clean-cli.js"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",

@@ -20,9 +20,14 @@ const generatePackage = ({
                              plugins,
                              presets,
                              repository,
+                             rootRepository,
                          }) => {
     if (!name) {
         throw new Error('--name is required');
+    }
+    let demo, main;
+    if (rootRepository) {
+        repository = `${rootRepository}/${name}`;
     }
     switch (type) {
         case 'app': {
@@ -34,14 +39,11 @@ const generatePackage = ({
             break;
         }
         case 'demo':
-            prepublish = prepublish || 'mrbuilder-webpack --demo demo';
-            start      = start || 'mrbuilder-webpack-dev-server';
-            clean      = clean || 'mrbuilder-clean app';
-            test       = test || 'mrbuilder-karma';
-            karma      = karma || 'mrbuilder-karma';
-            break;
+            prepublish = prepublish || 'mrbuilder-webpack';
+            demo       = "mrbuilder-webpack --demo demo";
         default:
             type       = 'lib';
+            main       = 'lib';
             prepublish = 'mrbuilder-webpack';
             start      = start || 'mrbuilder-webpack-dev-server';
             clean      = clean || 'mrbuilder-clean';
@@ -55,10 +57,13 @@ const generatePackage = ({
         version,
         description,
         repository,
+        "source"       : main ? "src" : void(0),
+        main,
         devDependencies: {
             "mrbuilder": mrbuilderVersion
         },
         scripts        : {
+            demo,
             start,
             prepublish,
             clean,
@@ -94,7 +99,7 @@ $ yarn run ${cmd}
 \`\`\``;
 };
 
-const generateReadme = (type, {
+const generateReadme = ({ type, rootDemo }, {
     name,
     version,
     description,
@@ -103,7 +108,8 @@ const generateReadme = (type, {
         prepublish,
         clean,
         test,
-        karma
+        karma,
+        demo
     },
     mrbuilder: {
         plugins,
@@ -118,6 +124,7 @@ ${name}
 ===
 ${description}
 
+${rootDemo ? `A demo can be found [here](${rootDemo}/${demo}/${name})` : ''}
 
 ## Installation    
 \`\`\`sh
@@ -138,6 +145,33 @@ ${clean ? `- clean ${cmd('clean')}` : ''}
 ${test ? `- test ${cmd('test')}` : ''  }
 ${karma ? `- karma ${cmd('karma')}` : ''}
 ${prepublish ? `- build ${cmd('prepublish')}` : ''}
+`
+};
+const generateIndex  = ({ name }) => {
+    return `
+import React, {PureComponent} from 'react';
+    
+export default class ${camelCased(name)} extends PureComponent {
+   render(){
+       return 'hello from ${name}'
+   }
+}
+    
+    `
+};
+const generateTest   = ({ name }) => {
+    const Component = camelCased(name);
+    return `
+import ${Component} from '${name}';
+import {expect} from 'chai';
+import {mount} from 'enzyme';
+    
+describe('${name}',function(){
+      it('should render', function(){
+        const root = mount(<${Component}/>);
+        expect(root.text()).to.eql('hello from ${name}');
+      });
+});
 `
 };
 
@@ -186,10 +220,16 @@ if (require.main === module) {
     mkdir('src');
     mkdir('test');
     write('package.json', JSON.stringify(_pkg, null, 2));
-    write('Readme.md', generateReadme(config.type, _pkg));
+    write('Readme.md', generateReadme(config, _pkg));
+    write('src/index.js', generateIndex(config));
+    if (_pkg.scripts.test) {
+        write(`test/${_pkg.name}-test.js`, generateTest(config));
+    }
 } else {
     module.exports = {
         generatePackage,
-        generateReadme
+        generateReadme,
+        generateIndex,
+        generateTest,
     }
 }

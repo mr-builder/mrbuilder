@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('mrbuilder-plugin-babel/bin/mrbuilder-clean');
+require('mrbuilder-plugin-babel/bin/clean-cli');

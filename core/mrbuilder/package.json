@@ -27,8 +27,7 @@
     "mrbuilder-karma": "bin/mrbuilder-karma.js",
     "mrbuilder-mocha": "bin/mrbuilder-mocha.js",
     "mrbuilder-webpack": "bin/mrbuilder-webpack.js",
-    "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js",
-    "mrbuilder-require-test": "bin/require-test.js"
+    "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js"
   },
   "mrbuilder": {
     "options": {

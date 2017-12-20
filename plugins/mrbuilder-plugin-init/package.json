@@ -9,6 +9,9 @@
   "scripts": {
     "mrbuilder-init": "./bin/mrbuilder-init.js"
   },
+  "bin": {
+    "mrbuilder-init": "./bin/init"
+  },
   "mrbuilder": {
     "alias": {
       "name": "Name of the module [required]",
@@ -21,7 +24,9 @@
       "test": "Script to run on test [default:mrbuilder-karma]",
       "karma": "Script to run for karma testing [default:mrbuilder-karma]",
       "plugins": "Plugins to enable by default",
-      "presets": "Presets to enable by default"
+      "presets": "Presets to enable by default",
+      "rootRepository": "The project will be appended to this to create repository url",
+      "rootDemo": "The project will be appended to this to create demo url"
     }
   }
 }
