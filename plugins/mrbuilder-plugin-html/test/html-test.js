@@ -29,7 +29,7 @@ describe('mrbuilder-plugin-html', function () {
         };
         mod.call({useHtml:true}, { title: 'whatever' }, webpack);
         expect(webpack.plugins).to.have.length(1);
-        expect(path.relative(__dirname,  webpack.entry)).to.eql('../src/app.js');
+        expect(path.relative(__dirname,  webpack.entry.index)).to.eql('../src/app.js');
     })
 })
 ;

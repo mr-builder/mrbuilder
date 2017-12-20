@@ -13,7 +13,6 @@ const isDirectory = sourceDir => {
     }
 };
 
-
 const odir = __dirname;
 describe('mrbuilder-optionsmanager', function () {
     const argv   = (...argv) => ['fake-interpreter', 'fake-script'].concat(
@@ -185,11 +184,14 @@ describe('mrbuilder-optionsmanager', function () {
         argv: argv('--alias-2.stuff=whatever'),
         env : {
             ALIAS_1_MORE: "stuff",
+            ALIAS_2_YUP : "true"
         }
     }, function (om) {
+        console.log(om.config('alias-1'), om.config('alias-2'));
         expect(om.config('alias-1.stuff')).to.eql('Override');
         expect(om.config('alias-2.stuff')).to.eql('whatever');
-        console.log(om.config('alias-1'), om.config('alias-2'));
+        expect(om.config('alias-1.more')).to.eql('stuff');
+        expect(om.config('alias-2.yup')).to.eql(true);
     });
 
     newOptionManagerTest("with-alias", {

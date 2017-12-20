@@ -3,6 +3,13 @@ import { get, parseJSON, parseValue } from 'mrbuilder-utils';
 import { merge, mergeAlias, nameConfig, select, split } from './util';
 import _help from './help';
 
+const copyProps = (...args) => {
+    if (args.includes(false)) {
+        return false;
+    }
+    return Object.assign({}, ...args.filter(v => v !== true));
+};
+
 export default class OptionsManager {
 
     plugins = new Map();
@@ -58,7 +65,7 @@ export default class OptionsManager {
             }
         };
 
-        this.info     = (...args) => {
+        this.info = (...args) => {
             if (!this.env('QUIET')) {
                 info(`INFO [${prefix.toLowerCase()}]`, ...args);
             }
@@ -150,9 +157,11 @@ export default class OptionsManager {
         };
 
         const processPlugin = (includedFrom, plugin, override, parent) => {
-            let [pluginName, pluginOpts = override] = nameConfig(plugin);
-            let pluginSrc               = pluginName;
-            let ret                     = pluginName;
+            let [pluginName, pluginOpts = {}] = nameConfig(plugin);
+
+            pluginOpts    = copyProps(pluginOpts, override);
+            let pluginSrc = pluginName;
+            let ret       = pluginName;
             let alias;
             if (pluginName.startsWith('.')) {
                 if (includedFrom === this.topPackage.name) {
@@ -162,28 +171,28 @@ export default class OptionsManager {
                 }
                 ret = false;
             } else {
-                let [rPluginName, rPluginOpts = pluginOpts] = nameConfig(
-                    plugin);
+                const [rPluginName, rPluginOpts] = nameConfig(plugin);
+
+                pluginOpts = copyProps(pluginOpts, rPluginOpts);
 
                 const pConfig = resolveConfig(rPluginName);
                 if (pConfig) {
 
                     if (pConfig.plugin) {
-                        let [pluginPath, prPluginOpts = rPluginOpts] = nameConfig(
+                        let [pluginPath, prPluginOpts] = nameConfig(
                             pConfig.plugin);
 
+                        pluginOpts = copyProps(pluginOpts, prPluginOpts);
                         if (pluginPath) {
                             if (rPluginName === this.topPackage.name) {
                                 pluginSrc = this.cwd(pluginPath);
                             } else {
                                 pluginSrc = join(rPluginName, pluginPath);
                             }
-                            pluginOpts = prPluginOpts;
                         }
                     }
                     alias = pConfig.alias;
                 }
-
             }
 
             if (this.plugins.has(pluginName)) {

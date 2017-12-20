@@ -1,19 +1,41 @@
-const path          = require('path');
-const getLocalIdent = require('./getLocalIdent');
+const path = require('path');
+
+const { cwd }  = require('mrbuilder-utils');
+const _resolve = (p) => {
+    if (p.startsWith('.')) {
+        return cwd(p);
+    }
+    if (p.startsWith('~')) {
+        p           = p.substring(1);
+        const parts = p.split('/');
+
+        const pkgDir = path.resolve(
+            require.resolve(path.join(parts.shift(), 'package.json')), '..');
+
+        return path.resolve(pkgDir, ...parts);
+    }
+    return p;
+};
 
 module.exports = function ({
                                alias,
                                sourceMap = true,
                                modules = true,
-                               paths = [],
+                               paths = [
+                                   cwd('node_modules'),
+                                   cwd('../node_modules'),
+                               ],
                                nib = true,
                                includeCss = true,
                                hoistAtRules = true,
                                compress = false,
                                preferPathResolver,
+                               getLocalIdent = require('./getLocalIdent'),
                                stylusContext = 'src',
                                localIdentName = '[package-name]_[hyphen:base-name]_[local]'
-                           }, webpack) {
+                           }, webpack, om) {
+
+    paths = paths.map(_resolve);
 
     const stylusOptions = {
         loader : 'stylus-loader',
@@ -21,9 +43,15 @@ module.exports = function ({
             preferPathResolver,
             sourceMap,
             paths,
-            compress,
+            compress
+
         },
     };
+    if (alias) {
+        Object.keys(alias).forEach(function (key) {
+            this[key] = _resolve(alias[key]);
+        }, webpack.resolve.alias || (webpack.resolve.alias = {}));
+    }
     if (includeCss !== null) {
         stylusOptions.options['include css'] = includeCss;
     }
@@ -36,24 +64,22 @@ module.exports = function ({
         stylusOptions.options.use    = [require('nib')()];
         stylusOptions.options.import = ['~nib/lib/nib/index.styl'];
     }
-
-    if (path.relative(process.cwd(), __dirname) !== '') {
-        stylusOptions.options.paths.unshift(
-            path.join(process.cwd(), 'node_modules'));
+    if (typeof getLocalIdent === 'string') {
+        getLocalIdent = require(_resolve(getLocalIdent));
     }
-    webpack.module.rules.push({
+
+    webpack.module.rules.unshift({
         test: /\.styl$/,
         use : this.useStyle(
             {
                 loader : 'css-loader',
                 options: {
-                    sourceMap,
-                    alias
+                    sourceMap
                 }
             }, stylusOptions)
     });
     if (modules) {
-        webpack.module.rules.push({
+        webpack.module.rules.unshift({
             test: /\.stylm$/,
             use : this.useStyle({
                 loader : 'css-loader',
@@ -64,12 +90,12 @@ module.exports = function ({
                     localIdentName: localIdentName,
                     context       : stylusContext || 'src',
                     getLocalIdent,
-                    alias
+
                 }
             }, stylusOptions)
         });
+
     }
 
     return webpack;
-
 };

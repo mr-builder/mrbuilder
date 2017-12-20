@@ -37,7 +37,7 @@ export const mergeEnv = (plugin, options = {}, { env } = process) => {
     }
 
 
-    const upperPlugin = plugin.toUpperCase();
+    const upperPlugin = plugin.toUpperCase().replace(/-/g, '_');
     const keys        = Object.keys(env);
     let ret           = Object.assign({}, options);
     for (let i = 0, l = keys.length; i < l; i++) {
