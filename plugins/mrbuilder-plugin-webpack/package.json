@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "json-loader": "^0.5.7",
+    "mrbuilder-optionsmanager":"^0.2.0",
     "mrbuilder-plugin-browserslist": "^0.2.0",
     "mrbuilder-utils": "^0.2.0",
     "prop-types": "^15.6.0",

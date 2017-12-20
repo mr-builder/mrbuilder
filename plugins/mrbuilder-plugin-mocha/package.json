@@ -12,6 +12,7 @@
     "chai": "^4.1.2",
     "jsdom": "^11.5.1",
     "mocha": "^4.0.1",
+    "mrbuilder-optionsmanager":"^0.2.0",
     "mrbuilder-plugin-babel": "^0.2.0"
   },
   "main": "src",
