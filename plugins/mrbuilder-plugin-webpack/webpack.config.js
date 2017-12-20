@@ -3,13 +3,13 @@ const path                                            = require('path');
 const optionsManager                                  = global._MRBUILDER_OPTIONS_MANAGER;
 const { stringify, pkg, cwd, resolveMap, parseEntry } = require(
     'mrbuilder-utils');
-const { MRBUILDER_ENTRY }                             = process.env;
+
 const {
           DefinePlugin,
           optimize: {
               ModuleConcatenationPlugin
           }
-      }                                               = require('webpack');
+      } = require('webpack');
 
 const {
           warn  = console.warn,
@@ -17,10 +17,16 @@ const {
           info  = console.log,
       } = optionsManager.logger('mrbuilder-plugin-webpack');
 
-const isKarma =
-          optionsManager.enabled('mrbuilder-plugin-karma')
+const isKarma = optionsManager.enabled('mrbuilder-plugin-karma');
 const opts    = {
-    isProduction  : process.env.NODE_ENV === 'production',
+    isProduction: process.env.NODE_ENV === 'production',
+    isLibrary   : !(
+        optionsManager.enabled('mrbuilder-plugin-karma') ||
+        optionsManager.enabled('mrbuilder-plugin-webpack-dev-server') ||
+        optionsManager.config('mrbuilder-plugin-webpack.demo') ||
+        optionsManager.config('mrbuilder-plugin-webpack.app')
+    ),
+
     isKarma,
     isDemo        : optionsManager.config('mrbuilder-plugin-webpack.demo'),
     isApp         : optionsManager.config('mrbuilder-plugin-webpack.app'),
