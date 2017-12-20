@@ -31,15 +31,13 @@ export const parse = (value, name) => {
     }
 };
 
-export const mergeEnv = (plugin, options = {}, { env } = process) => {
-    if (options === false) {
-        options = {};
-    }
+export const envify = (str) => str.toUpperCase().replace(/[-.]/g, '_');
 
+export const mergeEnv = (plugin, env = process.env) => {
+    let ret = {};
 
-    const upperPlugin = plugin.toUpperCase().replace(/-/g, '_');
+    const upperPlugin = envify(plugin);
     const keys        = Object.keys(env);
-    let ret           = Object.assign({}, options);
     for (let i = 0, l = keys.length; i < l; i++) {
         const key = keys[i];
         if (key === upperPlugin) {
@@ -59,12 +57,10 @@ export const mergeEnv = (plugin, options = {}, { env } = process) => {
     return ret;
 };
 
-export const mergeArgs     = (plugin, options, { argv } = process) => {
-    if (options === false) {
-        options = {};
-    }
+export const mergeArgs     = (plugin, argv = process.argv) => {
+
     const copy = [];
-    let ret    = Object.assign({}, options);
+    let ret    = {};
     for (let i = 2, l = argv.length; i < l; i++) {
         let arg = argv[i];
 
@@ -163,11 +159,11 @@ export const mergeAliasArgs = (aliases, options, { argv } = process) => {
     return options;
 };
 
-export const mergeAlias = (options,
-                           alias = [],
+export const mergeAlias = (alias = [],
                            aliasObj,
                            process) => {
 
+    const options = {};
     const aliases = (Array.isArray(alias) ? alias
         : Object.keys(alias));
 
@@ -176,39 +172,11 @@ export const mergeAlias = (options,
     aliasObj = mergeAliasArgs(aliases, aliasObj, process);
     aliasObj = mergeAliasEnv(aliases, aliasObj, process);
     aliases.forEach(function (key) {
-        if (!(key in options)) {
+        if (aliasObj[key] !== void(0)) {
             options[key] = aliasObj[key];
         }
     });
     return options;
-}
-
-/**
- * Merge the env and args into the options.
- * Either a command line or an env variable can override a turned off component.
- *
- * resolution order
- * ENV,
- * ARG,
- * Plugin Options,
- * Options
- *
- *
- * @param plugin
- * @param options
- * @param process
- */
-
-export const merge = (plugin, options = {}, process) => {
-    if (options === false) {
-        return false;
-    }
-    const ret = mergeArgs(plugin, options, process);
-
-    if (ret === false) {
-        return false;
-    }
-    return mergeEnv(plugin, ret, process);
 };
 
 

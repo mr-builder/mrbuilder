@@ -1,13 +1,28 @@
 import { basename, join, resolve } from 'path';
 import { get, parseJSON, parseValue } from 'mrbuilder-utils';
-import { merge, mergeAlias, nameConfig, select, split } from './util';
+import {
+    envify, mergeAlias, mergeArgs, mergeEnv, nameConfig, select, split
+} from './util';
 import _help from './help';
 
-const copyProps = (...args) => {
-    if (args.includes(false)) {
+const mergeOptions = (options) => {
+    const ret = {};
+    for (let i = options.length - 1; i >= 0; i--) {
+        const opt = options[i];
+        if (opt === false) {
         return false;
     }
-    return Object.assign({}, ...args.filter(v => v !== true));
+        if (opt == null) {
+            continue;
+        }
+        Object.keys(opt).reduce(function (ret, key) {
+            if (opt[key] !== void(0)) {
+                ret[key] = opt[key];
+            }
+            return ret;
+        }, ret);
+    }
+    return ret;
 };
 
 export default class OptionsManager {
@@ -33,8 +48,8 @@ export default class OptionsManager {
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
-        prefix     = prefix.toUpperCase();
-        envPrefix  = envPrefix || prefix.toUpperCase();
+        prefix     = envify(prefix);
+        envPrefix  = envPrefix || envify(prefix);
         confPrefix = confPrefix || prefix.toLowerCase();
         rcFile     = `.${confPrefix}rc`;
 
@@ -157,9 +172,8 @@ export default class OptionsManager {
         };
 
         const processPlugin = (includedFrom, plugin, override, parent) => {
-            let [pluginName, pluginOpts = {}] = nameConfig(plugin);
-
-            pluginOpts    = copyProps(pluginOpts, override);
+            let [pluginName, pluginOpt] = nameConfig(plugin);
+            const options               = [override, pluginOpt];
             let pluginSrc = pluginName;
             let ret       = pluginName;
             let alias;
@@ -173,7 +187,7 @@ export default class OptionsManager {
             } else {
                 const [rPluginName, rPluginOpts] = nameConfig(plugin);
 
-                pluginOpts = copyProps(pluginOpts, rPluginOpts);
+                options.push(rPluginOpts);
 
                 const pConfig = resolveConfig(rPluginName);
                 if (pConfig) {
@@ -182,7 +196,7 @@ export default class OptionsManager {
                         let [pluginPath, prPluginOpts] = nameConfig(
                             pConfig.plugin);
 
-                        pluginOpts = copyProps(pluginOpts, prPluginOpts);
+                        options.push(prPluginOpts);
                         if (pluginPath) {
                             if (rPluginName === this.topPackage.name) {
                                 pluginSrc = this.cwd(pluginPath);
@@ -199,18 +213,22 @@ export default class OptionsManager {
                 return;
             }
             //nothing enables a disabled plugin.
-            if (pluginOpts === false) {
+
+
+            options.unshift(mergeArgs(pluginName, argv));
+            options.unshift(mergeEnv(pluginName, env));
+            if (alias) {
+                options.unshift(mergeAlias(alias, aliasObj, { env, argv }));
+            }
+
+            const resolvedOptions = mergeOptions(options);
+            if (resolvedOptions === false) {
                 this.plugins.set(pluginName, false);
                 return;
             }
-
-
-            pluginOpts = merge(pluginName, pluginOpts, { env, argv });
-            if (alias) {
-                mergeAlias(pluginOpts, alias, aliasObj, { env, argv });
-            }
             this.plugins.set(pluginName,
-                newOption(pluginName, pluginSrc, pluginOpts, parent, alias));
+                newOption(pluginName, pluginSrc, resolvedOptions, parent,
+                    alias));
             return ret;
         };
 
@@ -220,11 +238,11 @@ export default class OptionsManager {
             ignoreRc
         } = {}, options, pkg, parent, override) => {
             if (plugins) {
-                plugins.map(plugin => {
-                    return processPlugin(pkg.name, plugin, override, pkg);
-                }).filter(Boolean).forEach((pluginName) => {
-                    scan(ignoreRc, pkg, pluginName, void(0), override);
-                })
+                plugins.map(
+                    plugin => processPlugin(pkg.name, plugin, override, pkg))
+                       .filter(Boolean).forEach(
+                    (pluginName) => scan(ignoreRc, pkg, pluginName, void(0),
+                        override))
             }
 
             if (presets) {

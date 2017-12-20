@@ -1,33 +1,45 @@
 const { parseRe } = require('mrbuilder-utils');
+const { CommonsChunkPlugin } = require('webpack').optimize;
 
-module.exports =
-    ({
+function chunks({
          filename = '[name].[hash].js',
-         manifest = 'js/manifest',
-         vendors = 'js/vendors',
+                    manifest = 'manifest',
+                    vendors = 'vendors',
          excludes = [],
          publicPath
      },
-     webpack) => {
-        if (!this.includes) {
-            this.includes = [];
+                webpack) {
+    const info = this.info || console.log;
+    if (this.isKarma) {
+        info('do not run chunk in test mode');
+        return;
         }
-        this.includes.push(manifest, vendors);
+    const includes = [];
+    includes.push(manifest, vendors);
 
         if (this.isDevServer) {
             filename = '[name].js';
         }
-
-        excludes = excludes.map(parseRe);
-
+    if (manifest) {
+        //CommonChunksPlugin will now extract all the common modules from
+        // vendor and main bundles
+        webpack.plugins.push(new CommonsChunkPlugin({
+            publicPath,
+            filename,
+            name: manifest
+        }));
+    }
+    if (vendors) {
         webpack.plugins.push(
-            new webpack.optimize.CommonsChunkPlugin({
+            new CommonsChunkPlugin({
                 name: vendors,
                 filename,
                 publicPath,
                 minChunks(module) {
                     for (let i = 0, l = excludes.length; i < l; i++) {
-                        if (excludes.test(module.context)) {
+                        if (typeof excludes[i].test == 'function') {
+                            return excludes[i].test(module.context);
+                        } else if (excludes[i] === module.context) {
                             return false;
                         }
                     }
@@ -37,14 +49,11 @@ module.exports =
                         'node_modules')
                            !== -1;
                 }
-            }),
-            //CommonChunksPlugin will now extract all the common modules from
-            // vendor and main bundles
-            new webpack.optimize.CommonsChunkPlugin({
-                publicPath,
-                minChunks: Infinity,
-                filename,
-                name     : manifest
             }));
 
-    };
+    }
+
+
+}
+
+module.exports = chunks;

@@ -40,7 +40,7 @@ module.exports = function ({
                                template,
                                filename, analytics,
                            },
-                           webpack) {
+                           webpack, om) {
     const info = this.info || console.log;
     const pkg  = require(path.join(process.cwd(), 'package.json'));
 
@@ -104,9 +104,23 @@ module.exports = function ({
         const keys    = Object.keys(entry);
         info('using entry', keys);
         webpack.plugins.push(...keys.map(key => {
+            const chunks = [key];
+            //html plugin is kinda borked, so this is a nasty workaround.
+            if (om.enabled('mrbuilder-plugin-chunk')) {
+                const { manifest = 'manifest', vendors = 'vendors' } = om.config(
+                    'mrbuilder-plugin-chunk');
+                if (manifest) {
+                    chunks.unshift(manifest);
+                }
+                if (vendors) {
+                    chunks.unshift(vendors);
+                }
+                info('chunks', chunks);
+            }
             return new HtmlWebpackPlugin(Object.assign({}, {
                 filename: filename || `${key}.html`,
-                chunks  : [key],
+                chunks,
+                name    : key,
                 title,
                 template,
                 publicPath,

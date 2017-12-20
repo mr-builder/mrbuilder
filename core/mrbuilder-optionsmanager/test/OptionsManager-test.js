@@ -56,8 +56,9 @@ describe('mrbuilder-optionsmanager', function () {
         fn(`should configure "${name}"${config ? ` and env ${stringify(
             config)}` : ''}`, function () {
             assert(new OptionsManager(Object.assign({
-                prefix: 'tester',
-                cwd   : cwd(name),
+                prefix  : 'tester',
+                cwd     : cwd(name),
+                _require: require,
             }, config)), config);
         });
 
@@ -160,7 +161,9 @@ describe('mrbuilder-optionsmanager', function () {
         expect(ret()).to.be.eql('Hi, whatever');
     });
     newOptionManagerTest('with-regex', {
-        argv: argv("--regex-argv=/argv/g", "--realias=/realias/",
+        argv: argv(
+            "--regex-argv=/argv/g",
+            "--realias=/realias/",
             "--regex-split", "/split/"),
         env : { "REGEX_ENV": "/env/i" }
     }, (om, config) => {
@@ -187,7 +190,6 @@ describe('mrbuilder-optionsmanager', function () {
             ALIAS_2_YUP : "true"
         }
     }, function (om) {
-        console.log(om.config('alias-1'), om.config('alias-2'));
         expect(om.config('alias-1.stuff')).to.eql('Override');
         expect(om.config('alias-2.stuff')).to.eql('whatever');
         expect(om.config('alias-1.more')).to.eql('stuff');
@@ -198,15 +200,14 @@ describe('mrbuilder-optionsmanager', function () {
         argv: argv('--stuff', 'whatever')
     }, function (om) {
 
-        expect(om.enabled("alias-1")).to.be.true;
-        expect(om.enabled("alias-2")).to.be.true;
-        expect(om.config('alias-1.stuff')).to.eql('whatever');
-        expect(om.config('alias-2.stuff')).to.eql('whatever');
-
-        expect(om.help()).to.eql(`alias-1 - [enabled]
+        expect(om.enabled("with-alias-1")).to.be.true;
+        expect(om.enabled("with-alias-2")).to.be.true;
+        expect(om.config('with-alias-1.stuff')).to.eql('whatever');
+        expect(om.config('with-alias-2.stuff')).to.eql('whatever');
+        expect(om.help()).to.eql(`with-alias-1 - [enabled]
 	--stuff	Here is stuff
 	--astuff	Here is alias-1-stuff
-alias-2 - [enabled]
+with-alias-2 - [enabled]
 	--stuff	Here is stuff
 	--other	Other description
 	--astuff	Here is alias-2-stuff\n`);

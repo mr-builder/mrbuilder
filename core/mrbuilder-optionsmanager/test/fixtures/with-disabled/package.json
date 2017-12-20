@@ -7,7 +7,7 @@
   "tester": {
     "plugins": [
       [
-        "metest",
+        "disabled",
         false
       ],
       "enabled"

@@ -3,8 +3,8 @@
   "version": "1",
   "tester": {
     "plugins": [
-      "alias-1",
-      "alias-2"
+      "with-alias-1",
+      "with-alias-2"
     ]
   }
 }

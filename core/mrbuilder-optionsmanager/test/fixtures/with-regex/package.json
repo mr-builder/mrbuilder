@@ -1,6 +1,5 @@
 {
   "name": "with-regex",
-  "version": 1,
   "tester": {
     "plugins": [
       [
