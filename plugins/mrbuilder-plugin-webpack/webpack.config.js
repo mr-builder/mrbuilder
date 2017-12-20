@@ -17,21 +17,20 @@ const {
           info  = console.log,
       } = optionsManager.logger('mrbuilder-plugin-webpack');
 
-const isKarma = optionsManager.enabled('mrbuilder-plugin-karma');
-const opts    = {
-    isProduction: process.env.NODE_ENV === 'production',
-    isLibrary   : !(
-        optionsManager.enabled('mrbuilder-plugin-karma') ||
-        optionsManager.enabled('mrbuilder-plugin-webpack-dev-server') ||
-        optionsManager.config('mrbuilder-plugin-webpack.demo') ||
-        optionsManager.config('mrbuilder-plugin-webpack.app')
-    ),
-
+const isKarma     = optionsManager.enabled('mrbuilder-plugin-karma');
+const isDevServer = optionsManager.enabled(
+    'mrbuilder-plugin-webpack-dev-server');
+const isDemo      = !!optionsManager.config('mrbuilder-plugin-webpack.demo');
+const isApp       = !!optionsManager.config('mrbuilder-plugin-webpack.app');
+const isHtml      = optionsManager.enabled('mrbuilder-plugin-html');
+const opts        = {
+    isProduction  : process.env.NODE_ENV === 'production',
+    isLibrary     : optionsManager.config('mrbuilder-plugin-webpack.library')
+                    || !(isKarma || isDevServer || isDemo || isApp),
     isKarma,
-    isDemo        : optionsManager.config('mrbuilder-plugin-webpack.demo'),
-    isApp         : optionsManager.config('mrbuilder-plugin-webpack.app'),
-    isDevServer   : optionsManager.enabled(
-        'mrbuilder-plugin-webpack-dev-server'),
+    isDemo,
+    isApp,
+    isDevServer,
     isHot         : optionsManager.enabled('mrbuilder-plugin-hot'),
     publicPath    : optionsManager.config('mrbuilder-plugin-webpack.public',
         '/'),
@@ -44,12 +43,7 @@ const opts    = {
         'mrbuilder-plugin-webpack.useScopeHoist', true),
     useTarget     : optionsManager.config('mrbuilder-plugin-webpack.target',
         'web'),
-    useHtml       : !isKarma &&
-                    (optionsManager.enabled(
-                            'mrbuilder-plugin-webpack-dev-server')
-                     || optionsManager.config('mrbuilder-plugin-webpack.app') ||
-                     optionsManager.config('mrbuilder-plugin-webpack.demo')
-                    )
+    useHtml       : !isKarma && (isDevServer || isDemo || isApp)
 };
 
 const packageJson = pkg();
