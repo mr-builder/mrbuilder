@@ -86,7 +86,7 @@ const mod = function ({
             typeof mainFields === 'string' ? mainFields.split(/,\s*/)
                 : mainFields;
         mainFields                 =
-            Array.isArray(mainFields) ? mainFields : mainFieds === true
+            Array.isArray(mainFields) ? mainFields : mainFields === true
                 ? SOURCE_MAIN_FIELDS : DEFAULT_MAIN_FIELDS;
         webpack.resolve.mainFields = mainFields;
         info(`using mainFields`, mainFields);
