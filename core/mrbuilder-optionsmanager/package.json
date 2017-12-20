@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-optionsmanager",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "test": "mocha -r babel-register test/**",
     "clean": "rimraf lib",
@@ -10,7 +10,7 @@
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"
   },
   "dependencies": {
-    "mrbuilder-utils": "^0.2.0"
+    "mrbuilder-utils": "^0.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
