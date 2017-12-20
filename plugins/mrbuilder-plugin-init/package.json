@@ -1,0 +1,27 @@
+{
+  "name": "mrbuilder-plugin-init",
+  "version": "0.2.0",
+  "main": "src",
+  "dependencies": {
+    "mrbuilder": "^0.2.0",
+    "mrbuilder-optionsmanager": "^0.2.0"
+  },
+  "scripts": {
+    "mrbuilder-init": "./bin/mrbuilder-init.js"
+  },
+  "mrbuilder": {
+    "alias": {
+      "name": "Name of the module",
+      "version": "Version of current module",
+      "type": "Is it an app, demo or lib [default:lib]",
+      "description": "Description of project",
+      "start": "Script to start defaults start [default:mrbuilder-webpack-dev-server]",
+      "prepublish": "Script to run on publish [default:mrbuilder-webpack]",
+      "clean": "Script to run on clean [default:mrbuilder-clean]",
+      "test": "Script to run on test [default:mrbuilder-karma]",
+      "kamra": "Script to run for karma testing [default:mrbuilder-test]",
+      "plugins": "Plugins to enable by default",
+      "presets": "Presets to enable by default"
+    }
+  }
+}
