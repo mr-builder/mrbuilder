@@ -43,6 +43,7 @@ export default class OptionsManager {
                     _require = require,
                     //Object of collected aliases, may be modified
                     aliasObj = {},
+                    topPackage,
                 } = {}) {
 
         if (!prefix) {
@@ -65,7 +66,7 @@ export default class OptionsManager {
 
         this.cwd        = (...paths) => resolve(this.env('MODULE_DIR', cwd()),
             ...paths);
-        this.topPackage = _require(this.cwd('package.json'));
+        this.topPackage = topPackage || _require(this.cwd('package.json'));
 
 
         this.warn =

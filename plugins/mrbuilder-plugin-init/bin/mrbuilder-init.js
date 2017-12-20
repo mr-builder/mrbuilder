@@ -3,7 +3,7 @@
 const { camelCased }   = require('mrbuilder-utils');
 const { argv }         = process;
 const { join }         = require('path');
-const root             = require('mrbuilder-plugin-init/package.json');
+const root             = require(join(__dirname, '..', 'package.json'));
 const mrbuilderVersion = root.dependencies['mrbuilder'];
 
 
@@ -135,7 +135,7 @@ ${(type === 'lib' || !type) ? `
 ## Usage
 In your javascript 
 \`\`\`js
-import ${camelCased(name)} from "${name}";
+import ${camelCased(name, true)} from "${name}";
 \`\`\`
 ` : ''} 
 
@@ -151,7 +151,7 @@ const generateIndex  = ({ name }) => {
     return `
 import React, {PureComponent} from 'react';
     
-export default class ${camelCased(name)} extends PureComponent {
+export default class ${camelCased(name, true)} extends PureComponent {
    render(){
        return 'hello from ${name}'
    }
@@ -160,8 +160,9 @@ export default class ${camelCased(name)} extends PureComponent {
     `
 };
 const generateTest   = ({ name }) => {
-    const Component = camelCased(name);
+    const Component = camelCased(name, true);
     return `
+import React from 'react';
 import ${Component} from '${name}';
 import {expect} from 'chai';
 import {mount} from 'enzyme';
@@ -188,7 +189,11 @@ if (require.main === module) {
                                              || (
                                                  global._MRBUILDER_OPTIONS_MANAGER =
                                                      new (require(
-                                                         'mrbuilder-optionsmanager').default));
+                                                         'mrbuilder-optionsmanager')
+                                                         .default)({
+                                                         prefix    : 'mrbuilder',
+                                                         topPackage: root
+                                                     }));
     if (argv.includes('-h', 2) || process.argv.includes('--help')) {
         console.log(optionsManager.help());
     }

@@ -1,14 +1,15 @@
 require('mrbuilder-plugin-browserslist');
-const path                                = require('path');
-const optionsManager                      = global._MRBUILDER_OPTIONS_MANAGER;
-const { stringify, pkg, cwd, resolveMap,parseEntry } = require('mrbuilder-utils');
-const { MRBUILDER_ENTRY }                 = process.env;
+const path                                            = require('path');
+const optionsManager                                  = global._MRBUILDER_OPTIONS_MANAGER;
+const { stringify, pkg, cwd, resolveMap, parseEntry } = require(
+    'mrbuilder-utils');
+const { MRBUILDER_ENTRY }                             = process.env;
 const {
           DefinePlugin,
           optimize: {
               ModuleConcatenationPlugin
           }
-      }                                   = require('webpack');
+      }                                               = require('webpack');
 
 const {
           warn  = console.warn,
@@ -136,8 +137,8 @@ if (opts.useScopeHoist) {
 }
 
 if (!webpack.entry) {
-    webpack.entry = cwd('src', 'index');
-    info('using default entry', webpack.entry)
+    webpack.entry = { index: cwd('src', 'index') };
+    info('using default entry', webpack.entry.index)
 }
 debug('DEBUG is on');
 debug('optionsManager', stringify(optionsManager.plugins));

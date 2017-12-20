@@ -137,10 +137,14 @@ function configOrBool(value, defaultValue) {
     }
 }
 
-const camelCased = function (str) {
-    return str.replace(/[.-]([a-z])/g, function (g) {
+const camelCased = function (str, first) {
+    str = str.replace(/[.-]([a-z])/g, function (g) {
         return g[1] && g[1].toUpperCase();
-    })
+    });
+    if (first) {
+        return `${str[0].toUpperCase()}${str.substring(1)}`;
+    }
+    return str;
 };
 
 const sliced = Function.call.bind(Array.prototype.slice);

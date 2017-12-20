@@ -42,6 +42,7 @@ module.exports = function ({
                            },
                            webpack, om) {
     const info = this.info || console.log;
+    const warn = this.warn || console.warn;
     const pkg  = require(path.join(process.cwd(), 'package.json'));
 
     if (!this.useHtml) {
@@ -69,11 +70,11 @@ module.exports = function ({
             webpack.module.rules.push({
                 test: new RegExp(webpack.entry.index),
                 use : [{
-                    loader : 'val-loader',
-                    options: pkg
-                }, {
                     loader : 'babel-loader',
                     options: babelConfig
+                }, {
+                    loader : 'val-loader',
+                    options: pkg
                 }]
             });
         }
@@ -106,7 +107,7 @@ module.exports = function ({
                 if (vendors) {
                     chunks.unshift(vendors);
                 }
-                info('chunks', chunks);
+                info('using chunks', chunks);
             }
             return new HtmlWebpackPlugin(Object.assign({}, {
                 filename: filename || `${key}.html`,
@@ -118,7 +119,7 @@ module.exports = function ({
             }, pages[key]));
         }));
     } else {
-        (this.warn || console.warn)('no entry found');
+        warn('no entry found');
     }
     return webpack;
 };
