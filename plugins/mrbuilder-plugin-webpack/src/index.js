@@ -12,6 +12,8 @@ const mod = function ({
                           demo,
                           outputPath = cwd('lib'),
                           useExternals,
+                          usePeersAsExternals = true,
+                          externals,
                           devtool = 'source-maps',
                           alias = [
                               'react',
@@ -70,14 +72,24 @@ const mod = function ({
         webpack.resolve.extensions = extensions;
     }
 
-    if (this.isLibrary && useExternals !== false) {
+    if (this.isLibrary && (useExternals !== false)) {
+
+        let externals = [];
         if (Array.isArray(useExternals)) {
-            webpack.useExternals = useExternals;
+            externals = useExternals;
         } else if (typeof useExternals === 'string') {
-            webpack.externals = useExternals.split(/,\s*/);
-        } else {
-            webpack.externals = Object.keys(pkg.peerDependencies || {});
+            externals = useExternals.split(/,\s*/);
         }
+
+        if (usePeersAsExternals && pkg.peerDependencies) {
+            externals = externals.concat(Object.keys(pkg.peerDependencies));
+        }
+
+        webpack.externals = Object.keys(externals.reduce((ret, key) => {
+            ret[key] = key;
+            return ret;
+        }, {}));
+
         info('packaging as externalize', webpack.externals);
     }
 

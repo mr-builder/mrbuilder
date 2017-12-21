@@ -25,8 +25,9 @@ module.exports = function ({
                                publicPath = '/public',
                                modules = false,
                                autoprefixer = true,
+                               sourceMap = true,
                            }, webpack) {
-
+    const info = this.info || console.log;
     let useStyle;
     if (useNameHash == null) {
         if (this.useHtml) {
@@ -34,18 +35,21 @@ module.exports = function ({
         } else {
             useNameHash = 'style.css';
         }
+
     } else if (useNameHash === true) {
         useNameHash = '[hash].style.css';
     } else if (useNameHash === false) {
         useNameHash = 'style.css';
     }
+    info('naming style sheet', useNameHash);
     //So if its not turned on and its Karma than let's say that
     // we don't use it.
-    if (isUseStyleLoader == null && !this.useHtml){
+    if (isUseStyleLoader == null && this.isDevServer) {
         isUseStyleLoader = true;
     }
 
     if (!isUseStyleLoader) {
+        info('extracting text', isUseStyleLoader);
         (this.info || console.log)('useNameHash', useNameHash);
         const ExtractTextPlugin = require('extract-text-webpack-plugin');
         const extractCSS        = new ExtractTextPlugin(useNameHash);
@@ -60,6 +64,7 @@ module.exports = function ({
 
         webpack.plugins.push(extractCSS);
     } else {
+        info('using style loader');
         useStyle = this.useStyle = function useStyleWithStyleLoader(...args) {
             return ['style-loader'].concat(args.filter(Boolean));
         };
@@ -70,7 +75,8 @@ module.exports = function ({
                 loader : "css-loader",
                 options: {
                     modules,
-                    importLoaders: 1,
+                    //  importLoaders: 1,
+                    sourceMap,
                 }
             },
             autoprefixer && {
