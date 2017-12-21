@@ -175,9 +175,7 @@ describe('${name}',function(){
 });
 `
 };
-
-if (require.main === module) {
-
+const main           = () => {
     const {
               existsSync,
               writeFileSync,
@@ -230,8 +228,12 @@ if (require.main === module) {
     if (_pkg.scripts.test) {
         write(`test/${_pkg.name}-test.js`, generateTest(config));
     }
+};
+if (require.main === module) {
+    main();
 } else {
     module.exports = {
+        main,
         generatePackage,
         generateReadme,
         generateIndex,

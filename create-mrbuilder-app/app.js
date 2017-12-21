@@ -1,1 +1,2 @@
-#!/usr/bin/env node -r mrbuilder-plugin-init/bin/mrbuilder-init
+#!/usr/bin/env node
+require('mrbuilder-plugin-init/bin/mrbuilder-init').main();
