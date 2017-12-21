@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-eslint",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "dependencies": {
     "eslint": "^4.12.1",
     "eslint-loader": "^1.9.0",
