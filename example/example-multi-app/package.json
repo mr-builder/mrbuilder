@@ -1,10 +1,10 @@
 {
   "name": "example-multi-app",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.3.6",
-    "mrbuilder-plugin-chunk": "^0.3.6"
+    "mrbuilder": "^0.3.7",
+    "mrbuilder-plugin-chunk": "^0.3.7"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",
