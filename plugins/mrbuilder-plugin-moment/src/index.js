@@ -5,8 +5,7 @@ function momentPlugin({ languages = ['en'], alias = true }, webpack) {
     languages = Array.isArray(languages) ? languages : [languages];
     if (alias) {
         if (alias === true) {
-            webpack.resolve.alias['moment'] =
-                resolve(require.resolve('moment/package.json'), '..')
+            webpack.resolve.alias['moment'] = require.resolve('moment')
         } else {
             webpack.resolve.alias['moment'] = alias;
         }

@@ -14,3 +14,18 @@ from the env, arguments, and configuration to create a list of all configured pl
 The tool then can be fed into other things like babel or webpack, so that
 they can be configured in a uniform fashion.
 
+
+
+## Getting Started
+To create a project with mrbuilder
+
+```sh
+$ yarn create mrbuilder-app --name your_project
+```
+
+## Working in a multi-repo.
+If you want to override the settings for your whole mono-repo you can create
+a dev-tool that has the settings you want and then set the env
+process.env.MRBUILDER_INTERNAL_PRESETS='your-build-tool'
+
+The easiest way is to create scripts for you "devtool" that
