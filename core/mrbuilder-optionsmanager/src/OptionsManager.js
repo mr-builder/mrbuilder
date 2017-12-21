@@ -240,7 +240,7 @@ export default class OptionsManager {
         } = {}, options, pkg, parent, override) => {
             if (plugins) {
                 plugins.map(
-                    plugin => processPlugin(pkg.name, plugin, override, pkg))
+                    plugin => processPlugin(pkg.name, plugin, override, pkg, ignoreRc))
                        .filter(Boolean).forEach(
                     (pluginName) => scan(ignoreRc, pkg, pluginName, void(0),
                         override))

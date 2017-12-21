@@ -1,6 +1,6 @@
 const { camelCased, cwd, resolveMap } = require('mrbuilder-utils');
 const DEFAULT_MAIN_FIELDS             = ['browser', 'main'];
-const SOURCE_MAIN_FIELDS              = ['source', 'browser', 'marin'];
+const SOURCE_MAIN_FIELDS              = ['source', 'browser', 'main'];
 
 const mod = function ({
                           library,

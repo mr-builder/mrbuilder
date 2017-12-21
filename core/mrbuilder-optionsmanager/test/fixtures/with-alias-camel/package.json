@@ -1,0 +1,9 @@
+{
+  "name": "with-alias-camel",
+  "version": "1",
+  "tester": {
+    "plugins": [
+      "camel-alias-1"
+    ]
+  }
+}

@@ -79,6 +79,17 @@ describe('mrbuilder-optionsmanager', function () {
 
     newOptionManagerTest('boot', om => expect(om).to.exist);
 
+    newOptionManagerTest('with-alias-camel', {
+        argv: argv('--camel-arg', 'yes'),
+        env : {
+            CAMEL_ENV: 'uh-huh'
+        }
+    }, om => {
+        expect(om.config('camel-alias-1.camelArg')).to.eql('yes');
+        expect(om.config('camel-alias-1.camelEnv')).to.eql('uh-huh');
+
+    });
+
     newOptionManagerTest('with-plugin',
         om => expect(om.enabled('whatever')).to.be.true);
 
