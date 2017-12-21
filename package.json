@@ -6,6 +6,7 @@
   "author": "Justin Spears <speajus@gmail.com>",
   "license": "BSD",
   "workspaces": [
+    "create-mrbuilder-app",
     "mrbuilder.wiki/*",
     "example/*",
     "core/*",
