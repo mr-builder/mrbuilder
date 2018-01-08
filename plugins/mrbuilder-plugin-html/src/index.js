@@ -64,9 +64,14 @@ module.exports = function ({
     entry = entry ? parseEntry(entry) : webpack.entry;
     if (!entry) {
         entry = webpack.entry = { index: path.join(publicPath, 'index') };
-        if (!existsSync(webpack.entry.index)) {
+        try {
+            //if we can resolve it
+            require.resolve(entry.index);
+            info('entry', entry.index);
+
+        } catch (e) {
             entry = webpack.entry = { index: `${__dirname}/app.js` };
-            info('entry', entry.index, 'does not exist using default');
+            info('using default entry');
             webpack.module.rules.push({
                 test: new RegExp(webpack.entry.index),
                 use : [{

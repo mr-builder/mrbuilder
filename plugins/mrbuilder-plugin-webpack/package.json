@@ -34,10 +34,11 @@
       "libraryTarget": "Output type of library",
       "public": "public path resource",
       "entry": "Entry point",
-      "useExternals": "Externalize peer dependencies",
+      "useExternals": "An array or boolean of dependencies to externalize [default:true]",
       "useTarget": "Type of build, web, node, electron,etc.",
       "useMainFields": "What main fields to use usually [browser, main]",
-      "useExtension": "What extensions to use"
+      "useExtension": "What extensions to use",
+      "externalizePeers":"Externalize peer dependencies [default:true]"
     }
   }
 }

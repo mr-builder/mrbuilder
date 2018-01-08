@@ -79,6 +79,11 @@ describe('mrbuilder-optionsmanager', function () {
 
     newOptionManagerTest('boot', om => expect(om).to.exist);
 
+    newOptionManagerTest('with-named-plugin', om => {
+        expect(om.enabled('named-plugin')).to.eql(true);
+        expect(om.require(om.plugins.get('named-plugin').plugin)()).to.eql('named plugin');
+
+    });
     newOptionManagerTest('with-alias-camel', {
         argv: argv('--camel-arg', 'yes'),
         env : {
@@ -205,6 +210,14 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.config('alias-2.stuff')).to.eql('whatever');
         expect(om.config('alias-1.more')).to.eql('stuff');
         expect(om.config('alias-2.yup')).to.eql(true);
+    });
+
+    newOptionManagerTest("with-plugin-array", function(om){
+
+        expect(om.enabled('wpa-plugin'));
+        expect(om.enabled('wpa-plugin-deb'));
+        const o =om.plugins.get('wpa-plugin');
+        console.log(om.plugins);
     });
 
     newOptionManagerTest("with-alias", {

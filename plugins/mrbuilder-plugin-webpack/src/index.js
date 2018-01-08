@@ -12,7 +12,7 @@ const mod = function ({
                           demo,
                           outputPath = cwd('lib'),
                           useExternals,
-                          usePeersAsExternals = true,
+                          externalizePeers = true,
                           externals,
                           devtool = 'source-maps',
                           alias = [
@@ -81,7 +81,7 @@ const mod = function ({
             externals = useExternals.split(/,\s*/);
         }
 
-        if (usePeersAsExternals && pkg.peerDependencies) {
+        if (externalizePeers && pkg.peerDependencies) {
             externals = externals.concat(Object.keys(pkg.peerDependencies));
         }
 

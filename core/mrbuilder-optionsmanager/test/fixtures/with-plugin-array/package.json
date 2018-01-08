@@ -1,0 +1,17 @@
+{
+  "name": "with-plugin-array",
+  "version": "1",
+  "dependencies": {
+    "wpa-plugin": "1"
+  },
+  "tester": {
+    "plugins": [
+      [
+        "wpa-plugin",
+        {
+          "wpaTest": 1
+        }
+      ]
+    ]
+  }
+}

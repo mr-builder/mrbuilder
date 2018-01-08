@@ -10,8 +10,8 @@ const mergeOptions = (options) => {
     for (let i = options.length - 1; i >= 0; i--) {
         const opt = options[i];
         if (opt === false) {
-        return false;
-    }
+            return false;
+        }
         if (opt == null) {
             continue;
         }
@@ -175,8 +175,8 @@ export default class OptionsManager {
         const processPlugin = (includedFrom, plugin, override, parent) => {
             let [pluginName, pluginOpt] = nameConfig(plugin);
             const options               = [override, pluginOpt];
-            let pluginSrc = pluginName;
-            let ret       = pluginName;
+            let pluginSrc               = pluginName;
+            let ret                     = pluginName;
             let alias;
             if (pluginName.startsWith('.')) {
                 if (includedFrom === this.topPackage.name) {
@@ -227,6 +227,9 @@ export default class OptionsManager {
                 this.plugins.set(pluginName, false);
                 return;
             }
+            if (pluginName.startsWith('.')) {
+                pluginName = join(includedFrom, pluginName)
+            }
             this.plugins.set(pluginName,
                 newOption(pluginName, pluginSrc, resolvedOptions, parent,
                     alias));
@@ -240,7 +243,8 @@ export default class OptionsManager {
         } = {}, options, pkg, parent, override) => {
             if (plugins) {
                 plugins.map(
-                    plugin => processPlugin(pkg.name, plugin, override, pkg, ignoreRc))
+                    plugin => processPlugin(pkg.name, plugin, override, pkg,
+                        ignoreRc))
                        .filter(Boolean).forEach(
                     (pluginName) => scan(ignoreRc, pkg, pluginName, void(0),
                         override))
