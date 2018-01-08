@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-moment",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "main": "src",
   "dependencies": {
     "moment": "^2.19.3"
