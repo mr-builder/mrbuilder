@@ -1,10 +1,10 @@
 {
   "name": "example-multi-app",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.4.0",
-    "mrbuilder-plugin-chunk": "^0.4.0"
+    "mrbuilder": "^0.5.0",
+    "mrbuilder-plugin-chunk": "^0.5.0"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",
@@ -27,9 +27,9 @@
         "mrbuilder-plugin-webpack-dev-server",
         {
           "rewrite": {
-            "/frown.:ext":"/smile.{ext}"
+            "/frown.:ext": "/smile.{ext}"
           },
-          "socketTimeout":5000
+          "socketTimeout": 5000
         }
       ],
       "mrbuilder-plugin-chunk",

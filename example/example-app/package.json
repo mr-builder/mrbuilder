@@ -1,14 +1,14 @@
 {
   "name": "example-app",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "dependencies": {
-    "example-lib": "^0.4.0",
-    "example-lib-everything": "^0.4.0",
-    "example-lib-webpack": "^0.4.0"
+    "example-lib": "^0.5.0",
+    "example-lib-everything": "^0.5.0",
+    "example-lib-webpack": "^0.5.0"
   },
   "devDependencies": {
-    "mrbuilder": "^0.4.0"
+    "mrbuilder": "^0.5.0"
   },
   "peerDependencies": {
     "react": "16.2.0",
