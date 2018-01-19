@@ -267,5 +267,5 @@ with-alias-2 - [enabled]
         expect(calls.pop().join(' ')).to.eql('INFO [tester:p1] test');
     });
 
-    
+
 });

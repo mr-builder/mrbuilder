@@ -63,3 +63,11 @@ const optionsManager = new OptionsManager({prefix:'whatever'});
  * warn - A function for logging warn level console.warn,
  * _require - A require function useful for scripts require,
  * aliasObj - Alias's you want to pass
+
+
+## Resolution
+Plugins resolve from the plugins array first, than the env.ENV.plugins array.  If
+a plugin exists in both arrays it will use the configuration of the env.ENV.plugins
+array.  If no configuration is given for env.ENV.plugins than no configuration
+will be passed to the plugin.  If a plugin in env.ENV.plugins second argument
+is false than it will be disabled.
