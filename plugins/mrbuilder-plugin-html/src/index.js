@@ -35,10 +35,12 @@ HtmlWebpackPlugin.prototype.generateAssetTags = function (assets) {
 module.exports = function ({
                                pages = {},
                                title,
+
                                entry,
                                publicPath = path.join(process.cwd(), 'public'),
                                template,
-                               filename, analytics,
+                               filename  = '[name].html',
+                               analytics,
                            },
                            webpack, om) {
     const info = this.info || console.log;
@@ -91,7 +93,7 @@ module.exports = function ({
         webpack.entry = path.resolve(publicPath, entry);
         (this.info || console.log)('using entry', webpack.entry);
         webpack.plugins.push(new HtmlWebpackPlugin(Object.assign({}, {
-            filename: filename || `index.html`,
+            filename: filename.replace('[name]', 'index'),
             title,
             template,
             publicPath,
@@ -115,7 +117,7 @@ module.exports = function ({
                 info('using chunks', chunks);
             }
             return new HtmlWebpackPlugin(Object.assign({}, {
-                filename: filename || `${key}.html`,
+                filename: filename.replace(/(\[name\])/g, key) || `${key}.html`,
                 chunks,
                 name    : key,
                 title,

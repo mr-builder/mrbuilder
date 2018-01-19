@@ -6,7 +6,7 @@
       "no-such-module"
     ],
     "env": {
-      "deveopment": {
+      "development": {
         "plugins": [
           "no-such-module"
         ]

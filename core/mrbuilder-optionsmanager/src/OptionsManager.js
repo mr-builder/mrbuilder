@@ -25,6 +25,26 @@ const mergeOptions = (options) => {
     return ret;
 };
 
+const asArray = v => Array.isArray(v) ? v : [v];
+
+const mergePlugins = (envPlugins, basePlugins = []) => {
+    if (!envPlugins) {
+        return basePlugins;
+    }
+    envPlugins  = envPlugins.map(asArray);
+    basePlugins = basePlugins.map(function (plugin) {
+        plugin      = asArray(plugin);
+        const found = envPlugins.findIndex(v => v[0] === plugin[0]);
+        if (found > -1) {
+            return envPlugins.splice(found, 1)[0];
+        }
+        return plugin;
+    });
+
+    basePlugins.push(...envPlugins);
+    return basePlugins;
+};
+
 export default class OptionsManager {
 
     plugins = new Map();
@@ -137,7 +157,8 @@ export default class OptionsManager {
             return {
                 presets : select(envOverride.presets, pluginConfig.presets),
                 options : select(envOverride.options, pluginConfig.options),
-                plugins : select(envOverride.plugins, pluginConfig.plugins),
+                plugins : mergePlugins(envOverride.plugins,
+                    pluginConfig.plugins),
                 ignoreRc: select(envOverride.ignoreRc, pluginConfig.ignoreRc),
                 plugin  : select(envOverride.plugin, pluginConfig.plugin),
                 alias   : pluginConfig.alias

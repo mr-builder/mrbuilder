@@ -30,16 +30,18 @@ module.exports = function ({
     const info = this.info || console.log;
     let useStyle;
     if (useNameHash == null) {
-        if (this.useHtml) {
-            useNameHash = '[hash].style.css';
-        } else {
+        if (this.isLibrary) {
             useNameHash = 'style.css';
+        } else {
+            useNameHash = '[hash].style.css';
         }
-
     } else if (useNameHash === true) {
         useNameHash = '[hash].style.css';
     } else if (useNameHash === false) {
         useNameHash = 'style.css';
+    }
+    if (this.isDevServer) {
+        useNameHash = useNameHash.replace('[hash].', '');
     }
     info('naming style sheet', useNameHash);
     //So if its not turned on and its Karma than let's say that

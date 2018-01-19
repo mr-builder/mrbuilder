@@ -219,7 +219,8 @@ function parseEntry(entryNoParse) {
     }
     if (!(typeof entryNoParse === 'string' || Array.isArray(entryNoParse))) {
         return Object.keys(entryNoParse).reduce(function (ret, key) {
-            ret[key] = cwd(entryNoParse[key]);
+            const val = entryNoParse[key];
+            ret[key] = Array.isArray(val) ? val.map(v=>cwd(v)) : [cwd(val)];
             return ret;
         }, {});
     }

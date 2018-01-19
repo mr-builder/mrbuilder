@@ -84,6 +84,19 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.require(om.plugins.get('named-plugin').plugin)()).to.eql('named plugin');
 
     });
+    newOptionManagerTest('with-merged-plugins', {
+        env : {
+            TESTER_ENV: 'test'
+        }
+    }, om => {
+        expect(om.enabled('merge-0')).to.be.false;
+        expect(om.enabled('merge-1')).to.be.true;
+        expect(om.enabled('merge-2')).to.be.true;
+        expect(om.enabled('merge-3')).to.be.true;
+        expect(om.config('merge-2.test')).to.be.undefined;
+        expect(om.config('merge-1.test')).to.eql(1);
+
+    });
     newOptionManagerTest('with-alias-camel', {
         argv: argv('--camel-arg', 'yes'),
         env : {
@@ -253,30 +266,6 @@ with-alias-2 - [enabled]
         expect(calls.pop().join(' ')).to.eql('WARN [tester:p1] test');
         expect(calls.pop().join(' ')).to.eql('INFO [tester:p1] test');
     });
-    it('should only load with-node-env test', function () {
-        const calls   = [];
-        const capture = (...args) => calls.push(args);
 
-        const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('with-node-env'),
-            env   : { NODE_ENV: "test" },
-            info  : capture,
-            warn  : capture
-        });
-        expect(om.enabled("webtest")).to.be.true;
-    });
-    it('should only load with-mrb-env test using TESTER_ENV', function () {
-        const calls   = [];
-        const capture = (...args) => calls.push(args);
-
-        const om = new OptionsManager({
-            prefix: 'tester',
-            cwd   : cwd('with-mrb-env'),
-            env   : { TESTER_ENV: "whatever" },
-            info  : capture,
-            warn  : capture
-        });
-        expect(om.enabled("webtest")).to.be.true;
-    })
+    
 });
