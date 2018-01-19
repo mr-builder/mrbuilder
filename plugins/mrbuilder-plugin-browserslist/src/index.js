@@ -1,10 +1,14 @@
-const { cwd } = require('mrbuilder-utils');
-const path    = require('path');
-const { env } = process;
+const { cwd }        = require('mrbuilder-utils');
+const path           = require('path');
+const { env }        = process;
+const { existsSync } = require('fs');
 
 
-if (!(env.BROWSERSLIST_CONFIG || env.BROWSERSLIST )) {
-    env.BROWSERSLIST_CONFIG = path.resolve(__dirname, '..', 'browserslist');
-} else if (env.BROWSERSLIST_CONFIG) {
+if (env.BROWSERSLIST_CONFIG) {
     env.BROWSERSLIST_CONFIG = cwd(env.BROWSERSLIST_CONFIG);
+} else if (!(env.BROWSERSLIST_CONFIG || env.BROWSERSLIST)) {
+    const dotBrowsers       = cwd('.browserslistrc');
+    env.BROWSERSLIST_CONFIG =
+        existsSync(dotBrowsers) ? dotBrowsers : path.resolve(__dirname, '..',
+            'browserslist');
 }

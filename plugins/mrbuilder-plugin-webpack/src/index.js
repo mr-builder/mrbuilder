@@ -15,6 +15,7 @@ const mod = function ({
                           externalizePeers = true,
                           externals,
                           devtool = 'source-maps',
+                          filename = '[name].[hash].js',
                           alias = [
                               'react',
                               'react-dom'
@@ -58,16 +59,20 @@ const mod = function ({
         webpack.output.library       =
             typeof library == 'string' ? library : camelCased(pkg.name);
         webpack.output.libraryTarget = libraryTarget;
+        //Don't hash when its a library
+        webpack.output.filename      = filename.replace('[hash].', '');
+    } else if (this.isDevServer) {
+        //Don't hash when its running in devServer
+        webpack.output.filename = filename.replace('[hash].', '');
+    }
+    if (demo) {
+        webpack.output.path = demo === true ? cwd('demo') : cwd(demo);
     }
 
-
-    if (!this.isDevServer && demo) {
-        webpack.output.path     = demo === true ? cwd('demo') : cwd(demo);
-        webpack.output.filename = '[name].[hash].js';
-        info('using entry', webpack.output.path);
-    } else {
-        webpack.output.filename = '[name].js';
+    if (this.isDevServer || demo) {
+        info('output filename', webpack.output.filename);
     }
+
     if (extensions) {
         webpack.resolve.extensions = extensions;
     }

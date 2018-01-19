@@ -1,4 +1,3 @@
-const { resolve }                  = require('path')
 const { ContextReplacementPlugin } = require('webpack');
 
 function momentPlugin({ languages = ['en'], alias = true }, webpack) {
@@ -10,7 +9,7 @@ function momentPlugin({ languages = ['en'], alias = true }, webpack) {
             webpack.resolve.alias['moment'] = alias;
         }
     }
-    const langs = new RegExp(languages.join('|'));
+    const langs = languages instanceof RegExp ? languages : new RegExp(languages.join('|'));
     (this.info || console.log)('using ', langs+'');
     webpack.plugins.push(
         new ContextReplacementPlugin( /moment\/locale$/,

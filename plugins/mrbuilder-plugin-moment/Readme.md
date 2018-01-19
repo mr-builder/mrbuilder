@@ -14,7 +14,10 @@ In package.json
  ...
  "mrbuilder":{
     "plugins":[
-      "mrbuilder-plugin-moment"
+      ["mrbuilder-plugin-moment", {
+
+        "languages":["en", "ru"] //include these languages
+      }]
     ]
 
  }

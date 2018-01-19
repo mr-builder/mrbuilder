@@ -8,10 +8,17 @@ const DEV_SERVER          = {
 };
 
 module.exports = function (opts, webpack) {
-    const devServer = Object.assign({}, DEV_SERVER, opts);
-    delete devServer.loader;
-    if (devServer.entry) {
-        webpack.entry = parseEntry(devServer.entry);
+    const {socketTimeout, noHot, useExternals, loader, entry, rewrite} = opts;
+    delete opts.socketTimeout;
+    delete opts.noHot;
+    delete opts.useExternals;
+    delete opts.loader;
+    delete opts.entry;
+    delete opts.rewrite;
+
+    const devServer = Object.assign({}, webpack.devServer, DEV_SERVER, opts);
+    if (entry) {
+        webpack.entry = parseEntry(entry);
     }
     this.useHtml = true;
     if (devServer.devtool == null) {
@@ -20,12 +27,48 @@ module.exports = function (opts, webpack) {
         webpack.devtool = devServer.devtool;
         delete devServer.devtool;
     }
-    delete devServer.entry;
     webpack.devServer = devServer;
-    delete devServer['useExternals'];
-    delete devServer['noHot'];
+
     //webpack dev server started, not being able to find loglevel.
     // google didn't show much, so... this is the thing now.
     webpack.resolve.alias.loglevel = require.resolve('loglevel');
+
+    //yeah, prolly should do this, but more is better?
+    if (socketTimeout) {
+        const { before }         = webpack.devServer;
+        webpack.devServer.before = (app) => {
+            before && before(app);
+            app.use((req, res, next) => {
+                req.socket.setTimeout(socketTimeout);
+                next();
+            })
+        }
+    }
+    //rewrite urls a little different than proxy.
+
+    if (rewrite) {
+        const { before }         = webpack.devServer;
+        const debug              = this.debug || console.log;
+        webpack.devServer.before = (app) => {
+            before && before(app);
+            Object.keys(rewrite).forEach(function (key) {
+                app.get(key, function (req, res, next) {
+                    const val = rewrite[key];
+                    if (typeof val === 'string') {
+                        const redirect = val.replace(/(?:\{(.+?)\})/g,
+                            (a, v) => req.params[v]);
+                        debug('redirecting to ', redirect);
+                        res.redirect(302, redirect);
+                    }
+                    if (val === true) {
+                        res.send('');
+                    } else {
+                        next();
+                    }
+                });
+            });
+        }
+    }
+
     return webpack;
 };

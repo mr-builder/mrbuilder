@@ -1,25 +1,37 @@
-const { parseRe } = require('mrbuilder-utils');
 const { CommonsChunkPlugin } = require('webpack').optimize;
 
 function chunks({
-         filename = '[name].[hash].js',
+                    filename = '[name].[chunkhash].js',
                     manifest = 'manifest',
                     vendors = 'vendors',
-         excludes = [],
-         publicPath
-     },
+                    excludes = [],
+                    publicPath,
+                    crossOriginLoading
+                },
                 webpack) {
     const info = this.info || console.log;
     if (this.isKarma) {
         info('do not run chunk in test mode');
         return;
-        }
+    }
     const includes = [];
-    includes.push(manifest, vendors);
+    if (manifest) {
+        includes.push(manifest);
+    }
+    if (vendors) {
+        includes.push(vendors);
+    }
 
-        if (this.isDevServer) {
-            filename = '[name].js';
-        }
+    if (this.isDevServer) {
+        filename = filename.replace('[chunkhash].', '');
+    }
+    if (!webpack.output) {
+        webpack.output = {};
+    }
+    webpack.output.chunkFilename = filename;
+    if (crossOriginLoading){
+        webpack.output.crossOriginLoading = crossOriginLoading;
+    }
     if (manifest) {
         //CommonChunksPlugin will now extract all the common modules from
         // vendor and main bundles

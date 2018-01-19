@@ -23,6 +23,15 @@
           }
         }
       ],
+      [
+        "mrbuilder-plugin-webpack-dev-server",
+        {
+          "rewrite": {
+            "/frown.:ext":"/smile.{ext}"
+          },
+          "socketTimeout":5000
+        }
+      ],
       "mrbuilder-plugin-chunk",
       [
         "mrbuilder-plugin-html",

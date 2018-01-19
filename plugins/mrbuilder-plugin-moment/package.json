@@ -1,5 +1,6 @@
 {
   "name": "mrbuilder-plugin-moment",
+  "description": "Mrbuilder plugin for momentjs allows for configuration for specific locals",
   "version": "0.4.0",
   "main": "src",
   "dependencies": {
