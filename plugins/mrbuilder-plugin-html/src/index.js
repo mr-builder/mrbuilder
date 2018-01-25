@@ -39,7 +39,9 @@ module.exports = function ({
                                publicPath = path.join(process.cwd(), 'public'),
                                template,
                                filename = '[name].html',
+                               elementId = 'content',
                                analytics,
+                               hot
                            },
                            webpack, om) {
     const info = this.info || console.log;
@@ -60,7 +62,7 @@ module.exports = function ({
     if (!publicPath) {
         publicPath = path.resolve(__dirname, '..', 'public');
     }
-
+    hot =  hot == null ? om.enabled('mrbuilder-plugin-hot') : hot;
     entry = entry ? parseEntry(entry) : webpack.entry;
     if (!entry) {
         entry = webpack.entry = { index: path.join(publicPath, 'index') };
@@ -68,7 +70,9 @@ module.exports = function ({
             //if we can resolve it
             require.resolve(entry.index);
             info('entry', entry.index);
-
+            if(hot){
+                info('hot loading, not using a the default bootstrap, see https://github.com/gaearon/react-hot-loader step 4 for information on configuration')
+            }
         } catch (e) {
             entry = webpack.entry = { index: `${__dirname}/app.js` };
             info('using default entry');
@@ -79,7 +83,12 @@ module.exports = function ({
                     options: babelConfig
                 }, {
                     loader : 'val-loader',
-                    options: pkg
+                    options: {
+                        name   : pkg.name,
+                        version: pkg.version,
+                        hot,
+                        elementId
+                    }
                 }]
             });
         }

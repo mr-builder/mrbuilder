@@ -6,7 +6,8 @@ function chunks({
                     vendors = 'vendors',
                     excludes = [],
                     publicPath,
-                    crossOriginLoading
+                    crossOriginLoading,
+
                 },
                 webpack) {
     const info = this.info || console.log;

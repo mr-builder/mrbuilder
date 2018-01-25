@@ -13,7 +13,6 @@
     "mrbuilder-plugin-markdown": "^0.5.0",
     "mrbuilder-plugin-moment": "^0.5.0",
     "mrbuilder-plugin-stylus": "^0.5.0",
-    "mrbuilder-plugin-uglify": "^0.5.0",
     "mrbuilder-plugin-worker": "^0.5.0"
   },
   "scripts": {
@@ -40,37 +39,15 @@
       "mrbuilder-plugin-env",
       "mrbuilder-plugin-moment",
       "mrbuilder-plugin-stylus",
-      "mrbuilder-plugin-uglify",
-      "mrbuilder-plugin-worker",
-      [
-        "mrbuilder-plugin-html",
-        false
-      ]
+      "mrbuilder-plugin-worker"
     ],
     "env": {
-      "test": {
-        "plugins": [
-          "mrbuilder-plugin-eslint",
-          "mrbuilder-plugin-css",
-          "mrbuilder-plugin-markdown",
-          "mrbuilder-plugin-env",
-          "mrbuilder-plugin-moment",
-          "mrbuilder-plugin-stylus",
-          "mrbuilder-plugin-worker",
-          "mrbuilder-plugin-eslint"
-        ]
-      },
       "development": {
         "plugins": [
-          "mrbuilder-plugin-eslint",
-          "mrbuilder-plugin-css",
-          "mrbuilder-plugin-markdown",
-          "mrbuilder-plugin-lodash",
-          "mrbuilder-plugin-env",
-          "mrbuilder-plugin-moment",
-          "mrbuilder-plugin-stylus",
-          "mrbuilder-plugin-worker",
-          "mrbuilder-plugin-hot"
+          [
+            "mrbuilder-plugin-html",
+            false
+          ]
         ]
       }
     }
