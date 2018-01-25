@@ -20,12 +20,12 @@
       "noHot": "Disable HMR",
       "public": "Webpack dev server public path",
       "useExternals": "Externalize a list of dependencies for use with libraries",
-      "entry": "Entry point or points"
+      "entry": "Entry point or points",
+      "port": "port to listen to defaults 8082"
     },
     "plugins": [
       "mrbuilder-plugin-webpack",
-      "mrbuilder-plugin-html",
-      "mrbuilder-plugin-hot"
+      "mrbuilder-plugin-html"
     ]
   }
 }

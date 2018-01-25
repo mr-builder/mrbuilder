@@ -1,49 +1,11 @@
 import { basename, join, resolve } from 'path';
 import { get, parseJSON, parseValue } from 'mrbuilder-utils';
 import {
-    envify, mergeAlias, mergeArgs, mergeEnv, nameConfig, select, split
+    envify, mergeAlias, mergeArgs, mergeEnv, mergeOptions, mergePlugins,
+    nameConfig, select, split
 } from './util';
 import _help from './help';
 
-const mergeOptions = (options) => {
-    const ret = {};
-    for (let i = options.length - 1; i >= 0; i--) {
-        const opt = options[i];
-        if (opt === false) {
-            return false;
-        }
-        if (opt == null) {
-            continue;
-        }
-        Object.keys(opt).reduce(function (ret, key) {
-            if (opt[key] !== void(0)) {
-                ret[key] = opt[key];
-            }
-            return ret;
-        }, ret);
-    }
-    return ret;
-};
-
-const asArray = v => Array.isArray(v) ? v : [v];
-
-const mergePlugins = (envPlugins, basePlugins = []) => {
-    if (!envPlugins) {
-        return basePlugins;
-    }
-    envPlugins  = envPlugins.map(asArray);
-    basePlugins = basePlugins.map(function (plugin) {
-        plugin      = asArray(plugin);
-        const found = envPlugins.findIndex(v => v[0] === plugin[0]);
-        if (found > -1) {
-            return envPlugins.splice(found, 1)[0];
-        }
-        return plugin;
-    });
-
-    basePlugins.push(...envPlugins);
-    return basePlugins;
-};
 
 export default class OptionsManager {
 

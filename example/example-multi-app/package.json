@@ -4,14 +4,18 @@
   "private": true,
   "devDependencies": {
     "mrbuilder": "^0.5.0",
-    "mrbuilder-plugin-chunk": "^0.5.0"
+    "mrbuilder-preset-app": "^0.5.0"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",
     "start": "mrbuilder-webpack-dev-server",
-    "prepublish": "mrbuilder-webpack --app app"
+    "prepublish": "NODE_ENV=production mrbuilder-webpack"
   },
   "mrbuilder": {
+    "presets": [
+      "mrbuilder",
+      "mrbuilder-preset-app"
+    ],
     "plugins": [
       [
         "mrbuilder-plugin-webpack",
@@ -23,16 +27,6 @@
           }
         }
       ],
-      [
-        "mrbuilder-plugin-webpack-dev-server",
-        {
-          "rewrite": {
-            "/frown.:ext": "/smile.{ext}"
-          },
-          "socketTimeout": 5000
-        }
-      ],
-      "mrbuilder-plugin-chunk",
       [
         "mrbuilder-plugin-html",
         {
@@ -47,8 +41,20 @@
         }
       ]
     ],
-    "presets": [
-      "mrbuilder"
-    ]
+    "env": {
+      "development": {
+        "plugins": [
+          [
+            "mrbuilder-plugin-webpack-dev-server",
+            {
+              "rewrite": {
+                "/frown.:ext": "/smile.{ext}"
+              },
+              "socketTimeout": 5000
+            }
+          ]
+        ]
+      }
+    }
   }
 }

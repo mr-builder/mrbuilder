@@ -1,0 +1,59 @@
+{
+  "name": "mrbuilder-preset-app",
+  "version": "0.5.0",
+  "dependencies": {
+    "mrbuilder-plugin-chunk": "^0.5.0",
+    "mrbuilder-plugin-uglify": "^0.5.0",
+    "mrbuilder-plugin-html": "^0.5.0",
+    "mrbuilder-plugin-env": "^0.5.0",
+    "mrbuilder-plugin-webpack-dev-server": "^0.5.0"
+  },
+  "peerDependencies": {
+    "mrbuilder": "^0.5.0"
+  },
+  "mrbuilder": {
+    "plugins": [
+      "mrbuilder-plugin-env"
+    ],
+    "env": {
+      "development": {
+        "plugins": [
+          [
+            "mrbuilder-plugin-css",
+            {
+              "useNameHash": "css/[name].css"
+            }
+          ],
+          "mrbuilder-plugin-webpack-dev-server",
+          "mrbuilder-plugin-html"
+        ]
+      },
+      "production": {
+        "plugins": [
+          [
+            "mrbuilder-plugin-css",
+            {
+              "useNameHash": "css/[name].[hash].css"
+            }
+          ],
+          [
+            "mrbuilder-plugin-webpack",
+            {
+              "app": "app",
+              "filename": "js/[name].[hash].js",
+              "externalizePeers": false
+            }
+          ],
+          "mrbuilder-plugin-html",
+          [
+            "mrbuilder-plugin-chunk",
+            {
+              "filename": "js/[name].[hash].js"
+            }
+          ],
+          "mrbuilder-plugin-uglify"
+        ]
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@
     "mrbuilder.wiki/*",
     "example/*",
     "core/*",
+    "presets/*",
     "plugins/*"
   ],
   "dependencies": {

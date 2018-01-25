@@ -15,11 +15,10 @@
     "mrbuilder-plugin-karma": "^0.5.0",
     "mrbuilder-plugin-less": "^0.5.0",
     "mrbuilder-plugin-mocha": "^0.5.0",
-    "mrbuilder-plugin-uglify": "^0.5.0",
     "mrbuilder-plugin-webpack": "^0.5.0",
     "mrbuilder-plugin-webpack-dev-server": "^0.5.0",
-    "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "bin": {
     "mrbuilder-babel": "bin/mrbuilder-babel.js",
@@ -30,9 +29,6 @@
     "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js"
   },
   "mrbuilder": {
-    "options": {
-      "loader": false
-    },
     "plugins": [
       "mrbuilder-plugin-browserslist",
       "mrbuilder-plugin-babel",
@@ -40,47 +36,19 @@
       "mrbuilder-plugin-fonts",
       "mrbuilder-plugin-css",
       "mrbuilder-plugin-less",
-      "mrbuilder-plugin-filetypes",
-      "mrbuilder-plugin-html"
+      "mrbuilder-plugin-filetypes"
     ],
     "env": {
       "development": {
         "plugins": [
-          "mrbuilder-plugin-browserslist",
-          "mrbuilder-plugin-babel",
-          "mrbuilder-plugin-webpack",
-          "mrbuilder-plugin-fonts",
-          "mrbuilder-plugin-css",
-          "mrbuilder-plugin-less",
-          "mrbuilder-plugin-filetypes",
-          "mrbuilder-plugin-html",
           "mrbuilder-plugin-webpack-dev-server",
           "mrbuilder-plugin-hot"
         ]
       },
       "test": {
         "plugins": [
-          "mrbuilder-plugin-browserslist",
-          "mrbuilder-plugin-babel",
-          "mrbuilder-plugin-webpack",
-          "mrbuilder-plugin-fonts",
-          "mrbuilder-plugin-css",
-          "mrbuilder-plugin-less",
-          "mrbuilder-plugin-filetypes",
           "mrbuilder-plugin-karma",
           "mrbuilder-plugin-enzyme"
-        ]
-      },
-      "production": {
-        "plugins": [
-          "mrbuilder-plugin-browserslist",
-          "mrbuilder-plugin-babel",
-          "mrbuilder-plugin-webpack",
-          "mrbuilder-plugin-fonts",
-          "mrbuilder-plugin-css",
-          "mrbuilder-plugin-less",
-          "mrbuilder-plugin-filetypes",
-          "mrbuilder-plugin-html"
         ]
       }
     }

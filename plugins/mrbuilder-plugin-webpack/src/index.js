@@ -64,6 +64,8 @@ const mod = function ({
     } else if (this.isDevServer) {
         //Don't hash when its running in devServer
         webpack.output.filename = filename.replace('[hash].', '');
+    }else{
+        webpack.output.filename = filename;
     }
     if (demo) {
         webpack.output.path = demo === true ? cwd('demo') : cwd(demo);
