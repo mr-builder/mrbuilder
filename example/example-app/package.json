@@ -1,15 +1,15 @@
 {
   "name": "example-app",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": true,
   "dependencies": {
-    "example-lib": "^0.6.2",
-    "example-lib-everything": "^0.6.2",
-    "example-lib-webpack": "^0.6.2"
+    "example-lib": "^0.6.3",
+    "example-lib-everything": "^0.6.3",
+    "example-lib-webpack": "^0.6.3"
   },
   "devDependencies": {
-    "mrbuilder": "^0.6.2",
-    "mrbuilder-preset-app": "^0.6.2"
+    "mrbuilder": "^0.6.3",
+    "mrbuilder-preset-app": "^0.6.3"
   },
   "scripts": {
     "prepublish": "mrbuilder-clean app && mrbuilder-webpack",
