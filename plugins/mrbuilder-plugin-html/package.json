@@ -12,7 +12,7 @@
     "mrbuilder-plugin-mocha": "^0.5.0"
   },
   "scripts": {
-    "test": "mrbuilder-mocha"
+    "test": "mrbuilder-mocha-cli"
   },
   "source": "src",
   "main": "src"

@@ -17,7 +17,9 @@
       "mrbuilder-preset-app"
     ],
     "plugins": [
+      "mrbuilder-plugin-babel",
       [
+
         "mrbuilder-plugin-webpack",
         {
           "app": "app",
@@ -35,7 +37,8 @@
               "title": "Index"
             },
             "other": {
-              "title": "Other"
+              "title": "Other",
+              "exported": true
             }
           }
         }
@@ -52,7 +55,8 @@
               },
               "socketTimeout": 5000
             }
-          ]
+          ],
+          "mrbuilder-plugin-hot"
         ]
       }
     }

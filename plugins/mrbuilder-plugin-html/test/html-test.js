@@ -19,17 +19,6 @@ describe('mrbuilder-plugin-html', function () {
 
     });
 
-    it('should entry string', function () {
-        const webpack = {
-            plugins   : [],
-            module:{
-                rules:[]
-            },
-            publicPath: 'public/'
-        };
-        mod.call({useHtml:true}, { title: 'whatever' }, webpack);
-        expect(webpack.plugins).to.have.length(1);
-        expect(path.relative(__dirname,  webpack.entry.index)).to.eql('../src/app.js');
-    })
+
 })
 ;

@@ -6,6 +6,7 @@
     "mrbuilder-plugin-uglify": "^0.5.0",
     "mrbuilder-plugin-html": "^0.5.0",
     "mrbuilder-plugin-env": "^0.5.0",
+    "mrbuilder-plugin-hot": "^0.5.0",
     "mrbuilder-plugin-webpack-dev-server": "^0.5.0"
   },
   "peerDependencies": {
@@ -25,7 +26,8 @@
             }
           ],
           "mrbuilder-plugin-webpack-dev-server",
-          "mrbuilder-plugin-html"
+          "mrbuilder-plugin-html",
+          "mrbuilder-plugin-hot"
         ]
       },
       "production": {

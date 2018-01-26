@@ -1,5 +1,6 @@
 const path                         = require('path');
 const { existsSync, readFileSync } = require('fs');
+const stripJsonComments            = require('strip-json-comments');
 const {
           SUBSCHEMA_PROJECT_DIR
               = process.cwd(),
@@ -18,7 +19,7 @@ const parseJSON = (filename) => {
         return;
     }
     const file = readFileSync(filename) + '';
-    return JSON.parse(file, parseRe);
+    return JSON.parse(stripJsonComments(file), parseRe);
 };
 
 function resolvePkgDir(name, file, ...rest) {
@@ -220,7 +221,7 @@ function parseEntry(entryNoParse) {
     if (!(typeof entryNoParse === 'string' || Array.isArray(entryNoParse))) {
         return Object.keys(entryNoParse).reduce(function (ret, key) {
             const val = entryNoParse[key];
-            ret[key] = Array.isArray(val) ? val.map(v=>cwd(v)) : [cwd(val)];
+            ret[key]  = Array.isArray(val) ? val.map(v => cwd(v)) : [cwd(val)];
             return ret;
         }, {});
     }

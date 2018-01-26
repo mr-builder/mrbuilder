@@ -3,5 +3,8 @@
   "version": "0.5.0",
   "description": "Dev utils for mrbuilder dev tools",
   "source": "src",
-  "main": "src"
+  "main": "src",
+  "dependencies": {
+    "strip-json-comments": "^2.0.1"
+  }
 }

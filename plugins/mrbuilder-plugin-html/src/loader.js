@@ -1,12 +1,16 @@
-const generate = (name, node) => `import React from 'react';
+const loaderUtils = require('loader-utils');
+const generate    = (name, node) => `
+
 import {render} from 'react-dom';
+import React from 'react';
 import App from '${name}';
 
 render(<App/>, document.getElementById('${node}'));
 `;
 
-const generateHot = (name, node) => `import React from 'react';
+const generateHot = (name, node) => `
 import {render} from 'react-dom';
+import React from 'react';
 import { AppContainer } from 'react-hot-loader'
 import App from '${name}';
 
@@ -26,12 +30,9 @@ if (module.hot) {
 }
 `;
 
-module.exports = ({ name, hot = false, node = 'content' }) => {
 
-    const code = hot ? generateHot(name, node) : generate(name, node);
-
-    return {
-        code,
-        cacheable: true
-    };
+module.exports = function () {
+    this.cacheable && this.cacheable();
+    const { hot, name, elementId } = loaderUtils.getOptions(this);
+    return (hot ? generate : generateHot)(name, elementId)
 };

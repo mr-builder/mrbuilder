@@ -1,7 +1,7 @@
-const HtmlWebpackPlugin  = require('html-webpack-plugin');
-const path               = require('path');
-const babelConfig        = require('mrbuilder-plugin-babel/babel-config');
-const { parseEntry }     = require('mrbuilder-utils');
+const HtmlWebpackPlugin   = require('html-webpack-plugin');
+const path                = require('path');
+const babelConfig         = require('mrbuilder-plugin-babel/babel-config');
+const { parseEntry, cwd } = require('mrbuilder-utils');
 /**
  *   title     : (deps.description ? deps.description : deps.name),
  hash      : opts.useNameHash,
@@ -12,7 +12,7 @@ const { parseEntry }     = require('mrbuilder-utils');
  * @param config
  * @param webpack
  */
-const ogenerateAssetTags = HtmlWebpackPlugin.prototype.generateAssetTags;
+const ogenerateAssetTags  = HtmlWebpackPlugin.prototype.generateAssetTags;
 
 function charset(ele) {
     if (!ele.attributes) {
@@ -22,6 +22,7 @@ function charset(ele) {
         ele.attributes.charset = 'UTF-8';
     }
 }
+
 
 HtmlWebpackPlugin.prototype.generateAssetTags = function (assets) {
     const ret = ogenerateAssetTags.call(this, assets);
@@ -40,6 +41,7 @@ module.exports = function ({
                                template,
                                filename = '[name].html',
                                elementId = 'content',
+                               exported,
                                analytics,
                                hot
                            },
@@ -62,41 +64,30 @@ module.exports = function ({
     if (!publicPath) {
         publicPath = path.resolve(__dirname, '..', 'public');
     }
-    hot =  hot == null ? om.enabled('mrbuilder-plugin-hot') : hot;
+    hot   = this.isHot;
     entry = entry ? parseEntry(entry) : webpack.entry;
+
     if (!entry) {
+        if (exported == null) {
+            exported = true;
+        }
         entry = webpack.entry = { index: path.join(publicPath, 'index') };
         try {
-            //if we can resolve it
             require.resolve(entry.index);
-            info('entry', entry.index);
-            if(hot){
-                info('hot loading, not using a the default bootstrap, see https://github.com/gaearon/react-hot-loader step 4 for information on configuration')
-            }
         } catch (e) {
-            entry = webpack.entry = { index: `${__dirname}/app.js` };
-            info('using default entry');
-            webpack.module.rules.push({
-                test: new RegExp(webpack.entry.index),
-                use : [{
-                    loader : 'babel-loader',
-                    options: babelConfig
-                }, {
-                    loader : 'val-loader',
-                    options: {
-                        name   : pkg.name,
-                        version: pkg.version,
-                        hot,
-                        elementId
-                    }
-                }]
-            });
+
+            const index = require.resolve(cwd(pkg.main || './src'));
+            this.info(`no entry using "${index}"`);
+            entry = webpack.entry = { index };
         }
     }
+
     const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
     info('creating pages', keys);
-    webpack.plugins.push(...keys.map(name => {
+
+
+    keys.forEach(name => {
         const chunks = [name];
         //html plugin is kinda borked, so this is a nasty workaround.
         if (om && om.enabled('mrbuilder-plugin-chunk')) {
@@ -110,15 +101,41 @@ module.exports = function ({
             }
             info('using chunks', chunks);
         }
-        return new HtmlWebpackPlugin(Object.assign({}, {
+
+
+        const page = pages && pages[name] || {};
+
+        if (('exported' in page) ? page.exported : exported) {
+            const val          = webpack.entry[name];
+            const current      = Array.isArray(val) ? val[val.length - 1] : val;
+            const currentAlias = `mrbuilder-plugin-html-${name}`;
+
+            webpack.resolve.alias[currentAlias] = current;
+
+            webpack.entry = Object.assign({},
+                webpack.entry,
+                {
+                    [name]: [`babel-loader?${JSON.stringify(
+                        babelConfig)}!mrbuilder-plugin-html/src/loader?${JSON.stringify(
+                        {
+                            name     : currentAlias,
+                            hot,
+                            elementId: page.elementId || elementId,
+
+                        })}!${current}?exported`] //?exported allows for the
+                                                  // file to be inspected.
+                }
+            );
+        }
+
+        webpack.plugins.push(new HtmlWebpackPlugin(Object.assign({}, {
             filename: filename.replace(/(\[name\])/g, name) || `${name}.html`,
             chunks,
             name,
             title,
             template,
             publicPath,
-        }, pages && pages[name]));
-    }));
-
+        }, page)));
+    });
     return webpack;
 };

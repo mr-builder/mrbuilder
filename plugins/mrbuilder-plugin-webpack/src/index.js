@@ -53,7 +53,7 @@ const mod = function ({
         webpack.output.path = outputPath;
     }
 
-    demo = app || demo;
+    demo = demo || app;
 
     if (this.isLibrary) {
         webpack.output.library       =
@@ -64,7 +64,7 @@ const mod = function ({
     } else if (this.isDevServer) {
         //Don't hash when its running in devServer
         webpack.output.filename = filename.replace('[hash].', '');
-    }else{
+    } else {
         webpack.output.filename = filename;
     }
     if (demo) {

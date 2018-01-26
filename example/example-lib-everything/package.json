@@ -49,6 +49,14 @@
             false
           ]
         ]
+      },
+      "test": {
+        "plugins": [
+          [
+            "mrbuilder-plugin-lodash",
+            false
+          ]
+        ]
       }
     }
   }

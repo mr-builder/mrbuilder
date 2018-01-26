@@ -8,7 +8,7 @@ const DEV_SERVER          = {
 };
 
 module.exports = function (opts, webpack) {
-    const {socketTimeout, noHot, useExternals, loader, entry, rewrite} = opts;
+    const { socketTimeout, entry, rewrite } = opts;
     delete opts.socketTimeout;
     delete opts.noHot;
     delete opts.useExternals;

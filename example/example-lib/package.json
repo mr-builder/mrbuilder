@@ -9,6 +9,7 @@
   "main": "lib",
   "scripts": {
     "start": "mrbuilder-webpack-dev-server",
+    "demo":"mrbuilder-demo",
     "prepublish": "mrbuilder-babel",
     "test": "mrbuilder-mocha"
   }

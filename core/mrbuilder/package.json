@@ -17,6 +17,7 @@
     "mrbuilder-plugin-mocha": "^0.5.0",
     "mrbuilder-plugin-webpack": "^0.5.0",
     "mrbuilder-plugin-webpack-dev-server": "^0.5.0",
+    "mrbuilder-preset-app": "^0.5.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
@@ -26,6 +27,7 @@
     "mrbuilder-karma": "bin/mrbuilder-karma.js",
     "mrbuilder-mocha": "bin/mrbuilder-mocha.js",
     "mrbuilder-webpack": "bin/mrbuilder-webpack.js",
+    "mrbuilder-demo": "bin/mrbuilder-demo.js",
     "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js"
   },
   "mrbuilder": {
@@ -41,8 +43,7 @@
     "env": {
       "development": {
         "plugins": [
-          "mrbuilder-plugin-webpack-dev-server",
-          "mrbuilder-plugin-hot"
+          "mrbuilder-plugin-webpack-dev-server"
         ]
       },
       "test": {
