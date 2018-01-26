@@ -14,11 +14,11 @@
     "plugins/*"
   ],
   "dependencies": {
-    "lerna": "^2.5.1"
+    "lerna": "^2.8.0"
   },
   "scripts": {
     "test": "lerna run test",
     "clean": "lerna run clean",
-    "publish:all": "lerna publish --force-publish=*"
+    "publish:all": "lerna publish --registry https://registry.npmjs.org/ --force-publish=*"
   }
 }
