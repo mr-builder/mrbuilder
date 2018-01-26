@@ -1,9 +1,9 @@
 {
   "name": "example-multi-cli",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.6.0"
+    "mrbuilder": "^0.6.1"
   },
   "scripts": {
     "start": "mrbuilder-webpack-dev-server --entry index=public/index.js other=public/other --mrbuilder-plugin-html-pages={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}",
