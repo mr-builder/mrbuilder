@@ -1,12 +1,12 @@
 {
   "name": "mrbuilder-plugin-analyze",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "analyze support for mrbuilder",
   "dependencies": {
     "webpack-bundle-analyzer": "^2.9.1"
   },
   "devDependencies": {
-    "mrbuilder-plugin-mocha": "^0.5.0"
+    "mrbuilder-plugin-mocha": "^0.6.0"
   },
   "scripts": {
     "test": "mrbuilder-mocha-cli"

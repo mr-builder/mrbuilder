@@ -1,10 +1,10 @@
 {
   "name": "example-multi-app",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.5.0",
-    "mrbuilder-preset-app": "^0.5.0"
+    "mrbuilder": "^0.6.0",
+    "mrbuilder-preset-app": "^0.6.0"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",
@@ -19,7 +19,6 @@
     "plugins": [
       "mrbuilder-plugin-babel",
       [
-
         "mrbuilder-plugin-webpack",
         {
           "app": "app",
