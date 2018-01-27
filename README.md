@@ -29,4 +29,3 @@ If you want to override the settings for your whole mono-repo you can create
 a dev-tool that has the settings you want and then set the env
 process.env.MRBUILDER_INTERNAL_PRESETS='your-build-tool'
 
-The easiest way is to create scripts for you "devtool" that

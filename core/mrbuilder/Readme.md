@@ -20,7 +20,7 @@ package.json like this
  "karma": "mrbuilder-karma",
  //if you want plain moch use mrbuilder-mocha instead.
     "test": "mrbuilder-karma",
-    "demo": "mrbuilder-webpack --demo ./docs",
+    "demo": "mrbuilder-webpack-demo",
     "server": "mrbuilder-webpack-dev-server",
     "prepublish": "mrbuilder-webpack",
     "clean": "rimraf ./lib ./dist"
@@ -51,23 +51,23 @@ $ npm run server
 
 
 Included tools-
-  * (mrbuilder-plugin-analyze)[./plugins/mrbuilder-plugin-analyze]
-  * (mrbuilder-plugin-babel)[./plugins/mrbuilder-plugin-babel]
-  * (mrbuilder-plugin-browserslist)[./plugins/mrbuilder-plugin-browserslist]
-  * (mrbuilder-plugin-css)[./plugins/mrbuilder-plugin-css]
-  * (mrbuilder-plugin-enzyme)[./plugins/mrbuilder-plugin-enzyme]
-  * (mrbuilder-plugin-eslint)[./plugins/mrbuilder-plugin-eslint]
-  * (mrbuilder-plugin-filetypes)[./plugins/mrbuilder-plugin-filetypes]
-  * (mrbuilder-plugin-fonts)[./plugins/mrbuilder-plugin-fonts]
-  * (mrbuilder-plugin-hot)[./plugins/mrbuilder-plugin-hot]
-  * (mrbuilder-plugin-html)[./plugins/mrbuilder-plugin-html]
-  * (mrbuilder-plugin-karma)[./plugins/mrbuilder-plugin-karma]
-  * (mrbuilder-plugin-less)[./plugins/mrbuilder-plugin-less]
-  * (mrbuilder-plugin-markdown)[./plugins/mrbuilder-plugin-markdown]
-  * (mrbuilder-plugin-mocha)[./plugins/mrbuilder-plugin-mocha]
-  * (mrbuilder-plugin-uglify)[./plugins/mrbuilder-plugin-uglify]
-  * (mrbuilder-plugin-webpack)[./plugins/mrbuilder-plugin-webpack]
-  * (mrbuilder-plugin-webpack-dev-server)[./plugins/mrbuilder-plugin-webpack-dev-server]
+  * [mrbuilder-plugin-analyze](./plugins/mrbuilder-plugin-analyze)
+  * [mrbuilder-plugin-babel](./plugins/mrbuilder-plugin-babel)
+  * [mrbuilder-plugin-browserslist](./plugins/mrbuilder-plugin-browserslist)
+  * [mrbuilder-plugin-css](./plugins/mrbuilder-plugin-css)
+  * [mrbuilder-plugin-enzyme](./plugins/mrbuilder-plugin-enzyme)
+  * [mrbuilder-plugin-eslint](./plugins/mrbuilder-plugin-eslint)
+  * [mrbuilder-plugin-filetypes](./plugins/mrbuilder-plugin-filetypes)
+  * [mrbuilder-plugin-fonts](./plugins/mrbuilder-plugin-fonts)
+  * [mrbuilder-plugin-hot](./plugins/mrbuilder-plugin-hot)
+  * [mrbuilder-plugin-html](./plugins/mrbuilder-plugin-html)
+  * [mrbuilder-plugin-karma](./plugins/mrbuilder-plugin-karma)
+  * [mrbuilder-plugin-less](./plugins/mrbuilder-plugin-less)
+  * [mrbuilder-plugin-markdown](./plugins/mrbuilder-plugin-markdown)
+  * [mrbuilder-plugin-mocha](./plugins/mrbuilder-plugin-mocha)
+  * [mrbuilder-plugin-uglify](./plugins/mrbuilder-plugin-uglify)
+  * [mrbuilder-plugin-webpack](./plugins/mrbuilder-plugin-webpack)
+  * [mrbuilder-plugin-webpack-dev-server](./plugins/mrbuilder-plugin-webpack-dev-server)
 
 
 
