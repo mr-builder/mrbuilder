@@ -119,8 +119,9 @@ module.exports = function ({
                         babelConfig)}!mrbuilder-plugin-html/src/loader?${JSON.stringify(
                         {
                             name     : currentAlias,
-                            hot,
+                            hot      : ('hot' in page) ? page.hot : hot,
                             elementId: page.elementId || elementId,
+                            exported : page.exported || exported,
 
                         })}!${current}?exported`] //?exported allows for the
                                                   // file to be inspected.

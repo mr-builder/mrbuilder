@@ -1,18 +1,28 @@
 const loaderUtils = require('loader-utils');
-const generate    = (name, node) => `
+
+const importAs = (exported) => {
+    if (exported === true) {
+        return 'App';
+    }
+    if (typeof exported === 'string') {
+        return `{ ${exported} as App }`
+    }
+};
+
+const generate = (name, node, exported) => `
 
 import {render} from 'react-dom';
 import React from 'react';
-import App from '${name}';
+import ${importAs(exported)} from '${name}';
 
 render(<App/>, document.getElementById('${node}'));
 `;
 
-const generateHot = (name, node) => `
+const generateHot = (name, node, exported) => `
 import {render} from 'react-dom';
 import React from 'react';
 import { AppContainer } from 'react-hot-loader'
-import App from '${name}';
+import ${importAs(exported)} from '${name}';
 
 const init = Component => {
   render(
@@ -33,6 +43,6 @@ if (module.hot) {
 
 module.exports = function () {
     this.cacheable && this.cacheable();
-    const { hot, name, elementId } = loaderUtils.getOptions(this);
-    return (hot ? generate : generateHot)(name, elementId)
+    const { hot, name, elementId, exported } = loaderUtils.getOptions(this);
+    return (hot ? generateHot : generate)(name, elementId, exported)
 };
