@@ -221,7 +221,8 @@ function parseEntry(entryNoParse) {
     if (!(typeof entryNoParse === 'string' || Array.isArray(entryNoParse))) {
         return Object.keys(entryNoParse).reduce(function (ret, key) {
             const val = entryNoParse[key];
-            ret[key]  = Array.isArray(val) ? val.map(enhancedResolve) : [enhancedResolve(val)];
+            ret[key]  = Array.isArray(val) ? val.map(v => enhancedResolve(v))
+                : [enhancedResolve(val)];
             return ret;
         }, {});
     }
@@ -256,7 +257,7 @@ const enhancedResolve = (p, _require = require) => {
         return cwd(p);
     }
     if (p.startsWith('~')) {
-        const parts = p.substring(1).split('/',2);
+        const parts  = p.substring(1).split('/', 2);
         const pkgDir = path.resolve(
             _require.resolve(path.join(parts.shift(), 'package.json')), '..');
 
