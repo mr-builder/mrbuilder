@@ -10,6 +10,7 @@ var {
 var fs = require('fs');
 var FileSystemUtilities = require('lerna/lib/FileSystemUtilities');
 var path = require('path');
+var isWindows = (process.platform === 'win32');
 function promise(fn, scope) {
 
     return function () {
@@ -42,7 +43,10 @@ function realLink() {
             return;
         return mkdirp(modulesPath).then(Promise.all(depKeys.map(function (modName) {
             const newModPath = path.relative(process.cwd(), path.join(modulesPath, modName));
-            const existingPath = path.relative(process.cwd(), deps[modName]);
+            const existingPath =
+                  isWindows
+                  ? path.resolve(process.cwd(), deps[modName])
+                  : path.relative(process.cwd(), deps[modName]);
             if (!fs.existsSync(newModPath)) {
                 if (fs.existsSync(existingPath)) {
                     console.log('link', newModPath, '->', existingPath);
