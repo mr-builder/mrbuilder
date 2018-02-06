@@ -1,7 +1,7 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "0.8.0",
+  "version": "0.8.1",
   "dependencies": {
     "mrbuilder": "^0.0.10",
     "mrbuilder-plugin-markdown": "^0.0.10"
