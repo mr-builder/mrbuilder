@@ -121,7 +121,7 @@ module.exports = function ({
                             name     : currentAlias,
                             hot      : ('hot' in page) ? page.hot : hot,
                             elementId: page.elementId || elementId,
-                            exported : page.exported || exported,
+                            exported : page.exported || exported
 
                         })}!${current}?exported`] //?exported allows for the
                                                   // file to be inspected.
@@ -136,6 +136,7 @@ module.exports = function ({
             title,
             template,
             publicPath,
+            pkg,
         }, page)));
     });
     return webpack;

@@ -266,6 +266,6 @@ module.exports = {
     warn,
     parseJSON,
     info,
-    cwd, sliced, resolveMap
+    cwd, sliced, resolveMap, resolvePkgDir,
 
 };

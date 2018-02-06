@@ -14,7 +14,8 @@
   },
   "mrbuilder": {
     "plugins": [
-      "mrbuilder-plugin-env"
+      "mrbuilder-plugin-env",
+      "mrbuilder-plugin-html"
     ],
     "env": {
       "development": {
@@ -26,7 +27,6 @@
             }
           ],
           "mrbuilder-plugin-webpack-dev-server",
-          "mrbuilder-plugin-html",
           "mrbuilder-plugin-hot"
         ]
       },
@@ -46,7 +46,7 @@
               "externalizePeers": false
             }
           ],
-          "mrbuilder-plugin-html",
+
           [
             "mrbuilder-plugin-chunk",
             {
