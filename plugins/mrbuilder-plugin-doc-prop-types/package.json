@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-doc-prop-types",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "description": "Allow for auto documentation of propTypes",
   "main": "src",
   "dependencies": {
     "doc-prop-types": "^1.0.0",
-    "mrbuilder-plugin-emeth": "^0.7.3"
+    "mrbuilder-plugin-emeth": "^0.8.0"
   },
   "peerDependencies": {
     "mrbuilder": "^0.7.3"
