@@ -79,9 +79,7 @@ module.exports = function (propTypes = {}, defaultProps = {}) {
         ret[key] = noUndefined({
             description,
             required,
-            defaultValue: defaultProps[key] != null &&
-                          has(defaultProps[key], 'value')
-                ? enumify(defaultProps[key]) : void(0),
+            defaultValue: defaultProps[key] != null ? enumify(defaultProps[key]) : void(0),
             type        : process({ type, value }),
             tags        : {}
         });

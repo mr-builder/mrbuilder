@@ -8,7 +8,7 @@
   "source": "src",
   "main": "lib",
   "scripts": {
-    "start": "mrbuilder-webpack-dev-server",
+    "start": "mrbuilder-webpack-dev-server --mrbuilder-plugin-html-exported=true",
     "demo": "mrbuilder-demo",
     "prepublish": "mrbuilder-babel",
     "test": "mrbuilder-mocha"

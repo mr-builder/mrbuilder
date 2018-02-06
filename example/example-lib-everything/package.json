@@ -17,8 +17,8 @@
   },
   "scripts": {
     "analyze": "MRBUILDER_PLUGINS=mrbuilder-plugin-analyze mrbuilder-webpack",
-    "prepublish": "mrbuilder-webpack --mrbuilder-plugin-env-environment=[NODE_ENV,USER]",
-    "start": "mrbuilder-webpack-dev-server --mrbuilder-plugin-env-environment=[NODE_ENV,USER]",
+    "prepublish": "mrbuilder-webpack",
+    "start": "mrbuilder-webpack-dev-server ",
     "test": "mrbuilder-karma",
     "karma": "mrbuilder-karma"
   },
@@ -33,6 +33,15 @@
       "mrbuilder"
     ],
     "plugins": [
+      [
+        "mrbuilder-plugin-env",
+        {
+          "environment": [
+            "NODE_ENV",
+            "USER"
+          ]
+        }
+      ],
       "mrbuilder-plugin-css",
       "mrbuilder-plugin-markdown",
       "mrbuilder-plugin-lodash",

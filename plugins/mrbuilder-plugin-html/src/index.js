@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin   = require('html-webpack-plugin');
 const path                = require('path');
 const babelConfig         = require('mrbuilder-plugin-babel/babel-config');
-const { parseEntry, cwd } = require('mrbuilder-utils');
+const { parseEntry, cwd, enhancedResolve } = require('mrbuilder-utils');
 /**
  *   title     : (deps.description ? deps.description : deps.name),
  hash      : opts.useNameHash,
@@ -134,7 +134,7 @@ module.exports = function ({
             chunks,
             name,
             title,
-            template,
+            template:enhancedResolve(template),
             publicPath,
             pkg,
         }, page)));

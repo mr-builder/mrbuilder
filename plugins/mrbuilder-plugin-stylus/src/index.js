@@ -1,21 +1,6 @@
 const path = require('path');
 
-const { cwd }  = require('mrbuilder-utils');
-const _resolve = (p) => {
-    if (p.startsWith('.')) {
-        return cwd(p);
-    }
-    if (p.startsWith('~')) {
-        p           = p.substring(1);
-        const parts = p.split('/');
-
-        const pkgDir = path.resolve(
-            require.resolve(path.join(parts.shift(), 'package.json')), '..');
-
-        return path.resolve(pkgDir, ...parts);
-    }
-    return p;
-};
+const { cwd, enhancedResolve:_resolve }  = require('mrbuilder-utils');
 
 module.exports = function ({
                                alias,

@@ -14,8 +14,8 @@
   },
   "mrbuilder": {
     "plugins": [
-      "mrbuilder-plugin-env",
-      "mrbuilder-plugin-html"
+      "mrbuilder",
+      "mrbuilder-plugin-env"
     ],
     "env": {
       "development": {
@@ -26,6 +26,7 @@
               "useNameHash": "css/[name].css"
             }
           ],
+          "mrbuilder-plugin-html",
           "mrbuilder-plugin-webpack-dev-server",
           "mrbuilder-plugin-hot"
         ]
@@ -46,7 +47,7 @@
               "externalizePeers": false
             }
           ],
-
+          "mrbuilder-plugin-html",
           [
             "mrbuilder-plugin-chunk",
             {

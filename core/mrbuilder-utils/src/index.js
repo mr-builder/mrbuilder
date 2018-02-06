@@ -221,7 +221,7 @@ function parseEntry(entryNoParse) {
     if (!(typeof entryNoParse === 'string' || Array.isArray(entryNoParse))) {
         return Object.keys(entryNoParse).reduce(function (ret, key) {
             const val = entryNoParse[key];
-            ret[key]  = Array.isArray(val) ? val.map(v => cwd(v)) : [cwd(val)];
+            ret[key]  = Array.isArray(val) ? val.map(enhancedResolve) : [enhancedResolve(val)];
             return ret;
         }, {});
     }
@@ -240,16 +240,30 @@ function parseEntry(entryNoParse) {
         }
         if (entry[key]) {
             if (Array.isArray(entry[key])) {
-                entry[key].push(cwd(value));
+                entry[key].push(enhancedResolve(value));
             } else {
-                entry[key] = [entry[key], cwd(value)];
+                entry[key] = [entry[key], enhancedResolve(value)];
             }
         } else {
-            entry[key] = cwd(value);
+            entry[key] = enhancedResolve(value);
         }
     }
     return entry;
 }
+
+const enhancedResolve = (p, _require = require) => {
+    if (p.startsWith('.')) {
+        return cwd(p);
+    }
+    if (p.startsWith('~')) {
+        const parts = p.substring(1).split('/',2);
+        const pkgDir = path.resolve(
+            _require.resolve(path.join(parts.shift(), 'package.json')), '..');
+
+        return path.resolve(pkgDir, ...parts);
+    }
+    return p;
+};
 
 module.exports = {
     parseValue,
@@ -262,6 +276,7 @@ module.exports = {
     configOrBool,
     applyFuncs,
     parseEntry,
+    enhancedResolve,
     debug,
     warn,
     parseJSON,

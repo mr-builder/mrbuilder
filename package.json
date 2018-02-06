@@ -6,12 +6,12 @@
   "author": "Justin Spears <speajus@gmail.com>",
   "license": "BSD",
   "workspaces": [
-    "create-mrbuilder-app",
-    "mrbuilder.wiki/*",
-    "example/*",
     "core/*",
     "presets/*",
-    "plugins/*"
+    "plugins/*",
+    "create-mrbuilder-app",
+    "mrbuilder.wiki",
+    "example/*"
   ],
   "dependencies": {
     "lerna": "^2.8.0"
