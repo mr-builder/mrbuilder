@@ -252,14 +252,14 @@ function parseEntry(entryNoParse) {
     return entry;
 }
 
-const enhancedResolve = (p, _require = require) => {
+const enhancedResolve = (p) => {
     if (p.startsWith('.')) {
         return cwd(p);
     }
     if (p.startsWith('~')) {
-        const parts  = p.substring(1).split('/', 2);
+        const parts  = p.substring(1).split('/');
         const pkgDir = path.resolve(
-            _require.resolve(path.join(parts.shift(), 'package.json')), '..');
+           require.resolve(path.join(parts.shift(), 'package.json')), '..');
 
         return path.resolve(pkgDir, ...parts);
     }
