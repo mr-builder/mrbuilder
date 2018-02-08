@@ -1,13 +1,16 @@
-const getConfig = require(
-    'react-styleguidist/scripts/config');
-const sylist    = require(
-    'react-styleguidist/scripts/make-webpack-config');
-const { cwd }   = require('mrbuilder-utils');
+const getConfig = require('react-styleguidist/scripts/config');
+const sylist    = require('react-styleguidist/scripts/make-webpack-config');
 const path      = require('path');
-module.exports  = function (options = {}, webpack, om) {
+const {
+          cwd,
+          enhancedResolve
+      }         = require('mrbuilder-utils');
+
+module.exports = function (options = {}, webpack, om) {
 
     const resolvePkgDir = (v, ...args) => path.join(
         om.require.resolve(path.join(v, 'package.json')), '..', ...args);
+
 
     const componentsToSections = (opts) => {
         if (!opts) {
@@ -29,9 +32,15 @@ module.exports  = function (options = {}, webpack, om) {
             };
 
 
-            const makeComponent = (name = '[A-Z]*') => path.join(
-                path.relative(cwd(),
-                    path.join(_pkgDir, 'src')), name) + '.{js,jsx}';
+            const makeComponent = (name = '[A-Z]*') => {
+
+
+                const key = path.join(
+                    path.relative(cwd(),
+                        path.join(_pkgDir, 'src')), name);
+
+                return `${key}.{js,jsx}`;
+            };
 
 
             if (Array.isArray(components[1])) {
@@ -48,33 +57,49 @@ module.exports  = function (options = {}, webpack, om) {
         } else {
             opts.sections = []
         }
+        if (opts.require) {
+            opts.require = opts.require.map(enhancedResolve);
+        }
         opts.sections = opts.sections.concat(sections);
         return opts;
     };
-
+    if (options.styleguideComponents) {
+        options.styleguideComponents =
+            Object.keys(options.styleguideComponents).reduce((ret, key) => {
+                ret[key] = enhancedResolve(options.styleguideComponents[key]);
+                return ret;
+            }, {});
+    }
     componentsToSections(options);
-
+    if (options.styleguideComponents) {
+        const { styleguideComponents } = options;
+        options.styleguideComponents   = Object.keys(styleguideComponents)
+                                               .reduce((ret, key) => {
+                                                   ret[key] = enhancedResolve(
+                                                       styleguideComponents[key]);
+                                                   return ret;
+                                               }, {})
+    }
 
     const conf = getConfig(options);
 
 
     if (!options.getComponentPathLine) {
-        conf.getComponentPathLine =
-            function getComponentPathLine(componentPath) {
+        conf.getComponentPathLine = (componentPath) => {
 
-                const [all, name, comp] = /.*\/(.+?)\/src\/(?:.+?\/)?([A-Z].+?)\.(js|jsx)$/.exec(
-                    componentPath) || [];
-                let ret                 = componentPath;
-                if (comp && name) {
-                    ret = `import {${comp}} from '${name}'`;
-                }
-                return ret;
-            };
+            const [all, name, comp] = /.*\/(.+?)\/src\/(?:.*\/)?([A-Z].+?)\.(js|jsx)$/.exec(
+                componentPath) || [];
+            let ret                 = componentPath;
+            if (comp && name) {
+                ret = `import {${comp}} from '${name}'`;
+            }
+            return ret;
+        };
     }
 
     delete conf.components;
 
-    (this.info || console.log)('config', conf);
+    (this.debug || console.log)('config', conf);
 
     const ret = sylist(conf, {});
     webpack.plugins.push(...ret.plugins);
