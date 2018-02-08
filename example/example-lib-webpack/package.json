@@ -1,9 +1,9 @@
 {
   "name": "example-lib-webpack",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.8.3"
+    "mrbuilder": "^0.8.4"
   },
   "scripts": {
     "prepublish": "mrbuilder-webpack",
