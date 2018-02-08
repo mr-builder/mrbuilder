@@ -99,7 +99,6 @@ module.exports = function (options = {}, webpack, om) {
 
     delete conf.components;
 
-    (this.debug || console.log)('config', conf);
 
     const ret = sylist(conf, {});
     webpack.plugins.push(...ret.plugins);
