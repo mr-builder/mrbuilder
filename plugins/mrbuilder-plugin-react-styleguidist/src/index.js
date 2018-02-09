@@ -1,15 +1,16 @@
-const getConfig = require('react-styleguidist/scripts/config');
-const sylist    = require('react-styleguidist/scripts/make-webpack-config');
-const path      = require('path');
+const getConfig          = require('react-styleguidist/scripts/config');
+const sylist             = require(
+    'react-styleguidist/scripts/make-webpack-config');
+const { join, relative } = require('path');
 const {
           cwd,
           enhancedResolve
-      }         = require('mrbuilder-utils');
+      }                  = require('mrbuilder-utils');
 
 module.exports = function (options = {}, webpack, om) {
 
-    const resolvePkgDir = (v, ...args) => path.join(
-        om.require.resolve(path.join(v, 'package.json')), '..', ...args);
+    const resolvePkgDir = (v, ...args) => join(
+        om.require.resolve(join(v, 'package.json')), '..', ...args);
 
 
     const componentsToSections = (opts) => {
@@ -21,35 +22,52 @@ module.exports = function (options = {}, webpack, om) {
         const sections = components && components.map(function (component) {
             component = Array.isArray(component) ? component : [component];
 
+            /**
+             * ['pkg']
+             * ['pkg', 'MyComponent'],
+             * ['pkg', ['A', 'B'],
+             * ['pkg', {
+             *    components:['A','B']
+             * }]
+             *
+             *
+             */
+
             const _pkgDir = resolvePkgDir(component[0]);
 
-            const _pkg = require(path.join(_pkgDir, 'package.json'));
+            const _pkg = require(join(_pkgDir, 'package.json'));
 
-            const obj = {
-                name       : _pkg.name,
-                description: _pkg.description,
-                content    : resolvePkgDir(component[0], 'Readme.md')
-            };
+            const obj = Object.assign({
+                    name       : _pkg.name,
+                    description: _pkg.description,
+                    content    : resolvePkgDir(component[0], 'Readme.md'),
+                    sections   : [],
+                },
+                typeof component[1] === 'string' ? {
+                    components: [component[1]]
+                } : Array.isArray(component[1]) ? {
+                    components: component[1]
+                } : component[1] != null ? component[1] : {});
 
 
             const makeComponent = (name = '[A-Z]*') => {
 
 
-                const key = path.join(
-                    path.relative(cwd(),
-                        path.join(_pkgDir, 'src')), name);
+                const key = join(relative(cwd(), join(_pkgDir, 'src')), name);
 
-                return `${key}.{js,jsx}`;
+                return { components: `${key}.{js,jsx}` };
             };
 
-
-            if (Array.isArray(components[1])) {
-                obj.sections = components[1].map(v => ({
-                    components: makeComponent(v)
-                }));
-            } else {
-                obj.components = makeComponent(component[1]);
+            if (!obj.components) {
+                obj.sections.push(makeComponent());
+            } else if (Array.isArray(obj.components)) {
+                obj.sections.push(...obj.components.map(makeComponent))
+                delete obj.components;
+            } else if (obj.components) {
+                obj.sections.push(makeComponent(obj.components));
+                delete obj.components;
             }
+
             return obj;
         }) || [];
         if (opts.sections) {
@@ -60,9 +78,15 @@ module.exports = function (options = {}, webpack, om) {
         if (opts.require) {
             opts.require = opts.require.map(enhancedResolve);
         }
-        opts.sections = opts.sections.concat(sections);
+        if (!opts.sections) {
+            opts.sections = sections;
+        } else {
+            opts.sections = opts.sections.concat(sections);
+        }
         return opts;
     };
+    options                    = componentsToSections(options);
+
     if (options.styleguideComponents) {
         options.styleguideComponents =
             Object.keys(options.styleguideComponents).reduce((ret, key) => {
@@ -70,7 +94,6 @@ module.exports = function (options = {}, webpack, om) {
                 return ret;
             }, {});
     }
-    componentsToSections(options);
     if (options.styleguideComponents) {
         const { styleguideComponents } = options;
         options.styleguideComponents   = Object.keys(styleguideComponents)
@@ -96,9 +119,6 @@ module.exports = function (options = {}, webpack, om) {
             return ret;
         };
     }
-
-    delete conf.components;
-
 
     const ret = sylist(conf, {});
     webpack.plugins.push(...ret.plugins);
