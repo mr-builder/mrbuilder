@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-emeth",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "Mrbuilder Plugin for Emeth css module helper",
   "main": "src",
   "dependencies": {
