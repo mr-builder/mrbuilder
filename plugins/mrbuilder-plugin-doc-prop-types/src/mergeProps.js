@@ -1,7 +1,7 @@
 const toReactDoc = require('./toReactDoc');
 const has        = Function.call.bind(Object.prototype.hasOwnProperty);
 const mergeProps = (Clazz, parsedProps = {}) => {
-    const docProps = toReactDoc(Clazz.propTypes, Clazz.defaultProps);
+    const docProps = toReactDoc(Clazz);
     return Object.keys(docProps).reduce(function (ret, key) {
         if (!has(ret, key)) {
             ret[key] = docProps[key];

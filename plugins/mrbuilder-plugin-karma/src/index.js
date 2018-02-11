@@ -1,4 +1,4 @@
-const { cwd }                                    = require('mrbuilder-utils');
+const { pkg,cwd }                                    = require('mrbuilder-utils');
 const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
 const { resolve }                                = require('path');
 
@@ -21,6 +21,11 @@ module.exports = function ({
                            }, webpack) {
 
     const info = (this.info || console.log);
+
+    const packageJson                       = pkg();
+    webpack.resolve.alias[packageJson.name] =
+        cwd(packageJson.source || packageJson.main
+            || 'src');
 
     if (useCoverage) {
         info(`enabling code coverage for karma`);

@@ -1,14 +1,6 @@
-mrbuilder-plugin-analyze
-===
 This plugin is used to run webpack-bundle-analyzer.
 
-## Installation
-```
-yarn add mrbuilder-plugin-analyze -D
-
-```
-
-## Usage
+### Usage
 The best way to run analyze is using the environmental variable, because
 you probably want to see what webpack is doing for a particular env.
 This is one of the cases where the ENV configuration is a better option.

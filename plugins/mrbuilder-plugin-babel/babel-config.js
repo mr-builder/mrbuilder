@@ -44,5 +44,22 @@ if (useModules) {
     }
 }
 
+const applyConfig = (type)=>(op)=>{
+    const preset = Array.isArray(op) ? op[0] : op;
+    const short  = (new RegExp(
+        `/babel-${type}-(${preset})/|^(${preset})$`).exec(preset));
+    const conf   = mrb(short[1] || short[2]);
+    if (conf != null) {
+        if (conf === false) {
+            return;
+        }
+        return [preset, conf];
+    }
+    return op;
+};
+conf.presets = conf.presets.map(applyConfig('preset')).filter(Boolean);
+
+conf.plugins = conf.plugins.map(applyConfig('plugin')).filter(Boolean);
+
 module.exports =
     babelProcess(conf, optionsManager.require.resolve, mrb('coverage', false));

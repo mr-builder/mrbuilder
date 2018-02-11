@@ -1,5 +1,3 @@
-mrbuilder-plugin-html
-===
 The HTML plugin allows for testing of components, and for compiling pages.
 It is a wrapper around HtmlWebpackPlugin.
 
@@ -7,7 +5,7 @@ It is a wrapper around HtmlWebpackPlugin.
 By default  looks first for a  public/index.js to bootstrap your app, if it
 does not exist, than it uses a synthetic file that looks like
 
-```jsx
+```js static
     import React from 'react';
     import {render} from 'react-dom';
     import App from 'your-module';
@@ -17,14 +15,10 @@ does not exist, than it uses a synthetic file that looks like
 More than likely you should write your own render component, that looks
 similar
 
-## Installation
-```
- $ yarn add mrbuilder-plugin-html -D
-```
 
-## Configuration
+### Configuration
 In package.json
-```
+```json
  "name":"your_component",
  ...
  "mrbuilder":{
@@ -35,7 +29,7 @@ In package.json
 
 
 ````
-## Custom Element
+### Custom Element
 To configure which element your component renders to use elementId property,
 where the value is the dom Id. By default it is "content".
 
@@ -66,7 +60,7 @@ It should look something like.
 
 Your entry point should look something like.
 
-```js
+```js static
 // main.js
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -96,12 +90,12 @@ if (module.hot) {
 ```
 
 
-## Pages
+### Pages
 The pages points can be configured via pages object where the key will match
 the entry point, or by default it will look into public/index.js, failing that
 it will use the main defined in your package.json.
 
-```js
+```js static
 "mrbuilder":[
 [
         "mrbuilder-plugin-html",

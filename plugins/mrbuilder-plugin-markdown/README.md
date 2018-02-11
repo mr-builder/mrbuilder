@@ -1,11 +1,5 @@
-mrbuilder-plugin-markdown
-===
-This plugin is meant to be used with [mrbuilder](https://github.com/jspears/mrbuilder)
-
-## Installation
-```shell
- $ yarn add mrbuilder-plugin-markdown -D
-```
+This plugin provides markdown support.  It probable should not be used,
+but is so... Should probably replace with [markdown-to-jsx](https://www.npmjs.com/package/markdown-to-jsx)
 
 ## Table support
 

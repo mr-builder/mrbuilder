@@ -1,15 +1,7 @@
-mrbuilder
-===
 These tools help develop mrbuilder, they could be used in other multimodule,
 monorepos.   This is meant to hold all common dev dependencies.   This dependency
 has all of the mrbuilder tools. You can use the plugins for more specific
 tools.
-
-## Installation
-Typical npm/yarn installation.
-```sh
-$ npm install mrbuilder --save-dev
-```
 
 ## Configuration
 The tools are designed to run with smart defaults.  Edit your 
@@ -32,21 +24,22 @@ package.json like this
 
 With this configuration you can run
 
-* Tests: 
-``` 
-$ npm run test
+* Tests:
+```sh
+$ yarn run test
 ```
-* Karma: 
-```
-$ npm run karma
+* Karma:
+```sh
+$ yarn run karma
+
 ```
 * Demo: 
-```
-$ npm run demo
+```sh
+$ yarn run demo
 ```
 * Server: 
-``` 
-$ npm run server
+```sh
+$ yarn run server
 ```
 
 
@@ -135,7 +128,7 @@ if this file exists it attempts to load it.   this file differs from traditional
 it is expected to be a function 
 
 
-```js
+```js static
 module.export = function(options,webpack){
   // options - are just for passing meta data to other loaders and from other loaders.
   // webpack is the actual configuration.  You can do whatever.

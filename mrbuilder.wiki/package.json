@@ -3,17 +3,27 @@
   "private": true,
   "version": "0.8.5",
   "dependencies": {
-    "mrbuilder": "^0.0.10",
-    "mrbuilder-plugin-markdown": "^0.0.10"
+    "mrbuilder": "^0.8.5",
+    "mrbuilder-plugin-react-styleguidist": "^0.8.5"
   },
   "scripts": {
     "prepublish": "mrbuilder-webpack --app docs",
     "start": "mrbuilder-webpack-dev-server"
   },
   "mrbuilder": {
+    "plugin": "src/index",
     "plugins": [
+      ["mrbuilder-plugin-html", false],
+      ["mrbuilder-plugin-hot", false],
+
       "mrbuilder",
-      "mrbuilder-plugin-markdown"
+      [
+        "mrbuilder-plugin-webpack",
+        {
+          "app": "docs"
+        }
+      ],
+      "mrbuilder.wiki"
     ]
   }
 }

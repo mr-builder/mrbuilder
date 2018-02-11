@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Editor from '../src/components/Editor';
 
-
 class Example extends PureComponent {
 
     static propTypes = {
@@ -15,8 +14,13 @@ class Example extends PureComponent {
     };
 
     static defaultProps = {
-        age : 10,
-        kids: []
+        age     : 10,
+        kids    : [],
+        noBool  : true,
+        noString: 'noString',
+        noFunc(){
+
+        }
     };
 
     render() {

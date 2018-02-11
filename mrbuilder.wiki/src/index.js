@@ -1,32 +1,79 @@
-import React, { Component } from 'react';
+const lerna = require('lerna');
+const path  = require('path');
+const style = require("mrbuilder-plugin-react-styleguidist");
 
-const context = (er) => er.keys().map(key => [key, er(key).default]);
+module.exports = function (options = {}, webpack) {
+    const ls = new lerna.LsCommand(null, {});
+    ls.runPreparations();
+    const plugins    = [], presets = [], core = [], other = [], examples = [];
+    options.sections = [
+        {
+            name    : "Core",
+            sections: core
+        },
+        {
+            name    : "Plugins",
+            sections: plugins
+        },
+        {
+            name    : "Presets",
+            sections: presets
+        },
+        {
+            name    : 'Examples',
+            sections: examples,
+        },
+        {
+            name    : 'Other',
+            sections: other
+        }
+    ];
+    const obj        = { core, plugins, presets, other, examples };
+    ls.filteredPackages.forEach(p => {
 
-const errors   = context(require.context('./errors', true, /\.md$/));
-const recipes  = context(require.context('./recipes', true, /\.md$/));
-const plugins  = context(require.context('../../plugins', true, /Readme\.md$/));
-const examples = context(require.context('../../example', true, /Readme\.md$/));
+        const { location, _package: pkg, description='' } = p;
 
-export default class App extends Component {
-    render() {
-        return <div>
-            <h2>Examples</h2>
-            {examples.map(
-                ([key, Example]) => <Example key={key} className='example'/>)}
+        const category = path.basename(path.dirname(location));
+        const place    = obj[category] || obj.other;
 
-            <h2>Recipes</h2>
-            {recipes.map(
-                ([key, Recipe]) => <Recipe className='help-for-recipe'
-                                           key={key}/>)}
+        place.push({
+            name   : pkg.name,
+            content: path.join(location, 'Readme.md'),
 
-            <h2>Plugins</h2>
-            {plugins.map(([key, Plugin]) => <Plugin className='plugin' id={key}
-                                                    key={key}/>)}
+            description: `
+${description}  
 
-            <h2>Common Errors</h2>
-            {errors.map(
-                ([key, Error]) => <Error className='help-for-error'
-                                         key={key}/>)}
-        </div>
-    }
+### Installation
+    
+\`\`\`sh
+$ yarn add ${pkg.name} -D   
+\`\`\`            
+${category === 'plugins' ? ` 
+### Basic Configuration
+In your 'package.json'
+
+\`\`\`json
+{
+ "name":"your_component"
+ ...
+ "mrbuilder":{
+    "plugins":[
+      "${pkg.name}"
+    ]
+
+ }
 }
+\`\`\`
+
+`:''}          
+            
+`,
+
+            //  components: pkg.name
+        })
+
+    });
+    webpack.node || (webpack.node = {});
+    webpack.node.fs = 'empty';
+    return style(options, webpack);
+};

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import EditorStyle from './Editor.stylm';
 import theme, { themeClass } from 'emeth';
 import qs from 'qs';
+import toReactDoc from '../toReactDoc';
 
 theme({ Editor: EditorStyle });
 
@@ -28,6 +29,8 @@ class Property extends PureComponent {
     }
 }
 
+const unescape = v => v.replace(/'/g, '');
+
 class FunctionEditor extends PureComponent {
     state = {
         value: ''
@@ -36,10 +39,12 @@ class FunctionEditor extends PureComponent {
     constructor(props, ...rest) {
         super(props, ...rest);
     }
-    componentDidMount(){
+
+    componentDidMount() {
         this.handleChange({ target: this.props });
 
     }
+
     handleChange = ({ target: { name, value } }) => {
         this.setState({ value });
         try {
@@ -74,18 +79,10 @@ export default class Editor extends PureComponent {
     };
 
     static componentProps({ component, overrides }) {
-        const {
-                  propTypes    = {},
-                  defaultProps = {},
-              }    = component;
-        const info = JSON.parse(JSON.stringify(propTypes));
+        const info         = toReactDoc(component);
         return Object.keys(info).map((key) => {
             const { ...val } = info[key];
-            const def        = defaultProps[key];
             const ove        = overrides[key];
-            if (key in defaultProps) {
-                val.defaultValue = def;
-            }
             val.name = key;
             return key in overrides ? {
                 ...val,
@@ -105,12 +102,12 @@ export default class Editor extends PureComponent {
         const q = qs.parse(window.location.search.substring(1));
         if (q) {
             return Editor.componentProps(props)
-                         .reduce((ret, { type, name }) => {
+                         .reduce((ret, { type = {}, name }) => {
                              if (!(name in ret)) {
                                  return ret;
                              }
                              const v = ret[name];
-                             switch (type) {
+                             switch (type.name) {
                                  case 'number':
                                      ret[name] = parseFloat(v, 10);
                                      break;
@@ -150,8 +147,13 @@ export default class Editor extends PureComponent {
     }
 
     renderProp   = (ret = [], prop) => {
-        const content = this[`_${prop.type}`](prop);
-        ret.push(' ', content);
+        const _key = `_${prop.type.name}`;
+        if (typeof this[_key] === 'function') {
+            const content = this[_key](prop);
+            ret.push(' ', content);
+        } else {
+            console.warn(`no handler for ${prop.type.name}`)
+        }
         return ret;
     };
     handleNumber = ({ target: { name, value } }) => {
@@ -187,10 +189,12 @@ export default class Editor extends PureComponent {
 
     _func({ type, name, description, defaultValue }) {
         const value = (name in this.state) ? this.state[name] : defaultValue
-                                                                || function (...args) {
+                                                                != null
+            ? defaultValue : function (...args) {
                 console.log(name, ...args)
             };
-        return <Property key={`func-${name}`} name={name} description={description}>
+        return <Property key={`func-${name}`} name={name}
+                         description={description}>
                  <span className={tc('value-value')}>
                     {name}
                 </span>
@@ -205,7 +209,8 @@ export default class Editor extends PureComponent {
         const value = (name in this.state) ? this.state[name] : defaultValue;
 
 
-        return <Property key={`object-${name}`} name={name} description={description}>
+        return <Property key={`object-${name}`} name={name}
+                         description={description}>
                 <textarea name={name} className={tc('textarea')}
                           onChange={this.handleJson}
                           value={JSON.stringify(value, null, 2)}/>
@@ -217,7 +222,8 @@ export default class Editor extends PureComponent {
             : defaultValue;
         const displayValue = Array.isArray(value) ? value.join(',') : value;
 
-        return <Property key={`array-${name}`} name={name} description={description}>
+        return <Property key={`array-${name}`} name={name}
+                         description={description}>
             [
             <span key={`prop-name-value-${name}`}
                   className={tc('value-container')}>
@@ -235,15 +241,18 @@ export default class Editor extends PureComponent {
         </Property>
     }
 
-    _oneOf({ type, name, description, args = [[]], defaultValue }) {
-        const value = (name in this.state) ? this.state[name] : defaultValue;
-        return <Property key={`oneOf-${name}`} name={name} description={description}>
+    _enum({ type: { value = [] }, name, description, defaultValue }) {
+        const selected = (name in this.state) ? this.state[name] : defaultValue;
+        return <Property key={`oneOf-${name}`} name={name}
+                         description={description}>
             <select className={tc('select')}
                     name={name}
                     onChange={this.handleString}
-                    value={value}>
-                {args[0].map(
-                    v => (<option key={v} value={v}>{v}</option>))}
+                    value={selected}>
+                {value.map(
+                    v => (<option key={unescape(v.value)}
+                                  value={unescape(v.value)}>{unescape(
+                        v.value)}</option>))}
             </select>
         </Property>
     }
@@ -253,7 +262,8 @@ export default class Editor extends PureComponent {
         if (typeof max === 'string') {
             max = this.props.value[max];
         }
-        return <Property key={`number-${name}`} name={name} description={description}>
+        return <Property key={`number-${name}`} name={name}
+                         description={description}>
             <input className={tc('input')}
                    type='number'
                    style={{ width: `${Math.max(1, ('' + value).length)}rem` }}
@@ -269,7 +279,8 @@ export default class Editor extends PureComponent {
 
     _string({ type, name, description, defaultValue = '' }) {
         const value = (name in this.state) ? this.state[name] : defaultValue;
-        return (<Property key={`string-${name}`} name={name} description={description}>
+        return (<Property key={`string-${name}`} name={name}
+                          description={description}>
             <input className={tc('input')}
                    type='text'
                    name={name}
@@ -282,7 +293,8 @@ export default class Editor extends PureComponent {
 
     _bool({ type, name, description, defaultValue }) {
         const value = (name in this.state) ? this.state[name] : defaultValue;
-        return <Property key={`bool-${name}`} name={name} description={description}>
+        return <Property key={`bool-${name}`} name={name}
+                         description={description}>
             <input type='checkbox'
                    style={{ visibility: 'hidden' }}
                    id={`${name}-check`}
@@ -333,7 +345,8 @@ class TinySlider extends PureComponent {
             <input type='range'
                    {...rest}
                    key={`input-range`}/>
-            {description && <p className={tc("tiny-description-block")}>{description}</p>}
+            {description && <p
+                className={tc("tiny-description-block")}>{description}</p>}
         </div>)
     }
 }

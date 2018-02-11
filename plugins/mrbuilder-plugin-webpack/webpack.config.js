@@ -22,7 +22,6 @@ const isDevServer = optionsManager.enabled(
     'mrbuilder-plugin-webpack-dev-server');
 const isDemo      = !!optionsManager.config('mrbuilder-plugin-webpack.demo');
 const isApp       = !!optionsManager.config('mrbuilder-plugin-webpack.app');
-const isHtml      = optionsManager.enabled('mrbuilder-plugin-html');
 const opts        = {
     isProduction  : process.env.NODE_ENV === 'production',
     isLibrary     : optionsManager.config('mrbuilder-plugin-webpack.library')
@@ -31,6 +30,7 @@ const opts        = {
     isDemo,
     isApp,
     isDevServer,
+    isHtml        : optionsManager.enabled('mrbuilder-plugin-html'),
     isHot         : optionsManager.enabled('mrbuilder-plugin-hot'),
     publicPath    : optionsManager.config('mrbuilder-plugin-webpack.public',
         '/'),
@@ -46,14 +46,10 @@ const opts        = {
     useHtml       : !isKarma && (isDevServer || isDemo || isApp)
 };
 
-const packageJson = pkg();
-let webpack       = {
+let webpack = {
 
     resolve: {
-        alias: {
-            [packageJson.name]: cwd(packageJson.source || packageJson.main
-                                    || 'src')
-        }
+        alias: {}
     },
 
     resolveLoader: {

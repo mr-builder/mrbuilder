@@ -1,22 +1,8 @@
-mrbuilder-plugin-filetypes
-===
-This plugin is designed to be used with [mrbuilder](https://github.com/jspears/mrbuilder).
+This plugin provides basic url-loader and file-loader support to webpack
+The configuration is
 
-## Installation
-```sh
-  $ yarn add "mrbuilder-plugin-filetypes" -D
-```
-## Configuration
-In package.json
-```json
-{
- "name":"your_component"
- ...
- "mrbuilder":{
-    "plugins":[
-      "mrbuilder-plugin-filetypes"
-    ]
-
- }
-}
+```js static
+  test = /\.(png|je?pg|gif?f|bmp|ppm|bpg|mpe?g)$/,
+  loader = 'file-loader',
+  limit = 1000,
 ```

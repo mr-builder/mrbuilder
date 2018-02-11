@@ -2527,12 +2527,6 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-doc-prop-types@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/doc-prop-types/-/doc-prop-types-1.0.0.tgz#a2e04c72edc7a9008d77fd62a8ce500117ad206e"
-  dependencies:
-    prop-types "^15.5.10"
-
 doctrine@^2.0.0, doctrine@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.0.2.tgz#68f96ce8efc56cc42651f1faadb4f175273b0075"

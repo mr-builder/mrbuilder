@@ -45,7 +45,7 @@ need to be production for downstream tools to work correctly.
 
 ## Configuration
 
-```js
+```js static
 const optionsManager = new OptionsManager({prefix:'whatever'});
 
 ```

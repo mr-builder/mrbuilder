@@ -1,22 +1,3 @@
-mrbuilder-plugin-stylus
-===
-This plugin is designed to be used with [mrbuilder](https://github.com/jspears/mrbuilder).
-
-## Installation
-```sh
-  $ yarn add "mrbuilder-plugin-stylus" -D
-```
-## Configuration
-In package.json
-```json
-{
- "name":"your_component"
- ...
- "mrbuilder":{
-    "plugins":[
-      "mrbuilder-plugin-stylus"
-    ]
-
- }
-}
-```
+This plugin provides [stylus](http://stylus-lang.com/) support for mrbuilder
+using the [stylus-loader](https://github.com/shama/stylus-loader).  It also
+adds [nib](https://tj.github.io/nib/) support.

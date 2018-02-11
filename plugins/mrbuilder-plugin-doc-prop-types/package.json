@@ -7,18 +7,11 @@
     "mrbuilder-plugin-emeth": "^0.8.5"
   },
   "peerDependencies": {
-    "mrbuilder": "^0.7.3"
+    "mrbuilder": "^0.8.5"
   },
   "scripts": {
     "test": "mrbuilder-mocha",
-    "start": "mrbuilder-webpack-dev-server --mrbuilder-plugin-html-exported=true"
-  },
-  "mrbuilder": {
-    "plugins": [
-      "mrbuilder-plugin-emeth",
-      "mrbuilder-plugin-css",
-      "mrbuilder-plugin-stylus",
-      "./src/index"
-    ]
+    "demo": "mrbuilder-demo  --mrbuilder-plugin-html-exported=true",
+    "start": " mrbuilder-webpack-dev-server --mrbuilder-plugin-babel-disable-transform-runtime=1 --mrbuilder-plugin-html-exported=true"
   }
 }

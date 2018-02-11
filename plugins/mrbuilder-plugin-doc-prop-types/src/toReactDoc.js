@@ -11,7 +11,7 @@ const toDocs = v => JSON.parse(JSON.stringify(v, function (key, value) {
 const has    = Function.call.bind(Object.prototype.hasOwnProperty);
 
 const enumify     = v => ({
-    value   : typeof v === 'number' ? '' + v : `'${v}'`,
+    value   : typeof v === 'number' || typeof v === 'function' ? '' + v : `'${v}'`,
     computed: false
 });
 const { assign }  = Object;
@@ -67,10 +67,47 @@ const process  = (prop) => {
                 { name, value: process(value), required, description });
     }
 };
-module.exports = function (propTypes = {}, defaultProps = {}) {
+const pickType = (type) => {
+    const ptype = typeof type;
+    switch (ptype) {
+        case 'undefined':
+            return {};
+
+        case 'string':
+        case 'number':
+        case 'symbol':
+            return {
+                name: ptype
+            };
+        case 'boolean':
+            return {
+                name: 'bool'
+            };
+        case 'function':
+            return {
+                name: 'func'
+            };
+        case 'object':
+            return {
+                name: Array.isArray(type) ? 'array' : 'object'
+            }
+    }
+};
+export default function ({ propTypes = {}, defaultProps = {} }) {
     propTypes = toDocs(propTypes);
 
-    return Object.keys(propTypes).reduce((ret, key) => {
+    return Object.keys(defaultProps).reduce((ret, key) => {
+        const val = defaultProps[key]
+        if (!ret[key]) {
+            ret[key] = {
+                type        : pickType(val),
+                defaultValue: enumify(val)
+            }
+        } else if (ret[key].defaultValue == null) {
+            ret[key].defaultValue = enumify(val);
+        }
+        return ret;
+    }, Object.keys(propTypes).reduce((ret, key) => {
         const {
                   required          = false, value,
                   type, description = ''
@@ -79,12 +116,14 @@ module.exports = function (propTypes = {}, defaultProps = {}) {
         ret[key] = noUndefined({
             description,
             required,
-            defaultValue: defaultProps[key] != null ? enumify(defaultProps[key]) : void(0),
+            defaultValue: defaultProps[key] != null ? enumify(
+                defaultProps[key])
+                : void(0),
             type        : process({ type, value }),
             tags        : {}
         });
 
         return ret;
 
-    }, {});
+    }, {}));
 };
