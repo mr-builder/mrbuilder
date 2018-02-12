@@ -15,7 +15,7 @@
     "plugins": [
       ["mrbuilder-plugin-html", false],
       ["mrbuilder-plugin-hot", false],
-
+      "mrbuilder-plugin-doc-prop-types",
       "mrbuilder",
       [
         "mrbuilder-plugin-webpack",

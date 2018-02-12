@@ -21,3 +21,11 @@ This is one of the cases where the ENV configuration is a better option.
   }
 
 }
+```
+
+### Options
+
+| Property      | Type       | Default      | Description                      |
+| ------------- | -----------| -------------| ---------------------------------|
+| reportFileName| string     | report.html  | The filename of the report to generate|
+| analyzerMode  | oneOf: server,static | server       | Server or static version         |

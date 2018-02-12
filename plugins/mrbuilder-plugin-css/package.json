@@ -15,6 +15,9 @@
   "devDependencies": {
     "mrbuilder-plugin-mocha": "^0.8.5"
   },
+  "peerDependencies": {
+    "mrbuilder": "*"
+  },
   "main": "src",
   "source": "src"
 }

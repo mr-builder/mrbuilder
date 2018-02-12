@@ -1,6 +1,7 @@
-const path = require('path');
+const cssLoader = require('mrbuilder-plugin-css/src/cssLoader');
 
-const { cwd, enhancedResolve:_resolve }  = require('mrbuilder-utils');
+
+const { cwd, enhancedResolve: _resolve } = require('mrbuilder-utils');
 
 module.exports = function ({
                                alias,
@@ -15,8 +16,6 @@ module.exports = function ({
                                hoistAtRules = true,
                                compress = false,
                                preferPathResolver,
-                               getLocalIdent = require('./getLocalIdent'),
-                               stylusContext = 'src',
                                localIdentName = '[package-name]_[hyphen:base-name]_[local]'
                            }, webpack, om) {
 
@@ -49,37 +48,13 @@ module.exports = function ({
         stylusOptions.options.use    = [require('nib')()];
         stylusOptions.options.import = ['~nib/lib/nib/index.styl'];
     }
-    if (typeof getLocalIdent === 'string') {
-        getLocalIdent = require(_resolve(getLocalIdent));
-    }
 
-    webpack.module.rules.unshift({
-        test: /\.styl$/,
-        use : this.useStyle(
-            {
-                loader : 'css-loader',
-                options: {
-                    sourceMap
-                }
-            }, stylusOptions)
-    });
+
+    cssLoader(webpack, /\.styl$/, false, stylusOptions);
+
     if (modules) {
-        webpack.module.rules.unshift({
-            test: /\.stylm$/,
-            use : this.useStyle({
-                loader : 'css-loader',
-                options: {
-                    sourceMap     : true,
-                    modules       : true,
-                    camelCase     : false,
-                    localIdentName: localIdentName,
-                    context       : stylusContext || 'src',
-                    getLocalIdent,
-
-                }
-            }, stylusOptions)
-        });
-
+        cssLoader(webpack, modules === true ? /\.stylm$/ : modules,
+            true, stylusOptions);
     }
 
     return webpack;

@@ -8,6 +8,7 @@ const currentPkgName = require(resolve(process.cwd(), 'package.json')).name;
 const lc             = Function.call.bind(String.prototype.toLowerCase);
 const hyphenize      = v => v.replace(/([A-Z])/g, (g) => `-${lc(g[0])}`)
                              .replace(/^-/, '');
+const loaderUtils = require("loader-utils");
 
 const cs = (v, delim = '_') => {
     let ret = v.replace(/\/|[.]/g, delim);
@@ -57,7 +58,7 @@ const makeOptions = (filepath, context, extension) => {
 };
 const formatters  = {
     hyphen: hyphenize,
-}
+};
 
 function getLocalIdent(loaderContext,
                        localIdentName,
@@ -71,10 +72,16 @@ function getLocalIdent(loaderContext,
             ? loaderContext.options.context
             : loaderContext.context;
     }
+    const request = path.relative(options.context, loaderContext.resourcePath);
+    options.content = options.hashPrefix + request + "+" + localName;
+
     const ctx = makeOptions(loaderContext.resourcePath,
         options.context, options.extension || '.stylm');
 
     ctx['local'] = localName;
+
+    localIdentName = loaderUtils.interpolateName(loaderContext, localIdentName, options);
+    console.log('localIdentName',localIdentName)
 
     localIdentName = localIdentName.replace(/\[([^\]]*)]/g, (a, m) => {
         let parts = m && m.split(':', 2);

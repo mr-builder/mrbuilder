@@ -1,4 +1,4 @@
-const toReactDoc = require('./toReactDoc');
+import toReactDoc from './toReactDoc';
 const has        = Function.call.bind(Object.prototype.hasOwnProperty);
 const mergeProps = (Clazz, parsedProps = {}) => {
     const docProps = toReactDoc(Clazz);
