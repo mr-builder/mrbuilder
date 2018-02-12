@@ -7,7 +7,7 @@
     "mrbuilder-plugin-react-styleguidist": "^0.8.5"
   },
   "scripts": {
-    "prepublish": "mrbuilder-webpack --app docs",
+    "prepublish": "mrbuilder-webpack --app ../docs",
     "start": "mrbuilder-webpack-dev-server"
   },
   "mrbuilder": {
