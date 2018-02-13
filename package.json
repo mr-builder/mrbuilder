@@ -4,6 +4,11 @@
   "version": "0.0.1",
   "description": "A tool for building monorepos",
   "author": "Justin Spears <speajus@gmail.com>",
+  "homepage": "mr-builder.github.io",
+  "repository": {
+    "type":"git",
+    "url":"git@github.com:mr-builder/mrbuilder.git"
+  },
   "license": "BSD",
   "workspaces": [
     "core/*",
