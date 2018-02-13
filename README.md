@@ -1,4 +1,4 @@
-![alt mr-builder]('./mrbuilder.svg')
+![alt mr-builder](./mrbuilder.wiki/mrbuilder.svg)
 mrbuilder - Mono Repo Builder
 ===
 A tool for developing javascript in monorepos.
