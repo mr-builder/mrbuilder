@@ -81,7 +81,6 @@ function getLocalIdent(loaderContext,
     ctx['local'] = localName;
 
     localIdentName = loaderUtils.interpolateName(loaderContext, localIdentName, options);
-    console.log('localIdentName',localIdentName)
 
     localIdentName = localIdentName.replace(/\[([^\]]*)]/g, (a, m) => {
         let parts = m && m.split(':', 2);
