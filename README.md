@@ -6,9 +6,6 @@ A tool for developing javascript in monorepos.
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
-*** Placeholder  Use at own risk -- Under development***
-
-
 ## What is it
 Its a set of configurable tools, that are coordinated through one options manager.
 This manager (mrbuilder-optionsmanager) tries to pull out all of settings
