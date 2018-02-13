@@ -9,11 +9,15 @@ module.exports = function (options = {}, webpack, om) {
 
     const ls = new lerna.LsCommand(null, {});
     ls.runPreparations();
-    const plugins    = [], presets = [], core = [], other = [], examples = [];
+    const plugins    = [], presets = [], core = [], other = [], example = [];
     options.sections = [
         {
             name      : "Getting Started",
             "sections": [
+                {
+                    "name" : "Overview",
+                    content: "./src/docs/overview.md"
+                },
                 {
                     "name" : "Do I need a monorepo",
                     content: "./src/docs/monorepo.md"
@@ -33,6 +37,10 @@ module.exports = function (options = {}, webpack, om) {
                 {
                     name     : "Tools",
                     "content": "./src/docs/tools.md"
+                },
+                {
+                    name   : "Debugging",
+                    content: "./src/docs/debugging.md"
                 }
             ]
         },
@@ -47,7 +55,7 @@ module.exports = function (options = {}, webpack, om) {
         },
         {
             name    : 'Examples',
-            sections: examples,
+            sections: example,
         },
         {
             name    : 'Other',
@@ -58,7 +66,7 @@ module.exports = function (options = {}, webpack, om) {
             sections: core
         }
     ];
-    const obj        = { core, plugins, presets, other, examples };
+    const obj        = { core, plugins, presets, other, example };
     ls.filteredPackages.forEach(p => {
 
         const { location, _package: pkg, description = '' } = p;
@@ -67,26 +75,27 @@ module.exports = function (options = {}, webpack, om) {
         const place    = obj[category] || obj.other;
 
         const conf = {
-            name       : pkg.name,
-            content    : path.join(location, 'Readme.md'),
-            description: `
-${description}  
-
+            name   : pkg.name,
+            content: path.join(location, 'Readme.md'),
+            description,
+        };
+        if (category === 'plugins' || category === 'presets') {
+            conf.description += `
 ### Installation
     
 \`\`\`sh
 $ yarn add ${pkg.name} -D   
 \`\`\`            
-${category === 'plugins' ? ` 
+
 ### Basic Configuration
-In your 'package.json'
+In your \`package.json\`
 
 \`\`\`json
 {
  "name":"your_component"
  ...
  "mrbuilder":{
-    "plugins":[
+    "${category}":[
       "${pkg.name}"
     ]
 
@@ -94,13 +103,24 @@ In your 'package.json'
 }
 \`\`\`
 
-` : ''}          
-            
-`,
+`;
+        }
 
-            //  components: pkg.name
-        };
+        if (category === 'example') {
+            conf.description += `
+### Configuration
+This is the configuration
 
+\`\`\`json
+{
+"name":"${pkg.name}",
+...
+"mrbuilder":${JSON.stringify(pkg.mrbuilder || {}, null, 2)}
+
+}
+\`\`\`            
+`
+        }
 
         place.push(conf);
 

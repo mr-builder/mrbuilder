@@ -73,25 +73,6 @@ $ mrbuilder-babel -s true &&\
  --copy-files &&\
 ```
 
-Effective .babelrc, although these tools do not actually use the babelrc this is the preset
-```json
-{
-  "presets": [
-    "es2015",
-    "es2017",
-    "react",
-    "stage-2"
-  ],
-  "plugins": [
-    "transform-function-bind",
-    "transform-class-properties",
-    "transform-async-to-generator",
-    "transform-export-extensions"
-  ],
-  "babelrc": false,
-  "ignore": "**/lib/**"
-}
-```
 
 ## Webpack
 This tool is designed to compile your code with webpack. It respects all the [webpack cli](https://webpack.js.org/api/cli/) but has been extended to be easier in multimodule projects.  Part of what

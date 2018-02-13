@@ -1,13 +1,5 @@
 This provides enhanced chunk support to mrbuilder.
 
-/**
-filename = '[name].[chunkhash].js',
-                    manifest = 'manifest',
-                    vendors = 'vendors',
-                    excludes = [],
-                    publicPath,
-                    crossOriginLoading,
-
 
 | Property      | Type       | Default      | Description                      |
 | ------------- | -----------| -------------| ---------------------------------|
