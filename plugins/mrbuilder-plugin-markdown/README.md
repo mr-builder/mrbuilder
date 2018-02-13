@@ -26,3 +26,8 @@ world
 
 ## This shows inline html
 It needs to be inline <span className='inline-hello' style="font-weight:bold;color:red">Hello</span>
+
+
+The advantage of this markdown implementation over the markdown-to-jsx is it
+is compiled to react components, rather than parsing the content in the browser
+to extract content.
