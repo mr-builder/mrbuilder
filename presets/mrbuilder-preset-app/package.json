@@ -1,13 +1,13 @@
 {
   "name": "mrbuilder-preset-app",
-  "version": "0.8.5",
+  "version": "0.9.0",
   "dependencies": {
-    "mrbuilder-plugin-chunk": "^0.8.5",
-    "mrbuilder-plugin-env": "^0.8.5",
-    "mrbuilder-plugin-hot": "^0.8.5",
-    "mrbuilder-plugin-html": "^0.8.5",
-    "mrbuilder-plugin-uglify": "^0.8.5",
-    "mrbuilder-plugin-webpack-dev-server": "^0.8.5"
+    "mrbuilder-plugin-chunk": "^0.9.0",
+    "mrbuilder-plugin-env": "^0.9.0",
+    "mrbuilder-plugin-hot": "^0.9.0",
+    "mrbuilder-plugin-html": "^0.9.0",
+    "mrbuilder-plugin-uglify": "^0.9.0",
+    "mrbuilder-plugin-webpack-dev-server": "^0.9.0"
   },
   "peerDependencies": {
     "mrbuilder": "^0.5.0"
