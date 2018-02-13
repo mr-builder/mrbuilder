@@ -62,6 +62,7 @@ module.exports = function (conf = {},
         highlighter: 'hljs',
         theme      : 'atom-one-light',
         html       : true,
+        markdownPlugins:['markdown-it-checkbox']
     }, omit(conf, ['test', 'include', 'exclude']));
 
 

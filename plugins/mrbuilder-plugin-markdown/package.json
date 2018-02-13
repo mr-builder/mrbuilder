@@ -4,11 +4,13 @@
   "scripts": {
     "test": "mrbuilder-babel && mrbuilder-karma",
     "karma": "mrbuilder-karma",
+    "start": "MRBUILDER_ENV=development node $NODE_DEBUG_OPTION  ./node_modules/.bin/mrbuilder-webpack-dev-server",
     "clean": "mrbuilder-clean",
     "prepublish": "mrbuilder-babel"
   },
   "dependencies": {
     "markdown-it": "^8.4.0",
+    "markdown-it-checkbox": "^1.1.0",
     "mrbuilder-plugin-babel": "^0.9.2",
     "mrbuilder-utils": "^0.9.2",
     "react-syntax-highlighter": "^6.0.4"
@@ -16,15 +18,14 @@
   "devDependencies": {
     "mrbuilder-plugin-karma": "^0.9.2"
   },
+  "peerDependencies": {
+    "mrbuilder": "^0.9.2"
+  },
   "source": "src",
   "main": "src",
   "mrbuilder": {
-    "env": {
-      "test": {
-        "plugins": [
-          "mrbuilder-plugin-markdown"
-        ]
-      }
-    }
+    "plugins": [
+      "mrbuilder-plugin-markdown"
+    ]
   }
 }
