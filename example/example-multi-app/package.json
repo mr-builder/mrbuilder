@@ -23,8 +23,8 @@
         {
           "app": "app",
           "entry": {
-            "index": "public/index",
-            "other": "public/other"
+            "index": "./public/index",
+            "other": "./public/other"
           }
         }
       ],
