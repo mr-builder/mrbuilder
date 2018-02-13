@@ -2,7 +2,8 @@
 
 mrbuilder - Mono Repo Builder
 ===
-A tool for developing javascript in monorepos.
+A tool for developing javascript in monorepos more documentation [here](https://mr-builder.github.io)
+
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
