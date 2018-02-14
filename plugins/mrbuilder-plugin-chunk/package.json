@@ -1,9 +1,9 @@
 {
   "name": "mrbuilder-plugin-chunk",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "main": "src",
   "dependencies": {
-    "mrbuilder-utils": "^0.9.4"
+    "mrbuilder-utils": "^0.9.5"
   },
   "license": "0BSD"
 }
