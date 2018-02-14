@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-tool",
-  "version": "0.9.2",
+  "version": "0.9.4",
   "description": "Tool for changing package files",
   "main": "lib",
   "source": "source",
@@ -21,8 +21,8 @@
     "mrbuilder": "*"
   },
   "devDependencies": {
-    "mrbuilder": "0.9.2",
-    "lerna": "2.8.0"
+    "lerna": "2.8.0",
+    "mrbuilder": "0.9.2"
   },
   "license": "BSD"
 }

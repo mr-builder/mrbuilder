@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-plugin-init",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "main": "src",
   "dependencies": {
-    "mrbuilder": "^0.9.3",
-    "mrbuilder-optionsmanager": "^0.9.3"
+    "mrbuilder": "^0.9.4",
+    "mrbuilder-optionsmanager": "^0.9.4"
   },
   "scripts": {
     "mrbuilder-init": "./bin/mrbuilder-init.js"

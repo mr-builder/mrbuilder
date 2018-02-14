@@ -1,19 +1,19 @@
 {
   "name": "example-lib-everything",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.9.3"
+    "mrbuilder": "^0.9.4"
   },
   "dependencies": {
     "babel-eslint": "^8.0.3",
-    "mrbuilder-plugin-env": "^0.9.3",
-    "mrbuilder-plugin-eslint": "^0.9.3",
-    "mrbuilder-plugin-lodash": "^0.9.3",
-    "mrbuilder-plugin-markdown": "^0.9.3",
-    "mrbuilder-plugin-moment": "^0.9.3",
-    "mrbuilder-plugin-stylus": "^0.9.3",
-    "mrbuilder-plugin-worker": "^0.9.3"
+    "mrbuilder-plugin-env": "^0.9.4",
+    "mrbuilder-plugin-eslint": "^0.9.4",
+    "mrbuilder-plugin-lodash": "^0.9.4",
+    "mrbuilder-plugin-markdown": "^0.9.4",
+    "mrbuilder-plugin-moment": "^0.9.4",
+    "mrbuilder-plugin-stylus": "^0.9.4",
+    "mrbuilder-plugin-worker": "^0.9.4"
   },
   "scripts": {
     "clean": "mrbuilder-clean lib",
