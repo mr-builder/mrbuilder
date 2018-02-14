@@ -17,5 +17,6 @@
     "react-dom": "16.x"
   },
   "source": "src",
-  "main": "lib"
+  "main": "lib",
+  "license": "BSD"
 }

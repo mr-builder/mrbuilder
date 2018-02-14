@@ -33,5 +33,6 @@
       "mrbuilder-plugin-webpack",
       "mrbuilder-plugin-mocha"
     ]
-  }
+  },
+  "license": "BSD"
 }

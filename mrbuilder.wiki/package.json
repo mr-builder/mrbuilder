@@ -31,5 +31,6 @@
       ],
       "mrbuilder.wiki"
     ]
-  }
+  },
+  "license": "BSD"
 }

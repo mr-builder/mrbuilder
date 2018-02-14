@@ -7,5 +7,6 @@
   },
   "dependencies": {
     "mrbuilder-plugin-init": "^0.9.3"
-  }
+  },
+  "license": "BSD"
 }

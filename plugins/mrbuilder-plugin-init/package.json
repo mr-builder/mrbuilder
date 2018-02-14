@@ -28,5 +28,6 @@
       "rootRepository": "The project will be appended to this to create repository url",
       "rootDemo": "The project will be appended to this to create demo url"
     }
-  }
+  },
+  "license": "BSD"
 }

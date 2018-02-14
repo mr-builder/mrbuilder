@@ -15,5 +15,6 @@
     "test": "mrbuilder-mocha-cli"
   },
   "source": "src",
-  "main": "src"
+  "main": "src",
+  "license": "BSD"
 }

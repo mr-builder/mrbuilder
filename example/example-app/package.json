@@ -23,5 +23,6 @@
       "mrbuilder-preset-app",
       "example-lib-everything"
     ]
-  }
+  },
+  "license": "BSD"
 }

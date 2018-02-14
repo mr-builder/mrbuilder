@@ -34,5 +34,6 @@
       "coverage": "Run with code coverage, not for production",
       "hot": "Run with hot configuration"
     }
-  }
+  },
+  "license": "BSD"
 }

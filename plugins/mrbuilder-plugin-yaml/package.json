@@ -5,5 +5,6 @@
     "json-loader": "^0.5.7",
     "yaml-loader": "^0.5.0"
   },
-  "main": "src"
+  "main": "src",
+  "license": "BSD"
 }

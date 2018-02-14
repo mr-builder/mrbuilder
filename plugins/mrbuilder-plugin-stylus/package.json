@@ -20,5 +20,6 @@
     "plugins": [
       "mrbuilder-plugin-css"
     ]
-  }
+  },
+  "license": "BSD"
 }

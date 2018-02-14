@@ -27,5 +27,6 @@
       "mrbuilder-plugin-webpack",
       "mrbuilder-plugin-html"
     ]
-  }
+  },
+  "license": "BSD"
 }

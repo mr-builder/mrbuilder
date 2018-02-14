@@ -14,5 +14,6 @@
     "presets": [
       "mrbuilder-preset-app"
     ]
-  }
+  },
+  "license": "BSD"
 }

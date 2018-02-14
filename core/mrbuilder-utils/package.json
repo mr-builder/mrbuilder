@@ -14,5 +14,6 @@
   },
   "scripts": {
     "test": "mocha ./test/**/*-test.js"
-  }
+  },
+  "license": "BSD"
 }

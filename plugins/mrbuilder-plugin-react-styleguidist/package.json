@@ -11,5 +11,6 @@
     "plugins": [
       "mrbuilder-plugin-doc-prop-types"
     ]
-  }
+  },
+  "license": "BSD"
 }

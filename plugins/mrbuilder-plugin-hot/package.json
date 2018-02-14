@@ -6,5 +6,6 @@
     "react-hot-loader": "^3.1.2"
   },
   "source": "src",
-  "main": "src"
+  "main": "src",
+  "license": "BSD"
 }

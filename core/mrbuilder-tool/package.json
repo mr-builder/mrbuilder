@@ -2,14 +2,14 @@
   "name": "mrbuilder-tool",
   "version": "0.9.2",
   "description": "Tool for changing package files",
-  "main": "index.js",
+  "main": "lib",
+  "source": "source",
   "scripts": {
     "test": "mrbuilder-mocha",
-    "build": "mrbuilder-babel",
-    "prepublish": "npm run build"
+    "prepublish": "mrbuilder-babel"
   },
   "bin": {
-    "mr-muck": "./bin/muck.js"
+    "mr-muck": "./lib/muck.js"
   },
   "keywords": [
     "lerna",
@@ -23,5 +23,6 @@
   "devDependencies": {
     "mrbuilder": "0.9.2",
     "lerna": "2.8.0"
-  }
+  },
+  "license": "BSD"
 }

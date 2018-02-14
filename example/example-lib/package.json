@@ -12,5 +12,6 @@
     "demo": "mrbuilder-demo",
     "prepublish": "mrbuilder-babel",
     "test": "mrbuilder-mocha"
-  }
+  },
+  "license": "BSD"
 }

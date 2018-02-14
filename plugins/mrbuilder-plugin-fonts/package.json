@@ -13,5 +13,6 @@
     "mrbuilder-plugin-mocha": "^0.9.3"
   },
   "source": "src",
-  "main": "src"
+  "main": "src",
+  "license": "BSD"
 }

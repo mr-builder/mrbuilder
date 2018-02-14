@@ -4,5 +4,6 @@
   "main": "src",
   "dependencies": {
     "mrbuilder-utils": "^0.9.3"
-  }
+  },
+  "license": "BSD"
 }

@@ -20,5 +20,6 @@
     "mrbuilder": "*"
   },
   "main": "src",
-  "source": "src"
+  "source": "src",
+  "license": "BSD"
 }

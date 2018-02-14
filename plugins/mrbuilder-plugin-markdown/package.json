@@ -25,5 +25,6 @@
     "plugins": [
       "mrbuilder-plugin-markdown"
     ]
-  }
+  },
+  "license": "BSD"
 }

@@ -9,5 +9,6 @@
     "alias": {
       "publicPath": "The public path to webworker source"
     }
-  }
+  },
+  "license": "BSD"
 }

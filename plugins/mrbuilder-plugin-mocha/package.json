@@ -28,5 +28,6 @@
     "plugins": [
       "mrbuilder-plugin-mocha"
     ]
-  }
+  },
+  "license": "BSD"
 }
