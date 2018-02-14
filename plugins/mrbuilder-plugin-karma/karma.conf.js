@@ -6,7 +6,7 @@ const optionsManager     = global._MRBUILDER_OPTIONS_MANAGER;
 const logger             = optionsManager.logger('mrbuilder-plugin-karma');
 const webpack            = require('mrbuilder-plugin-webpack/webpack.config');
 
-const mrb = (key, def) =>{
+const mrb = (key, def) => {
     return optionsManager.config(`mrbuilder-plugin-karma.${key}`,
         def);
 }
@@ -24,7 +24,7 @@ const browsers      = mrb('browsers', ['Chrome']);
 const port          = mrb('port', 9876);
 const reporters     = mrb('reports', ['spec']);
 const colors        = mrb('colors', true);
-logger.info('files:'+ files + ' browsers:'+ browsers);
+logger.info('files:' + files + ' browsers:' + browsers);
 
 module.exports = function (config) {
 
@@ -49,6 +49,10 @@ module.exports = function (config) {
             Chrome_travis_ci     : {
                 base : 'Chrome',
                 flags: ['--no-sandbox']
+            },
+            SimpleHeadlessChrome     : {
+                base : 'ChromeHeadless',
+                flags: ['--disable-translate', '--disable-extensions', '--remote-debugging-port=9223']
             }
         },
 
