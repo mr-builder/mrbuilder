@@ -6,5 +6,5 @@
   "dependencies": {
     "emeth": "^1.0.2"
   },
-  "license": "BSD"
+  "license": "0BSD"
 }

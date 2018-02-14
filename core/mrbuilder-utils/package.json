@@ -15,5 +15,5 @@
   "scripts": {
     "test": "mocha ./test/**/*-test.js"
   },
-  "license": "BSD"
+  "license": "0BSD"
 }

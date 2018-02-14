@@ -14,5 +14,5 @@
     "demo": "mrbuilder-demo  --mrbuilder-plugin-html-exported=true",
     "start": " mrbuilder-webpack-dev-server --mrbuilder-plugin-babel-disable-transform-runtime=1 --mrbuilder-plugin-html-exported=true"
   },
-  "license": "BSD"
+  "license": "0BSD"
 }

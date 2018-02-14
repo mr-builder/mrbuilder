@@ -41,5 +41,5 @@
       "externalizePeers": "Externalize peer dependencies [default:true]"
     }
   },
-  "license": "BSD"
+  "license": "0BSD"
 }

@@ -29,5 +29,5 @@
       "rootDemo": "The project will be appended to this to create demo url"
     }
   },
-  "license": "BSD"
+  "license": "0BSD"
 }

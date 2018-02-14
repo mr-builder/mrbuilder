@@ -5,5 +5,5 @@
   "dependencies": {
     "mrbuilder-utils": "^0.9.4"
   },
-  "license": "BSD"
+  "license": "0BSD"
 }

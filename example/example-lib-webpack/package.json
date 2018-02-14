@@ -18,5 +18,5 @@
   },
   "source": "src",
   "main": "lib",
-  "license": "BSD"
+  "license": "0BSD"
 }

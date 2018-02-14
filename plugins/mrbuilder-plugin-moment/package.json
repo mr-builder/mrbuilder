@@ -6,5 +6,5 @@
   "dependencies": {
     "moment": "^2.19.3"
   },
-  "license": "BSD"
+  "license": "0BSD"
 }
