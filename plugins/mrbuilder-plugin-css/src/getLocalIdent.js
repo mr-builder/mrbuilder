@@ -1,5 +1,4 @@
 const path           = require('path');
-const fs             = require('fs');
 const basename       = path.basename.bind(path);
 const relative       = path.relative.bind(path);
 const dirname        = path.dirname.bind(path);
@@ -8,9 +7,9 @@ const currentPkgName = require(resolve(process.cwd(), 'package.json')).name;
 const lc             = Function.call.bind(String.prototype.toLowerCase);
 const hyphenize      = v => v.replace(/([A-Z])/g, (g) => `-${lc(g[0])}`)
                              .replace(/^-/, '');
-const loaderUtils = require("loader-utils");
-
-const cs = (v, delim = '_') => {
+const loaderUtils    = require("loader-utils");
+const findPackage    = require('find-package');
+const cs             = (v, delim = '_') => {
     let ret = v.replace(/\/|[.]/g, delim);
     while (ret.startsWith(delim)) {
         ret = ret.substring(1);
@@ -19,34 +18,25 @@ const cs = (v, delim = '_') => {
 };
 
 const makeOptions = (filepath, context, extension) => {
-    const idx = filepath.lastIndexOf('node_modules');
-    if (idx != -1) {
-        try {
-            let pkgPath = filepath;
-            while ((pkgPath = dirname(pkgPath)) && pkgPath != '/') {
-                if (fs.existsSync(resolve(pkgPath, 'package.json'))) {
-                    break;
-                }
-            }
-            const pkgName  = require(resolve(pkgPath, 'package.json')).name;
-            const relName  =
-                      cs(relative(resolve(pkgPath, 'node_modules'), filepath));
+    try {
+        let pkg = findPackage(filepath, true);
 
-            const baseName = basename(filepath, extension);
+        const pkgName = pkg && pkg.name;
 
-            return {
-                'package-name': pkgName,
-                'rel-name'    : relName,
-                'base-name'   : cs(baseName)
-            }
-        } catch (e) {
+        const baseName = basename(filepath, extension);
 
-            const relName = basename(relative(process.cwd(), filepath));
-            return {
-                'package-name': relName,
-                'base-name'   : cs(basename(relName, extension))
+        return {
+            'package-name': pkgName,
+            'base-name'   : cs(baseName),
+            'rel-name'    : cs(path.relative(pkg && pkg.paths.absolute, filepath)),
+        }
+    } catch (e) {
 
-            }
+        const relName = basename(relative(process.cwd(), filepath));
+        return {
+            'package-name': relName,
+            'base-name'   : cs(basename(relName, extension))
+
         }
     }
     return {
@@ -72,7 +62,8 @@ function getLocalIdent(loaderContext,
             ? loaderContext.options.context
             : loaderContext.context;
     }
-    const request = path.relative(options.context, loaderContext.resourcePath);
+    const request   = path.relative(options.context,
+        loaderContext.resourcePath);
     options.content = options.hashPrefix + request + "+" + localName;
 
     const ctx = makeOptions(loaderContext.resourcePath,
@@ -80,7 +71,8 @@ function getLocalIdent(loaderContext,
 
     ctx['local'] = localName;
 
-    localIdentName = loaderUtils.interpolateName(loaderContext, localIdentName, options);
+    localIdentName =
+        loaderUtils.interpolateName(loaderContext, localIdentName, options);
 
     localIdentName = localIdentName.replace(/\[([^\]]*)]/g, (a, m) => {
         let parts = m && m.split(':', 2);
@@ -90,7 +82,7 @@ function getLocalIdent(loaderContext,
         if (parts.length === 2 && ctx[parts[1]]) {
             return formatters[parts[0]](ctx[parts[1]]);
         }
-        return  `[${m}]`
+        return `[${m}]`
     });
 
     return localIdentName.replace(

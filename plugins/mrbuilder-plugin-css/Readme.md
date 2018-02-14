@@ -36,5 +36,5 @@ less -> autprefixer -> css-loader -> (extract-text or style-loader)
 | modules       | bool or regex|false       | Support CSS Modules              |
 | autoprefixer  | bool       | true         | Include autoprefixer support     |
 | sourceMap     | bool       | true         | include sourcemap support        |
-
+| localIdentName| string     | [hash]_[package-name]_[hyphen:base-name]_[local] | the localIdentName for css modules |
 
