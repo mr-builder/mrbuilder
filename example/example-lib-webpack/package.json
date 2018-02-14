@@ -1,12 +1,12 @@
 {
   "name": "example-lib-webpack",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.9.2"
+    "mrbuilder": "^0.9.3"
   },
   "scripts": {
-    "clean":"mrbuilder-clean lib",
+    "clean": "mrbuilder-clean lib",
     "prepublish": "mrbuilder-webpack",
     "start": "mrbuilder-webpack-dev-server",
     "test": "mrbuilder-karma",
