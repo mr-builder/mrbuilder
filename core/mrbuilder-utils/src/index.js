@@ -1,7 +1,7 @@
 const path                         = require('path');
 const { existsSync, readFileSync } = require('fs');
 //JSON5 allows for a lot more convienent syntax.
-const JSON                         = require('json5');
+const JSON5                         = require('json5');
 const {
           SUBSCHEMA_PROJECT_DIR
               = process.cwd(),
@@ -20,7 +20,7 @@ const parseJSON = (filename) => {
         return;
     }
     const file = readFileSync(filename) + '';
-    return JSON.parse(file, parseRe);
+    return JSON5.parse(file, parseRe);
 };
 
 function resolvePkgDir(name, file, ...rest) {
@@ -176,10 +176,10 @@ function parseRe(key, value) {
 
 function parseValue(value) {
     if (/^".*"$/.test(value)) {
-        return JSON.parse(value, parseRe)
+        return JSON5.parse(value, parseRe)
     }
     if (/^(true|false)$/.test(value)) {
-        return JSON.parse(value);
+        return JSON5.parse(value);
     }
     if (/^\/.*\/[gim]*$/.test(value)) {
         const parts = value.split(/^\/(.*)\/([gim]*)$/);
@@ -191,7 +191,7 @@ function parseValue(value) {
         return new RegExp(re);
     }
     if (/^\d+?(?:\.\d*)?$/.test(value)) {
-        return JSON.parse(value);
+        return JSON5.parse(value);
     }
     if (/^\[([^{}\[\]]*)\]$/.test(value)) {
         return value.replace(/^\[(.*)\]$/, '$1')
@@ -201,10 +201,10 @@ function parseValue(value) {
 
     }
     if (/^\{(.*)\}$/.test(value)) {
-        return JSON.parse(value, parseRe);
+        return JSON5.parse(value, parseRe);
 
     }
-    return JSON.parse(`"${value}"`, parseRe);
+    return JSON5.parse(`"${value}"`, parseRe);
 }
 
 function stringify(value, indent = 2) {
