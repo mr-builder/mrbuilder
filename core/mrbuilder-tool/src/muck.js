@@ -8,6 +8,15 @@ import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 
+
+export const settings = {
+    exit : process.exit,
+    error: console.error,
+    warn : console.warn,
+    log  : console.log,
+    trace: console.trace,
+};
+
 const write = (filename, json) => new Promise(
     (resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2),
         'utf8', (e, o) => e ? reject(e) : resolve(o)));
@@ -80,7 +89,7 @@ function __get(key) {
 async function _move(json, keys, filename, opts) {
     const [from, to] = keys;
     if (!from || !to) {
-        console.warn(`move requires an argument`, from, to);
+        settings.warn(`move requires an argument`, from, to);
     }
     if (has(json, from)) {
         if (!await confirm(
@@ -114,7 +123,7 @@ function _get(json, keys, filename, opts = {}) {
             return false;
         }
     }
-    console.log(this.name, '=', str);
+    settings.log(this.name, '=', str);
     return false;
 }
 
@@ -169,7 +178,7 @@ async function _prompt(json, args, filename, options) {
             set(json, key, parse(answer.value));
             return true;
         } catch (e) {
-            console.warn(`Could not parse the value try again`, e);
+            settings.warn(`Could not parse the value try again`, e);
         }
         return _prompt.call(self, json, args, filename, options);
     }
@@ -186,7 +195,7 @@ export async function muckFile(pkg, file, opts) {
         if (opts.createIfNotExists && !fs.existsSync(fullname)) {
             json = {};
         } else {
-            console.warn(`Error reading ${fullname}`, e);
+            settings.warn(`Error reading ${fullname}`, e);
             return false
         }
     }
@@ -200,7 +209,7 @@ export async function muckFile(pkg, file, opts) {
         const backup = fullname + opts.extension;
         let newfile  = fullname;
         if (opts.preview) {
-            console.log(JSON.stringify(json, null, 2));
+            settings.log(JSON.stringify(json, null, 2));
             if (!await confirm(`Does above look correct for ${fullname}`,
                     { confirm: true })) {
                 return false;
@@ -223,24 +232,24 @@ export async function muckFile(pkg, file, opts) {
                 try {
                     fs.renameSync(backup, newfile);
                 } catch (ee) {
-                    console.warn(`Error renaming ${backup} back to ${newfile}`,
+                    settings.warn(`Error renaming ${backup} back to ${newfile}`,
                         e)
 
                 }
             }
-            console.warn(`Error writing ${newfile}`, e)
+            settings.warn(`Error writing ${newfile}`, e)
         }
     }
     return true;
 
 }
 
-export function makeOptions(name, args) {
+export function makeOptions(name, args,) {
     function help(msg) {
         if (msg) {
-            console.error(msg);
+            settings.error(msg);
         }
-        console.warn(`${name}   [-sdgihfe] <files>
+        settings.warn(`${name}   [-sdgihfe] <files>
       -b\t--backup\t<extension>\tuse a different extension
       -p\t--prompt\tkey=question\tprompt for value before changing
       -c\t--confirm\t\tconfirm before dangerous operations
@@ -259,7 +268,7 @@ export function makeOptions(name, args) {
       -S\t--scope packages,\t Only apply to these packages (glob).
       --no-extension\tuse in place
     `);
-        process.exit(1);
+        settings.exit(1);
     }
 
     const opts     = {
@@ -404,9 +413,9 @@ export async function muck(opts) {
 if (require.main === module) {
     muck(makeOptions(process.argv[1], process.argv.slice(2)))
         .then(function (res) {
-            process.exit(res);
+            settings.exit(res);
         }, function (e) {
-            console.trace(e);
+            settings.trace(e);
             process.exit(1);
         });
 }
