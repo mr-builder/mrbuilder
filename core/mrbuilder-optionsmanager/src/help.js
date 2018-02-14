@@ -1,4 +1,4 @@
-export default function (optionsManager) {
+module.exports = function help(optionsManager) {
     return () => {
         let str        = '';
         const aliasMap = {};

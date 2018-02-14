@@ -1,5 +1,5 @@
 import React from 'react';
-import Readme from '../README.md';
+import Meta from './fixture/meta.md';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
@@ -10,11 +10,14 @@ const into = (node) => {
 };
 
 describe('mrbuilder-plugin-markdown', function () {
-    it('should render README', function () {
+    /*it('should render Inline', function () {
 
-        const root = into(<Readme className='readme'/>);
-        expect(root.find('h1').at(0).text()).to
-                                            .eql('mrbuilder-plugin-markdown');
+         into(<Inline className='readme'/>);
+
+    });*/
+    it('should render Meta', function () {
+
+        into(<Meta className='readme'/>);
+
     });
-
 });
