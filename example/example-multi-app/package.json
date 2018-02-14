@@ -17,7 +17,30 @@
       "mrbuilder-preset-app"
     ],
     "plugins": [
-      "mrbuilder-plugin-babel",
+      [
+        "mrbuilder-plugin-babel",
+        {
+          "transform-runtime": false
+        }
+      ],
+      [
+        "mrbuilder-plugin-css",
+        {
+          "localIdentName":"[package-name]«[hyphen:rel-name]»[local]"
+        }
+      ],
+      [
+        "mrbuilder-plugin-stylus",
+        {
+          "modules": true
+        }
+      ],
+      [
+        "mrbuilder-plugin-less",
+        {
+          "modules": true
+        }
+      ],
       [
         "mrbuilder-plugin-webpack",
         {

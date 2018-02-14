@@ -1,0 +1,7 @@
+.link
+    background lightblue
+    border 1px solid darkblue
+    padding 5px
+    border-radius 3px
+    text-decoration none
+
