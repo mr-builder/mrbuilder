@@ -11,7 +11,7 @@ var codeRevision = 0;
 
 var render = function render() {
     // eslint-disable-next-line import/no-unresolved
-    var styleguide = require(`!!./loader!react-styleguidist/lib/index.js`);
+    var styleguide = require(`!!react-styleguidist/loaders/styleguide-loader!react-styleguidist/lib/index.js`);
     mergeProps(styleguide);
     ReactDOM.render(renderStyleguide(styleguide, codeRevision),
         document.getElementById('app'));
@@ -21,7 +21,7 @@ window.addEventListener('hashchange', render);
 
 /* istanbul ignore if */
 if (module.hot) {
-    module.hot.accept(`!!./loader!react-styleguidist/lib/index.js`, function () {
+    module.hot.accept(`!!react-styleguidist/loaders/styleguide-loader!react-styleguidist/lib/index.js`, function () {
         codeRevision += 1;
         render();
     });
