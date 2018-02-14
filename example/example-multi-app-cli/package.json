@@ -6,6 +6,7 @@
     "mrbuilder": "^0.9.2"
   },
   "scripts": {
+    "clean":"mrbuilder-clean app",
     "start": "mrbuilder-webpack-dev-server --entry index=./public/index.js other=./public/other --mrbuilder-plugin-html-pages={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}",
     "prepublish": "mrbuilder-webpack --app app --entry index=./public/index.js other=./public/other --mrbuilder-plugin-html-pages={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}"
   },

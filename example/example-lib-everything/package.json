@@ -16,6 +16,7 @@
     "mrbuilder-plugin-worker": "^0.9.2"
   },
   "scripts": {
+    "clean":"mrbuilder-clean lib",
     "analyze": "MRBUILDER_PLUGINS=mrbuilder-plugin-analyze mrbuilder-webpack",
     "prepublish": "mrbuilder-webpack",
     "start": "mrbuilder-webpack-dev-server ",
