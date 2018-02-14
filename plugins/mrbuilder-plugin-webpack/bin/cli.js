@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const OptionsManager = require('mrbuilder-optionsmanager').default;
+const OptionsManager = require('mrbuilder-optionsmanager');
 const optionsManager = global._MRBUILDER_OPTIONS_MANAGER ||
                        (global._MRBUILDER_OPTIONS_MANAGER = new OptionsManager({
                            prefix  : 'mrbuilder',

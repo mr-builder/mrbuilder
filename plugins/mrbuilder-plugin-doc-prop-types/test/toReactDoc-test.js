@@ -38,12 +38,12 @@
 const toReactDoc = require('../src/toReactDoc');
 const PropTypes  = require('../src/docWrapPropTypes');
 const { expect } = require('chai');
-const match      = (props, defaultProps, expected) => {
+const match      = (propTypes, defaultProps, expected) => {
     if (expected == null) {
         expected     = defaultProps;
         defaultProps = {};
     }
-    const processed = toReactDoc(props, defaultProps);
+    const processed = toReactDoc({propTypes, defaultProps});
     try {
         expect(processed).to.eql(expected)
     } catch (e) {

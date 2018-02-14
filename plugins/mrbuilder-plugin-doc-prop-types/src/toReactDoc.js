@@ -93,7 +93,7 @@ const pickType = (type) => {
             }
     }
 };
-export default function ({ propTypes = {}, defaultProps = {} }) {
+module.exports = function ({ propTypes = {}, defaultProps = {} }) {
     propTypes = toDocs(propTypes);
 
     return Object.keys(defaultProps).reduce((ret, key) => {

@@ -3,6 +3,7 @@
   "version": "0.9.2",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
+    "mrbuilder-optionsmanager": "^0.9.2",
     "mrbuilder-plugin-analyze": "^0.9.2",
     "mrbuilder-plugin-babel": "^0.9.2",
     "mrbuilder-plugin-browserslist": "^0.9.2",

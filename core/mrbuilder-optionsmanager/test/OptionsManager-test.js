@@ -1,8 +1,8 @@
-import OptionsManager from '../src/OptionsManager';
-import { join } from 'path';
-import { expect } from 'chai';
-import { stringify } from 'mrbuilder-utils';
-import { existsSync, readdirSync, statSync, symlinkSync, unlinkSync } from 'fs';
+const OptionsManager = require('../src/OptionsManager');
+const { join } = require('path');
+const { expect } = require('chai');
+const { stringify } = require( 'mrbuilder-utils');
+const { existsSync, readdirSync, statSync, symlinkSync, unlinkSync } = require('fs');
 
 const isDirectory = sourceDir => {
     try {

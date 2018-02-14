@@ -1,6 +1,23 @@
-This plugin provides markdown support.  It probable should not be used,
-but is so... Should probably replace with [markdown-to-jsx](https://www.npmjs.com/package/markdown-to-jsx)
+This plugin provides markdown support.
 
+- [ ] not done
+- [x] done
+
+The advantage of this markdown implementation over the [markdown-to-jsx](https://www.npmjs.com/package/markdown-to-jsx)
+is this  compiled to react components, rather than parsing the content in the browser
+to extract content.
+
+So it can easily include paths like the one below.
+
+![alt logo](../../mrbuilder.wiki/mrbuilder.svg)
+
+and inline _stuff_
+
+```js, showCode
+
+console.log('hello stuff')
+
+```
 ## Table support
 
 ```markdown
@@ -28,6 +45,10 @@ world
 It needs to be inline <span className='inline-hello' style="font-weight:bold;color:red">Hello</span>
 
 
-The advantage of this markdown implementation over the markdown-to-jsx is it
-is compiled to react components, rather than parsing the content in the browser
-to extract content.
+
+- list item 1
+- list item 2
+
+1) is first
+2) is second
+

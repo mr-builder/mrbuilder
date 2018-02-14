@@ -6,7 +6,7 @@ if (!env.NODE_ENV) {
 env.MRBUILDER_INTERNAL_PLUGINS =
     `${env.MRBUILDER_INTERNAL_PLUGINS},mrbuilder-webpack-dev-server`;
 
-const OptionsManager = require('mrbuilder-optionsmanager').default;
+const OptionsManager = require('mrbuilder-optionsmanager');
 const optionsManager = global._MRBUILDER_OPTIONS_MANAGER ||
                        (global._MRBUILDER_OPTIONS_MANAGER =
                            new OptionsManager({

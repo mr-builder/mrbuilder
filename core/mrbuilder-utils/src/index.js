@@ -1,6 +1,7 @@
 const path                         = require('path');
 const { existsSync, readFileSync } = require('fs');
-const stripJsonComments            = require('strip-json-comments');
+//JSON5 allows for a lot more convienent syntax.
+const JSON5                         = require('json5');
 const {
           SUBSCHEMA_PROJECT_DIR
               = process.cwd(),
@@ -19,7 +20,7 @@ const parseJSON = (filename) => {
         return;
     }
     const file = readFileSync(filename) + '';
-    return JSON.parse(stripJsonComments(file), parseRe);
+    return JSON5.parse(file, parseRe);
 };
 
 function resolvePkgDir(name, file, ...rest) {
@@ -32,8 +33,7 @@ function resolvePkgDir(name, file, ...rest) {
             require.resolve(path.join(name, 'package.json')), '..', file,
             ...rest);
     }
-    return path.resolve(require.resolve(path.join(name, 'package.json')),
-        '..');
+    return path.resolve(require.resolve(path.join(name, 'package.json')), '..');
 }
 
 const PKG_CACHE = {};
@@ -148,7 +148,9 @@ const camelCased = function (str, first) {
     return str;
 };
 
-const sliced = Function.call.bind(Array.prototype.slice);
+const camelToHyphen = (str = '') => str.replace(/([A-Z])/g,
+    (g, a, i) => `${i === 0 ? '' : '-'}${g[0].toLowerCase()}`);
+const sliced        = Function.call.bind(Array.prototype.slice);
 
 
 function resolveMap(...args) {
@@ -174,10 +176,10 @@ function parseRe(key, value) {
 
 function parseValue(value) {
     if (/^".*"$/.test(value)) {
-        return JSON.parse(value, parseRe)
+        return JSON5.parse(value, parseRe)
     }
     if (/^(true|false)$/.test(value)) {
-        return JSON.parse(value);
+        return JSON5.parse(value);
     }
     if (/^\/.*\/[gim]*$/.test(value)) {
         const parts = value.split(/^\/(.*)\/([gim]*)$/);
@@ -189,9 +191,9 @@ function parseValue(value) {
         return new RegExp(re);
     }
     if (/^\d+?(?:\.\d*)?$/.test(value)) {
-        return JSON.parse(value);
+        return JSON5.parse(value);
     }
-    if (/^\[(.*)\]$/.test(value)) {
+    if (/^\[([^{}\[\]]*)\]$/.test(value)) {
         return value.replace(/^\[(.*)\]$/, '$1')
                     .split(/,\s*/)
                     .filter(Boolean)
@@ -199,10 +201,10 @@ function parseValue(value) {
 
     }
     if (/^\{(.*)\}$/.test(value)) {
-        return JSON.parse(value, parseRe);
+        return JSON5.parse(value, parseRe);
 
     }
-    return JSON.parse(`"${value}"`, parseRe);
+    return JSON5.parse(`"${value}"`, parseRe);
 }
 
 function stringify(value, indent = 2) {
@@ -259,7 +261,7 @@ const enhancedResolve = (p) => {
     if (p.startsWith('~')) {
         const parts  = p.substring(1).split('/');
         const pkgDir = path.resolve(
-           require.resolve(path.join(parts.shift(), 'package.json')), '..');
+            require.resolve(path.join(parts.shift(), 'package.json')), '..');
 
         return path.resolve(pkgDir, ...parts);
     }
@@ -282,6 +284,6 @@ module.exports = {
     warn,
     parseJSON,
     info,
-    cwd, sliced, resolveMap, resolvePkgDir,
+    cwd, sliced, resolveMap, resolvePkgDir, camelToHyphen
 
 };

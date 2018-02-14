@@ -5,7 +5,7 @@ process.env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-mocha';
 
 const optionsManager = global._MRBUILDER_OPTIONS_MANAGER || (
     global._MRBUILDER_OPTIONS_MANAGER =
-        new (require('mrbuilder-optionsmanager').default)({
+        new (require('mrbuilder-optionsmanager'))({
             prefix  : 'mrbuilder',
             _require: require
         }));

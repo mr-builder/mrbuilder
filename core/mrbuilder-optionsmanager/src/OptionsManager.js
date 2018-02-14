@@ -1,15 +1,14 @@
-import { basename, join, resolve } from 'path';
-import { get, parseJSON, parseValue } from 'mrbuilder-utils';
-import {
-    envify, mergeAlias, mergeArgs, mergeEnv, mergeOptions, mergePlugins,
-    nameConfig, select, split
-} from './util';
-import _help from './help';
+const { basename, join, resolve }    = require('path');
+const { get, parseJSON, parseValue } = require('mrbuilder-utils');
+const {
+          envify, mergeAlias, mergeArgs, mergeEnv, mergeOptions, mergePlugins,
+          nameConfig, select, split
+      }                              = require('./util');
+const _help                          = require('./help');
 
 
-export default class OptionsManager {
+module.exports = class OptionsManager {
 
-    plugins = new Map();
 
     constructor({
                     prefix,
@@ -28,6 +27,8 @@ export default class OptionsManager {
                     topPackage,
                 } = {}) {
 
+        this.plugins = new Map();
+        this.help = _help(this);
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
@@ -291,7 +292,6 @@ export default class OptionsManager {
         }
     }
 
-    help = _help(this);
 
     forEach(fn, scope = {}) {
         this.plugins.forEach((value, key, ...args) => {

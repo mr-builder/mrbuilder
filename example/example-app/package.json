@@ -12,7 +12,8 @@
     "mrbuilder-preset-app": "^0.9.2"
   },
   "scripts": {
-    "prepublish": "mrbuilder-clean app && mrbuilder-webpack",
+    "clean":"mrbuilder-clean app",
+    "prepublish": "mrbuilder-webpack",
     "start": "mrbuilder-webpack-dev-server",
     "test": "mrbuilder-karma",
     "karma": "mrbuilder-karma"

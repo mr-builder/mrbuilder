@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const mod        = require('../src');
 
-describe('susbchema-dev-less', function () {
+describe('mrbuilder-plugin-less', function () {
     it('should load', function () {
         const webpack = {
             plugins: [],
@@ -9,50 +9,9 @@ describe('susbchema-dev-less', function () {
                 rules: []
             }
         };
-        let called    = [];
-        mod.call({
-            useStyle(...args) {
-                called.push(...args);
-                return args.filter(Boolean);
-            }
-        }, {}, webpack);
-        console.log(JSON.stringify(webpack, null, 2));
-        expect(called).to.have.length(3);
-        expect(webpack.module.rules).to.have.length(1);
-        expect(JSON.parse(JSON.stringify(webpack))).to.eql({
-            "plugins": [],
-            "module" : {
-                "rules": [
-                    {
-                        "test"  : {},
-                        "loader": [
-                            {
-                                "loader" : "css-loader",
-                                "options": {
-                                    "modules"       : true,
-                                    "importLoaders" : 1,
-                                    "localIdentName": "[name]__[local]___[hash:base64:5]"
-                                }
-                            },
-                            {
-                                "loader" : "less-loader",
-                                "options": {
-                                    "strictMath": true,
-                                    "noIeCompat": true
-                                }
-                            },
-                            {
-                                "loader" : "postcss-loader",
-                                "options": {
-                                    "plugins": [
-                                        null
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                ]
-            }
-        });
+        mod.call({}, { modules: true }, webpack);
+        expect(webpack.module.rules).to.have.length(2);
+        expect(webpack.plugins).to.have.length(1);
+        expect(webpack.module.rules[0].use).to.have.length(3);
     });
 });
