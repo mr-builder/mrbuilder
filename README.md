@@ -4,6 +4,7 @@ mrbuilder - Mono Repo Builder
 ===
 A tool for developing javascript in monorepos more documentation [here](https://mr-builder.github.io)
 
+[![Build Status](https://travis-ci.org/mr-builder/mrbuilder.svg?branch=master)](https://travis-ci.org/mr-builder/mrbuilder)
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
