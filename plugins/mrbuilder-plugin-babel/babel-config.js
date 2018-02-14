@@ -6,10 +6,12 @@ const mrb = (key, def) => optionsManager.config(
     `mrbuilder-plugin-babel.${key}`, def);
 
 
-const path         = require('path');
-const fs           = require('fs');
-const babelProcess = require('./babel-process');
-const babelrc      =
+const path              = require('path');
+const fs                = require('fs');
+const babelProcess      = require('./babel-process');
+const { camelToHyphen } = require('mrbuilder-utils');
+
+const babelrc =
           mrb('babelrc', true) ? path.resolve(process.cwd(), '.babelrc')
               : false;
 let conf;
@@ -23,6 +25,23 @@ if (babelrc && fs.existsSync(babelrc)) {
         defConf);
     conf = require(defConf);
 }
+
+let _plugins = mrb('plugins'), _presets = mrb('presets');
+if (_plugins) {
+    if (_plugins === false) {
+        conf.plugins = [];
+    } else {
+        conf.plugins = Array.isArray(_plugins) ? _plugins : [_plugins];
+    }
+}
+if (_presets != null) {
+    if (_presets === false) {
+        conf.presets = [];
+    } else {
+        conf.presets = Array.isArray(_presets) ? _presets : [_presets];
+    }
+}
+
 
 let useModules = mrb('useModules');
 if (mrb('hot') || optionsManager.enabled('mrbuilder-plugin-hot')) {
@@ -44,8 +63,8 @@ if (useModules) {
     }
 }
 
-const applyConfig = (type)=>(op)=>{
-    const preset = Array.isArray(op) ? op[0] : op;
+const applyConfig = (type) => (op) => {
+    const preset = camelToHyphen(Array.isArray(op) ? op[0] : op);
     const short  = (new RegExp(
         `/babel-${type}-(${preset})/|^(${preset})$`).exec(preset));
     const conf   = mrb(short[1] || short[2]);
@@ -57,7 +76,7 @@ const applyConfig = (type)=>(op)=>{
     }
     return op;
 };
-conf.presets = conf.presets.map(applyConfig('preset')).filter(Boolean);
+conf.presets      = conf.presets.map(applyConfig('preset')).filter(Boolean);
 
 conf.plugins = conf.plugins.map(applyConfig('plugin')).filter(Boolean);
 
