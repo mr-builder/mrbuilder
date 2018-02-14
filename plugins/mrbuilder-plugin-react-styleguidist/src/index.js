@@ -1,18 +1,19 @@
-const getConfig          = require('react-styleguidist/scripts/config');
-const sylist             = require(
+const getConfig = require('react-styleguidist/scripts/config');
+const sylist    = require(
     'react-styleguidist/scripts/make-webpack-config');
-const { join, relative } = require('path');
+const {
+          join,
+          relative
+      }         = require('path');
 const {
           cwd,
           enhancedResolve
-      }                  = require('mrbuilder-utils');
+      }         = require('mrbuilder-utils');
 
 module.exports = function (options = {}, webpack, om) {
 
-    const resolvePkgDir = (v, ...args) => join(
+    const resolvePkgDir        = (v, ...args) => join(
         om.require.resolve(join(v, 'package.json')), '..', ...args);
-
-
     const componentsToSections = (opts) => {
         if (!opts) {
             return;
