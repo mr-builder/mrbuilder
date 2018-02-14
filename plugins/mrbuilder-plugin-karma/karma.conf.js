@@ -6,15 +6,13 @@ const optionsManager     = global._MRBUILDER_OPTIONS_MANAGER;
 const logger             = optionsManager.logger('mrbuilder-plugin-karma');
 const webpack            = require('mrbuilder-plugin-webpack/webpack.config');
 
-const mrb = (key, def) => optionsManager.config(`mrbuilder-plugin-karma.${key}`,
-    def);
-
+const mrb = (key, def) =>{
+    return optionsManager.config(`mrbuilder-plugin-karma.${key}`,
+        def);
+}
+console.log(optionsManager.config(`mrbuilder-plugin-karma`));
 const chromeDataDir = mrb('chromeDataDir', path.resolve(process.env.HOME,
     '.mrbuilder-chrome'));
-
-const {
-          TRAVIS
-      } = process.env;
 
 
 const useCoverage   = mrb('coverage');
@@ -26,7 +24,7 @@ const browsers      = mrb('browsers', ['Chrome']);
 const port          = mrb('port', 9876);
 const reporters     = mrb('reports', ['spec']);
 const colors        = mrb('colors', true);
-logger.info('using', files, 'browsers', browsers);
+logger.info('files:'+ files + ' browsers:'+ browsers);
 
 module.exports = function (config) {
 
@@ -135,7 +133,7 @@ module.exports = function (config) {
         };
         karmaConf.plugins.push('karma-coverage-istanbul-reporter')
     }
-   
+
     logger.debug('karma-conf', stringify(karmaConf));
     config.set(karmaConf);
 };

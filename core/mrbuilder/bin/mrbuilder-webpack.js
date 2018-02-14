@@ -3,8 +3,8 @@ const { env }                  = process;
 env.MRBUILDER_INTERNAL_PRESETS =
     `${env.MRBUILDER_INTERNAL_PRESETS || ''},mrbuilder`;
 
-if (!(env.NODE_ENV || env.MRBUILDER_NODE_ENV)) {
-    env.NODE_ENV = 'production';
+if (!(env.NODE_ENV || env.MRBUILDER_ENV)) {
+    env.MRBUILDER_ENV = env.NODE_ENV = 'production';
 }
 
 global._MRBUILDER_OPTIONS_MANAGER =

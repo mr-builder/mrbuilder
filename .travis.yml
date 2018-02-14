@@ -6,6 +6,11 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
+env
+  MRBUILDER_PLUGIN_KARMA_BROWSERS="q"
+
 node_js:
   - 8
 script: yarn test
+addons:
+  firefox: "52.0"
