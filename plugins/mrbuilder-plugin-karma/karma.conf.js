@@ -135,9 +135,7 @@ module.exports = function (config) {
         };
         karmaConf.plugins.push('karma-coverage-istanbul-reporter')
     }
-    if (TRAVIS) {
-        karmaConf.browsers = ['Firefox'];
-    }
+   
     logger.debug('karma-conf', stringify(karmaConf));
     config.set(karmaConf);
 };
