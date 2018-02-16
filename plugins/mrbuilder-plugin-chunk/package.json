@@ -5,5 +5,8 @@
   "dependencies": {
     "mrbuilder-utils": "^0.9.5"
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "peerDependencies": {
+    "mrbuilder": "^0.9.5"
+  }
 }

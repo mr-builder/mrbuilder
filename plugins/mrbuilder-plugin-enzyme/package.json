@@ -17,5 +17,8 @@
       ]
     ]
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "peerDependencies": {
+    "mrbuilder": "^0.9.5"
+  }
 }

@@ -8,18 +8,44 @@ const toDocs = v => JSON.parse(JSON.stringify(v, function (key, value) {
     }
     return value;
 }));
+//Object.keys causes issues with transform
+const assign = function (target) {
+    const reset = Array.prototype.slice.call(arguments, 1);
+
+    function assign$each(key) {
+        target[key] = this[key];
+        return target;
+    }
+
+    return reset.reduce(function (ret, obj) {
+        keys(obj).forEach(assign$each, obj);
+        return ret;
+    }, target || {});
+};
+const keys   = (obj) => {
+    const ret = [];
+    if (!obj) {
+        return ret;
+    }
+    for (let k in obj) {
+        if (has(obj, k)) {
+            ret.push(k)
+        }
+    }
+    return ret;
+};
 const has    = Function.call.bind(Object.prototype.hasOwnProperty);
 
 const enumify     = v => ({
-    value   : typeof v === 'number' || typeof v === 'function' ? '' + v : `'${v}'`,
+    value   : typeof v === 'number' || typeof v === 'function' ? '' + v
+        : `'${v}'`,
     computed: false
 });
-const { assign }  = Object;
 const noUndefined = (obj) => {
     if (!obj) {
         return obj;
     }
-    return Object.keys(obj).reduce((ret, key) => {
+    return keys(obj).reduce((ret, key) => {
         if (obj[key] === void(0)) {
             return ret;
         }
@@ -41,7 +67,7 @@ const process  = (prop) => {
         case 'shape':
             return {
                 name,
-                value: Object.keys(value).reduce((ret, key) => {
+                value: keys(value).reduce((ret, key) => {
                     ret[key] =
                         process(assign({}, { required: false }, value[key]));
                     return ret;
@@ -96,7 +122,7 @@ const pickType = (type) => {
 module.exports = function ({ propTypes = {}, defaultProps = {} }) {
     propTypes = toDocs(propTypes);
 
-    return Object.keys(defaultProps).reduce((ret, key) => {
+    return keys(defaultProps).reduce((ret, key) => {
         const val = defaultProps[key]
         if (!ret[key]) {
             ret[key] = {
@@ -107,7 +133,7 @@ module.exports = function ({ propTypes = {}, defaultProps = {} }) {
             ret[key].defaultValue = enumify(val);
         }
         return ret;
-    }, Object.keys(propTypes).reduce((ret, key) => {
+    }, keys(propTypes).reduce((ret, key) => {
         const {
                   required          = false, value,
                   type, description = ''
