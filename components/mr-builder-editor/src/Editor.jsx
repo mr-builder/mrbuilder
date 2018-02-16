@@ -5,9 +5,9 @@ import TinySlider from './TinySlider';
 import Property from './Property';
 import { themeClass } from 'emeth';
 import qs from 'qs';
+import PropTypes from 'prop-types';
+import { clamp } from './util';
 import toReactDoc from 'mrbuilder-plugin-doc-prop-types/src/toReactDoc';
-
-const clamp = (v = 0, min, max) => Math.max(min, Math.min(max, v))
 
 const unescape = v => v.replace(/'/g, '');
 
@@ -15,14 +15,24 @@ const uniqueKeys = (...args) => args.reduce((ret, obj) => {
     ret.push(...Object.keys(obj).filter(key => !ret.includes(key)));
     return ret;
 }, []);
+
 export default class Editor extends PureComponent {
+    static propTypes = {
+        component  : PropTypes.func,
+        overrides  : PropTypes.object,
+        id         : PropTypes.string,
+        /**
+         * Keep the Element in sync with url.
+         */
+        syncHistory: PropTypes.bool
+    };
 
     static defaultProps = {
         component  : '',
         overrides  : {},
         props      : {},
         id         : '',
-        syncHistory: true,
+        syncHistory: false,
     };
 
     static componentProps({ component, overrides, props }) {
@@ -160,7 +170,7 @@ export default class Editor extends PureComponent {
         this.setHistoryState({ [name]: value });
     };
 
-    handleBool      = ({ currentTarget: { name, checked } }) => {
+    handleBool = ({ currentTarget: { name, checked } }) => {
         this.setHistoryState({ [name]: checked })
     };
 

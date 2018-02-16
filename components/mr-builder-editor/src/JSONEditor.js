@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { themeClass } from 'emeth';
 import { parseValue } from './parse';
 import { clamp } from './util';
-
 
 export default class JSONEditor extends PureComponent {
 
@@ -11,13 +11,22 @@ export default class JSONEditor extends PureComponent {
         min: 5,
         max: 50
     };
+    static propTypes    = {
+        min      : PropTypes.number,
+        max      : PropTypes.number,
+        name     : PropTypes.string,
+        type     : PropTypes.oneOf(['array', 'object']),
+        value    : PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        onChange : PropTypes.func._doc(
+            'On change handler @param name @param value'),
+        className: PropTypes.string._doc('CSS Class name')
+    };
 
     state = {};
 
     componentDidMount() {
         this.setNameValue(this.props.name, this.props.value);
     }
-
 
 
     trim(value) {

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { themeClass } from 'emeth';
+import PropTypes from 'prop-types';
 
 const EMPTY_FUNC = `function(){
     //your code here
@@ -9,6 +10,15 @@ const EMPTY_FUNC = `function(){
 export default class FunctionEditor extends PureComponent {
 
     static displayName = 'FunctionEditor';
+
+    static propTypes    = {
+
+        name     : PropTypes.string,
+        value    : PropTypes.oneOf([PropTypes.string, PropTypes.object]),
+        onChange : PropTypes.func._doc(
+            'On change handler @param name @param value'),
+        className: PropTypes.string._doc('CSS Class name')
+    };
 
     state = {};
 

@@ -106,7 +106,7 @@ In your \`package.json\`
 `;
         }
 
-        if (category === 'example') {
+        if (category === 'example' || category == 'component') {
             conf.description += `
 ### Configuration
 This is the configuration
@@ -121,7 +121,9 @@ This is the configuration
 \`\`\`            
 `
         }
-
+        if (category == 'components'){
+            conf.components = [pkg.name]
+        }
         place.push(conf);
 
     });
