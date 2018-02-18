@@ -1,18 +1,18 @@
 {
   "name": "example-app",
-  "version": "0.9.2",
+  "version": "0.9.5",
   "private": true,
   "dependencies": {
-    "example-lib": "^0.9.2",
-    "example-lib-everything": "^0.9.2",
-    "example-lib-webpack": "^0.9.2"
+    "example-lib": "^0.9.5",
+    "example-lib-everything": "^0.9.5",
+    "example-lib-webpack": "^0.9.5"
   },
   "devDependencies": {
-    "mrbuilder": "^0.9.2",
-    "mrbuilder-preset-app": "^0.9.2"
+    "mrbuilder": "^0.9.5",
+    "mrbuilder-preset-app": "^0.9.5"
   },
   "scripts": {
-    "clean":"mrbuilder-clean app",
+    "clean": "mrbuilder-clean app",
     "prepublish": "mrbuilder-webpack",
     "start": "mrbuilder-webpack-dev-server",
     "test": "mrbuilder-karma",
@@ -23,5 +23,6 @@
       "mrbuilder-preset-app",
       "example-lib-everything"
     ]
-  }
+  },
+  "license": "0BSD"
 }

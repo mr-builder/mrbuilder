@@ -1,12 +1,12 @@
 {
   "name": "example-lib-webpack",
-  "version": "0.9.2",
+  "version": "0.9.5",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^0.9.2"
+    "mrbuilder": "^0.9.5"
   },
   "scripts": {
-    "clean":"mrbuilder-clean lib",
+    "clean": "mrbuilder-clean lib",
     "prepublish": "mrbuilder-webpack",
     "start": "mrbuilder-webpack-dev-server",
     "test": "mrbuilder-karma",
@@ -17,5 +17,6 @@
     "react-dom": "16.x"
   },
   "source": "src",
-  "main": "lib"
+  "main": "lib",
+  "license": "0BSD"
 }

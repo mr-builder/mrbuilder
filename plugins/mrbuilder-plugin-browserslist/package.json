@@ -1,9 +1,10 @@
 {
   "name": "mrbuilder-plugin-browserslist",
-  "version": "0.9.2",
+  "version": "0.9.5",
   "dependencies": {
-    "mrbuilder-utils": "^0.9.2"
+    "mrbuilder-utils": "^0.9.5"
   },
   "source": "src",
-  "main": "src"
+  "main": "src",
+  "license": "0BSD"
 }

@@ -1,11 +1,12 @@
 {
   "name": "mrbuilder-plugin-env",
-  "version": "0.9.2",
+  "version": "0.9.5",
   "main": "src",
   "source": "src",
   "mrbuilder": {
     "alias": {
       "p": "Sets the build to production mode"
     }
-  }
+  },
+  "license": "0BSD"
 }

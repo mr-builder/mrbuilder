@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-plugin-doc-prop-types",
-  "version": "0.9.2",
+  "version": "0.9.5",
   "description": "Allow for auto documentation of propTypes",
   "main": "src",
   "dependencies": {
-    "mrbuilder-plugin-emeth": "^0.9.2"
+    "mrbuilder-plugin-emeth": "^0.9.5"
   },
   "peerDependencies": {
     "mrbuilder": "^0.9.2"
@@ -13,5 +13,6 @@
     "test": "mrbuilder-mocha",
     "demo": "mrbuilder-demo  --mrbuilder-plugin-html-exported=true",
     "start": " mrbuilder-webpack-dev-server --mrbuilder-plugin-babel-disable-transform-runtime=1 --mrbuilder-plugin-html-exported=true"
-  }
+  },
+  "license": "0BSD"
 }
