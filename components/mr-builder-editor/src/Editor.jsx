@@ -77,46 +77,44 @@ export default class Editor extends PureComponent {
         }
         q = q || {};
 
-        const ret = Editor.componentProps(props)
-                          .reduce((ret,
-                                   { type = {}, defaultValue: { value } = {}, name }) => {
-                              const v = ret[name] || value;
-                              switch (type.name) {
-                                  case 'number':
-                                      ret[name] = parseFloat(v, 10);
-                                      break;
-                                  case 'bool':
-                                      ret[name] =
-                                          v === true || v === false ? v : v
-                                                                          === 'true';
-                                      break;
-                                  case 'union':
-                                  case 'array':
-                                      ret[name] =
-                                          !v ? [] : Array.isArray(v) ? v
-                                              : v.split(',');
-                                      break;
-                                  case 'func':
-                                  case 'function':
-                                      if (typeof v !== 'function') {
-                                          ret[name] = (new Function([],
-                                              `return ${v}`))();
-                                          break;
-                                      }
-                                  default:
-                                      ret[name] = v;
-                              }
-                              return ret;
-                          }, q);
-        return ret;
-
+        return Editor.componentProps(props)
+                     .reduce((ret,
+                              { type = {}, defaultValue: { value } = {}, name }) => {
+                         const v = ret[name] || value;
+                         switch (type.name) {
+                             case 'number':
+                                 ret[name] = parseFloat(v, 10);
+                                 break;
+                             case 'bool':
+                                 ret[name] =
+                                     v === true || v === false ? v : v
+                                                                     === 'true';
+                                 break;
+                             case 'union':
+                             case 'array':
+                                 ret[name] =
+                                     !v ? [] : Array.isArray(v) ? v
+                                         : v.split(',');
+                                 break;
+                             case 'func':
+                             case 'function':
+                                 if (typeof v !== 'function') {
+                                     ret[name] = (new Function([],
+                                         `return ${v}`))();
+                                     break;
+                                 }
+                             default:
+                                 ret[name] = v;
+                         }
+                         return ret;
+                     }, q);
     }
 
     componentDidMount() {
         if (this.props.syncHistory) {
             const _oonpopstate = this._oonpopstate = window.onpopstate;
             window.onpopstate = (e, ...args) => {
-                _oonpopstate(e);
+                _oonpopstate && _oonpopstate(e);
                 if (this.props.id) {
                     this.setState(e.state[this.props.id]);
                 } else {
@@ -152,21 +150,21 @@ export default class Editor extends PureComponent {
         this.setState(state);
     }
 
-    renderProp   = (ret = [], prop) => {
-        const _key = `_${prop.type.name}`;
-        if (typeof this[_key] === 'function') {
-            const content = this[_key](prop);
-            ret.push(' ', content);
-        } else {
-            console.warn(`no handler for ${prop.type.name}`)
-        }
-        return ret;
+
+    handleReset = () => {
+        const state = this.state;
+
+        this.setHistoryState(Object.keys(state).reduce((ret, key) => {
+            ret[key] = void(0);
+            return ret;
+        }, {}), true);
     };
+
     handleNumber = ({ target: { name, value } }) => {
         this.setHistoryState({ [name]: parseInt(value, 10) });
     };
 
-    handleString = ({ target: { name, value } }) => {
+    handleChange = ({ target: { name, value } }) => {
         this.setHistoryState({ [name]: value });
     };
 
@@ -174,13 +172,6 @@ export default class Editor extends PureComponent {
         this.setHistoryState({ [name]: checked })
     };
 
-    handleJson = ({ target: { name, value } }) => {
-        this.setHistoryState({ [name]: value });
-    };
-
-    handleFunc = ({ target: { name, value } }) => {
-        this.setState({ [name]: value });
-    };
 
     _func({ type, name, description, defaultValue }) {
         const value = (name in this.state) ? this.state[name] : defaultValue
@@ -195,7 +186,7 @@ export default class Editor extends PureComponent {
                 </span>
             <FunctionEditor name={name}
                             className={tc('textarea')}
-                            onChange={this.handleFunc}
+                            onChange={this.handleChange}
                             value={value}/>
         </Property>
     }
@@ -206,15 +197,13 @@ export default class Editor extends PureComponent {
 
         return <Property key={`object-${name}`} name={name}
                          description={description}>
-            {'{'}
-                <JSONEditor className={tc('input')}
-                type='object'
-                name={name}
-                onChange={this.handleJson}
-                min={5}
-                max={50}
-                value={value}/>
-            {'}'}
+            <JSONEditor className={tc('input')}
+                        type='object'
+                        name={name}
+                        onChange={this.handleChange}
+                        min={5}
+                        max={50}
+                        value={value}/>
         </Property>
     }
 
@@ -227,21 +216,13 @@ export default class Editor extends PureComponent {
             : defaultValue;
         return <Property key={`array-${name}`} name={name}
                          description={description}>
-            {'['}
-            <span key={`prop-name-value-${name}`}
-                  className={tc('value-container')}>
-
-                <span className={tc('value-value')}>
-                    <JSONEditor className={tc('input')}
-                                type='array'
-                                name={name}
-                                onChange={this.handleJson}
-                                min={5}
-                                max={50}
-                                value={value}/>
-                </span>
-            </span>
-            {']'}
+            <JSONEditor className={tc('input')}
+                        type='array'
+                        name={name}
+                        onChange={this.handleChange}
+                        min={5}
+                        max={50}
+                        value={value}/>
         </Property>
     }
 
@@ -251,7 +232,7 @@ export default class Editor extends PureComponent {
                          description={description}>
             <select className={tc('select')}
                     name={name}
-                    onChange={this.handleString}
+                    onChange={this.handleChange}
                     value={selected}>
                 {value.map(
                     v => (<option key={unescape(v.value)}
@@ -285,12 +266,15 @@ export default class Editor extends PureComponent {
         const value = (name in this.state) ? this.state[name] : defaultValue;
         return (<Property key={`string-${name}`} name={name}
                           description={description}>
-            <input className={tc('input')}
-                   type='text'
-                   name={name}
-                   size={clamp(value && value.length, 1, 25)}
-                   value={value}
-                   onChange={this.handleString}/>
+            {value == null ? null : '"'}<input className={tc('input')}
+                                               type='text'
+                                               name={name}
+                                               size={clamp(value
+                                                           && value.length, 1,
+                                                   25)}
+                                               value={value}
+                                               onChange={this.handleChange}/>
+            {value == null ? null : '"'}
         </Property>);
 
     }
@@ -311,14 +295,15 @@ export default class Editor extends PureComponent {
             </label>
         </Property>
     }
-
-    handleReset = () => {
-        const state = this.state;
-
-        this.setHistoryState(Object.keys(state).reduce((ret, key) => {
-            ret[key] = void(0);
-            return ret;
-        }, {}), true);
+    renderProp = (ret = [], prop) => {
+        const _key = `_${prop.type.name}`;
+        if (typeof this[_key] === 'function') {
+            const content = this[_key](prop);
+            ret.push(' ', content);
+        } else {
+            console.warn(`no handler for ${prop.type.name}`)
+        }
+        return ret;
     };
 
     render() {

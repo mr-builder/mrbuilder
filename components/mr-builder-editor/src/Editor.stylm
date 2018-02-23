@@ -19,12 +19,12 @@
 
 :hover > .textarea, .textarea:hover, :hover + .textarea
     display inline-block
-    position fixed
+    position absolute
 
 .input
     -webkit-appearance: none
-    width 100%
-    margin 0 0
+    margin 0
+    padding 0
     border none
     background transparent
     outline none
@@ -67,7 +67,7 @@
     font normal normal normal normal 11.9px / 17.255px SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace
     margin 0
     outline rgb(36, 41, 46) none 0
-    overflow auto
+    overflow visible
     padding 16px
 
 .component-container

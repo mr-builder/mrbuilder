@@ -9,14 +9,17 @@ export default class JSONEditor extends PureComponent {
     static displayName  = 'JSONEditor';
     static defaultProps = {
         min: 5,
-        max: 50
+        max: 50,
+        onChange() {
+        }
     };
     static propTypes    = {
         min      : PropTypes.number,
         max      : PropTypes.number,
         name     : PropTypes.string,
         type     : PropTypes.oneOf(['array', 'object']),
-        value    : PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        value    : PropTypes.oneOfType(
+            [PropTypes.string, PropTypes.array, PropTypes.object]),
         onChange : PropTypes.func._doc(
             'On change handler @param name @param value'),
         className: PropTypes.string._doc('CSS Class name')
@@ -85,15 +88,19 @@ export default class JSONEditor extends PureComponent {
 
         let inputValue = valid ? this.trim(JSON.stringify(value)) : value;
         inputValue     = inputValue == null ? '' : inputValue;
-
-        return <input type='text'
-                      className={`${tc(this.state.valid ? ''
-                          : 'invalid')} ${this.props.className}`}
-                      value={inputValue}
-                      size={clamp(inputValue.length, this.props.min,
-                          this.props.max)}
-                      name={this.props.name}
-                      onChange={this.handleChange}/>
+        const isArray  = this.props.type === 'array';
+        return [
+            isArray ? '[' : '{',
+            <input key={'input'} type='text'
+                   className={`${tc(this.state.valid ? ''
+                       : 'invalid', 'input')} ${this.props.className}`}
+                   value={inputValue}
+                   size={clamp(inputValue.length, this.props.min,
+                       this.props.max)}
+                   name={this.props.name}
+                   onChange={this.handleChange}/>,
+            isArray ? ']' : '}'
+        ]
     }
 }
 const tc = themeClass(JSONEditor);

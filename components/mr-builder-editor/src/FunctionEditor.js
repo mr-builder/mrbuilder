@@ -14,17 +14,17 @@ export default class FunctionEditor extends PureComponent {
     static propTypes    = {
 
         name     : PropTypes.string,
-        value    : PropTypes.oneOf([PropTypes.string, PropTypes.object]),
+        value    : PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
         onChange : PropTypes.func._doc(
             'On change handler @param name @param value'),
         className: PropTypes.string._doc('CSS Class name')
     };
+    static defaultProps = {
+        onChange() {
+        }
+    };
 
     state = {};
-
-    constructor(props, ...rest) {
-        super(props, ...rest);
-    }
 
     componentDidMount() {
         this.update(this.props)

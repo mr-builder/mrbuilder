@@ -4,5 +4,5 @@ For objects:
 ```
 For Arrays:
 ```js
-<JSONEditor value={{a:1}} type="array"/>
+<JSONEditor value={["me","you"]} type="array"/>
 ```
