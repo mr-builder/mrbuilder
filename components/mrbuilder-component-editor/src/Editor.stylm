@@ -1,0 +1,116 @@
+@require 'common.styl';
+.props
+    display flex
+    flex-wrap wrap
+
+.textarea
+    display none
+    -webkit-appearance: none
+    width 100%
+    margin 0 0
+    border none
+    background white
+    outline none
+    text-align left
+    min-width: 250px
+    min-height: 250px
+    border: 2px solid #ccc
+    z-index: 3
+
+:hover > .textarea, .textarea:hover, :hover + .textarea
+    display inline-block
+    position absolute
+
+.input
+    -webkit-appearance: none
+    margin 0
+    padding 0
+    border none
+    background transparent
+    outline none
+    text-align center
+
+
+.value-container:hover > .tiny, :hover + .tiny, .tiny:hover
+    display inline-block
+
+.sample
+    box-sizing border-box
+    color rgb(36, 41, 46)
+    overflow-wrap break-word
+    text-decoration none solid rgb(36, 41, 46)
+    text-size-adjust 100%
+    word-wrap break-word
+    column-rule-color rgb(36, 41, 46)
+    perspective-origin 446px 24.5px
+    transform-origin 446px 24.5px
+    caret-color rgb(36, 41, 46)
+    border 0 none rgb(36, 41, 46)
+    font normal normal normal normal 14px / 21px -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+    outline rgb(36, 41, 46) none 0
+
+.code
+    position relative
+    display flex
+    flex-direction row
+    box-sizing border-box
+    color rgb(36, 41, 46)
+    text-decoration none solid rgb(36, 41, 46)
+    text-size-adjust 100%
+    column-rule-color rgb(36, 41, 46)
+    perspective-origin 446px 24.5px
+    transform-origin 446px 24.5px
+    caret-color rgb(36, 41, 46)
+    background rgb(246, 248, 250) none repeat scroll 0% 0% / auto padding-box border-box
+    border 0 none rgb(36, 41, 46)
+    border-radius 3px 3px 3px 3px
+    font normal normal normal normal 11.9px / 17.255px SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace
+    margin 0
+    outline rgb(36, 41, 46) none 0
+    overflow visible
+    padding 16px
+
+.component-container
+    box-sizing border-box
+    color rgb(34, 134, 58)
+    text-decoration none solid rgb(34, 134, 58)
+    text-size-adjust 100%
+    white-space pre
+    column-rule-color rgb(34, 134, 58)
+    caret-color rgb(34, 134, 58)
+    border 0 none rgb(34, 134, 58)
+    font normal normal normal normal 11.9px / 17.255px SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace
+    outline rgb(34, 134, 58) none 0
+
+.component, .value-value
+    box-sizing border-box
+    color rgb(0, 92, 197)
+    text-decoration none solid rgb(0, 92, 197)
+    text-size-adjust 100%
+    white-space pre
+    column-rule-color rgb(0, 92, 197)
+    caret-color rgb(0, 92, 197)
+    border 0 none rgb(0, 92, 197)
+    font normal normal normal normal 11.9px / 17.255px SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace
+    outline rgb(0, 92, 197) none 0
+
+.component
+    cursor pointer
+
+.prop-name
+    box-sizing border-box
+    color rgb(111, 66, 193)
+    text-decoration none solid rgb(111, 66, 193)
+    text-size-adjust 100%
+    white-space pre
+    column-rule-color rgb(111, 66, 193)
+    caret-color rgb(111, 66, 193)
+    border 0 none rgb(111, 66, 193)
+    font normal normal normal normal 11.9px / 17.255px SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace
+    outline rgb(111, 66, 193) none 0
+
+
+.checkbox
+    > input
+        visibility: hidden
+    cursor pointer

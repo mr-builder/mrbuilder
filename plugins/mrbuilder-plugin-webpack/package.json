@@ -22,7 +22,8 @@
   },
   "peerDependencies": {
     "react": "16.x || 15.x",
-    "react-dom": "16.x || 15.x"
+    "react-dom": "16.x || 15.x",
+    "mrbuilder": "^0.9.5"
   },
   "mrbuilder": {
     "alias": {

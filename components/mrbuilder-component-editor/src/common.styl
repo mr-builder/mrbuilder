@@ -1,0 +1,62 @@
+.tiny, .help
+    display none
+    position absolute
+    background transparent
+    border 1px solid #ccc
+    border-radius 3px
+    font-size 8px
+    width 100px
+    transform translate3d(-60%, 17px, 0)
+
+.left-curly, .right-curly
+    box-sizing border-box
+    color rgb(36, 41, 46)
+    text-decoration none solid rgb(36, 41, 46)
+    text-size-adjust 100%
+    white-space pre
+    column-rule-color rgb(36, 41, 46)
+    caret-color rgb(36, 41, 46)
+    border 0 none rgb(36, 41, 46)
+    font normal normal normal normal 11.9px / 17.255px SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace
+    outline rgb(36, 41, 46) none 0
+
+.value-container
+    position relative
+    box-sizing border-box
+    color rgb(36, 41, 46)
+    text-decoration none solid rgb(36, 41, 46)
+    text-size-adjust 100%
+    white-space pre
+    column-rule-color rgb(36, 41, 46)
+    caret-color rgb(36, 41, 46)
+    border 0 none rgb(36, 41, 46)
+    font normal normal normal normal 11.9px / 17.255px SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace
+    outline rgb(36, 41, 46) none 0
+    display inline-block
+    input[type="checkbox"]
+        position absolute
+        visibility hidden
+        + label
+            padding 0 .5rem
+    select
+        -webkit-appearance: none;
+        border: none;
+        text-align-last: center;
+
+.value-value
+    box-sizing border-box
+    color rgb(0, 92, 197)
+    text-decoration none solid rgb(0, 92, 197)
+    text-size-adjust 100%
+    white-space pre
+    column-rule-color rgb(0, 92, 197)
+    caret-color rgb(0, 92, 197)
+    border 0 none rgb(0, 92, 197)
+    font normal normal normal normal 11.9px / 17.255px SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace
+    outline rgb(0, 92, 197) none 0
+
+&.valid
+    border 2px solid lightblue
+
+&.invalid
+    border 2px solid darkred

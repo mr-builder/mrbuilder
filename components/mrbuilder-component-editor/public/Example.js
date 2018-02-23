@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Editor from '../src/components/Editor';
 
-class Example extends PureComponent {
+export default class  Example extends PureComponent {
 
     static propTypes = {
         name   : PropTypes.string,
@@ -18,7 +17,7 @@ class Example extends PureComponent {
         kids    : [],
         noBool  : true,
         noString: 'noString',
-        noFunc(){
+        noFunc() {
 
         }
     };
@@ -35,10 +34,3 @@ class Example extends PureComponent {
     }
 }
 
-
-export default class Index extends PureComponent {
-
-    render() {
-        return <Editor component={Example}/>
-    }
-}

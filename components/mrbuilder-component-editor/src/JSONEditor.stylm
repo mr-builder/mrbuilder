@@ -1,0 +1,14 @@
+@require './common.styl'
+:export {
+    --invalid-color: #8b0000;
+}
+&.invalid
+    outline-width: 5px
+    outline-color: var(--invalid-color, 'green')
+    outline-style: auto
+    border-color transparent
+    outline-offset: -2px
+.input
+    border-color transparent
+    text-align center
+

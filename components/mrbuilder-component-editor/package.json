@@ -1,0 +1,21 @@
+{
+  "name": "mrbuilder-component-editor",
+  "version": "0.9.5",
+  "description": "A simplish editor for mr builder",
+  "main": "src",
+  "dependencies": {
+    "mrbuilder-plugin-emeth": "^0.9.5",
+    "mrbuilder-utils": "^0.9.5",
+    "json5": "^1.0.0-beta.4"
+  },
+  "peerDependencies": {
+    "mrbuilder": "^0.9.5"
+  },
+  "scripts": {
+    "test": "mrbuilder-karma",
+    "karma": "mrbuilder-karma",
+    "demo": "mrbuilder-demo  --mrbuilder-plugin-html-exported=true",
+    "start": "mrbuilder-webpack-dev-server --mrbuilder-plugin-html-exported=true"
+  },
+  "license": "0BSD"
+}

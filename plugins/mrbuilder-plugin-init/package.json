@@ -29,5 +29,8 @@
       "rootDemo": "The project will be appended to this to create demo url"
     }
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "peerDependencies": {
+    "mrbuilder": "^0.9.5"
+  }
 }

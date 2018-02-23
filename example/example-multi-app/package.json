@@ -4,7 +4,8 @@
   "private": true,
   "devDependencies": {
     "mrbuilder": "^0.9.5",
-    "mrbuilder-preset-app": "^0.9.5"
+    "mrbuilder-preset-app": "^0.9.5",
+    "mrbuilder-plugin-sass": "^0.9.5"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",
@@ -37,6 +38,12 @@
       ],
       [
         "mrbuilder-plugin-less",
+        {
+          "modules": true
+        }
+      ],
+      [
+        "mrbuilder-plugin-sass",
         {
           "modules": true
         }

@@ -1,0 +1,7 @@
+@require './common.styl'
+
+
+/*
+:hover > .textarea, .textarea:hover
+    display block
+*/
