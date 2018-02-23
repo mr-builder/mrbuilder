@@ -1,0 +1,7 @@
+.red {
+  color: darkred;
+  background:pink;
+  border: 1px solid darkred;
+  border-radius: 3px;
+  padding: 5px
+}
