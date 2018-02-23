@@ -20,9 +20,10 @@ export default class JSONEditor extends PureComponent {
         type     : PropTypes.oneOf(['array', 'object']),
         value    : PropTypes.oneOfType(
             [PropTypes.string, PropTypes.array, PropTypes.object]),
-        onChange : PropTypes.func._doc(
-            'On change handler @param name @param value'),
-        className: PropTypes.string._doc('CSS Class name')
+        /**Fires on Change when it is valid **/
+        onChange : PropTypes.func,
+        /**Class name to wrap element **/
+        className: PropTypes.string
     };
 
     state = {};

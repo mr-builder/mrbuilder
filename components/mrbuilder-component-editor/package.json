@@ -1,5 +1,5 @@
 {
-  "name": "mr-builder-editor",
+  "name": "mrbuilder-component-editor",
   "version": "0.9.5",
   "description": "A simplish editor for mr builder",
   "main": "src",
@@ -12,7 +12,8 @@
     "mrbuilder": "^0.9.5"
   },
   "scripts": {
-    "test": "mrbuilder-mocha",
+    "test": "mrbuilder-karma",
+    "karma": "mrbuilder-karma",
     "demo": "mrbuilder-demo  --mrbuilder-plugin-html-exported=true",
     "start": "mrbuilder-webpack-dev-server --mrbuilder-plugin-html-exported=true"
   },

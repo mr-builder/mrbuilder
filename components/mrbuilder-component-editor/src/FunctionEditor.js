@@ -15,9 +15,10 @@ export default class FunctionEditor extends PureComponent {
 
         name     : PropTypes.string,
         value    : PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-        onChange : PropTypes.func._doc(
-            'On change handler @param name @param value'),
-        className: PropTypes.string._doc('CSS Class name')
+        /**On change handler @param name @param value**/
+        onChange : PropTypes.func,
+        /**CSS Class name**/
+        className: PropTypes.string
     };
     static defaultProps = {
         onChange() {
