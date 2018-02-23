@@ -22,9 +22,12 @@ Using mrbuilder you can get advanced builds, along with easy to use documentatio
 
 
 ### Why Mr Builder
-- instead of react-create-app, its designed for building the entire
-  app not entire sets of modules, therefore any configuration change has to be replicated.
-- just webpack - if you only have one or two modules sure, its great but it does not scale
-  to dozens or hundreds.
-- custom tools - sure you can get exactly what you want, but... its all on you.
+I really didn't want to write another build tool.  Webpack is great, lerna, babel, mocha
+all are good things.   However they do not work well with large multi-module projects;
+its not their fault, but it 50 module projects can't be managed with individual build
+files, each with 90% of the same stuff.  As soon as you need to make a global change,
+you are pretty much out of luck.  Lerna helps managing the dependencies but doesn't
+handle building; webpack handles building but does not do much in the way of
+consistency across modules.   Even if it did its programmatic configuration is makes
+global changes across dozens of modules hard, like really hard.
 
