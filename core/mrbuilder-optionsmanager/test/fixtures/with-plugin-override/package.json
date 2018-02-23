@@ -1,0 +1,7 @@
+{
+  "name": "with-plugin-override",
+  "version": "1.0.0",
+  "tester": {
+    "plugin": "./plug"
+  }
+}
