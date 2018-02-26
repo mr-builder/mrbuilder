@@ -3,7 +3,7 @@ const cssLoader                     = require(
 const { enhancedResolve: _resolve } = require('mrbuilder-utils');
 
 module.exports = function ({
-                               test = /\.sass$/,
+                               test = /\.s[ac]ss$/,
                                options,
                                modules = true,
                            }, webpack) {
@@ -24,7 +24,7 @@ module.exports = function ({
     });
 
     if (modules) {
-        cssLoader(webpack, modules === true ? /\.sassm/ : modules, true, {
+        cssLoader(webpack, modules === true ? /\.s[ac]ssm$/ : modules, true, {
             loader: 'sass-loader',
             options
         })

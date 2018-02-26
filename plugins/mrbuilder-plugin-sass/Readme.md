@@ -5,5 +5,5 @@ Provides sass loader for webpack.
 | ------------- | -----------| -------------| ---------------------------------|
 | options.sourceMaps| bool   | true         | Add source maps                  |
 | module        | bool       | false        | Add css module support           |
-| test          | regex      | /*.sass$/    | match *.sass files               |
+| test          | regex      | /*.s[ac]ss$/ | match *.sass and scss files      |
 | options.includePaths| array|              | Add paths to include             |
