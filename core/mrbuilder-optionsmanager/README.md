@@ -1,5 +1,3 @@
-mrbuilder-options-manager
-===
 The OptionsManager is a babel inspired configuration system for plugin based apps.
 It is generic in the since it can be configured to use different namespaces.
 It handles command line args, env args, and file based configuration.
@@ -27,9 +25,9 @@ plugins this should add some convience.
 
 
 ## ${envPrefix}_ENV -
-Defaults to NODE_ENV and both be null.  This tells the option manager
+Defaults to `NODE_ENV` and both be null.  This tells the option manager
 which env the user, and therefore configuration the app is running with.
-Because NODE_ENV is conventionally used for test,development,production,
+Because `NODE_ENV` is conventionally used for test,development,production,
 but configurations often have more ENV's this allows for more specific
 configuration for an environment.
 I.E. a server build may be env `production-server` but the node env would

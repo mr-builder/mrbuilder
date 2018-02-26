@@ -81,9 +81,9 @@ Example
 Which plugins and presets that are loaded can be configured via the environment
 via the `MRBUILDER_INTERNAL_PLUGINS` and `MRBUILDER_INTERNAL_PRESETS` env variable.
 This allows for plugins that are not explicitly defined in the package.json (or
-.mrbuilderrc) to be loaded at runtime.  MRBUILDER_ENV is the "env" that you
+.mrbuilderrc) to be loaded at runtime.  `MRBUILDER_ENV`is the "env" that you
 want mrbuilder to run under i.e. "test","development","production".  By default
-it is the same as the NODE_ENV, however you can have different values for each.
+it is the same as the `NODE_ENV`, however you can have different values for each.
 
 ### Configuring Plugins.
 Plugins can be configured either by `package.json`, `.mrbuilderrc`, command
@@ -96,7 +96,7 @@ be escaped by the shell.
 
 Examples:
 Command Line-
-**Note** dashes after the plugin name will be converted to
+**Note** dashes after the plugin name will be converted to camelCase
 ```sh
 $ mrbuilder --mrbuilder-plugin-webpack-app=demo
 ```
@@ -110,7 +110,7 @@ Environment-
 $ MRBUILDER_PLUGIN_WEBPACK_APP=demo mrbuilder
 ```
 
-Which is equivalent to in .mrbuilderrc or package.json configuration
+Which is equivalent to in `.mrbuilderrc` or `package.json` configuration
 ```json
 {
   "plugins":[
@@ -130,8 +130,8 @@ for other configurations.
 
 ### env - configurations per environment.
 Some plugins are only needed in test, or development, or production, or whatever.
-To support this mrbuilder allows for an env section in `.mrbuilderrc` or package.json
-to allow for plugin overrides.   If a plugin exists both in plugins and env[current-env].plugins
+To support this mrbuilder allows for an env section in `.mrbuilderrc` or `package.json`
+to allow for plugin overrides.   If a plugin exists both in plugins and `env[current-env].plugins`
 than the current-env plugins will be substituted in place.  Otherwise the env
 plugins will be loaded after the plugins array has been loaded.
 

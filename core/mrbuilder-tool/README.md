@@ -20,7 +20,7 @@ have name set to Somethign and a devDependency of stuff.
 ```
 And then some other time you wanted to add a description. you could
 ```sh
-$ mr-muck -p name="Name the Package" -p description="Describe the Package" -s devDependencies.stuff=1.7.0 -s dependencies.other=1.0.0 -c -C -n config.json
+$ mr-muck -p name="Name the Package" -p description="Describe the Package" -s devDependencies.stuff=1.7.0 -s dependencies.other=1.0.0
 ```
 
 ### Options
@@ -30,10 +30,10 @@ $ mr-muck -p name="Name the Package" -p description="Describe the Package" -s de
 | Argument      | Short | Type       | Description                      |
 | ------------- | ------|------------| ---------------------------------|
 | --prompt      | -p    | message    | Prompt for any changes           |
-| --set         | -s    | **path**=value | Set the path                     |
+| --set         | -s    | **path**=value | Set the path                 |
 | --delete      | -d    | **path**   | Delete the key and value         |
 | --get         | -g    | **path**   | Get the value(s) for the path    |
-| --move        | -mv   | **path**=path  | Move path from location to another|
+| --move        | -mv   | **path**=path | Move path from location to another|
 | --skip        | -k    |            | Skip if value exists             |
 | --unless      | -u    |            | Only if key exists               |
 | --confirm     | -c    |            | Confirm change                   |

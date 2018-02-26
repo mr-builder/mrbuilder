@@ -104,16 +104,17 @@ Cli Arguments
 
 
 ### Custom Webpack Configuration
-Sometimes you need to change webpacks configuration.   mrbuilder-webpack extends normal webpack behaviour to look into the dependencies and the current project for a `babel-config.js`
+Sometimes you need to change webpacks configuration.   [mrbuilder-webpack](#mrbuilder-plugin-webpack)
+extends normal webpack behaviour to look into the dependencies and the current project for a `babel-config.js`
 if this file exists it attempts to load it.   this file differs from traditional webpack as that
 it is expected to be a function 
 
 
 ```js static
-module.export = function(options,webpack){
+module.export = function(options,webpack, optionsManager){
   // options - are just for passing meta data to other loaders and from other loaders.
   // webpack is the actual configuration.  You can do whatever.
-  
+  // The optionsManager currently running.
   return webpack.
 }
 
@@ -136,8 +137,8 @@ package.json
 ## Mocha
 For non browser testing we use plain mocha. Its faster and easier to run than Karma but can not do browsery things. It uses the same babel configuration as mrbuilder-babel. It uses a combination of environmental variables and arguments for configuration, though typically it takes neither.
 
-* MRBUILDER_COVERAGE_DIR=./converage turns on test coverage
-* MRBUILDER_COVERAGE=1 turns on coverage
+* MRBUILDER\_COVERAGE\_DIR=./converage turns on test coverage
+* MRBUILDER\_COVERAGE=1 turns on coverage
 
 ## Karma
 Karma testing is useful for testing in browser.  This configuration
