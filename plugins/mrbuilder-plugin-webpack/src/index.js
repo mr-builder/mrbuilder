@@ -118,7 +118,8 @@ const mod = function ({
         info(`using mainFields`, mainFields);
     }
     if (node) {
-        webpack.node = Object.assign(webpack.node, {}, node);
+        webpack.node = Object.assign({}, webpack.node,  node);
+        info('using node config %O', webpack.node);
     }
     webpack.devtool = devtool;
 
