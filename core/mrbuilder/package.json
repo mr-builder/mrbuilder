@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
     "mrbuilder-optionsmanager": "^0.9.9",
@@ -13,12 +13,12 @@
     "mrbuilder-plugin-fonts": "^0.9.9",
     "mrbuilder-plugin-hot": "^0.9.9",
     "mrbuilder-plugin-html": "^0.9.9",
-    "mrbuilder-plugin-karma": "^0.9.9",
+    "mrbuilder-plugin-karma": "^0.9.10",
     "mrbuilder-plugin-less": "^0.9.9",
     "mrbuilder-plugin-mocha": "^0.9.9",
-    "mrbuilder-plugin-webpack": "^0.9.9",
-    "mrbuilder-plugin-webpack-dev-server": "^0.9.9",
-    "mrbuilder-preset-app": "^0.9.9",
+    "mrbuilder-plugin-webpack": "^0.9.10",
+    "mrbuilder-plugin-webpack-dev-server": "^0.9.10",
+    "mrbuilder-preset-app": "^0.9.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
