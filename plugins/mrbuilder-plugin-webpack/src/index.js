@@ -42,7 +42,8 @@ const mod = function ({
                 Array.isArray(alias) ? resolveMap(...alias) : alias
             );
         } else {
-            webpack.alias = alias;
+            webpack.resolve.alias =
+                Object.assign(webpack.resolve.alias, {}, alias);
         }
     }
 
