@@ -1,9 +1,9 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "0.9.6",
+  "version": "0.9.7",
   "dependencies": {
-    "mrbuilder": "^0.9.6",
+    "mrbuilder": "^0.9.7",
     "mrbuilder-plugin-react-styleguidist": "^0.9.6"
   },
   "scripts": {

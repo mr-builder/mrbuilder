@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-webpack",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "Tools for developing with mrbuilder and webpack",
   "scripts": {
     "clean": "mrbuilder-clean"
@@ -12,7 +12,7 @@
   "source": "src",
   "dependencies": {
     "json-loader": "^0.5.7",
-    "mrbuilder-optionsmanager": "^0.9.6",
+    "mrbuilder-optionsmanager": "^0.9.7",
     "mrbuilder-plugin-browserslist": "^0.9.6",
     "mrbuilder-utils": "^0.9.6",
     "prop-types": "^15.6.0",

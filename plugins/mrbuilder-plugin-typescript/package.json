@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-typescript",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "Typescript plugin for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
