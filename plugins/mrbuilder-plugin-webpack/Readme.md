@@ -17,3 +17,5 @@ This plugin is a core plugin that provides the root of the [webpack](https://web
 | devtool       | string     | source-maps  | A dev tool                       |
 | filename      | string     | [name].[hash].js|Name the javascript files      |
 | alias         | array      | [react,react-dom]| Create alias's so only 1 version is used|
+| node          | object     |              | Maps to [webpack.node](https://webpack.js.org/configuration/node/)             |
+| extensions    | array      | [.js,.jsx,.json]| Add extensions                |

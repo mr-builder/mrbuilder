@@ -5,7 +5,7 @@ const SOURCE_MAIN_FIELDS              = ['source', 'browser', 'main'];
 const mod = function ({
                           library,
                           libraryTarget = 'commonjs2',
-                          extensions = ['.js', '.jsx'],
+                          extensions = ['.js', '.jsx', '.json'],
                           mainFields = true,
                           app,
                           entry,
@@ -19,7 +19,8 @@ const mod = function ({
                           alias = [
                               'react',
                               'react-dom'
-                          ]
+                          ],
+                          node
                       },
                       webpack) {
 
@@ -76,7 +77,10 @@ const mod = function ({
     }
 
     if (extensions) {
-        webpack.resolve.extensions = extensions;
+        if (!webpack.resolve.extensions) {
+            webpack.resolve.extensions = [];
+        }
+        webpack.resolve.extensions.push(...extensions)
     }
 
     if (this.isLibrary && (useExternals !== false)) {
@@ -112,7 +116,9 @@ const mod = function ({
         webpack.resolve.mainFields = mainFields;
         info(`using mainFields`, mainFields);
     }
-
+    if (node) {
+        webpack.node = Object.assign(webpack.node, {}, node);
+    }
     webpack.devtool = devtool;
 
     return webpack;
