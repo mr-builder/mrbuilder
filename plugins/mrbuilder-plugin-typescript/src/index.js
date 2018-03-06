@@ -14,7 +14,7 @@ module.exports = function ({
     webpack.module.rules.push(
         {
             test,
-            use:[
+            use: [
                 'source-map-loader',
                 'ts-loader',
             ]
@@ -29,11 +29,11 @@ module.exports = function ({
     }
     if (!existsSync(om.cwd('tsconfig.json'))) {
         if (configFile) {
-            this.info(`using tsconfig ${configFile} with baseUrl ${baseUrl}`)
+            this.info(`using tsconfig ${configFile} with baseUrl ${baseUrl}`);
             webpack.plugins.unshift(
-                new TsconfigPathsPlugin({ configFile, baseUrl,extensions,  }));
+                new TsconfigPathsPlugin({ configFile, baseUrl, extensions, }));
         }
-    }else{
+    } else {
         this.info('using local tsconfig.json');
     }
     return webpack;

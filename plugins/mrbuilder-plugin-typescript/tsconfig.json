@@ -2,6 +2,7 @@
 	"compileOnSave": false,
 	"name": "mrbuilder-plugin-typescript",
 	"compilerOptions": {
+		"baseUrl":".",
 		"suppressExcessPropertyErrors": true,
 		"declaration": true,
 		"outDir": "@types",
