@@ -1,6 +1,7 @@
-const { camelCased, cwd, resolveMap } = require('mrbuilder-utils');
-const DEFAULT_MAIN_FIELDS             = ['browser', 'main'];
-const SOURCE_MAIN_FIELDS              = ['source', 'browser', 'main'];
+const { camelCased, cwd, resolveMap, enhancedResolve, regexOrFuncApply } = require(
+    'mrbuilder-utils');
+const DEFAULT_MAIN_FIELDS                                                = ['browser', 'main'];
+const SOURCE_MAIN_FIELDS                                                 = ['source', 'browser', 'main'];
 
 const mod = function ({
                           library,
@@ -20,7 +21,8 @@ const mod = function ({
                               'react',
                               'react-dom'
                           ],
-                          node
+                          node,
+                          noParse,
                       },
                       webpack) {
 
@@ -28,6 +30,17 @@ const mod = function ({
         webpack.resolve = {
             alias: {}
         };
+    }
+    if (noParse) {
+
+        if (!webpack.module) {
+            webpack.module = { noParse };
+        } else {
+            webpack.module.noParse =
+                regexOrFuncApply(noParse, webpack.module.noParse);
+        }
+
+
     }
     const info = this.info || console.log;
 
@@ -52,7 +65,8 @@ const mod = function ({
     }
 
     if (outputPath) {
-        webpack.output.path = outputPath;
+        //webpack wants an absolute path here.
+        webpack.output.path = enhancedResolve(outputPath);
     }
 
     demo = demo || app;
@@ -118,7 +132,7 @@ const mod = function ({
         info(`using mainFields`, mainFields);
     }
     if (node) {
-        webpack.node = Object.assign({}, webpack.node,  node);
+        webpack.node = Object.assign({}, webpack.node, node);
         info('using node config %O', webpack.node);
     }
     webpack.devtool = devtool;

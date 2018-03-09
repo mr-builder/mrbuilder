@@ -204,21 +204,47 @@ function parseEntry(entryNoParse) {
     return entry;
 }
 
-const enhancedResolve = (p) => {
+const enhancedResolve  = (p, _require = require) => {
+    if (p.startsWith(path.sep)) {
+        return p;
+    }
     if (p.startsWith('.')) {
         return cwd(p);
     }
     if (p.startsWith('~')) {
-        const parts  = p.substring(1).split('/');
+        const parts  = p.substring(1).split(path.sep);
         const pkgDir = path.resolve(
-            require.resolve(path.join(parts.shift(), 'package.json')), '..');
+            _require.resolve(path.join(parts.shift(), 'package.json')), '..');
 
         return path.resolve(pkgDir, ...parts);
     }
     return p;
 };
+const regexOrFuncApply = (first, second) => {
+    if (!first) {
+        return second;
+    }
+    if (!second) {
+        return first;
+    }
+    return (test) => {
+        if (first instanceof RegExp) {
+            if (first.test(test)) {
+                return true;
+            }
+        } else {
+            if (first(test)) {
+                return true;
+            }
+        }
+        if (second instanceof RegExp) {
+            return second.test(test);
+        }
+        return second(test);
+    }
+};
 
-module.exports = {
+module.exports         = {
     parseValue,
     stringify,
     get,
@@ -232,6 +258,7 @@ module.exports = {
     enhancedResolve,
     debug,
     warn,
+    regexOrFuncApply,
     parseJSON,
     info,
     cwd, sliced, resolveMap, resolvePkgDir, camelToHyphen
