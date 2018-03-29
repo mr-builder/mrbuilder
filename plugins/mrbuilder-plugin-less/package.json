@@ -8,7 +8,7 @@
     "mrbuilder-plugin-css": "^0.9.11"
   },
   "peerDependencies": {
-    "mrbuilder": "^0.9.5"
+    "mrbuilder": "1.x"
   },
   "scripts": {
     "test": "mrbuilder-mocha"

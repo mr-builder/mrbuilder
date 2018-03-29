@@ -5338,7 +5338,7 @@ lerna@2.8.0:
     write-pkg "^3.1.0"
     yargs "^8.0.2"
 
-lerna@^2.8.0:
+lerna@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.9.0.tgz#303f70bc50b1c4541bdcf54eda13c36fe54401f3"
   dependencies:

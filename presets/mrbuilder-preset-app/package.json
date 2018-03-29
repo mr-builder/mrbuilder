@@ -10,7 +10,7 @@
     "mrbuilder-plugin-webpack-dev-server": "^0.9.11"
   },
   "peerDependencies": {
-    "mrbuilder": "^0.5.0"
+    "mrbuilder": "1.x"
   },
   "mrbuilder": {
     "plugins": [

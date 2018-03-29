@@ -21,7 +21,7 @@
     "webpack": "^3.8.1"
   },
   "peerDependencies": {
-    "mrbuilder": "^0.9.5",
+    "mrbuilder": "1.x",
     "react": "16.x || 15.x",
     "react-dom": "16.x || 15.x"
   },
