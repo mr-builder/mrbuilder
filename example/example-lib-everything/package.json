@@ -49,7 +49,8 @@
       "mrbuilder-plugin-env",
       "mrbuilder-plugin-moment",
       "mrbuilder-plugin-stylus",
-      "mrbuilder-plugin-worker"
+      "mrbuilder-plugin-worker",
+      "mrbuilder-plugin-typescript"
     ],
     "env": {
       "development": {

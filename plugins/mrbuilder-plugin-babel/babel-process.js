@@ -1,4 +1,3 @@
-require('mrbuilder-plugin-browserslist');
 
 const path = require('path');
 

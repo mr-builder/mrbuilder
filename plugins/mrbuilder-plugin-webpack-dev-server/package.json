@@ -7,7 +7,7 @@
     "mrbuilder-optionsmanager": "^0.9.11",
     "mrbuilder-plugin-webpack": "^0.9.11",
     "mrbuilder-utils": "^0.9.11",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^3.1.1"
   },
   "source": "src",
   "main": "src",

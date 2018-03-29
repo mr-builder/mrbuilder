@@ -3,7 +3,7 @@
   "version": "0.9.11",
   "description": "uglify support for mrbuilder",
   "dependencies": {
-    "uglifyjs-webpack-plugin": "^1.1.1"
+    "uglifyjs-webpack-plugin": "^1.2.4"
   },
   "devDependencies": {
     "mrbuilder-plugin-mocha": "^0.9.11"
@@ -12,6 +12,6 @@
   "source": "src",
   "license": "0BSD",
   "peerDependencies": {
-    "mrbuilder": "^0.9.5"
+    "mrbuilder": "^0.9.11"
   }
 }

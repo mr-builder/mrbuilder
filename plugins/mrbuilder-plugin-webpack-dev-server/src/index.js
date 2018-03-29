@@ -33,6 +33,8 @@ module.exports = function (opts, webpack) {
     // google didn't show much, so... this is the thing now.
     webpack.resolve.alias.loglevel = require.resolve('loglevel');
 
+    webpack.mode = 'development';
+
     //yeah, prolly should do this, but more is better?
     if (socketTimeout) {
         const { before }         = webpack.devServer;

@@ -18,6 +18,7 @@ module.exports                = ({
             }
         }
     });
-
+    //see https://github.com/webpack/webpack/issues/6642
+    webpack.output.globalObject = "this";
     return webpack;
 };

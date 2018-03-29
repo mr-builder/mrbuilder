@@ -1,4 +1,5 @@
 const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
+require('mrbuilder-plugin-browserslist');
 
 const logger = optionsManager.logger('mrbuilder-plugin-babel');
 

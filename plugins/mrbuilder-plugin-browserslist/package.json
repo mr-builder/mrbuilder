@@ -4,10 +4,10 @@
   "dependencies": {
     "mrbuilder-utils": "^0.9.11"
   },
-  "source": "src",
   "main": "src",
+  "source": "src",
   "license": "0BSD",
   "peerDependencies": {
-    "mrbuilder": "^0.9.5"
+    "mrbuilder": "^0.9.11"
   }
 }
