@@ -1,0 +1,13 @@
+{
+  "name": "mrbuilder-plugin-clean",
+  "version": "0.0.1",
+  "main": "src",
+  "dependencies": {
+    "mrbuilder-utils": "^1.0.0",
+    "clean-webpack-plugin":"^0.1.19"
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "mrbuilder": "1.x"
+  }
+}
