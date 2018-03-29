@@ -40,4 +40,4 @@ const descend = function (conf) {
     return conf;
 };
 
-module.exports = descend;
+export default descend;

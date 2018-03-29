@@ -121,11 +121,11 @@ module.exports = function (options = {}, webpack, om) {
         };
     }
 
-    const ret = sylist(conf, {});
-    webpack.plugins.push(...ret.plugins);
+    const ret = sylist(conf, process.env.NODE_ENV);
+   /* webpack.plugins.push(...ret.plugins);
     ret.entry.splice(0, 1, `${__dirname}/entry.js`);
-    webpack.entry = ret.entry;
-
+    */webpack.entry = ret.entry;
+    webpack.plugins.push(...ret.plugins);
     Object.assign(webpack.resolve.alias, ret.resolve.alias);
     (webpack.performance || (webpack.performance = {})).hints = false;
 

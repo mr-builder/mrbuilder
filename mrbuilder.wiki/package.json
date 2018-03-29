@@ -7,18 +7,16 @@
     "mrbuilder-plugin-react-styleguidist": "^1.0.0"
   },
   "scripts": {
-    "prepublish": "mrbuilder-webpack --app ../../mr-builder.github.io",
+    "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io",
     "start": "mrbuilder-webpack-dev-server"
   },
   "mrbuilder": {
     "plugin": "src/index",
     "plugins": [
+      "mrbuilder-plugin-env",
+
       [
         "mrbuilder-plugin-html",
-        false
-      ],
-      [
-        "mrbuilder-plugin-hot",
         false
       ],
       "mrbuilder-plugin-doc-prop-types",
@@ -29,6 +27,7 @@
           "app": "docs"
         }
       ],
+      ["mrbuilder-plugin-hot", false],
       "mrbuilder.wiki"
     ]
   },
