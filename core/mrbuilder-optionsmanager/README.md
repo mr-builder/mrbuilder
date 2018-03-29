@@ -10,10 +10,10 @@ infrastructure for describing the configuration and loading of said plugins.
 Its meant to be declarative, to allow for easy modification and overriding.
 
 It searches for a "plugins" or "presets" in a section
- named ${prefix} in package.json or .${prefix}rc in addition it searches
- the ENV for ${envPrefix}_PLUGINS, ${envPrefix}_PRESETS and after evaluation it search
+ named `${prefix}` in package.json or `.${prefix}rc` in addition it searches
+ the ENV for ``${envPrefix}_PLUGINS`, `${envPrefix}_PRESETS` and after evaluation it search
 
- ${envPrefix}_INTERNAL_PRESETS
+ ``${envPrefix}_INTERNAL_PRESETS`
 
 
 ## Presets vs Plugins
@@ -33,12 +33,6 @@ configuration for an environment.
 I.E. a server build may be env `production-server` but the node env would
 need to be production for downstream tools to work correctly.
 
-
-
-## Installation
-```sh
- $ yarn install mrbuilder-options-manager
-```
 
 
 ## Configuration

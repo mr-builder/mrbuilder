@@ -79,30 +79,6 @@ This tool is designed to compile your code with webpack. It respects all the [we
 this does is creates alias to make debugging and changing multiple modules easier in dev mode and compile and biuld modes.
 
 
-Environmental Variables
-
-| Name                        |  Default   | Description
-| --------------------------- |:----------:|:-----------
-| MRBUILDER\_USE\_NAME\_HASH  |            | Use hashes in filenames
-| MRBUILDER\_NO\_STYLE\_LOADER| 1          | Disable style loader.
-| MRBUILDER\_USE\_HTML        | 1          | Use html templates
-| MRBUILDER\_USE\_STATS\_FILE | 1          | Use stats file
-| MRBUILDER\_USE\_EXTERNALS   | 1          | Use externals react,react-dom,prop-types
-
-
-Cli Arguments
-
-| Argument               | Value     |Description
-| -----------------------|:---------:|:----
-| --demo                 | [path]    | generate a demo app a that location 
-| --no-style-loader      |           | don't use style loader (better for server side).
-| --use-stats-file       | [file]    | output a file with css and compiled information.
-| --use-externals        | [modules] | use the following as externals react,...
-| --externalize-peers    |           | (default) use this to make externalize the peerDependencies.
-| --no-externalize-peers |           | Do not externalize peer dependencies.
-| --debug                |           | output some debug information.
-
-
 ### Custom Webpack Configuration
 Sometimes you need to change webpacks configuration.   [mrbuilder-webpack](#mrbuilder-plugin-webpack)
 extends normal webpack behaviour to look into the dependencies and the current project for a `babel-config.js`
@@ -136,9 +112,6 @@ package.json
 
 ## Mocha
 For non browser testing we use plain mocha. Its faster and easier to run than Karma but can not do browsery things. It uses the same babel configuration as mrbuilder-babel. It uses a combination of environmental variables and arguments for configuration, though typically it takes neither.
-
-* MRBUILDER\_COVERAGE\_DIR=./converage turns on test coverage
-* MRBUILDER\_COVERAGE=1 turns on coverage
 
 ## Karma
 Karma testing is useful for testing in browser.  This configuration
