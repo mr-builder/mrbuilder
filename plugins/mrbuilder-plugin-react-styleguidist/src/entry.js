@@ -14,7 +14,7 @@ var render = function render() {
     var styleguide = require(`!!react-styleguidist/loaders/styleguide-loader!react-styleguidist/lib/index.js`);
     mergeProps(styleguide);
     ReactDOM.render(renderStyleguide(styleguide, codeRevision),
-        document.getElementById('app'));
+        document.getElementById('rsg-root'));
 };
 
 window.addEventListener('hashchange', render);

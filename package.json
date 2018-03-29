@@ -22,10 +22,13 @@
   "dependencies": {
     "lerna": "^2.8.0"
   },
+  "publishConfig": {
+    "registry":"https://registry.npm.orig"
+  },
   "scripts": {
     "test": "lerna run test",
     "clean": "lerna clean",
     "prepublish:all": "lerna run prepublish",
-    "publish:all": "lerna publish --registry http://artifacts.netflix.com/api/npm/npm-netflix --force-publish=*"
+    "publish:all": "lerna publish --registry http://registry.npm.org --force-publish=*"
   }
 }
