@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-filetypes",
-  "version": "0.9.11",
+  "version": "1.0.0",
   "description": "Loadin file types via webpack",
   "dependencies": {
     "file-loader": "^1.1.5",
@@ -10,6 +10,6 @@
   "main": "src",
   "license": "0BSD",
   "peerDependencies": {
-    "mrbuilder": "^0.9.5"
+    "mrbuilder": "1.x"
   }
 }

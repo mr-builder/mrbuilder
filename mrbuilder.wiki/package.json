@@ -1,24 +1,22 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "0.9.11",
+  "version": "1.0.2",
   "dependencies": {
-    "mrbuilder": "^0.9.11",
-    "mrbuilder-plugin-react-styleguidist": "^0.9.11"
+    "mrbuilder": "^1.0.0",
+    "mrbuilder-plugin-clean": "^1.0.2",
+    "mrbuilder-plugin-react-styleguidist": "^1.0.1"
   },
   "scripts": {
-    "prepublish": "mrbuilder-webpack --app ../../mr-builder.github.io",
+    "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io",
     "start": "mrbuilder-webpack-dev-server"
   },
   "mrbuilder": {
     "plugin": "src/index",
     "plugins": [
+      "mrbuilder-plugin-env",
       [
         "mrbuilder-plugin-html",
-        false
-      ],
-      [
-        "mrbuilder-plugin-hot",
         false
       ],
       "mrbuilder-plugin-doc-prop-types",
@@ -29,7 +27,18 @@
           "app": "docs"
         }
       ],
-      "mrbuilder.wiki"
+      [
+        "mrbuilder-plugin-hot",
+        false
+      ],
+      "mrbuilder.wiki",
+      [
+        "mrbuilder-plugin-clean",
+        {
+          "allowExternal": true,
+          "exclude": ".git"
+        }
+      ]
     ]
   },
   "license": "0BSD"

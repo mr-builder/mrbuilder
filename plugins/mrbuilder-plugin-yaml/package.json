@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-yaml",
-  "version": "0.9.11",
+  "version": "1.0.0",
   "dependencies": {
     "json-loader": "^0.5.7",
     "yaml-loader": "^0.5.0"
@@ -8,6 +8,6 @@
   "main": "src",
   "license": "0BSD",
   "peerDependencies": {
-    "mrbuilder": "^0.9.5"
+    "mrbuilder": "1.x"
   }
 }

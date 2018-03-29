@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-tool",
-  "version": "0.9.11",
+  "version": "1.0.0",
   "description": "Tool for changing package files",
   "main": "lib",
   "source": "source",
@@ -18,7 +18,7 @@
   ],
   "peerDependencies": {
     "lerna": "*",
-    "mrbuilder": "*"
+    "mrbuilder": "1.x"
   },
   "devDependencies": {
     "lerna": "2.8.0",

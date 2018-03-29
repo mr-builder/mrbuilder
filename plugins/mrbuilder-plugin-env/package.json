@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-env",
-  "version": "0.9.11",
+  "version": "1.0.0",
   "main": "src",
   "source": "src",
   "mrbuilder": {
@@ -10,6 +10,6 @@
   },
   "license": "0BSD",
   "peerDependencies": {
-    "mrbuilder": "^0.9.5"
+    "mrbuilder": "1.x"
   }
 }

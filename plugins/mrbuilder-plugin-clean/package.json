@@ -1,11 +1,11 @@
 {
-  "name": "mrbuilder-plugin-browserslist",
-  "version": "1.0.0",
+  "name": "mrbuilder-plugin-clean",
+  "version": "1.0.2",
+  "main": "src",
   "dependencies": {
+    "clean-webpack-plugin": "^0.1.19",
     "mrbuilder-utils": "^1.0.0"
   },
-  "source": "src",
-  "main": "src",
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "1.x"
