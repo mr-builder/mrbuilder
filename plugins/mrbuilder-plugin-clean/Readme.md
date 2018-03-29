@@ -1,18 +1,24 @@
 This provides [clean](https://github.com/johnagan/clean-webpack-plugin) functionality
 
-
-NOTE -- This could do terrible things to your filesystem.  So please
+===
+NOTE  This could do terrible things to your filesystem.  So please
 have a backup and use carefullly.
+===
+
+**By default it removes your output directory**
+
 
 ## Paths
 An [array] of string paths to clean
 
 ```js static
-[
+{
+paths:[
   'dist',         // removes 'dist' folder
   'build/*.*',    // removes all files in 'build' folder
   'web/*.js'      // removes all JavaScript files in 'web' folder
 ]
+}
 ```
 
 | Property      | Type       | Default      | Description                      |
@@ -22,3 +28,4 @@ An [array] of string paths to clean
 | verbose       | bool       | false        | Be verbose                       |
 | allowExternal | bool       | false        | Allow external directory deletion|
 | dry           | bool       | false        | Dry run                          |
+| exclude       | [string]   |              | Paths to exclude                 |
