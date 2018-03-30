@@ -59,6 +59,10 @@ describe('mrbuilder-optionsmanager', function () {
                 prefix  : 'tester',
                 cwd     : cwd(name),
                 _require: require,
+                handleNotFound(e, pkg){
+                    console.log(e, pkg);
+                    throw e;
+                }
             }, config)), config);
         });
 
