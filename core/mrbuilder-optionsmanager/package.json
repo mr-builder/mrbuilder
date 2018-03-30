@@ -2,8 +2,7 @@
   "name": "mrbuilder-optionsmanager",
   "version": "1.0.0",
   "scripts": {
-    "test": "mocha test/**",
-    "env": "env"
+    "test": "mocha test/**"
   },
   "bin": {
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"
