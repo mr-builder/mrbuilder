@@ -19,7 +19,7 @@ module.exports = function ({
                                localIdentName = '[package-name]_[hyphen:base-name]_[local]'
                            }, webpack, om) {
 
-    paths = paths.map(_resolve);
+    paths = paths.map((v) => _resolve(v));
 
     const stylusOptions = {
         loader : 'stylus-loader',
