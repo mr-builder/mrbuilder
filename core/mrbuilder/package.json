@@ -4,21 +4,6 @@
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
     "mrbuilder-optionsmanager": "^1.0.3-1.0",
-    "mrbuilder-plugin-analyze": "^1.0.3-1.0",
-    "mrbuilder-plugin-babel": "^1.0.3-1.0",
-    "mrbuilder-plugin-browserslist": "^1.0.3-1.0",
-    "mrbuilder-plugin-css": "^1.0.3-1.0",
-    "mrbuilder-plugin-enzyme": "^1.0.3-1.0",
-    "mrbuilder-plugin-filetypes": "^1.0.3-1.0",
-    "mrbuilder-plugin-fonts": "^1.0.3-1.0",
-    "mrbuilder-plugin-hot": "^1.0.3-1.0",
-    "mrbuilder-plugin-html": "^1.0.3-1.0",
-    "mrbuilder-plugin-karma": "^1.0.3-1.0",
-    "mrbuilder-plugin-less": "^1.0.3-1.0",
-    "mrbuilder-plugin-mocha": "^1.0.3-1.0",
-    "mrbuilder-plugin-webpack": "^1.0.3-1.0",
-    "mrbuilder-plugin-webpack-dev-server": "^1.0.3-1.0",
-    "mrbuilder-preset-app": "^1.0.3-1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
@@ -30,30 +15,6 @@
     "mrbuilder-webpack": "bin/mrbuilder-webpack.js",
     "mrbuilder-demo": "bin/mrbuilder-demo.js",
     "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js"
-  },
-  "mrbuilder": {
-    "plugins": [
-      "mrbuilder-plugin-browserslist",
-      "mrbuilder-plugin-babel",
-      "mrbuilder-plugin-webpack",
-      "mrbuilder-plugin-fonts",
-      "mrbuilder-plugin-css",
-      "mrbuilder-plugin-less",
-      "mrbuilder-plugin-filetypes"
-    ],
-    "env": {
-      "development": {
-        "plugins": [
-          "mrbuilder-plugin-webpack-dev-server"
-        ]
-      },
-      "test": {
-        "plugins": [
-          "mrbuilder-plugin-karma",
-          "mrbuilder-plugin-enzyme"
-        ]
-      }
-    }
   },
   "license": "0BSD"
 }

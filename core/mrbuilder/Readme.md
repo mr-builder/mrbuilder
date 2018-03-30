@@ -3,6 +3,18 @@ monorepos.   This is meant to hold all common dev dependencies.   This dependenc
 has all of the mrbuilder tools. You can use the plugins for more specific
 tools.
 
+## Autoinstall
+Adding plugins to your project or running these commands, may cause them to
+added as dep dependencies to your project.   This is a good thing, as now you
+only have to add them in one place.   If you add the deps themselves then
+it will not auto install.
+
+## Upgrade from 0.x->1.2
+The 'mrbuilder' package no longer ships with the dependencies.   Dependencies
+will be added as you run commands.  That is calling mrbuilder-webpack will cause
+the plugin to be installed.
+
+
 ## Configuration
 The tools are designed to run with smart defaults.  Edit your 
 package.json like this

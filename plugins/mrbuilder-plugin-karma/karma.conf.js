@@ -9,7 +9,7 @@ const webpack            = require('mrbuilder-plugin-webpack/webpack.config');
 const mrb = (key, def) => {
     return optionsManager.config(`mrbuilder-plugin-karma.${key}`,
         def);
-}
+};
 console.log(optionsManager.config(`mrbuilder-plugin-karma`));
 const chromeDataDir = mrb('chromeDataDir', path.resolve(process.env.HOME,
     '.mrbuilder-chrome'));

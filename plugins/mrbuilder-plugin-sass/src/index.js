@@ -6,7 +6,7 @@ module.exports = function ({
                                test = /\.s[ac]ss$/,
                                options,
                                modules = true,
-                           }, webpack) {
+                           }, webpack, om) {
 
     if (options == null) {
         options = {
@@ -24,10 +24,11 @@ module.exports = function ({
     });
 
     if (modules) {
-        cssLoader(webpack, modules === true ? /\.s[ac]ssm$/ : modules, true, {
-            loader: 'sass-loader',
-            options
-        })
+        cssLoader(webpack, modules === true ? /\.s[ac]ssm$/ : modules, true, om,
+            {
+                loader: 'sass-loader',
+                options
+            })
     }
 
     return webpack;

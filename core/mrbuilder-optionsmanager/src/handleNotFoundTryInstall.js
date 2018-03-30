@@ -1,5 +1,6 @@
 const { spawnSync } = require('child_process');
-const path = require('path');
+const path          = require('path');
+
 function findExecPath() {
     return process.env['$npm_execpath'] || require('which')
         .sync('yarn', { nothrow: true }) || require('which')
@@ -20,6 +21,10 @@ module.exports =
     function handleNotFoundTryInstall(e, pkg, isDev = true) {
         const warn = this.warn || console.warn;
         const info = this.info || console.log;
+        if (!pkg || pkg === 'undefined') {
+            warn(`package was null?`);
+            return;
+        }
 
         const npmPath = findExecPath();
         if (npmPath) {
@@ -44,7 +49,7 @@ module.exports =
             
              try running
 
-             $ ${isYarn ? 'yarn': 'npm'} ${args.join(' ')}
+            # ${isYarn ? 'yarn' : 'npm'} ${args.join(' ')}
             
             \n ` + err);
             throw (e || err);

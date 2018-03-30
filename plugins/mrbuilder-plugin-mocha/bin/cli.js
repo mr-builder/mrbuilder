@@ -1,14 +1,17 @@
 #!/usr/bin/env node
-process.env.NODE_ENV                   = process.env.NODE_ENV || 'test';
-process.env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-mocha';
-
-
-const optionsManager = global._MRBUILDER_OPTIONS_MANAGER || (
-    global._MRBUILDER_OPTIONS_MANAGER =
-        new (require('mrbuilder-optionsmanager'))({
+process.env.NODE_ENV = process.env.NODE_ENV || 'test';
+if (!global._MRBUILDER_OPTIONS_MANAGER) {
+    process.env.MRBUILDER_INTERNAL_PLUGINS =
+        `${process.env.MRBUILDER_INTERNAL_PLUGINS}},mrbuilder-plugin-enzyme,mrbuilder-plugin-mocha`;
+    global._MRBUILDER_OPTIONS_MANAGER      =
+        new (require('mrbuilder-optionsmanager').default)({
             prefix  : 'mrbuilder',
             _require: require
-        }));
+        });
+
+}
+const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
+
 
 const { cwd }  = require('mrbuilder-utils');
 const path     = require('path');

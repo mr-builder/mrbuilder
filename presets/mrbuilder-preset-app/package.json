@@ -2,11 +2,16 @@
   "name": "mrbuilder-preset-app",
   "version": "1.0.3-1.0",
   "dependencies": {
+    "mrbuilder-plugin-browserslist": "^1.0.3-1.0",
+    "mrbuilder-plugin-babel": "^1.0.3-1.0",
     "mrbuilder-plugin-chunk": "^1.0.3-1.0",
     "mrbuilder-plugin-env": "^1.0.3-1.0",
     "mrbuilder-plugin-hot": "^1.0.3-1.0",
     "mrbuilder-plugin-html": "^1.0.3-1.0",
+    "mrbuilder-plugin-less": "^1.0.3-1.0",
+    "mrbuilder-plugin-css": "^1.0.3-1.0",
     "mrbuilder-plugin-uglify": "^1.0.3-1.0",
+    "mrbuilder-plugin-webpack": "^1.0.3-1.0",
     "mrbuilder-plugin-webpack-dev-server": "^1.0.3-1.0"
   },
   "peerDependencies": {
@@ -14,6 +19,8 @@
   },
   "mrbuilder": {
     "plugins": [
+      "mrbuilder-plugin-babel",
+      "mrbuilder-plugin-browserslist",
       "mrbuilder",
       "mrbuilder-plugin-env"
     ],
@@ -26,6 +33,7 @@
               "useNameHash": "css/[name].css"
             }
           ],
+          "mrbuilder-plugin-less",
           "mrbuilder-plugin-html",
           "mrbuilder-plugin-webpack-dev-server",
           "mrbuilder-plugin-hot"
@@ -39,6 +47,7 @@
               "useNameHash": "css/[name].[hash].css"
             }
           ],
+          "mrbuilder-plugin-less",
           [
             "mrbuilder-plugin-webpack",
             {

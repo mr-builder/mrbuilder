@@ -50,11 +50,11 @@ module.exports = function ({
     }
 
 
-    cssLoader(webpack, /\.styl$/, false, stylusOptions);
+    cssLoader(webpack, /\.styl$/, false, om, stylusOptions);
 
     if (modules) {
         cssLoader(webpack, modules === true ? /\.stylm$/ : modules,
-            true, stylusOptions);
+            true, om, stylusOptions);
     }
 
     return webpack;
