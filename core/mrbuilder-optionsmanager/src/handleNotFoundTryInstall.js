@@ -45,7 +45,7 @@ module.exports =
                 return;
             }
             const err = res.stderr + '';
-            warn(`install of '${pkg}' failed!
+            warn(`install of '${pkg}' failed with status ${res.status}!
             
              try running
 
