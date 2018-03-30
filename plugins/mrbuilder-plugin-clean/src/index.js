@@ -4,7 +4,7 @@ module.exports = function (options={}, webpack, om) {
     const paths = [];
 
     if (options.paths) {
-        paths.push(...options.root);
+        paths.push(...options.paths);
     } else if (webpack.output && webpack.output.path) {
         if (webpack.output.path[0] === '/') {
             paths.push(webpack.output.path);
