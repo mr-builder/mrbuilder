@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "dependencies": {
     "mrbuilder": "^1.0.0",
-    "mrbuilder-plugin-clean": "^1.0.2",
+    "mrbuilder-plugin-clean": "^1.0.4",
     "mrbuilder-plugin-react-styleguidist": "^1.0.3"
   },
   "scripts": {
