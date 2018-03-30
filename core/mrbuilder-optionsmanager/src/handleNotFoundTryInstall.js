@@ -44,12 +44,7 @@ module.exports =
             
              try running
 
-            $ yarn add ${pkg} ${isDev ? '-D' : ''}
-
-            or npm
-
-            $ npm install ${pkg} ${isDev ? '--save-dev' : ''}
-            
+             $ ${isYarn ? 'yarn': 'npm'} ${args.join(' ')}
             
             \n ` + err);
             throw (e || err);
@@ -57,14 +52,14 @@ module.exports =
         } else {
             warn(
                 `could not find yarn or npm to install '${pkg}' 
-            Try adding a command to your package.json 
+            Try adding a command to your package.json something like
             {
               ...
               "scripts":{
                  "${path.basename(process.env.argv[1])}":"${process.env.argv[1]}"
               }  
             }
-            $ yarn run mrbuilder
+            $ yarn run ${path.basename(process.env.argv[1])}
             
             or adding the path to yarn to PATH .
             run under package.json scripts for better results.`);
