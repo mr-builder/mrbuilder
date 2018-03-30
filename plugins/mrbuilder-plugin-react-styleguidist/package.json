@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-react-styleguidist",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Mrbuilder Plugin for styleguidist",
   "main": "src",
   "dependencies": {
