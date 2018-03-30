@@ -116,10 +116,12 @@ module.exports = class OptionsManager {
                     try {
                         pkg = _require(join(pkg, 'package.json'));
                     } catch (e) {
-                        //THis should throw if it can't find it
+                        //This should throw if it can't find it
                         //otherwise we try resolving again.
-                        handleNotFound.call(this, e, pkg);
                         if (retry) {
+                            handleNotFound.call(this, e, pkg);
+                            delete _require.cache[path.join(pkg, 'package.json')];
+
                             return resolveConfig(pkg, false);
                         }
                         throw e;
