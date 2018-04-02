@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-lodash",
-  "version": "1.1.0-2",
+  "version": "1.1.0-3",
   "dependencies": {
     "lodash-es": "^4.17.4"
   },
