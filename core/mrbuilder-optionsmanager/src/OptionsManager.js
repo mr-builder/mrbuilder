@@ -270,7 +270,6 @@ module.exports = class OptionsManager {
 
             //install first but don't load first.
             if (presets) {
-                //presets all get the same configuration.
                 presets.forEach(preset => {
                     const [presetName] = nameConfig(preset);
                     if (!presetName.startsWith('.')) {
