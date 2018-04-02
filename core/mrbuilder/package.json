@@ -1,9 +1,9 @@
 {
   "name": "mrbuilder",
-  "version": "1.1.0-0",
+  "version": "1.1.0-1",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
-    "mrbuilder-optionsmanager": "^1.1.0-0",
+    "mrbuilder-optionsmanager": "^1.1.0-1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
