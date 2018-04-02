@@ -13,7 +13,10 @@
     "mrbuilder-plugin-fonts": "^1.1.0-0",
     "mrbuilder-plugin-filetypes": "^1.1.0-0",
     "mrbuilder-plugin-webpack": "^1.1.0-0",
-    "mrbuilder-plugin-webpack-dev-server": "^1.1.0-0"
+    "mrbuilder-plugin-webpack-dev-server": "^1.1.0-0",
+    "mrbuilder-plugin-karma": "^1.1.0-0",
+    "mrbuilder-plugin-mocha": "^1.1.0-0",
+    "mrbuilder-plugin-enzyme": "^1.1.0-0"
   },
   "peerDependencies": {
     "mrbuilder": "1.x"
@@ -28,6 +31,13 @@
       "mrbuilder-plugin-filetypes"
     ],
     "env": {
+      "test": {
+        "plugins": [
+          "mrbuilder-plugin-enzyme",
+          "mrbuilder-plugin-mocha",
+          "mrbuilder-plugin-karma"
+        ]
+      },
       "development": {
         "plugins": [
           [

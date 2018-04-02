@@ -1,8 +1,13 @@
-const OptionsManager = require('../src/OptionsManager');
-const { join } = require('path');
-const { expect } = require('chai');
-const { stringify } = require( 'mrbuilder-utils');
-const { existsSync, readdirSync, statSync, symlinkSync, unlinkSync } = require('fs');
+const OptionsManager                                                 = require(
+    '../src/OptionsManager');
+const { join }                                                       = require(
+    'path');
+const { expect }                                                     = require(
+    'chai');
+const { stringify }                                                  = require(
+    'mrbuilder-utils');
+const { existsSync, readdirSync, statSync, symlinkSync, unlinkSync } = require(
+    'fs');
 
 const isDirectory = sourceDir => {
     try {
@@ -15,6 +20,9 @@ const isDirectory = sourceDir => {
 
 const odir = __dirname;
 describe('mrbuilder-optionsmanager', function () {
+
+    process.env.TESTER_NO_AUTOINSTALL = 1;
+
     const argv   = (...argv) => ['fake-interpreter', 'fake-script'].concat(
         ...argv);
     const afters = [];
@@ -55,11 +63,18 @@ describe('mrbuilder-optionsmanager', function () {
         }
         fn(`should configure "${name}"${config ? ` and env ${stringify(
             config)}` : ''}`, function () {
+
+            const env = Object.assign({
+                TESTER_NO_AUTOINSTALL: 1,
+            }, config && config.env);
+
+
             assert(new OptionsManager(Object.assign({
                 prefix  : 'tester',
                 cwd     : cwd(name),
+                env,
                 _require: require,
-                handleNotFound(e, pkg){
+                handleNotFound(e, pkg) {
                     console.log(e, pkg);
                     throw e;
                 }
@@ -85,12 +100,14 @@ describe('mrbuilder-optionsmanager', function () {
 
     newOptionManagerTest('with-named-plugin', om => {
         expect(om.enabled('named-plugin')).to.eql(true);
-        expect(om.require(om.plugins.get('named-plugin').plugin)()).to.eql('named plugin');
+        expect(om.require(om.plugins.get('named-plugin').plugin)()).to.eql(
+            'named plugin');
 
     });
     newOptionManagerTest('with-merged-plugins', {
-        env : {
-            TESTER_ENV: 'test'
+        env: {
+            TESTER_ENV           : 'test',
+            TESTER_NO_AUTOINSTALL: 1,
         }
     }, om => {
         expect(om.enabled('merge-0')).to.be.false;
@@ -104,7 +121,8 @@ describe('mrbuilder-optionsmanager', function () {
     newOptionManagerTest('with-alias-camel', {
         argv: argv('--camel-arg', 'yes'),
         env : {
-            CAMEL_ENV: 'uh-huh'
+            CAMEL_ENV           : 'uh-huh',
+            CAMEL_NO_AUTOINSTALL: 1,
         }
     }, om => {
         expect(om.config('camel-alias-1.camelArg')).to.eql('yes');
@@ -137,8 +155,9 @@ describe('mrbuilder-optionsmanager', function () {
 
     newOptionManagerTest('with-env', {
         env: {
-            TESTER_PLUGINS: 'metest',
-            METEST_STUFF  : "1"
+            TESTER_PLUGINS       : 'metest',
+            METEST_STUFF         : "1",
+            TESTER_NO_AUTOINSTALL: 1,
         }
     }, (om) => {
         expect(om.enabled('metest')).to.be.true;
@@ -148,7 +167,8 @@ describe('mrbuilder-optionsmanager', function () {
 
     newOptionManagerTest('with-env', {
         env : {
-            TESTER_PLUGINS: 'metest',
+            TESTER_PLUGINS       : 'metest',
+            TESTER_NO_AUTOINSTALL: 1,
 
         },
         argv: argv(
@@ -198,7 +218,7 @@ describe('mrbuilder-optionsmanager', function () {
             "--regex-argv=/argv/g",
             "--realias=/realias/",
             "--regex-split", "/split/"),
-        env : { "REGEX_ENV": "/env/i" }
+        env : { "REGEX_ENV": "/env/i", REGEX_NO_AUTOINSTALL: 1, }
     }, (om, config) => {
         expect(om.enabled("regex")).to.be.true;
         re(om.config('regex.argv'), "/argv/g");
@@ -219,8 +239,9 @@ describe('mrbuilder-optionsmanager', function () {
     newOptionManagerTest('with-merge-alias-override', {
         argv: argv('--alias-2.stuff=whatever'),
         env : {
-            ALIAS_1_MORE: "stuff",
-            ALIAS_2_YUP : "true"
+            ALIAS_1_MORE         : "stuff",
+            ALIAS_2_YUP          : "true",
+            TESTER_NO_AUTOINSTALL: 1,
         }
     }, function (om) {
         expect(om.config('alias-1.stuff')).to.eql('Override');
@@ -229,11 +250,11 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.config('alias-2.yup')).to.eql(true);
     });
 
-    newOptionManagerTest("with-plugin-array", function(om){
+    newOptionManagerTest("with-plugin-array", function (om) {
 
         expect(om.enabled('wpa-plugin'));
         expect(om.enabled('wpa-plugin-deb'));
-        const o =om.plugins.get('wpa-plugin');
+        const o = om.plugins.get('wpa-plugin');
         console.log(om.plugins);
     });
 
@@ -261,7 +282,7 @@ with-alias-2 - [enabled]
         const om = new OptionsManager({
             prefix: 'tester',
             cwd   : cwd('with-presets-and-config'),
-            env   : { TESTER_DEBUG: 12 },
+            env   : { TESTER_DEBUG: 12, TESTER_NO_AUTOINSTALL: 1, },
             info  : capture,
             warn  : capture
         });

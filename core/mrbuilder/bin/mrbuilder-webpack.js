@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 const { env, argv } = process;
+
+//This allows someone to define internal presets to empty
+// to prevent any presets to be used.
 if (!('MRBUILDER_INTERNAL_PRESETS' in env)) {
 
     if (!(argv.includes('--demo', 2) || argv.includes('--app', 2))) {

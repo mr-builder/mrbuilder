@@ -116,23 +116,26 @@ module.exports = class OptionsManager {
                     const pkgPath = join(pkg, 'package.json');
 
                     try {
-                        if (retry) {
-                            //so node has a stat cache that is pretty much
-                            // impossible to clear so we are going to try this
-                            // which isn't quite right, as the context could
-                            // be wrong.
-                            // But to be extra sure, we'll try it again
-                            // without this check and see if it works.
-                            // This should blow up first, if there a package
-                            // does not exist.   Second time it doesn't try
-                            // this as the package _should_ be there.  if it
-                            // is great we'll be fine. If it doesn't an error
-                            // is thrown.
-                            cp.execFileSync(process.argv[0],
-                                ['-e', `require.resolve('${pkgPath}')`],
-                                { stdio: 'ignore', cwd: cwd() });
+                        if (!this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
+                            if (retry) {
+                                //so node has a stat cache that is pretty much
+                                // impossible to clear so we are going to try this
+                                // which isn't quite right, as the context could
+                                // be wrong.
+                                // But to be extra sure, we'll try it again
+                                // without this check and see if it works.
+                                // This should blow up first, if there a package
+                                // does not exist.   Second time it doesn't try
+                                // this as the package _should_ be there.  if it
+                                // is great we'll be fine. If it doesn't an error
+                                // is thrown.
+                                cp.execFileSync(process.argv[0],
+                                    ['-e', `require.resolve('${pkgPath}')`],
+                                    { stdio: 'ignore', cwd: cwd() });
+                            }
                         }
-                        return parseJSON(_require.resolve(pkgPath));
+
+                        pkg = parseJSON(_require.resolve(pkgPath));
                     } catch (e) {
                         //This should throw if it can't find it
                         //otherwise we try resolving again.
@@ -148,7 +151,6 @@ module.exports = class OptionsManager {
 
                 }
             }
-            resolveConfig.pkgCache = new Map();
 
             const pluginConfig = pkg[confPrefix] ? parseValue(
                 JSON.stringify(pkg[confPrefix]))

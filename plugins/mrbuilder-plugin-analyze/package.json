@@ -13,5 +13,8 @@
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "1.x"
+  },
+  "devDependencies": {
+    "mrbuilder-plugin-enzyme": "^1.1.0-0"
   }
 }

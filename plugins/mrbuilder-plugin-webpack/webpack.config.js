@@ -26,7 +26,7 @@ let  publicPath  = optionsManager.config('mrbuilder-plugin-webpack.public',
     '/');
 //So if you defined publicPath to /public/ it will parse as a regex.
 // this fixes that.
-if (publicPath instanceof Regex){
+if (publicPath instanceof RegExp){
     publicPath = ''+publicPath;
 }
 const opts        = {
