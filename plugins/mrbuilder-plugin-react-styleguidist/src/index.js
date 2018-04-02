@@ -77,7 +77,7 @@ module.exports = function (options = {}, webpack, om) {
             opts.sections = []
         }
         if (opts.require) {
-            opts.require = opts.require.map(enhancedResolve);
+            opts.require = opts.require.map((v) => enhancedResolve(v));
         }
         if (!opts.sections) {
             opts.sections = sections;
@@ -122,9 +122,10 @@ module.exports = function (options = {}, webpack, om) {
     }
 
     const ret = sylist(conf, process.env.NODE_ENV);
-   /* webpack.plugins.push(...ret.plugins);
-    ret.entry.splice(0, 1, `${__dirname}/entry.js`);
-    */webpack.entry = ret.entry;
+    /* webpack.plugins.push(...ret.plugins);
+     ret.entry.splice(0, 1, `${__dirname}/entry.js`);
+     */
+    webpack.entry = ret.entry;
     webpack.plugins.push(...ret.plugins);
     Object.assign(webpack.resolve.alias, ret.resolve.alias);
     (webpack.performance || (webpack.performance = {})).hints = false;
