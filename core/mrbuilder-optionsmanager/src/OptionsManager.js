@@ -6,7 +6,6 @@ const {
       }                              = require('./util');
 const _help                          = require('./help');
 const handleNotFoundTryInstall       = require('./handleNotFoundTryInstall');
-const Module                         = require('module');
 const handleNotFoundFail             = (e, pkg) => {
     this.warn('could not require "%s/package.json" from "%s"',
         pkg,
