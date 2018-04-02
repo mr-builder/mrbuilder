@@ -107,51 +107,52 @@ module.exports = class OptionsManager {
             return resolve(_require.resolve(join(pkg, 'package.json')), '..',
                 file, ...relto);
         };
+        const resolvePkgJson    = (pkg, retry = true) => {
+            if (typeof pkg !== 'string') {
+                return pkg;
+            }
+            if (pkg === this.topPackage.name) {
+                return this.topPackage;
+            } else {
+                const pkgPath = join(pkg, 'package.json');
 
-        const resolveConfig = (pkg, retry = true) => {
-            if (typeof pkg === 'string') {
-                if (pkg === this.topPackage.name) {
-                    pkg = this.topPackage;
-                } else {
-                    const pkgPath = join(pkg, 'package.json');
-
-                    try {
-                        if (!this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
-                            if (retry) {
-                                //so node has a stat cache that is pretty much
-                                // impossible to clear so we are going to try this
-                                // which isn't quite right, as the context could
-                                // be wrong.
-                                // But to be extra sure, we'll try it again
-                                // without this check and see if it works.
-                                // This should blow up first, if there a package
-                                // does not exist.   Second time it doesn't try
-                                // this as the package _should_ be there.  if it
-                                // is great we'll be fine. If it doesn't an error
-                                // is thrown.
-                                cp.execFileSync(process.argv[0],
-                                    ['-e', `require.resolve('${pkgPath}')`],
-                                    { stdio: 'ignore', cwd: cwd() });
-                            }
-                        }
-
-                        pkg = parseJSON(_require.resolve(pkgPath));
-                    } catch (e) {
-                        //This should throw if it can't find it
-                        //otherwise we try resolving again.
+                try {
+                    if (!this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
                         if (retry) {
-                            handleNotFound.call(this, e, pkg);
-                            return resolveConfig(pkg, false);
+                            //so node has a stat cache that is pretty much
+                            // impossible to clear so we are going to try this
+                            // which isn't quite right, as the context could
+                            // be wrong.
+                            // But to be extra sure, we'll try it again
+                            // without this check and see if it works.
+                            // This should blow up first, if there a package
+                            // does not exist.   Second time it doesn't try
+                            // this as the package _should_ be there.  if it
+                            // is great we'll be fine. If it doesn't an error
+                            // is thrown.
+                            cp.execFileSync(process.argv[0],
+                                ['-e', `require.resolve('${pkgPath}')`],
+                                { stdio: 'ignore', cwd: cwd() });
                         }
-
-                        throw e;
-
                     }
 
+                    return parseJSON(_require.resolve(pkgPath));
+                } catch (e) {
+                    //This should throw if it can't find it
+                    //otherwise we try resolving again.
+                    if (retry) {
+                        handleNotFound.call(this, e, pkg);
+                        return resolveConfig(pkg, false);
+                    }
+
+                    throw e;
 
                 }
             }
+        };
 
+        const resolveConfig = (pkg) => {
+            pkg                = resolvePkgJson(pkg);
             const pluginConfig = pkg[confPrefix] ? parseValue(
                 JSON.stringify(pkg[confPrefix]))
                 : parseJSON(resolveFromPkgDir(pkg.name, rcFile))
@@ -266,6 +267,18 @@ module.exports = class OptionsManager {
             plugins,
             ignoreRc
         } = {}, options, pkg, parent, override) => {
+
+            //install first but don't load first.
+            if (presets) {
+                //presets all get the same configuration.
+                presets.forEach(preset => {
+                    const [presetName] = nameConfig(preset);
+                    if (!presetName.startsWith('.')) {
+                        resolvePkgJson(presetName);
+                    }
+                });
+            }
+
             if (plugins) {
                 plugins.map(
                     plugin => processPlugin(pkg.name, plugin, override, pkg,
