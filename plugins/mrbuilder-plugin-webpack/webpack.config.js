@@ -66,6 +66,7 @@ let webpack = {
     output       : {
         path    : opts.outputPath,
         filename: opts.outputFilename,
+        publicPath,
     },
     plugins      : [],
     module       : {

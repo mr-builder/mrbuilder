@@ -3,15 +3,21 @@
   "version": "1.1.0-0",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^1.1.0-0"
+    "mrbuilder": "^1.1.0-0",
+    "mrbuilder-preset-lib": "^1.0.0-0"
   },
   "source": "src",
   "main": "lib",
   "scripts": {
-    "start": "mrbuilder-webpack-dev-server --mrbuilder-plugin-html-exported=true",
+    "start": "mrbuilder-webpack-dev-server",
     "demo": "mrbuilder-demo",
     "prepublish": "mrbuilder-babel",
     "test": "mrbuilder-mocha"
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "mrbuilder": {
+    "presets": [
+      "mrbuilder-preset-lib"
+    ]
+  }
 }

@@ -1,0 +1,66 @@
+{
+  "name": "mrbuilder-preset-lib",
+  "version": "1.1.0-0",
+  "dependencies": {
+    "mrbuilder-plugin-babel": "^1.1.0-0",
+    "mrbuilder-plugin-browserslist": "^1.1.0-0",
+    "mrbuilder-plugin-chunk": "^1.1.0-0",
+    "mrbuilder-plugin-css": "^1.1.0-0",
+    "mrbuilder-plugin-env": "^1.1.0-0",
+    "mrbuilder-plugin-hot": "^1.1.0-0",
+    "mrbuilder-plugin-html": "^1.1.0-0",
+    "mrbuilder-plugin-less": "^1.1.0-0",
+    "mrbuilder-plugin-fonts": "^1.1.0-0",
+    "mrbuilder-plugin-filetypes": "^1.1.0-0",
+    "mrbuilder-plugin-webpack": "^1.1.0-0",
+    "mrbuilder-plugin-webpack-dev-server": "^1.1.0-0"
+  },
+  "peerDependencies": {
+    "mrbuilder": "1.x"
+  },
+  "mrbuilder": {
+    "plugins": [
+      "mrbuilder-plugin-babel",
+      "mrbuilder-plugin-browserslist",
+      "mrbuilder",
+      "mrbuilder-plugin-env",
+      "mrbuilder-plugin-fonts",
+      "mrbuilder-plugin-filetypes"
+    ],
+    "env": {
+      "development": {
+        "plugins": [
+          [
+            "mrbuilder-plugin-css",
+            {
+              "useNameHash": "css/[name].css"
+            }
+          ],
+          "mrbuilder-plugin-eslint",
+          "mrbuilder-plugin-less",
+          "mrbuilder-plugin-html",
+          "mrbuilder-plugin-webpack-dev-server",
+          "mrbuilder-plugin-hot"
+        ]
+      },
+      "production": {
+        "plugins": [
+          [
+            "mrbuilder-plugin-css",
+            {
+              "useNameHash": "[name].css"
+            }
+          ],
+          "mrbuilder-plugin-less",
+          [
+            "mrbuilder-plugin-webpack",
+            {
+              "externalizePeers": true
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "license": "0BSD"
+}
