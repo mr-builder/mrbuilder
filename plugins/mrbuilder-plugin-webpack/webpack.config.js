@@ -22,6 +22,8 @@ const isDevServer = optionsManager.enabled(
     'mrbuilder-plugin-webpack-dev-server');
 const isDemo      = !!optionsManager.config('mrbuilder-plugin-webpack.demo');
 const isApp       = !!optionsManager.config('mrbuilder-plugin-webpack.app');
+const publicPath  = optionsManager.config('mrbuilder-plugin-webpack.public',
+    '/');
 const opts        = {
     isProduction  : process.env.NODE_ENV === 'production',
     isLibrary     : optionsManager.config('mrbuilder-plugin-webpack.library')
@@ -32,8 +34,7 @@ const opts        = {
     isDevServer,
     isHtml        : optionsManager.enabled('mrbuilder-plugin-html'),
     isHot         : optionsManager.enabled('mrbuilder-plugin-hot'),
-    publicPath    : optionsManager.config('mrbuilder-plugin-webpack.public',
-        '/'),
+    publicPath,
     outputPath    : optionsManager.config('mrbuilder-plugin-webpack.outputPath',
         cwd('lib')),
     outputFilename: optionsManager.config(
