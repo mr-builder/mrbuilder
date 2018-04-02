@@ -5,8 +5,13 @@ if (!('MRBUILDER_INTERNAL_PRESETS' in env)) {
 }
 
 if (!env.NODE_ENV) {
-    env.NODE_ENV = 'test';
+    env.NODE_ENV = 'development';
 }
+
+if (!env.MRBUILDER_ENV){
+    env.MRBUILDER_ENV = env.NODE_ENV;
+}
+
 global._MRBUILDER_OPTIONS_MANAGER || (global._MRBUILDER_OPTIONS_MANAGER =
     new (require('mrbuilder-optionsmanager'))(
         { prefix: 'mrbuilder', _require: require }));
