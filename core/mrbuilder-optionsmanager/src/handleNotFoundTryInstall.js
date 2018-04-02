@@ -33,7 +33,7 @@ module.exports =
                 first = false;
                 info(
                     `using ${isYarn ? 'yarn' : 'npm'} to install '${pkg}' this might take a minute, and
-                 should only happen when you haven't declared the plugin as a dependency. After it installs
+                 should only happen when you haven't installed it as a dependency. After it installs
                  successfully it won't do this the next time you run mrbuilder. If you would
                  rather declare it as a ${isDev ? 'devDependency' : 'dependency'} in your package.json, 
                  you can quit now and add it manually.

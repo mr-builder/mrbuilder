@@ -16,7 +16,8 @@
     "mrbuilder-plugin-less": "^1.1.0-3",
     "mrbuilder-plugin-mocha": "^1.1.0-3",
     "mrbuilder-plugin-webpack": "^1.1.0-3",
-    "mrbuilder-plugin-webpack-dev-server": "^1.1.0-3"
+    "mrbuilder-plugin-webpack-dev-server": "^1.1.0-3",
+    "mrbuilder-plugin-eslint":"^1.1.0-3"
   },
   "peerDependencies": {
     "mrbuilder": "1.x"
