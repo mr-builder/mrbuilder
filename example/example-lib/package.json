@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "mrbuilder": "^1.1.0-0",
-    "mrbuilder-preset-lib": "^1.0.0-0"
+    "mrbuilder-preset-lib": "^1.1.0-0"
   },
   "source": "src",
   "main": "lib",
