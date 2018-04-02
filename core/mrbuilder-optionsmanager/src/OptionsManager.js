@@ -130,7 +130,7 @@ module.exports = class OptionsManager {
                             // is great we'll be fine. If it doesn't an error
                             // is thrown.
                             cp.execFileSync(process.argv[0],
-                                ['-e', `require.resolve(${pkgPath})`],
+                                ['-e', `require.resolve('${pkgPath}')`],
                                 { stdio: 'ignore', cwd: cwd() });
                         }
                         return parseJSON(_require.resolve(pkgPath));
