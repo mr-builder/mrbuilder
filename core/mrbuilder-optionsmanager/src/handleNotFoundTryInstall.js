@@ -16,7 +16,7 @@ const yarnRe = /.*[/]?yarn([.]js)?$/;
  * @param pkg
  * @param isDev - set to false if it is not a dev dependency.
  */
-
+let first      = true;
 module.exports =
     function handleNotFoundTryInstall(e, pkg, isDev = true) {
         const warn = this.warn || console.warn;
@@ -28,11 +28,25 @@ module.exports =
 
         const npmPath = findExecPath();
         if (npmPath) {
-            info(
-                `using yarn '${npmPath}' to install '${pkg}' this might take a minute.`);
-
             const isYarn = yarnRe.test(npmPath);
-            const args   = isYarn ? ['add', pkg] : ['install', pkg];
+            if (first) {
+                first = false;
+                info(
+                    `using ${isYarn ? 'yarn' : 'npm'} to install '${pkg}' this might take a minute, and
+                 should only happen when you haven't declared the plugin as a dependency. After it installs
+                 successfully it won't do this the next time you run mrbuilder. If you would
+                 rather declare it as a ${isDev ? 'devDependency' : 'dependency'} in your package.json, 
+                 you can quit now and add it manually.
+                 
+                 Note: there may be more plugins/presets that need to be installed.  Same
+                 rules apply, but you won't get the full message.
+               
+                `);
+            } else {
+                info(`using '${isYarn ? 'yarn' : 'npm'}' to install '${pkg}'.`);
+            }
+
+            const args = isYarn ? ['add', pkg] : ['install', pkg];
 
             if (isDev) {
                 args.push(isYarn ? '-D' : '--save-dev');

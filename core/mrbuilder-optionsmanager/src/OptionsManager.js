@@ -6,14 +6,15 @@ const {
       }                              = require('./util');
 const _help                          = require('./help');
 const handleNotFoundTryInstall       = require('./handleNotFoundTryInstall');
-
-const handleNotFoundFail = (e, pkg) => {
+const Module                         = require('module');
+const handleNotFoundFail             = (e, pkg) => {
     this.warn('could not require "%s/package.json" from "%s"',
         pkg,
         process.cwd()
     );
     throw e;
 };
+const cp                             = require('child_process');
 
 module.exports = class OptionsManager {
 
@@ -33,7 +34,7 @@ module.exports = class OptionsManager {
                     //Object of collected aliases, may be modified
                     aliasObj = {},
                     topPackage,
-                    handleNotFound
+                    handleNotFound = handleNotFoundTryInstall
                 } = {}) {
 
         this.plugins = new Map();
@@ -55,7 +56,7 @@ module.exports = class OptionsManager {
             }
             return ret;
         };
-        if (!handleNotFound && this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
+        if (!handleNotFound || this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
             handleNotFound = handleNotFoundFail;
         } else {
             handleNotFound = handleNotFoundTryInstall;
@@ -113,22 +114,42 @@ module.exports = class OptionsManager {
                 if (pkg === this.topPackage.name) {
                     pkg = this.topPackage;
                 } else {
+                    const pkgPath = join(pkg, 'package.json');
+
                     try {
-                        pkg = _require(join(pkg, 'package.json'));
+                        if (retry) {
+                            //so node has a stat cache that is pretty much
+                            // impossible to clear so we are going to try this
+                            // which isn't quite right, as the context could
+                            // be wrong.
+                            // But to be extra sure, we'll try it again
+                            // without this check and see if it works.
+                            // This should blow up first, if there a package
+                            // does not exist.   Second time it doesn't try
+                            // this as the package _should_ be there.  if it
+                            // is great we'll be fine. If it doesn't an error
+                            // is thrown.
+                            cp.execFileSync(process.argv[0],
+                                ['-e', `require.resolve(${pkgPath})`],
+                                { stdio: 'ignore', cwd: cwd() });
+                        }
+                        return parseJSON(_require.resolve(pkgPath));
                     } catch (e) {
                         //This should throw if it can't find it
                         //otherwise we try resolving again.
                         if (retry) {
                             handleNotFound.call(this, e, pkg);
-                            delete _require.cache[path.join(pkg, 'package.json')];
-
                             return resolveConfig(pkg, false);
                         }
+
                         throw e;
 
                     }
+
+
                 }
             }
+            resolveConfig.pkgCache = new Map();
 
             const pluginConfig = pkg[confPrefix] ? parseValue(
                 JSON.stringify(pkg[confPrefix]))
