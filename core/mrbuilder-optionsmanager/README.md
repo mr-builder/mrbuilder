@@ -55,6 +55,7 @@ const optionsManager = new OptionsManager({prefix:'whatever'});
  * warn - A function for logging warn level console.warn,
  * _require - A require function useful for scripts require,
  * aliasObj - Alias's you want to pass
+ * handleNotFound - Function to call when a package is not found.
 
 
 ## Resolution

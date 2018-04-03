@@ -1,5 +1,5 @@
 module.exports = ({
-                      test = /\.(png|je?pg|gif?f|bmp|ppm|bpg|mpe?g)$/,
+                      test = /\.(png|je?pg|gif?f|bmp|ppm|bpg|mpe?g|svg)$/,
                       loader = 'file-loader',
                       options = {}
                   }, webpack) => {

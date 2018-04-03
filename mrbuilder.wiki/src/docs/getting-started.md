@@ -10,6 +10,42 @@ build configuration, although it does allow per module configuration when a modu
 deviates from the common build configuration.   Within a multi module system
 it may make sence to have a module that holds said common configuration.
 
+### Just a module
+While MR Builder is designed for use in monorepos.  It can also be used stand alone
+Just add mrbuilder to your package.json and the correspoding scripts
+
+```sh
+ $ yarn add mrbuilder
+
+```
+And then edit package.json
+```json
+{
+  "name":"your-component",
+  "devDependencies":{
+     "mrbuilder":"..."
+  },
+  "main":"lib",
+  "source":"src",
+  "scripts":{
+      "test":"mrbuilder-karma",
+      "karma":"mrbuilder-karma",
+      "prepublish":"mrbuilder-webpack",
+      "start":"mrbuilder-webpack-dev-server"
+  }
+
+}
+
+```
+
+You can still configure .mrbuilderrc or add a mrbuilder property to the
+root of our package.json.
+
+As of 1.10 mrbuilder will auto install any plugin that is not defined in the
+package.json.   To disable set the env `MRBUILDER_NO_AUTOINSTALL=1`.
+
+
+
 
 ### Creating a multi module monorepo.
 There is not much special about creating a monorepo, and there are many many

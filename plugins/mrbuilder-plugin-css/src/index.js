@@ -5,13 +5,13 @@ module.exports  = function ({
                                 publicPath = '/public',
                                 css = true,
                                 modules = false,
-                            }, webpack) {
+                            }, webpack, om) {
 
     if (css) {
-        cssLoader(webpack, css === true ? /\.css/ : css, false)
+        cssLoader(webpack, css === true ? /\.css/ : css, false, om);
     }
     if (modules) {
-        cssLoader(webpack, modules === true ? /\.cssm$/ : modules, true)
+        cssLoader(webpack, modules === true ? /\.cssm$/ : modules, true, om);
     }
     return webpack;
 };

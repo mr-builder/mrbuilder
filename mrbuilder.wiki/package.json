@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.1.0-5",
   "dependencies": {
-    "mrbuilder": "^1.0.0",
-    "mrbuilder-plugin-clean": "^1.0.2",
-    "mrbuilder-plugin-react-styleguidist": "^1.0.1"
+    "mrbuilder": "^1.1.0-5",
+    "mrbuilder-plugin-clean": "^1.1.0-5",
+    "mrbuilder-plugin-react-styleguidist": "^1.1.0-5"
   },
   "scripts": {
     "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io",

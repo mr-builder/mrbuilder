@@ -1,7 +1,6 @@
 const path           = require('path');
 const basename       = path.basename.bind(path);
 const relative       = path.relative.bind(path);
-const dirname        = path.dirname.bind(path);
 const resolve        = path.resolve.bind(path);
 const currentPkgName = require(resolve(process.cwd(), 'package.json')).name;
 const lc             = Function.call.bind(String.prototype.toLowerCase);

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 const { env } = process;
 
-env.MRBUILDER_INTERNAL_PRESETS =
-    `${env.MRBUILDER_INTERNAL_PRESETS || ''},mrbuilder`;
+env.MRBUILDER_INTERNAL_PLUGINS =
+    `${env.MRBUILDER_INTERNAL_PLUGINS || ''},mrbuilder-plugin-babel,mrbuilder-plugin-enzyme,mrbuilder-plugin-mocha`;
 
 if (!env.NODE_ENV) {
     env.NODE_ENV = 'test';
