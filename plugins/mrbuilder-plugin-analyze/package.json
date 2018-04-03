@@ -1,29 +1,20 @@
 {
   "name": "mrbuilder-plugin-analyze",
-  "version": "1.0.0",
+  "version": "1.1.0-5",
   "description": "analyze support for mrbuilder",
   "dependencies": {
     "webpack-bundle-analyzer": "^2.9.1"
   },
-  "devDependencies": {
-    "mrbuilder-plugin-mocha": "^1.0.0"
-  },
   "scripts": {
-    "test": "mrbuilder-mocha-cli"
+    "test": "mrbuilder-mocha"
   },
   "source": "src",
   "main": "src",
-  "mrbuilder": {
-    "env": {
-      "test": {
-        "plugins": [
-          "mrbuilder-plugin-mocha"
-        ]
-      }
-    }
-  },
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "1.x"
+  },
+  "devDependencies": {
+    "mrbuilder-plugin-enzyme": "^1.1.0-5"
   }
 }

@@ -12,3 +12,4 @@ if (env.BROWSERSLIST_CONFIG) {
         existsSync(dotBrowsers) ? dotBrowsers : path.resolve(__dirname, '..',
             'browserslist');
 }
+module.exports = ()=>{};

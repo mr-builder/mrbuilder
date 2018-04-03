@@ -1,3 +1,4 @@
+const cp                             = require('child_process');
 const { basename, join, resolve }    = require('path');
 const { get, parseJSON, parseValue } = require('mrbuilder-utils');
 const {
@@ -5,7 +6,14 @@ const {
           nameConfig, select, split
       }                              = require('./util');
 const _help                          = require('./help');
-
+const handleNotFoundTryInstall       = require('./handleNotFoundTryInstall');
+const handleNotFoundFail             = (e, pkg) => {
+    this.warn('could not require "%s/package.json" from "%s"',
+        pkg,
+        process.cwd()
+    );
+    throw e;
+};
 
 module.exports = class OptionsManager {
 
@@ -25,10 +33,11 @@ module.exports = class OptionsManager {
                     //Object of collected aliases, may be modified
                     aliasObj = {},
                     topPackage,
+                    handleNotFound = handleNotFoundTryInstall
                 } = {}) {
 
         this.plugins = new Map();
-        this.help = _help(this);
+        this.help    = _help(this);
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
@@ -46,6 +55,11 @@ module.exports = class OptionsManager {
             }
             return ret;
         };
+        if (!handleNotFound || this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
+            handleNotFound = handleNotFoundFail;
+        } else {
+            handleNotFound = handleNotFoundTryInstall;
+        }
 
         this.cwd        = (...paths) => resolve(this.env('MODULE_DIR', cwd()),
             ...paths);
@@ -74,7 +88,8 @@ module.exports = class OptionsManager {
             this.warn('require is not set, using default require');
         }
         const ENV_VAR = `${envPrefix}_ENV`;
-        const ENV     = this.env(ENV_VAR) || env.NODE_ENV;
+
+        const ENV = this.env(ENV_VAR) || env.NODE_ENV;
 
         this.info(ENV_VAR, 'is', ENV || 'not set');
         this.debug('topPackage is', this.topPackage.name);
@@ -92,24 +107,60 @@ module.exports = class OptionsManager {
             return resolve(_require.resolve(join(pkg, 'package.json')), '..',
                 file, ...relto);
         };
+        const resolvePkgJson    = (pkg, retry = true) => {
+            if (typeof pkg !== 'string') {
+                return pkg;
+            }
+            if (pkg === this.topPackage.name) {
+                return this.topPackage;
+            } else {
+                if (resolvePkgJson.cache.has(pkg)) {
+                    return resolvePkgJson.cache.get(pkg);
+                }
 
-        const resolveConfig = (pkg) => {
-            if (typeof pkg === 'string') {
-                if (pkg === this.topPackage.name) {
-                    pkg = this.topPackage;
-                } else {
-                    try {
-                        pkg = _require(join(pkg, 'package.json'));
-                    } catch (e) {
-                        this.warn(
-                            'could not require "%s/package.json" from "%s"',
-                            pkg,
-                            process.cwd()
-                        );
-                        throw e;
+                const pkgPath = join(pkg, 'package.json');
+                try {
+                    if (!this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
+                        if (retry) {
+                            //so node has a stat cache that is pretty much
+                            // impossible to clear so we are going to try this
+                            // which isn't quite right, as the context could
+                            // be wrong.
+                            // But to be extra sure, we'll try it again
+                            // without this check and see if it works.
+                            // This should blow up first, if there a package
+                            // does not exist.   Second time it doesn't try
+                            // this as the package _should_ be there.  if it
+                            // is great we'll be fine. If it doesn't an error
+                            // is thrown.
+                            cp.execFileSync(process.argv[0],
+                                ['-e', `require.resolve('${pkgPath}')`],
+                                { stdio: 'ignore', cwd: cwd() });
+                        }
                     }
+
+                    const ret = parseJSON(_require.resolve(pkgPath));
+                    resolvePkgJson.cache.set(pkg, ret);
+                    return ret;
+                } catch (e) {
+                    //This should throw if it can't find it
+                    //otherwise we try resolving again.
+                    if (retry) {
+                        handleNotFound.call(this, e, pkg);
+                        return resolveConfig(pkg, false);
+                    }
+
+                    throw e;
+
                 }
             }
+        };
+
+        resolvePkgJson.cache = new Map();
+
+        const resolveConfig = (pkg) => {
+            pkg = resolvePkgJson(pkg);
+
             const pluginConfig = pkg[confPrefix] ? parseValue(
                 JSON.stringify(pkg[confPrefix]))
                 : parseJSON(resolveFromPkgDir(pkg.name, rcFile))
@@ -139,8 +190,7 @@ module.exports = class OptionsManager {
             opt.optionsManager = this;
 
             opt.info = (...args) => {
-                info(`INFO [${prefix.toLowerCase()}:${name}]`,
-                    ...args);
+                info(`INFO [${prefix.toLowerCase()}:${name}]`, ...args);
             };
 
             opt.debug = (...args) => {
@@ -225,6 +275,12 @@ module.exports = class OptionsManager {
             plugins,
             ignoreRc
         } = {}, options, pkg, parent, override) => {
+
+            //install first but don't load first.
+            if (presets) {
+                presets.forEach(p => resolvePkgJson(nameConfig(p)[0]));
+            }
+
             if (plugins) {
                 plugins.map(
                     plugin => processPlugin(pkg.name, plugin, override, pkg,
@@ -259,25 +315,27 @@ module.exports = class OptionsManager {
         const scan        = (ignoreRc, parent, name, options, override) => {
             this.debug('scanning', name);
 
-            const pkg = name === this.topPackage.name ? this.topPackage
-                : _require(`${name}/package.json`);
             if (Array.isArray(name)) {
                 throw new Error(
                     `${name} can not be an array import from ${parent
                                                                && parent.name}`);
-
             }
 
+            const pkg        = resolvePkgJson(name);
             const pluginConf = resolveConfig(pkg);
 
-
-            processOpts(name, pluginConf, options, pkg, parent,
-                override);
+            processOpts(name, pluginConf, options, pkg, parent, override);
         };
 
 
         processEnv();
-        scan(false, this.topPackage, this.topPackage.name);
+
+        scan(
+            false,
+            this.topPackage,
+            this.topPackage.name
+        );
+
         //ALLOW for fallbacks when tooling wants to signal things.
         processEnv('INTERNAL_');
 
@@ -317,14 +375,14 @@ module.exports = class OptionsManager {
         return !!this.plugins.get(name);
     }
 
-    //make nice stringify
+//make nice stringify
     toJSON() {
         return {
             name   : this.topPackage.name,
             plugins: this.plugins
         }
     }
-}
+};
 
 class Option {
     constructor(name,

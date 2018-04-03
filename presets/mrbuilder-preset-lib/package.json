@@ -1,5 +1,5 @@
 {
-  "name": "mrbuilder-preset-app",
+  "name": "mrbuilder-preset-lib",
   "version": "1.1.0-5",
   "dependencies": {
     "mrbuilder-plugin-babel": "^1.1.0-5",
@@ -7,10 +7,15 @@
     "mrbuilder-plugin-chunk": "^1.1.0-5",
     "mrbuilder-plugin-css": "^1.1.0-5",
     "mrbuilder-plugin-env": "^1.1.0-5",
+    "mrbuilder-plugin-enzyme": "^1.1.0-5",
+    "mrbuilder-plugin-eslint": "^1.1.0-5",
+    "mrbuilder-plugin-filetypes": "^1.1.0-5",
+    "mrbuilder-plugin-fonts": "^1.1.0-5",
     "mrbuilder-plugin-hot": "^1.1.0-5",
     "mrbuilder-plugin-html": "^1.1.0-5",
+    "mrbuilder-plugin-karma": "^1.1.0-5",
     "mrbuilder-plugin-less": "^1.1.0-5",
-    "mrbuilder-plugin-uglify": "^1.1.0-5",
+    "mrbuilder-plugin-mocha": "^1.1.0-5",
     "mrbuilder-plugin-webpack": "^1.1.0-5",
     "mrbuilder-plugin-webpack-dev-server": "^1.1.0-5"
   },
@@ -22,9 +27,18 @@
       "mrbuilder-plugin-babel",
       "mrbuilder-plugin-browserslist",
       "mrbuilder",
-      "mrbuilder-plugin-env"
+      "mrbuilder-plugin-env",
+      "mrbuilder-plugin-fonts",
+      "mrbuilder-plugin-filetypes"
     ],
     "env": {
+      "test": {
+        "plugins": [
+          "mrbuilder-plugin-enzyme",
+          "mrbuilder-plugin-mocha",
+          "mrbuilder-plugin-karma"
+        ]
+      },
       "development": {
         "plugins": [
           [
@@ -33,6 +47,7 @@
               "useNameHash": "css/[name].css"
             }
           ],
+          "mrbuilder-plugin-eslint",
           "mrbuilder-plugin-less",
           "mrbuilder-plugin-html",
           "mrbuilder-plugin-webpack-dev-server",
@@ -44,26 +59,16 @@
           [
             "mrbuilder-plugin-css",
             {
-              "useNameHash": "css/[name].[hash].css"
+              "useNameHash": "[name].css"
             }
           ],
           "mrbuilder-plugin-less",
           [
             "mrbuilder-plugin-webpack",
             {
-              "app": "app",
-              "filename": "js/[name].[hash].js",
-              "externalizePeers": false
+              "externalizePeers": true
             }
-          ],
-          "mrbuilder-plugin-html",
-          [
-            "mrbuilder-plugin-chunk",
-            {
-              "filename": "js/[name].[hash].js"
-            }
-          ],
-          "mrbuilder-plugin-uglify"
+          ]
         ]
       }
     }

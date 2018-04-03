@@ -6,15 +6,15 @@ module.exports  = function ({
                                     noIeCompat: true
                                 },
                                 modules = true,
-                            }, webpack) {
+                            }, webpack, om) {
 
-    cssLoader(webpack, /\.less$/, true, {
+    cssLoader(webpack, /\.less$/, true, om, {
         loader: 'less-loader',
         options
     });
 
     if (modules) {
-        cssLoader(webpack, modules === true ? /\.lessm$/ : modules, true, {
+        cssLoader(webpack, modules === true ? /\.lessm$/ : modules, true, om, {
             loader: 'less-loader',
             options
         })

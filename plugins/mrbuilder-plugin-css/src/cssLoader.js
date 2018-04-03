@@ -1,14 +1,13 @@
 if (!global._MRBUILDER_OPTIONS_MANAGER) {
     throw new Error('_MRBUILDER_OPTIONS_MANAGER not set');
 }
-const om = global._MRBUILDER_OPTIONS_MANAGER;
 
 const useStyle      = require('./styleLoader');
 const getLocalIdent = require('./getLocalIdent');
 
-const mrb = (v, d) => om.config('mrbuilder-plugin-css' + (v ? `.${v}` : ''), d);
+module.exports = function (webpack, test, modules = false, om, ...conf) {
 
-module.exports = function (webpack, test, modules = false, ...conf) {
+    const mrb = (v, d) => om.config('mrbuilder-plugin-css' + (v ? `.${v}` : ''), d);
 
     const loaders = [{
         loader : 'css-loader',

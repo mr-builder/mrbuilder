@@ -33,7 +33,7 @@ module.exports = function (opts, webpack) {
     // google didn't show much, so... this is the thing now.
     webpack.resolve.alias.loglevel = require.resolve('loglevel');
 
-    //yeah, prolly should do this, but more is better?
+    //yeah, prolly should not do this, but more is better?
     if (socketTimeout) {
         const { before }         = webpack.devServer;
         webpack.devServer.before = (app) => {
@@ -50,23 +50,33 @@ module.exports = function (opts, webpack) {
         const { before }         = webpack.devServer;
         const debug              = this.debug || console.log;
         webpack.devServer.before = (app) => {
-            before && before(app);
-            Object.keys(rewrite).forEach(function (key) {
+            before && before.call(this, app);
+            const addPath = (key, val) => {
                 app.get(key, function (req, res, next) {
-                    const val = rewrite[key];
                     if (typeof val === 'string') {
                         const redirect = val.replace(/(?:\{(.+?)\})/g,
                             (a, v) => req.params[v]);
                         debug('redirecting to ', redirect);
                         res.redirect(302, redirect);
-                    }
-                    if (val === true) {
+                    } else if (val === true) {
+                        debug('sending empty string');
                         res.send('');
                     } else {
+                        debug('calling next');
                         next();
                     }
                 });
-            });
+            };
+
+            if (Array.isArray(rewrite)) {
+                rewrite.forEach(
+                    v => Array.isArray(v) ? addPath(...v) : addPath(v.path,
+                        v.value));
+            } else {
+                Object.keys(rewrite).forEach(function (key) {
+                    addPath(key, rewrite[key]);
+                });
+            }
         }
     }
 

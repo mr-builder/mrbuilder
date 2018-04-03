@@ -1,5 +1,10 @@
 {
   "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6,
+    "allowImportExportEverywhere": true
+  },
   "plugins": [
     "react"
   ],
@@ -15,7 +20,8 @@
     "itShould": true,
     "requiret": true,
     "requiref": true,
-    "expect": true
+    "expect": true,
+    "__REACT_HOT_LOADER__":true
   },
   "rules": {
     "block-scoped-var": 2,

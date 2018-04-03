@@ -22,6 +22,13 @@ const isDevServer = optionsManager.enabled(
     'mrbuilder-plugin-webpack-dev-server');
 const isDemo      = !!optionsManager.config('mrbuilder-plugin-webpack.demo');
 const isApp       = !!optionsManager.config('mrbuilder-plugin-webpack.app');
+let  publicPath  = optionsManager.config('mrbuilder-plugin-webpack.public',
+    '/');
+//So if you defined publicPath to /public/ it will parse as a regex.
+// this fixes that.
+if (publicPath instanceof RegExp){
+    publicPath = ''+publicPath;
+}
 const opts        = {
     isProduction  : process.env.NODE_ENV === 'production',
     isLibrary     : optionsManager.config('mrbuilder-plugin-webpack.library')
@@ -32,8 +39,7 @@ const opts        = {
     isDevServer,
     isHtml        : optionsManager.enabled('mrbuilder-plugin-html'),
     isHot         : optionsManager.enabled('mrbuilder-plugin-hot'),
-    publicPath    : optionsManager.config('mrbuilder-plugin-webpack.public',
-        '/'),
+    publicPath,
     outputPath    : optionsManager.config('mrbuilder-plugin-webpack.outputPath',
         cwd('lib')),
     outputFilename: optionsManager.config(
@@ -66,6 +72,7 @@ let webpack = {
     output       : {
         path    : opts.outputPath,
         filename: opts.outputFilename,
+        publicPath,
     },
     plugins      : [],
     module       : {
