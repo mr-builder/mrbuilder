@@ -1,3 +1,4 @@
+const cp                             = require('child_process');
 const { basename, join, resolve }    = require('path');
 const { get, parseJSON, parseValue } = require('mrbuilder-utils');
 const {
@@ -13,7 +14,6 @@ const handleNotFoundFail             = (e, pkg) => {
     );
     throw e;
 };
-const cp                             = require('child_process');
 
 module.exports = class OptionsManager {
 
@@ -114,8 +114,11 @@ module.exports = class OptionsManager {
             if (pkg === this.topPackage.name) {
                 return this.topPackage;
             } else {
-                const pkgPath = join(pkg, 'package.json');
+                if (resolvePkgJson.cache.has(pkg)) {
+                    return resolvePkgJson.cache.get(pkg);
+                }
 
+                const pkgPath = join(pkg, 'package.json');
                 try {
                     if (!this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
                         if (retry) {
@@ -136,7 +139,9 @@ module.exports = class OptionsManager {
                         }
                     }
 
-                    return parseJSON(_require.resolve(pkgPath));
+                    const ret = parseJSON(_require.resolve(pkgPath));
+                    resolvePkgJson.cache.set(pkg, ret);
+                    return ret;
                 } catch (e) {
                     //This should throw if it can't find it
                     //otherwise we try resolving again.
@@ -151,8 +156,11 @@ module.exports = class OptionsManager {
             }
         };
 
+        resolvePkgJson.cache = new Map();
+
         const resolveConfig = (pkg) => {
-            pkg                = resolvePkgJson(pkg);
+            pkg = resolvePkgJson(pkg);
+
             const pluginConfig = pkg[confPrefix] ? parseValue(
                 JSON.stringify(pkg[confPrefix]))
                 : parseJSON(resolveFromPkgDir(pkg.name, rcFile))
@@ -270,12 +278,7 @@ module.exports = class OptionsManager {
 
             //install first but don't load first.
             if (presets) {
-                presets.forEach(preset => {
-                    const [presetName] = nameConfig(preset);
-                    if (!presetName.startsWith('.')) {
-                        resolvePkgJson(presetName);
-                    }
-                });
+                presets.forEach(p => resolvePkgJson(nameConfig(p)[0]));
             }
 
             if (plugins) {
@@ -312,20 +315,16 @@ module.exports = class OptionsManager {
         const scan        = (ignoreRc, parent, name, options, override) => {
             this.debug('scanning', name);
 
-            const pkg = name === this.topPackage.name ? this.topPackage
-                : _require(join(name, 'package.json'));
             if (Array.isArray(name)) {
                 throw new Error(
                     `${name} can not be an array import from ${parent
                                                                && parent.name}`);
-
             }
 
+            const pkg        = resolvePkgJson(name);
             const pluginConf = resolveConfig(pkg);
 
-
-            processOpts(name, pluginConf, options, pkg, parent,
-                override);
+            processOpts(name, pluginConf, options, pkg, parent, override);
         };
 
 
