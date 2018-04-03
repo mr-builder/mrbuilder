@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-hot",
-  "version": "1.1.0-5",
+  "version": "1.2.0",
   "description": "hmr for mrbuilder",
   "dependencies": {
     "react-hot-loader": "^3.1.2"
