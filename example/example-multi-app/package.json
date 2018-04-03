@@ -8,9 +8,8 @@
     "mrbuilder-preset-app": "^1.1.0-4"
   },
   "scripts": {
-    "clean": "mrbuilder-clean app",
-    "start": "mrbuilder-webpack-dev-server",
-    "prepublish": "NODE_ENV=production mrbuilder-webpack"
+    "start": "mrbuilder",
+    "prepublish": "NODE_ENV=production mrbuilder"
   },
   "mrbuilder": {
     "presets": [

@@ -12,11 +12,11 @@
     "mrbuilder-preset-app": "^1.1.0-4"
   },
   "scripts": {
-    "clean": "mrbuilder-clean app",
-    "prepublish": "mrbuilder-webpack",
-    "start": "mrbuilder-webpack-dev-server",
-    "test": "mrbuilder-karma",
-    "karma": "mrbuilder-karma"
+    "prepublish": "mrbuilder",
+    "start": "mrbuilder",
+    "test": "mrbuilder",
+    "karma": "mrbuilder",
+    "analyze": "mrbuilder"
   },
   "mrbuilder": {
     "presets": [

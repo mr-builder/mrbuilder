@@ -8,6 +8,7 @@
     "react-dom": "^16.2.0"
   },
   "bin": {
+    "mrbuilder": "bin/mrbuilder.js",
     "mrbuilder-babel": "bin/mrbuilder-babel.js",
     "mrbuilder-clean": "bin/mrbuilder-clean.js",
     "mrbuilder-karma": "bin/mrbuilder-karma.js",

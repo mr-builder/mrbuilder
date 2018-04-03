@@ -9,8 +9,10 @@
   "source": "src",
   "main": "lib",
   "scripts": {
-    "start": "mrbuilder-webpack-dev-server",
-    "demo": "mrbuilder-demo",
+    "mocha": "mrbuilder",
+    "start": "mrbuilder",
+    "demo": "mrbuilder",
+    "babel": "mrbuilder",
     "prepublish": "mrbuilder-babel",
     "test": "mrbuilder-mocha"
   },

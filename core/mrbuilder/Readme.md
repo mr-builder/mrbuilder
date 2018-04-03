@@ -11,8 +11,9 @@ it will not auto install.
 
 ## Upgrade from 0.x->1.2
 The 'mrbuilder' package no longer ships with the dependencies.   Dependencies
-will be added as you run commands.  That is calling mrbuilder-webpack will cause
-the plugin to be installed.
+will be added as you run commands.  That is calling `mrbuilder` will cause
+the plugin to be installed.  You can add the plugins manually to your package.json
+if you prefer; as it may be faster.
 
 
 ## Configuration
@@ -21,13 +22,14 @@ package.json like this
 
 ```json
 "scripts":{
- "karma": "mrbuilder-karma",
+ "karma": "mrbuilder",
  //if you want plain moch use mrbuilder-mocha instead.
-    "test": "mrbuilder-karma",
-    "demo": "mrbuilder-webpack-demo",
-    "server": "mrbuilder-webpack-dev-server",
-    "prepublish": "mrbuilder-webpack",
-    "clean": "rimraf ./lib ./dist"
+    "test": "mrbuilder",
+    "demo": "mrbuilder",
+    "app":"mrbuilder",
+    "server": "mrbuilder",
+    //use "babel":"mrbuilder", to only run babel instead of webpack
+    "prepublish": "mrbuilder",
 },
 "devDependencies":{
  "mrbuilder-plugin-support":"^2.2.3"
@@ -53,28 +55,6 @@ $ yarn run demo
 ```sh
 $ yarn run server
 ```
-
-
-Included tools-
-  * [mrbuilder-plugin-analyze](./plugins/mrbuilder-plugin-analyze)
-  * [mrbuilder-plugin-babel](./plugins/mrbuilder-plugin-babel)
-  * [mrbuilder-plugin-browserslist](./plugins/mrbuilder-plugin-browserslist)
-  * [mrbuilder-plugin-css](./plugins/mrbuilder-plugin-css)
-  * [mrbuilder-plugin-enzyme](./plugins/mrbuilder-plugin-enzyme)
-  * [mrbuilder-plugin-eslint](./plugins/mrbuilder-plugin-eslint)
-  * [mrbuilder-plugin-filetypes](./plugins/mrbuilder-plugin-filetypes)
-  * [mrbuilder-plugin-fonts](./plugins/mrbuilder-plugin-fonts)
-  * [mrbuilder-plugin-hot](./plugins/mrbuilder-plugin-hot)
-  * [mrbuilder-plugin-html](./plugins/mrbuilder-plugin-html)
-  * [mrbuilder-plugin-karma](./plugins/mrbuilder-plugin-karma)
-  * [mrbuilder-plugin-less](./plugins/mrbuilder-plugin-less)
-  * [mrbuilder-plugin-markdown](./plugins/mrbuilder-plugin-markdown)
-  * [mrbuilder-plugin-mocha](./plugins/mrbuilder-plugin-mocha)
-  * [mrbuilder-plugin-uglify](./plugins/mrbuilder-plugin-uglify)
-  * [mrbuilder-plugin-webpack](./plugins/mrbuilder-plugin-webpack)
-  * [mrbuilder-plugin-webpack-dev-server](./plugins/mrbuilder-plugin-webpack-dev-server)
-
-
 
 ## Babel
 Mrbuilder uses babel to compile source code.  This command is for when you don't need webpack to do the compiling. The arguments are the same as [babel-cli](https://babeljs.io/docs/usage/cli/) but are defaulted to

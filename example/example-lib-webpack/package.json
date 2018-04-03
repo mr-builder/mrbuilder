@@ -6,11 +6,10 @@
     "mrbuilder": "^1.1.0-4"
   },
   "scripts": {
-    "clean": "mrbuilder-clean lib",
-    "prepublish": "mrbuilder-webpack",
-    "start": "mrbuilder-webpack-dev-server",
-    "test": "mrbuilder-karma",
-    "karma": "mrbuilder-karma"
+    "prepublish": "mrbuilder",
+    "start": "mrbuilder",
+    "test": "mrbuilder",
+    "karma": "mrbuilder"
   },
   "peerDependencies": {
     "react": "16.x",

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const { env } = process;
 if (!('MRBUILDER_INTERNAL_PRESETS' in env)) {
-    env.MRBUILDER_INTERNAL_PRESETS = 'mrbuilder-preset-lib';
+    env.MRBUILDER_INTERNAL_PRESETS = 'mrbuilder-preset-test,mrbuilder-preset-lib';
 }
 
 if (!env.NODE_ENV) {
