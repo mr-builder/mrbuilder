@@ -1,10 +1,10 @@
 {
   "name": "example-lib",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^1.2.2",
-    "mrbuilder-preset-lib": "^1.2.2"
+    "mrbuilder": "^1.2.3",
+    "mrbuilder-preset-lib": "^1.2.3"
   },
   "source": "src",
   "main": "lib",
