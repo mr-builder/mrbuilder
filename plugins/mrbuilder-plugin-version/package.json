@@ -1,19 +1,13 @@
 {
-  "name": "mrbuilder-plugin-sass",
+  "name": "mrbuilder-plugin-version",
   "version": "1.2.1",
-  "description": "Sass plugin for mrbuilder",
+  "description": "Expose version information for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
-    "mrbuilder-plugin": "^1.1.0",
-    "mrbuilder-plugin-css": "^1.2.0",
-    "mrbuilder-utils": "^1.2.0",
-    "node-sass": "^4.7.2",
-    "sass-loader": "^6.0.6"
+    "mrbuilder-utils": "^1.2.0"
   },
   "keywords": [
-    "subschema",
-    "sass",
     "mrbuilder"
   ],
   "license": "0BSD",

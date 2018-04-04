@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "mrbuilder": "^1.2.0",
-    "mrbuilder-preset-app": "^1.2.0"
+    "mrbuilder-preset-app": "^1.2.0",
+    "mrbuilder-plugin-version": "^1.2.0"
   },
   "scripts": {
     "prepublish": "mrbuilder",
@@ -19,6 +20,9 @@
     "analyze": "mrbuilder"
   },
   "mrbuilder": {
+    "plugins": [
+      "mrbuilder-plugin-version"
+    ],
     "presets": [
       "mrbuilder-preset-app",
       "example-lib-everything"
