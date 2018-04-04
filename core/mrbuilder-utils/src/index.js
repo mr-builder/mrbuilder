@@ -223,8 +223,8 @@ const enhancedResolve  = (p, _require = require) => {
         }catch(e){
             if (e.code === 'MODULE_NOT_FOUND'){
                 console.warn(`Could not resolve ${pkg} from ${p} check spelling and location`);
-                throw e;
             }
+            throw e;
         }
     }
     return p;
