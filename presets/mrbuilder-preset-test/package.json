@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-preset-test",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "dependencies": {
     "mrbuilder-plugin-enzyme": "^1.2.0",
-    "mrbuilder-plugin-karma": "^1.2.0",
-    "mrbuilder-plugin-mocha": "^1.2.0",
-    "mrbuilder-plugin-webpack": "^1.2.0"
+    "mrbuilder-plugin-karma": "^1.2.2",
+    "mrbuilder-plugin-mocha": "^1.2.2",
+    "mrbuilder-plugin-webpack": "^1.2.2"
   },
   "peerDependencies": {
     "mrbuilder": "1.x"

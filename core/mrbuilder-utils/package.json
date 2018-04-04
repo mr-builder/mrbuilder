@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-utils",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Dev utils for mrbuilder dev tools",
   "source": "src",
   "main": "src",

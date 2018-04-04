@@ -1,23 +1,23 @@
 {
   "name": "mrbuilder-preset-lib",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^1.2.0",
-    "mrbuilder-plugin-browserslist": "^1.2.0",
-    "mrbuilder-plugin-chunk": "^1.2.0",
-    "mrbuilder-plugin-css": "^1.2.0",
+    "mrbuilder-plugin-babel": "^1.2.2",
+    "mrbuilder-plugin-browserslist": "^1.2.2",
+    "mrbuilder-plugin-chunk": "^1.2.2",
+    "mrbuilder-plugin-css": "^1.2.2",
     "mrbuilder-plugin-env": "^1.2.0",
     "mrbuilder-plugin-enzyme": "^1.2.0",
     "mrbuilder-plugin-eslint": "^1.2.0",
     "mrbuilder-plugin-filetypes": "^1.2.0",
-    "mrbuilder-plugin-fonts": "^1.2.0",
+    "mrbuilder-plugin-fonts": "^1.2.2",
     "mrbuilder-plugin-hot": "^1.2.0",
-    "mrbuilder-plugin-html": "^1.2.0",
-    "mrbuilder-plugin-karma": "^1.2.0",
-    "mrbuilder-plugin-less": "^1.2.0",
-    "mrbuilder-plugin-mocha": "^1.2.0",
-    "mrbuilder-plugin-webpack": "^1.2.0",
-    "mrbuilder-plugin-webpack-dev-server": "^1.2.0"
+    "mrbuilder-plugin-html": "^1.2.2",
+    "mrbuilder-plugin-karma": "^1.2.2",
+    "mrbuilder-plugin-less": "^1.2.2",
+    "mrbuilder-plugin-mocha": "^1.2.2",
+    "mrbuilder-plugin-webpack": "^1.2.2",
+    "mrbuilder-plugin-webpack-dev-server": "^1.2.2"
   },
   "peerDependencies": {
     "mrbuilder": "1.x"
