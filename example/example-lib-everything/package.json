@@ -12,6 +12,7 @@
     "mrbuilder-plugin-moment": "^1.2.0",
     "mrbuilder-plugin-stylus": "^1.2.0",
     "mrbuilder-plugin-worker": "^1.2.0"
+
   },
   "scripts": {
     "analyze": "mrbuilder",

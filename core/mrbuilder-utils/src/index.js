@@ -213,10 +213,19 @@ const enhancedResolve  = (p, _require = require) => {
     }
     if (p.startsWith('~')) {
         const parts  = p.substring(1).split(path.sep);
-        const pkgDir = path.resolve(
-            _require.resolve(path.join(parts.shift(), 'package.json')), '..');
+        const pkg = parts.shift();
+        try {
+            const pkgDir = path.resolve(
+                _require.resolve(path.join(pkg, 'package.json')),
+                '..');
 
-        return path.resolve(pkgDir, ...parts);
+            return path.resolve(pkgDir, ...parts);
+        }catch(e){
+            if (e.code === 'MODULE_NOT_FOUND'){
+                console.warn(`Could not resolve ${pkg} from ${p} check spelling and location`);
+            }
+            throw e;
+        }
     }
     return p;
 };

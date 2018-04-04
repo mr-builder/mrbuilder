@@ -24,7 +24,7 @@ const mod = function ({
                           node,
                           noParse,
                       },
-                      webpack) {
+                      webpack, om) {
 
     if (!webpack.resolve) {
         webpack.resolve = {
@@ -51,12 +51,15 @@ const mod = function ({
             alias = alias.split(/,\s*/);
         }
         if (Array.isArray(alias)) {
-            webpack.resolve.alias = Object.assign(webpack.resolve.alias,
-                Array.isArray(alias) ? resolveMap(...alias) : alias
-            );
-        } else {
             webpack.resolve.alias =
-                Object.assign(webpack.resolve.alias, {}, alias);
+                Object.assign({}, webpack.resolve.alias, resolveMap(...alias));
+
+        } else {
+            webpack.resolve.alias = Object.assign({}, webpack.resolve.alias,
+                Object.keys(alias).reduce((ret, key) => {
+                    ret[key] = enhancedResolve(alias[key]);
+                    return ret;
+                }));
         }
     }
 
@@ -135,6 +138,7 @@ const mod = function ({
         webpack.node = Object.assign({}, webpack.node, node);
         info('using node config %O', webpack.node);
     }
+
     webpack.devtool = devtool;
 
     return webpack;

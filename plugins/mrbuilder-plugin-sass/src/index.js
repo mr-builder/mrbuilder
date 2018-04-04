@@ -18,7 +18,7 @@ module.exports = function ({
         options.includePaths = options.includePaths.map(_resolve);
     }
 
-    cssLoader(webpack, test, true, {
+    cssLoader(webpack, test, true, om, {
         loader: 'sass-loader',
         options
     });
