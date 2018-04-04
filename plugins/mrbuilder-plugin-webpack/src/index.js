@@ -59,7 +59,7 @@ const mod = function ({
                 Object.keys(alias).reduce((ret, key) => {
                     ret[key] = enhancedResolve(alias[key]);
                     return ret;
-                }));
+                }, {}));
         }
     }
 
