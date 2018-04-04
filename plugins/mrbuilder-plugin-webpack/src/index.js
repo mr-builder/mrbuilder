@@ -135,6 +135,7 @@ const mod = function ({
         webpack.node = Object.assign({}, webpack.node, node);
         info('using node config %O', webpack.node);
     }
+
     webpack.devtool = devtool;
 
     return webpack;
