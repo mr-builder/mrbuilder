@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-typescript",
-  "version": "1.2.6",
+  "version": "2.0.0-beta.0",
   "description": "Typescript plugin for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
@@ -13,7 +13,8 @@
     "source-map-loader": "^0.2.3",
     "ts-loader": "^4.0.1",
     "tsconfig-paths-webpack-plugin": "^2.0.0",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "webpack-utils": "^1.0.0"
   },
   "keywords": [
     "typescrpipt",
@@ -21,6 +22,6 @@
   ],
   "license": "0BSD",
   "peerDependencies": {
-    "mrbuilder": "1.x"
+    "mrbuilder": "2.x"
   }
 }

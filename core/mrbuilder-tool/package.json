@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-tool",
-  "version": "1.2.6",
+  "version": "2.0.0-beta.0",
   "description": "Tool for changing package files",
   "main": "lib",
   "source": "source",
@@ -18,12 +18,11 @@
   ],
   "peerDependencies": {
     "lerna": "*",
-    "mrbuilder": "1.x"
+    "mrbuilder": "2.x"
   },
   "devDependencies": {
     "lerna": "2.8.0",
-    "mrbuilder": "0.9.2",
-    "mrbuilder-plugin-enzyme": "^1.2.6"
+    "mrbuilder": "^2.0.0-beta.0"
   },
   "license": "0BSD"
 }

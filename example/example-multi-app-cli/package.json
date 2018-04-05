@@ -1,9 +1,9 @@
 {
   "name": "example-multi-cli",
-  "version": "1.2.6",
+  "version": "2.0.0-beta.0",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^1.2.6"
+    "mrbuilder": "^2.0.0-beta.0"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",

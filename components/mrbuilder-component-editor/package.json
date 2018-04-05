@@ -1,15 +1,15 @@
 {
   "name": "mrbuilder-component-editor",
-  "version": "1.2.6",
+  "version": "2.0.0-beta.0",
   "description": "A simplish editor for mr builder",
   "main": "src",
   "dependencies": {
     "json5": "^1.0.0-beta.4",
-    "mrbuilder-plugin-emeth": "^1.2.6",
-    "mrbuilder-utils": "^1.2.6"
+    "mrbuilder-plugin-emeth": "^2.0.0-beta.0",
+    "mrbuilder-utils": "^2.0.0-beta.0"
   },
   "peerDependencies": {
-    "mrbuilder": "1.x"
+    "mrbuilder": "2.x"
   },
   "scripts": {
     "test": "mrbuilder-karma",
