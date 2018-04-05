@@ -9,7 +9,7 @@ This plugin is a core plugin that provides the root of the [webpack](https://web
 | mainFields    | bool or array|true        | Main fieds [source,browser,main] |
 | app           | string     |              | Directory to build app (not library)|
 | demo          | string     |              | Directory to build demo (not library)|
-| entry         | object     | {index:src/index.js| Entry point                |
+| entry         | object     | {index:src/index.js}| Entry point                |
 | outputPath    | string     | dist         | where to put built library       |
 | useExternals  | bool       | true         | use externals                    |
 | externals     | string     |              | libraries to use as externals    |
@@ -19,3 +19,6 @@ This plugin is a core plugin that provides the root of the [webpack](https://web
 | alias         | array      | [react,react-dom]| Create alias's so only 1 version is used|
 | node          | object     |              | Maps to [webpack.node](https://webpack.js.org/configuration/node/)             |
 | extensions    | array      | [.js,.jsx,.json]| Add extensions                |
+| public        | string     | ""           | The "publicPath" options in webpack|
+| useTarget     | string     | "web"        | The target property in webpac     |
+| noParse       | regex      |              | A pattern for webpack not to parse|
