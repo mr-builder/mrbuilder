@@ -28,7 +28,13 @@ module.exports = ({
                       }
                   }, webpack) => {
 
-    webpack.plugins.push(new UglifyJsPlugin({
+    if (!webpack.optimization){
+        webpack.optimization = {};
+    }
+    if (!webpack.optimization.minimizer){
+        webpack.optimization.minimizer = [];
+    }
+    webpack.optimization.minimizer.push(new UglifyJsPlugin({
         test,
         parallel,
         cache,

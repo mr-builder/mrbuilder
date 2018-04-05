@@ -4,8 +4,10 @@
   "dependencies": {
     "mrbuilder-plugin-babel": "^2.0.0-beta.0",
     "mrbuilder-plugin-browserslist": "^2.0.0-beta.0",
-    "mrbuilder-plugin-chunk": "^2.0.0-beta.0",
+    "mrbuilder-plugin-chunk":"^2.0.0-beta.0",
     "mrbuilder-plugin-css": "^2.0.0-beta.0",
+    "mrbuilder-plugin-filetypes": "^2.0.0-beta.0",
+    "mrbuilder-plugin-fonts": "^2.0.0-beta.0",
     "mrbuilder-plugin-env": "^2.0.0-beta.0",
     "mrbuilder-plugin-hot": "^2.0.0-beta.0",
     "mrbuilder-plugin-html": "^2.0.0-beta.0",
@@ -21,10 +23,28 @@
     "plugins": [
       "mrbuilder-plugin-babel",
       "mrbuilder-plugin-browserslist",
-      "mrbuilder",
-      "mrbuilder-plugin-env"
+      "mrbuilder-plugin-filetypes",
+      "mrbuilder-plugin-fonts",
+      "mrbuilder-plugin-env",
+      [
+        "mrbuilder-plugin-html",
+        {
+          "exported": true
+        }
+      ]
     ],
     "env": {
+      "test": {
+        "presets": [
+          "mrbuilder-preset-test"
+        ],
+        "plugins": [
+          [
+            "mrbuilder-plugin-html",
+            false
+          ]
+        ]
+      },
       "development": {
         "plugins": [
           [
@@ -56,7 +76,6 @@
               "externalizePeers": false
             }
           ],
-          "mrbuilder-plugin-html",
           [
             "mrbuilder-plugin-chunk",
             {

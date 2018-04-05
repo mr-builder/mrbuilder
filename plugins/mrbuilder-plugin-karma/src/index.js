@@ -1,4 +1,4 @@
-const { pkg,cwd }                                    = require('mrbuilder-utils');
+const { pkg, cwd }                               = require('mrbuilder-utils');
 const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
 const { resolve }                                = require('path');
 
@@ -59,12 +59,14 @@ module.exports = function ({
     webpack.output          = {};
     webpack.output.pathinfo = pathinfo;
     webpack.entry           = { test: testIndex };
-    webpack.plugins.unshift(new DefinePlugin({
-        MRBUILDER_TEST_MODULE: JSON.stringify(testDir)
-    }));
+    this.useDefine          = Object.assign({}, this.useDefine, {
+        MRBUILDER_TEST_MODULE: testDir
+    });
+    (this.info || console.log)('using test dir ', testDir);
     if (mainFields) {
         webpack.resolve.mainFields = mainFields;
     }
     webpack.externals = [];
+    delete webpack.output.chunkFilename;
     return webpack;
 };

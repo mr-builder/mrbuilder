@@ -12,7 +12,7 @@ describe('mrbuilder-plugin-karma', function () {
 
         mod.call({info(){}, warn(){}}, {}, webpack);
 
-        expect(webpack.plugins).to.have.length(2);
+        expect(webpack.plugins).to.have.length(1);
         expect(webpack.node).to.eql({
             "console": false,
             "fs"     : "empty",

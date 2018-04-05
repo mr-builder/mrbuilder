@@ -1,29 +1,28 @@
 if (!global._MRBUILDER_OPTIONS_MANAGER) {
     throw new Error('_MRBUILDER_OPTIONS_MANAGER not set');
 }
-
-const om       = global._MRBUILDER_OPTIONS_MANAGER;
-const { info } = om.plugins.get('mrbuilder-plugin-css');
-const mrb      = (v) => om.config('mrbuilder-plugin-css' + (v ? `.${v}` : ''));
-
-let useNameHash      = mrb('useNameHash');
+require('mrbuilder-plugin-browserslist');
+const om                 = global._MRBUILDER_OPTIONS_MANAGER;
+const { info }           = om.plugins.get('mrbuilder-plugin-css');
+const mrb                = (v) => om.config('mrbuilder-plugin-css' + (v
+    ? `.${v}` : ''));
+let useNameHash          = mrb('useNameHash');
 let useStyleLoaderLoader = mrb('useStyleLoader');
-let publicPath       = mrb('publicPath');
+let publicPath           = mrb('publicPath');
 
-let isDevServer      = om.enabled('mrbuilder-plugin-webpack-dev-server');
-let isLibrary        = om.config('mrbuilder-plugin-webpack.library');
+let isDevServer = om.enabled('mrbuilder-plugin-webpack-dev-server');
+let isLibrary   = om.config('mrbuilder-plugin-webpack.library');
 
-if (useNameHash == null) {
+if (useNameHash == null || useNameHash === true) {
     if (isLibrary) {
         useNameHash = 'style.css';
     } else {
-        useNameHash = '[hash].style.css';
+        useNameHash = '[id].[hash].style.css';
     }
-} else if (useNameHash === true) {
-    useNameHash = '[hash].style.css';
 } else if (useNameHash === false) {
     useNameHash = 'style.css';
 }
+
 if (isDevServer) {
     useNameHash = useNameHash.replace('[hash].', '');
 }
@@ -33,24 +32,23 @@ info('naming style sheet', useNameHash);
 if (useStyleLoaderLoader == null && isDevServer) {
     useStyleLoaderLoader = true;
 }
+let addedPlugin = false;
 
 if (!useStyleLoaderLoader) {
     info('extracting text', useStyleLoaderLoader);
-    const ExtractTextPlugin = require('extract-text-webpack-plugin');
+    const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-    let addedPlugin = false;
-    module.exports  = function useStyleExtractText(webpack, ...args) {
-        const conf = { use: args.filter(Boolean) };
-        if (publicPath) {
-            conf.publicPath = publicPath;
-        }
-        if (!addedPlugin) {
-            addedPlugin = true;
-            webpack.plugins.push(new ExtractTextPlugin(useNameHash));
-        }
-
-        return ExtractTextPlugin.extract(conf);
-    };
+    module.exports = function useStyleExtractText(webpack, ...args) {
+            const use = [MiniCssExtractPlugin.loader, ...args];
+            if (!addedPlugin) {
+                addedPlugin = true;
+                webpack.plugins.push(new MiniCssExtractPlugin({
+                    filename     : useNameHash,
+                    chunkFilename: `[name].style.css`
+                }));
+            }
+            return use;
+        };
 
 } else {
     info('using style loader');

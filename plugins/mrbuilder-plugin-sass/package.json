@@ -8,7 +8,7 @@
     "loader-utils": "^1.1.0",
     "mrbuilder-plugin-css": "^2.0.0-beta.0",
     "mrbuilder-utils": "^2.0.0-beta.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7"
   },
   "keywords": [

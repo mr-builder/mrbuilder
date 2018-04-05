@@ -51,9 +51,21 @@ const opts = {
         'web'),
     useHtml       : !isKarma && (isDevServer || isDemo || isApp)
 };
+const mode = (val) => {
+    switch (val) {
+        case "development":
+        case "test":
+            return "development";
+        case "production":
+            return "production";
+        default:
+            return "none";
+    }
+
+};
 
 let webpack = {
-
+    mode   : mode(process.env.NODE_ENV),
     resolve: {
         alias: {}
     },
@@ -64,10 +76,7 @@ let webpack = {
             cwd('node_modules'),
             path.resolve(__dirname, 'node_modules'),
         ],
-        alias  : resolveMap(
-            'raw-loader',
-            'json-loader'
-        )
+        alias  : resolveMap('raw-loader')
     },
     output       : {
         path    : opts.outputPath,
@@ -76,13 +85,7 @@ let webpack = {
     },
     plugins      : [],
     module       : {
-        rules: [
-
-            {
-                test  : /\.json$/,
-                loader: 'json-loader'
-            }
-        ]
+        rules: []
     }
 };
 
@@ -94,7 +97,10 @@ let webpack = {
     }
     webpack.entry = Object.freeze(parseEntry(entryNoParse))
 })(optionsManager.config('mrbuilder-plugin-webpack.entry'));
-
+if (!webpack.entry) {
+    webpack.entry = { index: cwd('src', 'index') };
+    info('using default entry', webpack.entry.index)
+}
 //This is where the magic happens
 try {
     optionsManager.forEach((option, key) => {
@@ -139,10 +145,7 @@ if (opts.useScopeHoist) {
     webpack.plugins.push(new ModuleConcatenationPlugin());
 }
 
-if (!webpack.entry) {
-    webpack.entry = { index: cwd('src', 'index') };
-    info('using default entry', webpack.entry.index)
-}
+
 debug('DEBUG is on');
 debug('optionsManager', stringify(optionsManager.plugins));
 debug('webpack configuration', stringify(webpack));

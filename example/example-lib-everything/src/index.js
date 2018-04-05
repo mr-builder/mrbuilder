@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { container } from './style.less';
+import less, { container } from './style.less';
 import moment from 'moment';
 import map from 'lodash/map';
 import Readme from '../Readme.md';
 import Timer from './timer.worker';
 import stylus from './stylus_module.stylm';
-import less from './style.less';
 import './stylus.styl';
-const USER = process.env.USER;
+import { Hello } from './hello';
+import yaml from './test.yaml';
+const USER     = process.env.USER;
 const NODE_ENV = process.env.NODE_ENV;
 
 export default class WebpackExample extends Component {
@@ -19,12 +20,13 @@ export default class WebpackExample extends Component {
 
     constructor(...rest) {
         super(...rest);
-      this.timer = new Timer();
+        this.timer = new Timer();
 
         this.timer.onmessage =
-            ({ data:{count} }) => this.setState({ count });
+            ({ data: { count } }) => this.setState({ count });
     }
-    componentWillUnmount(){
+
+    componentWillUnmount() {
         this.time.stop();
     }
 
@@ -33,7 +35,7 @@ export default class WebpackExample extends Component {
     };
 
     sendMessage = () => {
-        this.setState({time: Date.now()});
+        this.setState({ time: Date.now() });
         this.timer.postMessage('hello');
     };
 
@@ -44,12 +46,16 @@ export default class WebpackExample extends Component {
         return (<div>
             <span id="header" className={container}>Hello</span> from webpack
             everything example.
-            <h2 className={less.user}>Hi {USER}! Your running with NODE_ENV: "{NODE_ENV}"</h2>
+            <h2 className={less.user}>Hi {USER}! Your running with NODE_ENV:
+                "{NODE_ENV}"</h2>
             <Readme className={stylus.readme}/>
             <ul>
                 {map([1, 2, 3], this.renderItem)}
             </ul>
+            <div id="yaml" className={'yaml'}>Yaml - {yaml.name}</div>
             <div className={'time'}>Time since button click: {time}</div>
+
+            <Hello name={USER}/>
             <button onClick={this.sendMessage}>Count from web
                 worker: {this.state.count}</button>
         </div>);

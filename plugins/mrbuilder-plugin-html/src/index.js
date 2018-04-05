@@ -1,6 +1,7 @@
-const HtmlWebpackPlugin   = require('html-webpack-plugin');
-const path                = require('path');
-const babelConfig         = require('mrbuilder-plugin-babel/babel-config');
+const HtmlWebpackPlugin                    = require('html-webpack-plugin');
+const path                                 = require('path');
+const babelConfig                          = require(
+    'mrbuilder-plugin-babel/babel-config');
 const { parseEntry, cwd, enhancedResolve } = require('mrbuilder-utils');
 /**
  *   title     : (deps.description ? deps.description : deps.name),
@@ -12,7 +13,7 @@ const { parseEntry, cwd, enhancedResolve } = require('mrbuilder-utils');
  * @param config
  * @param webpack
  */
-const ogenerateAssetTags  = HtmlWebpackPlugin.prototype.generateAssetTags;
+const ogenerateAssetTags                   = HtmlWebpackPlugin.prototype.generateAssetTags;
 
 function charset(ele) {
     if (!ele.attributes) {
@@ -43,6 +44,7 @@ module.exports = function ({
                                elementId = 'content',
                                exported,
                                analytics,
+                               inlineManifest = true,
                                hot
                            },
                            webpack, om) {
@@ -134,10 +136,11 @@ module.exports = function ({
             chunks,
             name,
             title,
-            template:enhancedResolve(template),
+            template: enhancedResolve(template),
             publicPath,
             pkg,
         }, page)));
     });
+
     return webpack;
 };

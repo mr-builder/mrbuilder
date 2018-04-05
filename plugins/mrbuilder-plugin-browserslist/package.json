@@ -4,8 +4,8 @@
   "dependencies": {
     "mrbuilder-utils": "^2.0.0-beta.0"
   },
-  "source": "src",
   "main": "src",
+  "source": "src",
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "2.x"

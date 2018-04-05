@@ -20,4 +20,4 @@ if (!process.argv.includes('--config', 2)) {
     optionsManager.info('using', config);
     process.argv.push('--config', config)
 }
-require('webpack/bin/webpack');
+require('webpack-cli/bin/webpack');

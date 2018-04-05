@@ -33,7 +33,9 @@ module.exports = function (opts, webpack) {
     // google didn't show much, so... this is the thing now.
     webpack.resolve.alias.loglevel = require.resolve('loglevel');
 
-    //yeah, prolly should not do this, but more is better?
+    webpack.mode = 'development';
+
+    //yeah, prolly should do this, but more is better?
     if (socketTimeout) {
         const { before }         = webpack.devServer;
         webpack.devServer.before = (app) => {
@@ -51,7 +53,7 @@ module.exports = function (opts, webpack) {
         const debug              = this.debug || console.log;
         webpack.devServer.before = (app) => {
             before && before.call(this, app);
-            const addPath = (key, val) => {
+            const addPath = ([key, val]) => {
                 app.get(key, function (req, res, next) {
                     if (typeof val === 'string') {
                         const redirect = val.replace(/(?:\{(.+?)\})/g,
@@ -70,12 +72,10 @@ module.exports = function (opts, webpack) {
 
             if (Array.isArray(rewrite)) {
                 rewrite.forEach(
-                    v => Array.isArray(v) ? addPath(...v) : addPath(v.path,
-                        v.value));
+                    v => Array.isArray(v) ? addPath(v) : addPath([v.path,
+                        v.value]));
             } else {
-                Object.keys(rewrite).forEach(function (key) {
-                    addPath(key, rewrite[key]);
-                });
+                Object.entries(rewrite).forEach(addPath);
             }
         }
     }
