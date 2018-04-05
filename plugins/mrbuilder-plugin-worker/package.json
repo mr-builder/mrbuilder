@@ -3,7 +3,7 @@
   "version": "1.2.6",
   "main": "src",
   "dependencies": {
-    "worker-loader": "^1.1.0"
+    "worker-loader": "^1.1.1"
   },
   "mrbuilder": {
     "alias": {

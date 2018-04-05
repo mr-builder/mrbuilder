@@ -4,7 +4,7 @@
   "description": "less support for mrbuilder",
   "dependencies": {
     "less": "^2.7.3",
-    "less-loader": "^4.0.5",
+    "less-loader": "^4.1.0",
     "mrbuilder-plugin-css": "^1.2.6"
   },
   "peerDependencies": {
