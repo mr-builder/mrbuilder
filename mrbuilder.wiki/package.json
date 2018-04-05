@@ -14,6 +14,12 @@
   "mrbuilder": {
     "plugin": "src/index",
     "plugins": [
+      [
+        "mrbuilder-plugin-version",
+        {
+          "variable": "MRBUILDER_VERSION"
+        }
+      ],
       "mrbuilder-plugin-filetypes",
       "mrbuilder-plugin-fonts",
       "mrbuilder-plugin-env",

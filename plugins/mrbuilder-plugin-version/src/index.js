@@ -1,10 +1,10 @@
-const { cwd }      = require('mrbuilder-utils');
+const { cwd } = require('mrbuilder-utils');
 
-module.exports = function (webpack, {
-    variable,
-    version,
-    NODE_ENV = true
-}) {
+module.exports = function ({
+                               variable,
+                               version,
+                               NODE_ENV = true
+                           }, webpack) {
     if (!variable || !version) {
         const pkg = require(cwd('package.json'));
 
