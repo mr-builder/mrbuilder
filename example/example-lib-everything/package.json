@@ -1,17 +1,17 @@
 {
   "name": "example-lib-everything",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^1.2.3"
+    "mrbuilder": "^1.2.6"
   },
   "dependencies": {
-    "mrbuilder-plugin-env": "^1.2.3",
-    "mrbuilder-plugin-lodash": "^1.2.3",
-    "mrbuilder-plugin-markdown": "^1.2.5",
-    "mrbuilder-plugin-moment": "^1.2.3",
-    "mrbuilder-plugin-stylus": "^1.2.3",
-    "mrbuilder-plugin-worker": "^1.2.3"
+    "mrbuilder-plugin-env": "^1.2.6",
+    "mrbuilder-plugin-lodash": "^1.2.6",
+    "mrbuilder-plugin-markdown": "^1.2.6",
+    "mrbuilder-plugin-moment": "^1.2.6",
+    "mrbuilder-plugin-stylus": "^1.2.6",
+    "mrbuilder-plugin-worker": "^1.2.6"
   },
   "scripts": {
     "analyze": "mrbuilder",
