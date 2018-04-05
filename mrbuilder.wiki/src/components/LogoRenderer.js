@@ -18,13 +18,12 @@ const styles = ({ color, fontFamily, fontSize }) => ({
     }
 });
 
-export function LogoRenderer({ classes, children }) {
+export function LogoRenderer({ classes }) {
     return <img src={Logo} className={classes.img}/>
 }
 
 LogoRenderer.propTypes = {
-    classes : PropTypes.object.isRequired,
-    children: PropTypes.node,
+    classes : PropTypes.object.isRequired
 };
 
 export default Styled(styles)(LogoRenderer);

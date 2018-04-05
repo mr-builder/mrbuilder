@@ -14,6 +14,8 @@
   "mrbuilder": {
     "plugin": "src/index",
     "plugins": [
+      "mrbuilder-plugin-filetypes",
+      "mrbuilder-plugin-fonts",
       "mrbuilder-plugin-env",
       [
         "mrbuilder-plugin-html",
@@ -24,7 +26,8 @@
       [
         "mrbuilder-plugin-webpack",
         {
-          "app": "docs"
+          "app": "docs",
+          "public": "/"
         }
       ],
       [
