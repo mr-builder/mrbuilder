@@ -6,7 +6,13 @@ module.exports = function (options = {}, webpack, om) {
     options.styleguideComponents = {
         LogoRenderer: '~mrbuilder.wiki/src/components/LogoRenderer'
     };
-
+    options.styles = {
+        StyleGuide: {
+            sidebar: {
+                width: '18em'
+            }
+        }
+    };
     const ls = new lerna.LsCommand(null, {});
     ls.runPreparations();
     const plugins    = [], presets = [], core = [], other = [], example = [];

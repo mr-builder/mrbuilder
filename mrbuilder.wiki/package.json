@@ -17,7 +17,7 @@
       [
         "mrbuilder-plugin-version",
         {
-          "variable": "MRBUILDER_VERSION"
+          "module":"~mrbuilder/package.json"
         }
       ],
       "mrbuilder-plugin-filetypes",
@@ -32,7 +32,8 @@
       [
         "mrbuilder-plugin-webpack",
         {
-          "app": "docs"
+          "app": "docs",
+          "devtool":"cheap-module-eval-source-map"
         }
       ],
       [
