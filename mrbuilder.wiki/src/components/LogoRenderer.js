@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import S from 'rsg-components/Styled';
+import S from 'rsg-components/Styled/Styled';
 import Logo from '../../mrbuilder.svg';
 
 //Yes ugly, no i dunno why.
