@@ -15,10 +15,10 @@
     "mrbuilder-optionsmanager": "^2.0.0-beta.0",
     "mrbuilder-plugin-browserslist": "^2.0.0-beta.0",
     "mrbuilder-utils": "^2.0.0-beta.0",
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.6.1",
     "raw-loader": "^0.5.1",
-    "val-loader": "^1.0.2",
-    "webpack": "^3.8.1"
+    "val-loader": "^1.1.0",
+    "webpack": "^4.5.0"
   },
   "peerDependencies": {
     "mrbuilder": "2.x",
