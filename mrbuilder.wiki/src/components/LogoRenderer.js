@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Styled from 'rsg-components/Styled';
+import S from 'rsg-components/Styled';
 import Logo from '../../mrbuilder.svg';
+
+//Yes ugly, no i dunno why.
+const Styled = S.default || S;
 
 const styles = ({ color, fontFamily, fontSize }) => ({
     logo   : {

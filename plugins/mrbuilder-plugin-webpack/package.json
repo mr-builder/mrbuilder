@@ -18,7 +18,8 @@
     "prop-types": "^15.6.1",
     "raw-loader": "^0.5.1",
     "val-loader": "^1.1.0",
-    "webpack": "^4.5.0"
+    "webpack": "^4.5.0",
+    "webpack-cli":"^2.0.14"
   },
   "peerDependencies": {
     "mrbuilder": "2.x",

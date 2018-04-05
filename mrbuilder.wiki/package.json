@@ -8,8 +8,9 @@
     "mrbuilder-plugin-react-styleguidist": "^2.0.0-beta.0"
   },
   "scripts": {
-    "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io",
-    "start": "mrbuilder-webpack-dev-server"
+    "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io/beta",
+    "start": "mrbuilder-webpack-dev-server",
+    "test": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io/beta-test"
   },
   "mrbuilder": {
     "plugin": "src/index",
