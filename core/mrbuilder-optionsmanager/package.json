@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-optionsmanager",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "scripts": {
     "test": "mocha test/**"
   },
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "decache": "^4.4.0",
-    "mrbuilder-utils": "^2.0.0-beta.2",
+    "mrbuilder-utils": "^2.0.0-beta.3",
     "which": "^1.3.0"
   },
   "devDependencies": {
