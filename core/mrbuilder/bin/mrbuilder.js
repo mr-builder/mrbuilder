@@ -70,7 +70,7 @@ switch (profile) {
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = env.NODE_ENV;
         }
-        if (!argv.slice(2).find(v => /^--demo=?$/.test(v))) {
+        if (!argv.slice(2).find(v => /^--demo(=.*)?$/.test(v))) {
             argv.push('--demo', 'demo');
         }
         if (!script) {
@@ -91,7 +91,7 @@ switch (profile) {
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = env.NODE_ENV;
         }
-        if (!argv.slice(2).find(v => /^--app=?$/.test(v))) {
+        if (!argv.slice(2).find(v => /^--app(=.*)?$/.test(v))) {
             argv.push('--app', 'app');
         }
         if (!script) {
