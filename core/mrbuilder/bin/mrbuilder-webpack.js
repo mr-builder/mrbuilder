@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const { env, argv } = process;
-
+const inpublish = require('in-publish');
 //This allows someone to define internal presets to empty
 // to prevent any presets to be used.
 if (!('MRBUILDER_INTERNAL_PRESETS' in env)) {
@@ -22,4 +22,6 @@ if (!(env.NODE_ENV || env.MRBUILDER_ENV)) {
 global._MRBUILDER_OPTIONS_MANAGER = new (require('mrbuilder-optionsmanager'))(
     { prefix: 'mrbuilder', _require: require });
 
-require('mrbuilder-plugin-webpack/bin/cli');
+if (!inpublish.inInstall()) {
+    require('mrbuilder-plugin-webpack/bin/cli');
+}

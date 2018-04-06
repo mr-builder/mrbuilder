@@ -59,13 +59,18 @@ module.exports =
             }
 
             const res = spawnSync(npmPath, args, {
-                stdio: ['inherit', 'inherit', 'inherit']
+                stdio: ['inherit', 'inherit', 'inherit'],
+                env  : {
+                    ...process.env,
+                    NODE_ENV: 'development'
+                }
             });
 
             if (res.status === 0) {
                 info(`install of '${pkg}' succeeded.`);
                 //try sleeping so that things don't go loopy.
-                spawnSync(process.argv[0], ['-e', 'setTimeout(process.exit, 1000, 0)']);
+                spawnSync(process.argv[0],
+                    ['-e', 'setTimeout(process.exit, 1000, 0)']);
 
                 return;
             }
