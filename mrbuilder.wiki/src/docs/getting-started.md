@@ -12,7 +12,7 @@ it may make sence to have a module that holds said common configuration.
 
 ### Just a module
 While MR Builder is designed for use in monorepos.  It can also be used stand alone
-Just add mrbuilder to your package.json and the correspoding scripts
+Just add mrbuilder to your package.json and the scripts section.
 
 ```sh
  $ yarn add mrbuilder
@@ -23,20 +23,27 @@ And then edit package.json
 {
   "name":"your-component",
   "devDependencies":{
-     "mrbuilder":"..."
+     "mrbuilder":"2.0.0"
   },
   "main":"lib",
   "source":"src",
   "scripts":{
-      "test":"mrbuilder-karma",
-      "karma":"mrbuilder-karma",
-      "prepublish":"mrbuilder-webpack",
-      "start":"mrbuilder-webpack-dev-server"
+      "test":"mrbuilder",
+      "karma":"mrbuilder",
+      "prepublish":"mrbuilder",
+      "start":"mrbuilder"
   }
 
 }
 
 ```
+
+Add a file to src/index.js with your react app and
+
+```sh
+ $ yarn run start
+```
+
 
 You can still configure .mrbuilderrc or add a mrbuilder property to the
 root of our package.json.

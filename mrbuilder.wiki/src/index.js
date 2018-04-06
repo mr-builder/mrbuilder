@@ -10,6 +10,9 @@ module.exports = function (options = {}, webpack, om) {
         StyleGuide: {
             sidebar: {
                 width: '18em'
+            },
+            hasSidebar:{
+                paddingLeft:'18em'
             }
         }
     };
@@ -27,6 +30,10 @@ module.exports = function (options = {}, webpack, om) {
                 {
                     "name" : "Do I need a monorepo",
                     content: "./src/docs/monorepo.md"
+                },
+                {
+                    "name" : "Upgrading to 2.0",
+                    content: "./src/docs/upgrade-1-2.md"
                 },
                 {
                     "name" : "Multi Module Project",
