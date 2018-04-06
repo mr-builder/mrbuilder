@@ -64,6 +64,9 @@ module.exports =
 
             if (res.status === 0) {
                 info(`install of '${pkg}' succeeded.`);
+                //try sleeping so that things don't go loopy.
+                spawnSync(process.argv[0], ['-e', 'setTimeout(process.exit, 1000, 0)']);
+
                 return;
             }
             const err = res.stderr + '';

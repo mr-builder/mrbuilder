@@ -11,6 +11,9 @@ if (!('MRBUILDER_INTERNAL_PRESETS' in env)) {
         env.MRBUILDER_INTERNAL_PRESETS = 'mrbuilder-preset-lib';
     }
 }
+if (!('MRBUILDER_INTERNAL_PLUGINS' in env)){
+    env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-webpack';
+}
 
 if (!(env.NODE_ENV || env.MRBUILDER_ENV)) {
     env.MRBUILDER_ENV = env.NODE_ENV = 'production';
