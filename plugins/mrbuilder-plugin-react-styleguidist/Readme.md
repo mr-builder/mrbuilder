@@ -19,6 +19,7 @@ mrbuilder ships with a newer one.  If you get an error like:
 
 Please run to add it to your project, hopefully making it resolve before
 react styleguist.
-    ```sh
-     $ yarn add webpack-dev-server@^3 -D
-    ```
+
+```sh
+   $ yarn add webpack-dev-server@^3 -D
+```

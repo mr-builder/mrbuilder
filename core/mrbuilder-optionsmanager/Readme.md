@@ -9,11 +9,10 @@ mono repos, where there may be many many plugins.   This optionsmanager provides
 infrastructure for describing the configuration and loading of said plugins.
 Its meant to be declarative, to allow for easy modification and overriding.
 
-It searches for a "plugins" or "presets" in a section
- named `${prefix}` in package.json or `.${prefix}rc` in addition it searches
- the ENV for ``${envPrefix}_PLUGINS`, `${envPrefix}_PRESETS` and after evaluation it search
-
- ``${envPrefix}_INTERNAL_PRESETS`
+It searches for a "plugins" or "presets" in a section named `${prefix}` in
+package.json or `.${prefix}rc` in addition it searches the ENV for
+`${envPrefix}_PLUGINS`, `${envPrefix}_PRESETS` and after evaluation it search
+ `${envPrefix}_INTERNAL_PRESETS`
 
 
 ## Presets vs Plugins

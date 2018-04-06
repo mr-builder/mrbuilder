@@ -1,11 +1,10 @@
 This provides [clean](https://github.com/johnagan/clean-webpack-plugin) functionality
 
-===
-NOTE  This could do terrible things to your filesystem.  So please
-have a backup and use carefullly.
-===
 
-**By default it removes your output directory**
+**NOTE**  This could do terrible things to your filesystem.  So please
+have a backup and use carefullly.
+
+**\*By default it removes your output directory**
 
 
 ## Paths

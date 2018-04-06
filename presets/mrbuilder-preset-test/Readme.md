@@ -15,6 +15,6 @@ This preset is to be used for tests.
   }
 
 }
+```
 
-
-To start applications see [mrbuilder-preset-app](../mrbuilder-preset-app)
+To start applications see [mrbuilder-preset-app](#mrbuilder-preset-app)

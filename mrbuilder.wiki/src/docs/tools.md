@@ -7,6 +7,7 @@ underlying command line arguments.
 ### Options
 | Script           | Wraps      | Description                        |
 | ---------------- | -----------| -----------------------------------|
+| mrbuilder        | all scripts| Attempts to execute correct script based on what the "node" script is |
 | mrbuilder-clean  | rimraf     | Cleans build directories           |
 | mrbuilder-karma  | karma-cli  | starts karma with plugins          |
 | mrbuilder-mocha  | mocha      | Run mocha from the command line    |
