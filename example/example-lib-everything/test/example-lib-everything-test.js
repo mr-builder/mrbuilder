@@ -13,6 +13,8 @@ describe('example-lib-everything', function () {
 
     it('should render', function () {
         const ret = into(<Everything/>);
-        expect(ret.find('#header').text()).to.eql('Hello')
+        expect(ret.find('#header').text()).to.eql('Hello');
+        expect(ret.find('#yaml').text()).to.eql('Yaml - A Yaml Value');
+
     })
 });

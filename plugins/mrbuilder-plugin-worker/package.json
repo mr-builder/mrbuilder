@@ -1,9 +1,9 @@
 {
   "name": "mrbuilder-plugin-worker",
-  "version": "1.2.3",
+  "version": "2.0.0-beta.5",
   "main": "src",
   "dependencies": {
-    "worker-loader": "^1.1.0"
+    "worker-loader": "^1.1.1"
   },
   "mrbuilder": {
     "alias": {
@@ -12,6 +12,6 @@
   },
   "license": "0BSD",
   "peerDependencies": {
-    "mrbuilder": "1.x"
+    "mrbuilder": "2.x"
   }
 }

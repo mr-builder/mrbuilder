@@ -14,4 +14,6 @@ global._MRBUILDER_OPTIONS_MANAGER =
     global._MRBUILDER_OPTIONS_MANAGER || (global._MRBUILDER_OPTIONS_MANAGER =
                                           new (require('mrbuilder-optionsmanager'))(
                                               { prefix: 'mrbuilder', _require: require }));
-require('mrbuilder-plugin-mocha/bin/cli');
+if (!env.MRBUILDER_AUTO_INSTALLING) {
+  require('mrbuilder-plugin-mocha/bin/cli');
+}

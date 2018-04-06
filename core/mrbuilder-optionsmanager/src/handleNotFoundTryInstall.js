@@ -8,8 +8,8 @@ function findExecPath() {
 
 }
 
-const yarnRe = /.*[/]?yarn([.]js)?$/;
-
+const yarnRe   = /.*[/]?yarn([.]js)?$/;
+let mrbuilderVersion;
 /**
  * Tries to install a package as dev dependency.
  * @param e
@@ -28,14 +28,19 @@ module.exports =
 
         const npmPath = findExecPath();
         if (npmPath) {
-            const isYarn = yarnRe.test(npmPath);
+            if (!mrbuilderVersion) {
+                mrbuilderVersion = require('mrbuilder/package.json').version;
+            }
+            const installPkg = `${pkg}@^${mrbuilderVersion}`;
+            const isYarn     = yarnRe.test(npmPath);
             if (first) {
                 first = false;
                 info(
                     `using ${isYarn ? 'yarn' : 'npm'} to install '${pkg}' this might take a minute, and
                  should only happen when you haven't installed it as a dependency. After it installs
                  successfully it won't do this the next time you run mrbuilder. If you would
-                 rather declare it as a ${isDev ? 'devDependency' : 'dependency'} in your package.json, 
+                 rather declare it as a ${isDev ? 'devDependency'
+                        : 'dependency'} in your package.json, 
                  you can quit now and add it manually.
                  
                  Note: there may be more plugins/presets that need to be installed.  Same
@@ -43,19 +48,31 @@ module.exports =
                
                 `);
             } else {
-                info(`using '${isYarn ? 'yarn' : 'npm'}' to install '${pkg}'.`);
+                info(`using '${isYarn ? 'yarn'
+                    : 'npm'}' to install '${installPkg}'.`);
             }
 
-            const args = isYarn ? ['add', pkg] : ['install', pkg];
+            const args = isYarn ? ['add', installPkg] : ['install', installPkg];
 
             if (isDev) {
                 args.push(isYarn ? '-D' : '--save-dev');
             }
 
-            const res = spawnSync(npmPath, args);
+            const res = spawnSync(npmPath, args, {
+                stdio: ['inherit', 'inherit', 'inherit'],
+                env  : {
+                    ...process.env,
+                    NODE_ENV                 : 'development',
+                    MRBUILDER_AUTO_INSTALLING: 1,
+                }
+            });
 
             if (res.status === 0) {
                 info(`install of '${pkg}' succeeded.`);
+                //try sleeping so that things don't go loopy.
+                spawnSync(process.argv[0],
+                    ['-e', 'setTimeout(process.exit, 1000, 0)']);
+
                 return;
             }
             const err = res.stderr + '';

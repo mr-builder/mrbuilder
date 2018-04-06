@@ -13,11 +13,6 @@ So it can easily include paths like the one below.
 
 and inline _stuff_
 
-```js, showCode
-
-console.log('hello stuff')
-
-```
 ## Table support
 
 ```markdown

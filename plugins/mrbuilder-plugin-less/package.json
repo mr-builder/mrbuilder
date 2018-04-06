@@ -1,14 +1,14 @@
 {
   "name": "mrbuilder-plugin-less",
-  "version": "1.2.3",
+  "version": "2.0.0-beta.5",
   "description": "less support for mrbuilder",
   "dependencies": {
     "less": "^2.7.3",
-    "less-loader": "^4.0.5",
-    "mrbuilder-plugin-css": "^1.2.3"
+    "less-loader": "^4.1.0",
+    "mrbuilder-plugin-css": "^2.0.0-beta.5"
   },
   "peerDependencies": {
-    "mrbuilder": "1.x"
+    "mrbuilder": "2.x"
   },
   "scripts": {
     "test": "mrbuilder-mocha"

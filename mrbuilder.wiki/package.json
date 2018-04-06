@@ -1,15 +1,16 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "1.2.5",
+  "version": "2.0.0-beta.5",
   "dependencies": {
-    "mrbuilder": "^1.2.3",
-    "mrbuilder-plugin-clean": "^1.2.3",
-    "mrbuilder-plugin-react-styleguidist": "^1.2.3"
+    "mrbuilder": "^2.0.0-beta.5",
+    "mrbuilder-plugin-clean": "^2.0.0-beta.5",
+    "mrbuilder-plugin-react-styleguidist": "^2.0.0-beta.5"
   },
   "scripts": {
-    "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io",
-    "start": "mrbuilder-webpack-dev-server"
+    "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io/beta",
+    "start": "mrbuilder-webpack-dev-server",
+    "test": "NODE_ENV=production MRBUILDER_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io/beta-test"
   },
   "mrbuilder": {
     "plugin": "src/index",
@@ -17,7 +18,7 @@
       [
         "mrbuilder-plugin-version",
         {
-          "variable": "MRBUILDER_VERSION"
+          "module": "~mrbuilder/package.json"
         }
       ],
       "mrbuilder-plugin-filetypes",
@@ -32,7 +33,8 @@
       [
         "mrbuilder-plugin-webpack",
         {
-          "app": "docs"
+          "app": "docs",
+          "devtool": "cheap-module-eval-source-map"
         }
       ],
       [

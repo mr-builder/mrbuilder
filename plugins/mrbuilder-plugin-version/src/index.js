@@ -1,12 +1,13 @@
-const { cwd } = require('mrbuilder-utils');
+const { cwd, enhancedResolve } = require('mrbuilder-utils');
 
 module.exports = function ({
                                variable,
                                version,
+                               module=cwd('package.json'),
                                NODE_ENV = true
                            }, webpack) {
     if (!variable || !version) {
-        const pkg = require(cwd('package.json'));
+        const pkg = require(enhancedResolve(module));
 
         if (!version) {
             version = pkg.version;
@@ -36,6 +37,6 @@ module.exports = function ({
         }
         conf[NODE_ENV] = 1;
     }
-    console.log('conf', conf);
+    (this.info || console.log)(conf);
     this.useDefine = Object.assign({}, this.useDefine, conf);
 };

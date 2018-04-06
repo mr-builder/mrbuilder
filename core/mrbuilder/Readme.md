@@ -9,6 +9,15 @@ added as dep dependencies to your project.   This is a good thing, as now you
 only have to add them in one place.   If you add the deps themselves then
 it will not auto install.
 
+## Upgrade from 1.2.x->2.0.0
+This should be a seamless upgrade, for the supported plugins.   Webpack4 is
+significantly different and third party plugins may need to be changed to
+support webpack 4.  For now 2.0.0 and 1.x will be supported until Webpack5 is
+released.  Then Mrbuilder 3.x and 2.x will be supported.   I only have so much
+bandwidth to support old versions; while at the same time not everyone has
+the bandwith to upgrade all the time.  Sound like a reasonable compromise?
+
+
 ## Upgrade from 0.x->1.2
 The 'mrbuilder' package no longer ships with the dependencies.   Dependencies
 will be added as you run commands.  That is calling `mrbuilder` will cause

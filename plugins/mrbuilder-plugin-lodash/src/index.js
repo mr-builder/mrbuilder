@@ -8,7 +8,7 @@ function isMod(v) {
 module.exports =
     ({
          aliasDotImports = true,
-         lodash = 'lodash-es',
+         lodash = 'lodash',
          lodashDir
      }, webpack, optionsManager) => {
 
