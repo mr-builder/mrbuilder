@@ -1,9 +1,9 @@
 {
   "name": "mrbuilder-plugin-chunk",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "main": "src",
   "dependencies": {
-    "mrbuilder-utils": "^2.0.0-beta.3"
+    "mrbuilder-utils": "^2.0.0-beta.4"
   },
   "license": "0BSD",
   "peerDependencies": {
