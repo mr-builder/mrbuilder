@@ -4,7 +4,7 @@ if (!('MRBUILDER_INTERNAL_PRESETS' in env)) {
     env.MRBUILDER_INTERNAL_PRESETS = 'mrbuilder-preset-lib';
 }
 if (!('MRBUILDER_INTERNAL_PLUGINS' in env)){
-    env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-webpack-dev-server';
+    env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-webpack,mrbuilder-plugin-webpack-dev-server';
 }
 
 
