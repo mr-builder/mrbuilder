@@ -14,5 +14,6 @@ global._MRBUILDER_OPTIONS_MANAGER = new (require('mrbuilder-optionsmanager'))({
     prefix  : 'mrbuilder',
     _require: require
 });
-
-require('mrbuilder-plugin-babel/bin/babel-cli');
+if (!env.MRBUILDER_AUTO_INSTALLING) {
+    require('mrbuilder-plugin-babel/bin/babel-cli');
+}

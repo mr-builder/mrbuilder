@@ -62,7 +62,8 @@ module.exports =
                 stdio: ['inherit', 'inherit', 'inherit'],
                 env  : {
                     ...process.env,
-                    NODE_ENV: 'development'
+                    NODE_ENV                 : 'development',
+                    MRBUILDER_AUTO_INSTALLING: 1,
                 }
             });
 
