@@ -33,7 +33,6 @@ And then edit package.json
       "prepublish":"mrbuilder",
       "start":"mrbuilder"
   }
-
 }
 
 ```

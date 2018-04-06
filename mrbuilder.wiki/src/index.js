@@ -106,12 +106,10 @@ In your \`package.json\`
 \`\`\`json
 {
  "name":"your_component"
- ...
  "mrbuilder":{
     "${category}":[
       "${pkg.name}"
     ]
-
  }
 }
 \`\`\`
@@ -119,7 +117,7 @@ In your \`package.json\`
 `;
         }
 
-        if (category === 'example' || category == 'component') {
+        if (category === 'example' || category == 'component' || category === 'presets') {
             conf.description += `
 ### Configuration
 This is the configuration
@@ -129,7 +127,6 @@ This is the configuration
 "name":"${pkg.name}",
 ...
 "mrbuilder":${JSON.stringify(pkg.mrbuilder || {}, null, 2)}
-
 }
 \`\`\`            
 `

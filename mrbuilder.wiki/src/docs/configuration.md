@@ -18,7 +18,8 @@ The general mrbuilder configuration format has 3 keys, plugins,presets and env,
 which can have plugins and presets.  The plugins and preset keys are arrays
 that take either the plugin name or preset name respectively, or an array with
 the first value being a string with the plugin name and the second argument either
-an object to configure, or false to disable.
+an object to configure, or `false` to disable.
+
 
 
 Example
@@ -70,7 +71,6 @@ Example
        }
      }
    }
-
 }
 
 
@@ -131,23 +131,28 @@ for other configurations.
 ### env - configurations per environment.
 Some plugins are only needed in test, or development, or production, or whatever.
 To support this mrbuilder allows for an env section in `.mrbuilderrc` or `package.json`
-to allow for plugin overrides.   If a plugin exists both in plugins and `env[current-env].plugins`
+to allow for plugin overrides.   If a plugin exists both in plugins and `env.current-env.plugins`
 than the current-env plugins will be substituted in place.  Otherwise the env
 plugins will be loaded after the plugins array has been loaded.
 
 Example:
+
 In the following example "mrbuilder-plugin-webpack" will be passed "app":demo by
 default, but will be pass "app":"test" in the development env.  Also in the
-development env, "mrbuilder-plugin-webpack-dev-server" will be added.
+development env, "mrbuilder-plugin-webpack-dev-server" will be added and the
+less plugin will not be loaded.
+
 ```json
 
  "plugins":[
     ["mrbuilder-plugin-webpack", {"app":"demo"}]
+    "mrbuilder-plugin-less"
  ],
  "env":{
     "development":{
         "plugins":[
             ["mrbuilder-plugin-webpack", {"app":"test"}],
+            ["mrbuilder-plugin-less", false],
             "mrbuilder-plugin-webpack-dev-server"
         ]
     }
