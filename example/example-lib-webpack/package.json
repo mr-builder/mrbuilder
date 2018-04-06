@@ -1,9 +1,9 @@
 {
   "name": "example-lib-webpack",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^2.0.0-beta.1"
+    "mrbuilder": "^2.0.0-beta.2"
   },
   "scripts": {
     "prepublish": "mrbuilder",

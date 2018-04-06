@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-analyze",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "analyze support for mrbuilder",
   "dependencies": {
     "webpack-bundle-analyzer": "^2.9.1"
@@ -15,6 +15,6 @@
     "mrbuilder": "2.x"
   },
   "devDependencies": {
-    "mrbuilder-plugin-enzyme": "^2.0.0-beta.1"
+    "mrbuilder-plugin-enzyme": "^2.0.0-beta.2"
   }
 }
