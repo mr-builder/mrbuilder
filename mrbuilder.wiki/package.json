@@ -10,7 +10,7 @@
   "scripts": {
     "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io/beta",
     "start": "mrbuilder-webpack-dev-server",
-    "test": "NODE_ENV=production MRBUILDER_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io/beta-test"
+    "test": "NODE_ENV=production MRBUILDER_ENV=production mrbuilder-webpack --app ./test-out"
   },
   "mrbuilder": {
     "plugin": "src/index",
