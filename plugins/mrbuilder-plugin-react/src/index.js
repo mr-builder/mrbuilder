@@ -11,24 +11,24 @@ module.exports = function reactPlugin({
     if (!webpack.resolve.alias) {
         webpack.resolve.alias = {};
     }
+    const reactDir = resolvePkgDir('react');
     if (compatMode) {
         if (this.isLibrary) {
             (this.warn || console.warn)(
                 'compatMode should not be used for libraries results will be unpredictable')
         }
         if (!webpack.resolve.alias['react-internal']) {
-            webpack.resolve.alias['react-internal'] = resolvePkgDir('react');
+            webpack.resolve.alias['react-internal'] = reactDir;
         }
-        if (!webpack.resolve.alias['react']) {
-            webpack.resolve.alias['react-internal'] =
-                path.resolve(__dirname, 'react.js');
+        if (!webpack.resolve.alias.react) {
+            webpack.resolve.alias.react = require.resolve('./react.js');
         }
         if (!webpack.resolve.alias['react/']) {
-            webpack.resolve.alias['react/'] = resolvePkgDir('react');
+            webpack.resolve.alias['react/'] = reactDir;
         }
     } else {
         if (!webpack.resolve.alias['react']) {
-            webpack.resolve.alias['react'] = resolvePkgDir('react');
+            webpack.resolve.alias['react'] = reactDir;
         }
     }
 
@@ -39,15 +39,20 @@ module.exports = function reactPlugin({
     if (!webpack.resolve.alias['prop-types']) {
         webpack.resolve.alias['prop-types'] = resolvePkgDir('prop-types');
     }
+    const isHot       = om.enabled('mrbuilder-plugin-hot');
+    const babelConfig = require('mrbuilder-plugin-babel/babel-config');
+    let entry         = webpack.entry;
+
+    const preEntry = isHot ? om.config('mrbuilder-plugin-hot.preEntry',
+        ['react-hot-loader/patch']) : [];
 
     if (om.enabled('mrbuilder-plugin-html')) {
-        const isHot       = om.enabled('mrbuilder-plugin-hot');
-        const babelConfig = require('mrbuilder-plugin-babel/babel-config');
 
-        const pkg        = require(cwd('package.json'));
-        let entry        = webpack.entry;
+        const pkg = require(cwd('package.json'));
+
         const publicPath = om.config('mrbuilder-plugin-html.publicPath',
             cwd('public'));
+
 
         if (!entry) {
 
@@ -77,8 +82,6 @@ module.exports = function reactPlugin({
             const page = pages && pages[name] || {};
             const hot  = ('hot' in page) ? page.hot : isHot;
 
-            const preEntry = hot ? om.config('mrbuilder-plugin-hot.preEntry',
-                ['react-hot-loader/patch']) : [];
 
             if (('exported' in page) ? page.exported : exported) {
                 this.info('expecting a react component to be exported from ',
@@ -128,6 +131,13 @@ module.exports = function reactPlugin({
             webpack.externals = [];
         }
         webpack.externals.push('react', 'react-dom', 'prop-types');
+    } else if (isHot) {
+        //its hot, but not serving html, so we just add the preEntry stuff.
+        webpack.entry =
+            Object.entries(webpack.entry).reduce((ret, [key, value]) => {
+                ret[key] = preEntry.concat(value);
+                return ret;
+            }, {});
     }
     return webpack;
 };
