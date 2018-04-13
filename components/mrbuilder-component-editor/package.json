@@ -4,7 +4,6 @@
   "description": "A simplish editor for mr builder",
   "main": "src",
   "dependencies": {
-    "json5": "^1.0.0-beta.4",
     "mrbuilder-plugin-emeth": "^2.0.0-beta.5",
     "mrbuilder-utils": "^2.0.0-beta.5"
   },

@@ -17,10 +17,7 @@ const mod = function ({
                           externals,
                           devtool = 'source-maps',
                           filename = '[name].[hash].js',
-                          alias = [
-                              'react',
-                              'react-dom'
-                          ],
+                          alias = [],
                           node,
                           noParse,
                       },
@@ -113,11 +110,12 @@ const mod = function ({
         if (externalizePeers && pkg.peerDependencies) {
             externals = externals.concat(Object.keys(pkg.peerDependencies));
         }
-
-        webpack.externals = Object.keys(externals.reduce((ret, key) => {
-            ret[key] = key;
-            return ret;
-        }, {}));
+        const wexternals  = webpack.externals || (webpack.externals = []);
+        webpack.externals =
+            wexternals.concat(Object.keys(externals.reduce((ret, key) => {
+                ret[key] = key;
+                return ret;
+            }, {})));
 
         info('packaging as externalize', webpack.externals);
     }

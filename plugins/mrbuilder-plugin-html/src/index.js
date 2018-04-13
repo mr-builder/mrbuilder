@@ -66,13 +66,10 @@ module.exports = function ({
     if (!publicPath) {
         publicPath = path.resolve(__dirname, '..', 'public');
     }
-    hot   = this.isHot;
     entry = entry ? parseEntry(entry) : webpack.entry;
 
     if (!entry) {
-        if (exported == null) {
-            exported = true;
-        }
+
         entry = webpack.entry = { index: path.join(publicPath, 'index') };
         try {
             require.resolve(entry.index);
@@ -86,7 +83,7 @@ module.exports = function ({
 
     const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
-    info('creating pages', keys);
+    info('creating pages', keys, pages);
 
 
     keys.forEach(name => {
@@ -106,30 +103,6 @@ module.exports = function ({
 
 
         const page = pages && pages[name] || {};
-
-        if (('exported' in page) ? page.exported : exported) {
-            const val          = webpack.entry[name];
-            const current      = Array.isArray(val) ? val[val.length - 1] : val;
-            const currentAlias = `mrbuilder-plugin-html-${name}`;
-
-            webpack.resolve.alias[currentAlias] = current;
-
-            webpack.entry = Object.assign({},
-                webpack.entry,
-                {
-                    [name]: [`babel-loader?${JSON.stringify(
-                        babelConfig)}!mrbuilder-plugin-html/src/loader?${JSON.stringify(
-                        {
-                            name     : currentAlias,
-                            hot      : ('hot' in page) ? page.hot : hot,
-                            elementId: page.elementId || elementId,
-                            exported : page.exported || exported
-
-                        })}!${current}?exported`] //?exported allows for the
-                                                  // file to be inspected.
-                }
-            );
-        }
 
         webpack.plugins.push(new HtmlWebpackPlugin(Object.assign({}, {
             filename: filename.replace(/(\[name\])/g, name) || `${name}.html`,

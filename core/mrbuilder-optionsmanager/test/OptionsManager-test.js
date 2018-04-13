@@ -96,6 +96,12 @@ describe('mrbuilder-optionsmanager', function () {
         process.chdir(odir)
     });
 
+    newOptionManagerTest("with-cli", {
+        argv: argv([`--with-cli-alias-1-other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`])
+    }, om => {
+        expect(om.config('with-cli-alias-1.other')).to.eql(
+            {"index":{"title":"Index"},"other":{"title":"Other"}});
+    });
     newOptionManagerTest('boot', om => expect(om).to.exist);
 
     newOptionManagerTest('with-named-plugin', om => {
