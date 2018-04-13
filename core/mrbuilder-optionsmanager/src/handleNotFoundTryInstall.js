@@ -40,7 +40,7 @@ module.exports =
                  should only happen when you haven't installed it as a dependency. After it installs
                  successfully it won't do this the next time you run mrbuilder. If you would
                  rather declare it as a ${isDev ? 'devDependency'
-                        : 'dependency'} in your package.json, 
+                                                : 'dependency'} in your package.json, 
                  you can quit now and add it manually.
                  
                  Note: there may be more plugins/presets that need to be installed.  Same
@@ -49,7 +49,7 @@ module.exports =
                 `);
             } else {
                 info(`using '${isYarn ? 'yarn'
-                    : 'npm'}' to install '${installPkg}'.`);
+                                      : 'npm'}' to install '${installPkg}'.`);
             }
 
             const args = isYarn ? ['add', installPkg] : ['install', installPkg];
@@ -60,11 +60,10 @@ module.exports =
 
             const res = spawnSync(npmPath, args, {
                 stdio: ['inherit', 'inherit', 'inherit'],
-                env  : {
-                    ...process.env,
+                env  : Object.assign({}, process.env, {
                     NODE_ENV                 : 'development',
                     MRBUILDER_AUTO_INSTALLING: 1,
-                }
+                })
             });
 
             if (res.status === 0) {

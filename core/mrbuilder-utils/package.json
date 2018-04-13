@@ -5,8 +5,7 @@
   "source": "src",
   "main": "src",
   "dependencies": {
-    "json5": "^0.5.1",
-    "strip-json-comments": "^2.0.1"
+    "json5": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",

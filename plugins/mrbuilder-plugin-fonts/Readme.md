@@ -1,5 +1,11 @@
 This plugin provides for font loading into webpack.
 
+By default it supports woff, woff2, eot and svg font formats.  Be careful not
+to have 2 loaders for the svg, this will prevent the svg from being loaded.
+
+If using SVG files, this plugin will load them just fine, no need to add them
+to the mrbuilder-plugin-filetypes.
+
 ### Options
 | Property      | Type       | Default      | Description                      |
 | ------------- | -----------| -------------| ---------------------------------|

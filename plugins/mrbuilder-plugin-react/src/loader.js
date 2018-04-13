@@ -46,3 +46,5 @@ module.exports = function () {
     const { hot, name, elementId, exported } = loaderUtils.getOptions(this);
     return (hot ? generateHot : generate)(name, elementId, exported)
 };
+module.exports.generate = generate;
+module.exports.generateHot = generateHot;

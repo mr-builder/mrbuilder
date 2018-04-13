@@ -1,0 +1,14 @@
+{
+  "name": "with-cli",
+  "version": "1.0.0",
+  "tester": {
+    "plugins": [
+      [
+        "with-cli-alias-1",
+        {
+          "stuff": "Override"
+        }
+      ]
+    ]
+  }
+}

@@ -16,7 +16,6 @@ module.exports = function ({
                                hoistAtRules = true,
                                compress = false,
                                preferPathResolver,
-                               localIdentName = '[package-name]_[hyphen:base-name]_[local]'
                            }, webpack, om) {
 
     paths = paths.map((v) => _resolve(v));

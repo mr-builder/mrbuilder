@@ -10,6 +10,9 @@ module.exports = function (options = {}, webpack, om) {
         StyleGuide: {
             sidebar: {
                 width: '18em'
+            },
+            hasSidebar:{
+                paddingLeft:'18em'
             }
         }
     };
@@ -27,6 +30,10 @@ module.exports = function (options = {}, webpack, om) {
                 {
                     "name" : "Do I need a monorepo",
                     content: "./src/docs/monorepo.md"
+                },
+                {
+                    "name" : "Upgrading to 2.0",
+                    content: "./src/docs/upgrade-1-2.md"
                 },
                 {
                     "name" : "Multi Module Project",
@@ -99,12 +106,10 @@ In your \`package.json\`
 \`\`\`json
 {
  "name":"your_component"
- ...
  "mrbuilder":{
     "${category}":[
       "${pkg.name}"
     ]
-
  }
 }
 \`\`\`
@@ -112,7 +117,7 @@ In your \`package.json\`
 `;
         }
 
-        if (category === 'example' || category == 'component') {
+        if (category === 'example' || category == 'component' || category === 'presets') {
             conf.description += `
 ### Configuration
 This is the configuration
@@ -122,7 +127,6 @@ This is the configuration
 "name":"${pkg.name}",
 ...
 "mrbuilder":${JSON.stringify(pkg.mrbuilder || {}, null, 2)}
-
 }
 \`\`\`            
 `
