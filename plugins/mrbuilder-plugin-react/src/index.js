@@ -127,10 +127,12 @@ module.exports = function reactPlugin({
             }
         });
     } else if (this.isLibrary) {
-        if (!webpack.externals) {
-            webpack.externals = [];
+        if (om.config('mrbuilder-plugin-webpack.useExternals') !== false) {
+            if (!webpack.externals) {
+                webpack.externals = [];
+            }
+            webpack.externals.push('react', 'react-dom', 'prop-types');
         }
-        webpack.externals.push('react', 'react-dom', 'prop-types');
     } else if (isHot) {
         //its hot, but not serving html, so we just add the preEntry stuff.
         webpack.entry =
