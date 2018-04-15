@@ -31,7 +31,13 @@
       "mrbuilder",
       "mrbuilder-plugin-env",
       "mrbuilder-plugin-fonts",
-      "mrbuilder-plugin-filetypes"
+      "mrbuilder-plugin-filetypes",
+      [
+        "mrbuilder-plugin-css",
+        {
+          "useNameHash": "[name].css"
+        }
+      ]
     ],
     "env": {
       "test": {
@@ -43,27 +49,22 @@
       },
       "development": {
         "plugins": [
-          [
-            "mrbuilder-plugin-css",
-            {
-              "useNameHash": "css/[name].css"
-            }
-          ],
+
           "mrbuilder-plugin-eslint",
           "mrbuilder-plugin-less",
           "mrbuilder-plugin-html",
           "mrbuilder-plugin-webpack-dev-server",
-          "mrbuilder-plugin-hot"
-        ]
-      },
-      "production": {
-        "plugins": [
+          "mrbuilder-plugin-hot",
           [
             "mrbuilder-plugin-css",
             {
               "useNameHash": "[name].css"
             }
-          ],
+          ]
+        ]
+      },
+      "production": {
+        "plugins": [
           "mrbuilder-plugin-less",
           [
             "mrbuilder-plugin-webpack",
