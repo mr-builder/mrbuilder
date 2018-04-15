@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
     "mrbuilder-optionsmanager": "^2.0.0",
