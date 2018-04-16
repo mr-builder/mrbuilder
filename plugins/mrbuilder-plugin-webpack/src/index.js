@@ -24,7 +24,16 @@ const mod = function ( {
                            ...rest
                        }, webpack, om) {
     //If its not in
-    Object.assign(webpack, rest);
+    if (Object.keys(rest).length > 0) {
+        (this.info || console.log)(`Using a not explicitly supported webpack feature, 
+        this will make your configuration bound to whatever version of webpack you are using. 
+        mrbuilder will not be able to manage the version differences for you.
+        
+        The mrbuilder unsupported keys are ${Object.keys(rest)}
+                
+        `);
+        Object.assign(webpack, rest);
+    }
     if (!webpack.resolve) {
         webpack.resolve = {
             alias: {}
