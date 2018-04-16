@@ -3,27 +3,26 @@ const { camelCased, cwd, resolveMap, enhancedResolve, regexOrFuncApply } = requi
 const DEFAULT_MAIN_FIELDS                                                = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS                                                 = ['source', 'browser', 'main'];
 
-const mod = function (options, webpack, om) {
-    let {
-            library,
-            libraryTarget    = 'commonjs2',
-            extensions       = ['.js', '.jsx', '.json'],
-            mainFields       = true,
-            app,
-            //we don't handle entry here
-            entry,
-            demo,
-            outputPath       = cwd('lib'),
-            useExternals,
-            externalizePeers = true,
-            externals,
-            devtool          = 'source-maps',
-            filename         = '[name].[hash].js',
-            alias            = [],
-            node,
-            noParse,
-            ...rest,
-        } = options;
+const mod = function ( {
+                           library,
+                           libraryTarget    = 'commonjs2',
+                           extensions       = ['.js', '.jsx', '.json'],
+                           mainFields       = true,
+                           app,
+                           //we don't handle entry here
+                           entry,
+                           demo,
+                           outputPath       = cwd('lib'),
+                           useExternals,
+                           externalizePeers = true,
+                           externals,
+                           devtool          = 'source-maps',
+                           filename         = '[name].[hash].js',
+                           alias            = [],
+                           node,
+                           noParse,
+                           ...rest
+                       }, webpack, om) {
     //If its not in
     Object.assign(webpack, rest);
     if (!webpack.resolve) {
