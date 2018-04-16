@@ -129,7 +129,8 @@ try {
 }
 //only define entry if it doesn't exist already.
 if (!webpack.entry) {
-    webpack.entry = { index: cwd('src', 'index') };
+    const _pkg = pkg();
+    webpack.entry = { index: cwd(_pkg.source || 'src/index') };
     info('using default entry', webpack.entry.index)
 }
 if (opts.useDefine) {
