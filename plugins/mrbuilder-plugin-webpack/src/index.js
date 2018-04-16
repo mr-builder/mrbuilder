@@ -20,9 +20,11 @@ const mod = function ({
                           alias = [],
                           node,
                           noParse,
+                          ...rest,
                       },
                       webpack, om) {
-
+    //If its not in
+    Object.assign(webpack, rest);
     if (!webpack.resolve) {
         webpack.resolve = {
             alias: {}
@@ -123,12 +125,13 @@ const mod = function ({
     if (mainFields) {
         mainFields                 =
             typeof mainFields === 'string' ? mainFields.split(/,\s*/)
-                : mainFields;
+                                           : mainFields;
         mainFields                 =
             Array.isArray(mainFields) ? mainFields : mainFields === true
-                ? webpack.target == 'node' ? ['source', 'main']
-                                                         : SOURCE_MAIN_FIELDS
-                : DEFAULT_MAIN_FIELDS;
+                                                     ? webpack.target == 'node'
+                                                       ? ['source', 'main']
+                                                       : SOURCE_MAIN_FIELDS
+                                                     : DEFAULT_MAIN_FIELDS;
         webpack.resolve.mainFields = mainFields;
         info(`using mainFields`, mainFields);
     }

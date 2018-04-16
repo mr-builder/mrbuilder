@@ -17,5 +17,8 @@
     "mrbuilder-demo": "bin/mrbuilder-demo.js",
     "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js"
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "engines": {
+    "node": ">=8.0.0"
+  }
 }
