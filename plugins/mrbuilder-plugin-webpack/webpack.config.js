@@ -156,9 +156,11 @@ if (webpack.resolve.alias) {
         if (!v) {
             return 0;
         }
-        let count = -1, index  = 0;
-        for ( ;index != -1; count++, index = v.indexOf(path.sep, index + 1)) {
-            //make ide happy
+        let count = 0;
+        for (let i = 0, l = v.length; i < l; i++) {
+            if (v[i] === path.sep) {
+                count++;
+            }
         }
         return count;
     };
