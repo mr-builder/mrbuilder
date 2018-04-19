@@ -32,13 +32,29 @@ module.exports = function reactPlugin({
         }
     }
 
+
+    if (!webpack.resolve.alias['react-dom/']) {
+        webpack.resolve.alias['react-dom/'] = resolvePkgDir('react-dom');
+    }
+
     if (!webpack.resolve.alias['react-dom']) {
         webpack.resolve.alias['react-dom'] = resolvePkgDir('react-dom');
+    }
+    //so styleguidist tries to do this, but it fails.  So we do it instead.
+    // webpack resolve alias is super flackey.  It depends on entry order, rather
+    // than depth specified.
+    if (!webpack.resolve.alias['prop-types/checkPropTypes']){
+        webpack.resolve.alias['prop-types/checkPropTypes'] = require.resolve('prop-types/checkPropTypes');
+    }
+
+    if (!webpack.resolve.alias['prop-types/']) {
+        webpack.resolve.alias['prop-types/'] = resolvePkgDir('prop-types');
     }
 
     if (!webpack.resolve.alias['prop-types']) {
         webpack.resolve.alias['prop-types'] = resolvePkgDir('prop-types');
     }
+
     const isHot       = om.enabled('mrbuilder-plugin-hot');
     const babelConfig = require('mrbuilder-plugin-babel/babel-config');
     let entry         = webpack.entry;

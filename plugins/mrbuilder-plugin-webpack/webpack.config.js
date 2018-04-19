@@ -129,7 +129,7 @@ try {
 }
 //only define entry if it doesn't exist already.
 if (!webpack.entry) {
-    const _pkg = pkg();
+    const _pkg    = pkg();
     webpack.entry = { index: cwd(_pkg.source || 'src/index') };
     info('using default entry', webpack.entry.index)
 }
@@ -146,8 +146,30 @@ if (opts.useDefine) {
 if (opts.useScopeHoist) {
     webpack.plugins.push(new ModuleConcatenationPlugin());
 }
+/**
+ * This is an attempt to fix webpack.resolve.alias.   Currently it uses whatever
+ * was added first to match, rather than what is most specific; which is almost
+ * certainly what you want.
+ */
+if (webpack.resolve.alias) {
+    const countSlash = (v) => {
+        if (!v) {
+            return 0;
+        }
+        let count = -1, index  = 0;
+        for ( ;index != -1; count++, index = v.indexOf(path.sep, index + 1)) {
+            //make ide happy
+        }
+        return count;
+    };
 
-
+    webpack.resolve.alias = Object.keys(webpack.resolve.alias)
+                                  .sort((b, a) => countSlash(a) - countSlash(b))
+                                  .reduce((ret, key) => {
+                                      ret[key] = webpack.resolve.alias[key];
+                                      return ret;
+                                  });
+}
 debug('DEBUG is on');
 debug('optionsManager', stringify(optionsManager.plugins));
 debug('webpack configuration', stringify(webpack));
