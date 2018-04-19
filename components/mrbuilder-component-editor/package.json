@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-component-editor",
-  "version": "2.0.4-3",
+  "version": "2.0.4-4",
   "description": "A simplish editor for mr builder",
   "main": "src",
   "dependencies": {
-    "mrbuilder-plugin-emeth": "^2.0.4-3",
-    "mrbuilder-utils": "^2.0.4-3"
+    "mrbuilder-plugin-emeth": "^2.0.4-4",
+    "mrbuilder-utils": "^2.0.4-4"
   },
   "peerDependencies": {
     "mrbuilder": "2.x"
