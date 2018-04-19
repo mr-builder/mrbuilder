@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-plugin-enzyme",
-  "version": "2.0.4-1",
+  "version": "2.0.4-2",
   "dependencies": {
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
-    "mrbuilder-plugin-lodash": "^2.0.4-1"
+    "mrbuilder-plugin-lodash": "^2.0.4-2"
   },
   "main": "src",
   "mrbuilder": {
