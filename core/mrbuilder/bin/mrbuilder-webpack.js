@@ -12,7 +12,7 @@ if (!('MRBUILDER_INTERNAL_PRESETS' in env)) {
 }
 
 if (!('MRBUILDER_INTERNAL_PLUGINS' in env)) {
-    env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-webpack';
+    env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-webpack-dev-server';
 }
 
 if (!(env.NODE_ENV || env.MRBUILDER_ENV)) {

@@ -16,11 +16,13 @@ function help(message) {
             babel       - runs babel
             app         - runs webpack in app mode
             app:start   - runs webpack-dev-server in app mode
+            start:app   - alias to app:start
             demo        - runs webpack in demo mode
             demo:start  - runs webpack-dev-server in demo mode
-            build       - runs webpack in production mode unless otherwise defined.
+            start:demo  - alias to demo:start
+            build       - alias to prepublish
+            production  - alias to prepublish
             prepublish  - runs webpack in production mode unless otherwise defined.
-            production  - runs webpack in production mode unless otherwise defined.
             start       - starts webpack-dev-server
             dev-server  - starts webpack-dev-server
             development - starts webpack-dev-server
@@ -56,6 +58,7 @@ let script;
 switch (profile) {
     case "help":
         help('This helpful message');
+    case "start:demo":
     case "demo:start": {
         if (!env.NODE_ENV) {
             env.NODE_ENV = "development";
@@ -78,6 +81,7 @@ switch (profile) {
         }
         break;
     }
+    case "start:app":
     case "app:start": {
         if (!env.NODE_ENV) {
             env.NODE_ENV = "development";
@@ -130,7 +134,7 @@ switch (profile) {
     case "analyze":
         env.MRBUILDER_INTERNAL_PLUGINS =
             `mrbuilder-plugin-analyze,${env.MRBUILDER_INTERNAL_PLUGINS || ''}`;
-        script = "./mrbuilder-webpack";
+        script                         = "./mrbuilder-webpack";
         break;
 
     case "start":

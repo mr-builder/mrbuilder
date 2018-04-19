@@ -97,10 +97,7 @@ let webpack = {
     }
     webpack.entry = Object.freeze(parseEntry(entryNoParse))
 })(optionsManager.config('mrbuilder-plugin-webpack.entry'));
-if (!webpack.entry) {
-    webpack.entry = { index: cwd('src', 'index') };
-    info('using default entry', webpack.entry.index)
-}
+
 //This is where the magic happens
 try {
     optionsManager.forEach((option, key) => {
@@ -130,7 +127,12 @@ try {
     warn('caught error', e);
     throw e;
 }
-
+//only define entry if it doesn't exist already.
+if (!webpack.entry) {
+    const _pkg = pkg();
+    webpack.entry = { index: cwd(_pkg.source || 'src/index') };
+    info('using default entry', webpack.entry.index)
+}
 if (opts.useDefine) {
     webpack.plugins.push(
         new DefinePlugin(

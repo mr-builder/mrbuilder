@@ -3,26 +3,37 @@ const { camelCased, cwd, resolveMap, enhancedResolve, regexOrFuncApply } = requi
 const DEFAULT_MAIN_FIELDS                                                = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS                                                 = ['source', 'browser', 'main'];
 
-const mod = function ({
-                          library,
-                          libraryTarget = 'commonjs2',
-                          extensions = ['.js', '.jsx', '.json'],
-                          mainFields = true,
-                          app,
-                          entry,
-                          demo,
-                          outputPath = cwd('lib'),
-                          useExternals,
-                          externalizePeers = true,
-                          externals,
-                          devtool = 'source-maps',
-                          filename = '[name].[hash].js',
-                          alias = [],
-                          node,
-                          noParse,
-                      },
-                      webpack, om) {
-
+const mod = function ( {
+                           library,
+                           libraryTarget    = 'commonjs2',
+                           extensions       = ['.js', '.jsx', '.json'],
+                           mainFields       = true,
+                           app,
+                           //we don't handle entry here
+                           entry,
+                           demo,
+                           outputPath       = cwd('lib'),
+                           useExternals,
+                           externalizePeers = true,
+                           externals,
+                           devtool          = 'source-maps',
+                           filename         = '[name].[hash].js',
+                           alias            = [],
+                           node,
+                           noParse,
+                           ...rest
+                       }, webpack, om) {
+    //If its not in
+    if (Object.keys(rest).length > 0) {
+        (this.info || console.log)(`Using a not explicitly supported webpack feature, 
+        this will make your configuration bound to whatever version of webpack you are using. 
+        mrbuilder will not be able to manage the version differences for you.
+        
+        The mrbuilder unsupported keys are ${Object.keys(rest)}
+                
+        `);
+        Object.assign(webpack, rest);
+    }
     if (!webpack.resolve) {
         webpack.resolve = {
             alias: {}
@@ -123,12 +134,13 @@ const mod = function ({
     if (mainFields) {
         mainFields                 =
             typeof mainFields === 'string' ? mainFields.split(/,\s*/)
-                : mainFields;
+                                           : mainFields;
         mainFields                 =
             Array.isArray(mainFields) ? mainFields : mainFields === true
-                ? webpack.target == 'node' ? ['source', 'main']
-                                                         : SOURCE_MAIN_FIELDS
-                : DEFAULT_MAIN_FIELDS;
+                                                     ? webpack.target == 'node'
+                                                       ? ['source', 'main']
+                                                       : SOURCE_MAIN_FIELDS
+                                                     : DEFAULT_MAIN_FIELDS;
         webpack.resolve.mainFields = mainFields;
         info(`using mainFields`, mainFields);
     }
