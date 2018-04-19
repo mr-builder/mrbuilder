@@ -28,6 +28,10 @@ function help(message) {
             development - starts webpack-dev-server
             analyze     - starts webpack-dev-server in analyze mode
             
+            
+            or
+            start:{PROFILE} - starts webpack-dev-server in whatever PROFILE is specified.
+            {PROFILE} - starts webpack in whatevever PROFILE is specified.
             Please either run from a scripts in package.json or set the
             MRBUILDER_PROFILE variable.
             
@@ -58,52 +62,8 @@ let script;
 switch (profile) {
     case "help":
         help('This helpful message');
-    case "start:demo":
-    case "demo:start": {
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = "development";
-        }
-        script = "./mrbuilder-webpack-dev-server"
-
-    }
-    case "demo": {
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = "production";
-        }
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = env.NODE_ENV;
-        }
-        if (!argv.slice(2).find(v => /^--demo(=.*)?$/.test(v))) {
-            argv.push('--demo', 'demo');
-        }
-        if (!script) {
-            script = "./mrbuilder-webpack"
-        }
-        break;
-    }
-    case "start:app":
-    case "app:start": {
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = "development";
-        }
-        script = "./mrbuilder-webpack-dev-server"
-    }
-    case "app": {
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = "production";
-        }
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = env.NODE_ENV;
-        }
-        if (!argv.slice(2).find(v => /^--app(=.*)?$/.test(v))) {
-            argv.push('--app', 'app');
-        }
-        if (!script) {
-            script = "./mrbuilder-webpack"
-
-        }
-        break;
-    }
+    case "mocha":
+        script = "./mrbuilder-mocha";
     case "karma":
     case "test":
         if (!env.NODE_ENV) {
@@ -112,10 +72,9 @@ switch (profile) {
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = env.NODE_ENV;
         }
-        script = "./mrbuilder-karma";
-        break;
-    case "mocha":
-        script = "./mrbuilder-mocha";
+        if (!script) {
+            script = "./mrbuilder-karma";
+        }
         break;
     case "babel":
         script = "./mrbuilder-babel";
@@ -133,23 +92,53 @@ switch (profile) {
         break;
     case "analyze":
         env.MRBUILDER_INTERNAL_PLUGINS =
-            `mrbuilder-plugin-analyze,${env.MRBUILDER_INTERNAL_PLUGINS || ''}`;
+            `mrbuilder-plugin-analyze,mrbuilder-webpack-dev-server,${env.MRBUILDER_INTERNAL_PLUGINS || ''}`;
         script                         = "./mrbuilder-webpack";
         break;
 
+    case "server":
     case "start":
     case "dev-server":
-
-    case "development":
-        script = "./mrbuilder-webpack-dev-server";
-        if (!env.NODE_ENV) {
+    case "development":{
+        if (!env.NODE_ENV){
             env.NODE_ENV = 'development';
         }
-        if (!env.MRBUILDER_ENV) {
+        if (!env.MRBUILDER_ENV){
             env.MRBUILDER_ENV = env.NODE_ENV;
         }
+        script = './mrbuilder-webpack-dev-server';
         break;
-    default:
-        help(`${process.env[1]} does not understand '${profile}'`);
+    }
+    //just for documentation.
+    case "demo":
+    case "demo:start":
+    case "start:demo":
+    case "app":
+    case "app:start":
+    case "start:app":
+    default: {
+        const parts      = profile.split(':', 2);
+        const [p, start] = parts[0] === 'start' ? [parts[1], parts[0]] : parts;
+        if (start === 'start') {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'development';
+            }
+            script = "./mrbuilder-webpack-dev-server";
+        } else {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'production';
+            }
+            script = "./mrbuilder-webpack";
+        }
+        if (!env.MRBUILDER_ENV){
+            env.MRBUILDER_ENV = p || env.NODE_ENV;
+        }
+        if (script) {
+            console.log(
+                `starting mrbuilder using profile "${env.MRBUILDER_ENV}" NODE_ENV "${env.NODE_ENV}" and script "${script}"`)
+        }else{
+            help(`not sure what to do`);
+        }
+    }
 }
 require(script);

@@ -3,6 +3,7 @@ const sylist    = require(
     'react-styleguidist/scripts/make-webpack-config');
 const {
           join,
+          resolve,
           relative
       }         = require('path');
 const {
@@ -12,13 +13,19 @@ const {
 
 module.exports = function (options = {}, webpack, om) {
 
-    const resolvePkgDir        = (v, ...args) => join(
-        om.require.resolve(join(v, 'package.json')), '..', ...args);
+    const resolvePkgDir        = (v, ...args) => {
+        if (v === om.topPackage.name || v === '.') {
+            return resolve('.', ...args);
+        }
+        return join(om.require.resolve(join(v, 'package.json')), '..', ...args);
+    }
     const componentsToSections = (opts) => {
         if (!opts) {
             return;
         }
-        const components = opts.components;
+        const components = opts.components || [
+            om.topPackage.name
+        ];
         delete opts.components;
         const sections = components && components.map(function (component) {
             component = Array.isArray(component) ? component : [component];
@@ -36,7 +43,8 @@ module.exports = function (options = {}, webpack, om) {
 
             const _pkgDir = resolvePkgDir(component[0]);
 
-            const _pkg = require(join(_pkgDir, 'package.json'));
+            const pDir = resolve(_pkgDir, 'package.json');
+            const _pkg = require(pDir);
 
             const obj = Object.assign({
                     name       : _pkg.name,

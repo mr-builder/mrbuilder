@@ -12,6 +12,20 @@
   },
   "mrbuilder": {
     "plugins": [
+      [
+        "mrbuilder-plugin-css",
+        {
+          "useStyleLoader": true
+        }
+      ],
+      [
+        "mrbuilder-plugin-html",
+        false
+      ],
+      [
+        "mrbuilder-plugin-hot",
+        false
+      ],
       "mrbuilder-plugin-enzyme",
       "mrbuilder-plugin-mocha",
       "mrbuilder-plugin-webpack",

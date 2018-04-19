@@ -1,0 +1,52 @@
+{
+  "env": {
+    "test": {
+      "presets": [
+        "mrbuilder-preset-test"
+      ]
+    },
+    "app": {
+      "presets": [
+        "mrbuilder-preset-app"
+      ]
+    },
+    "demo": {
+      "presets": [
+        [
+          "mrbuilder-preset-app",
+          {
+            "demo": "demo"
+          }
+        ]
+      ]
+    },
+    "lib": {
+      "presets": [
+        "mrbuilder-preset-lib"
+      ]
+    },
+    "analyze": {
+      "plugins": [
+        "mrbuilder-plugin-analyze"
+      ]
+    },
+    "styleguide": {
+      "plugins": [
+        [
+          "mrbuilder-plugin-html",
+          false
+        ],
+        "mrbuilder-plugin-doc-prop-types",
+        [
+          "mrbuilder-plugin-webpack",
+          {
+            "demo": "./styleguide"
+          }
+        ],
+        [
+          "mrbuilder-plugin-react-styleguidist"
+        ]
+      ]
+    }
+  }
+}
