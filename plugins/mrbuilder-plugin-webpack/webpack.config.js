@@ -168,7 +168,7 @@ if (webpack.resolve.alias) {
                                   .reduce((ret, key) => {
                                       ret[key] = webpack.resolve.alias[key];
                                       return ret;
-                                  });
+                                  }, {});
 }
 debug('DEBUG is on');
 debug('optionsManager', stringify(optionsManager.plugins));
