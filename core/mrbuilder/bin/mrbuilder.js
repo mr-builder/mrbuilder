@@ -1,6 +1,18 @@
 #!/usr/bin/env node
 const { env, argv } = process;
-const profile       = env.MRBUILDER_PROFILE || env['npm_lifecycle_event'];
+const profile       = env.MRBUILDER_PROFILE || ((idx) => {
+                                                if (idx > -1) {
+                                                    if (argv[idx].includes('=')) {
+                                                        argv.splice(idx, 1);
+                                                        return argv[idx].split('=', 2).pop();
+                                                    } else {
+                                                        let arg = process.argv[idx + 1];
+                                                        argv.splice(idx, 2);
+                                                        return arg;
+                                                    }
+                                                }
+                                            })(argv.findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
+                      || env['npm_lifecycle_event'];
 
 function help(message) {
     console.warn(`
@@ -54,6 +66,7 @@ function help(message) {
     process.exit(1);
 }
 
+
 if (!profile) {
     help(`Please either run from a scripts in package.json or set the
     MRBUILDER_PROFILE variable`);
@@ -92,18 +105,19 @@ switch (profile) {
         break;
     case "analyze":
         env.MRBUILDER_INTERNAL_PLUGINS =
-            `mrbuilder-plugin-analyze,mrbuilder-webpack-dev-server,${env.MRBUILDER_INTERNAL_PLUGINS || ''}`;
+            `mrbuilder-plugin-analyze,mrbuilder-webpack-dev-server,${env.MRBUILDER_INTERNAL_PLUGINS
+                                                                     || ''}`;
         script                         = "./mrbuilder-webpack";
         break;
 
     case "server":
     case "start":
     case "dev-server":
-    case "development":{
-        if (!env.NODE_ENV){
+    case "development": {
+        if (!env.NODE_ENV) {
             env.NODE_ENV = 'development';
         }
-        if (!env.MRBUILDER_ENV){
+        if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = env.NODE_ENV;
         }
         script = './mrbuilder-webpack-dev-server';
@@ -130,13 +144,13 @@ switch (profile) {
             }
             script = "./mrbuilder-webpack";
         }
-        if (!env.MRBUILDER_ENV){
+        if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = p || env.NODE_ENV;
         }
         if (script) {
             console.log(
                 `starting mrbuilder using profile "${env.MRBUILDER_ENV}" NODE_ENV "${env.NODE_ENV}" and script "${script}"`)
-        }else{
+        } else {
             help(`not sure what to do`);
         }
     }
