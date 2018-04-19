@@ -11,7 +11,7 @@ const profile       = env.MRBUILDER_PROFILE || ((idx) => {
                                                         return arg;
                                                     }
                                                 }
-                                            })(argv.findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
+                                            })(argv.slice(2).findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
                       || env['npm_lifecycle_event'];
 
 function help(message) {

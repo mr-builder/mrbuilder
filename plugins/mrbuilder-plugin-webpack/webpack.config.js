@@ -32,7 +32,8 @@ if (publicPath instanceof RegExp) {
 const opts = {
     isProduction  : process.env.NODE_ENV === 'production',
     isLibrary     : optionsManager.config('mrbuilder-plugin-webpack.library')
-                    || !(isKarma || isDevServer || isDemo || isApp),
+                    != null ? true : !(isKarma || isDevServer || isDemo
+                                       || isApp),
     isKarma,
     isDemo,
     isApp,
