@@ -52,8 +52,7 @@ const opts = {
     useScopeHoist : optionsManager.config(
         'mrbuilder-plugin-webpack.useScopeHoist', true),
     useTarget     : optionsManager.config('mrbuilder-plugin-webpack.target',
-        'web'),
-    useHtml       : !isKarma && (isDevServer || isDemo || isApp)
+        'web')
 };
 const mode = (val) => {
     switch (val) {
