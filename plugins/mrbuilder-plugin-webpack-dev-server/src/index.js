@@ -20,7 +20,6 @@ module.exports = function (opts, webpack) {
     if (entry) {
         webpack.entry = parseEntry(entry);
     }
-    this.useHtml = true;
     if (devServer.devtool == null) {
         webpack.devtool = 'eval-source-map'
     } else {
