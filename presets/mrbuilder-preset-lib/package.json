@@ -31,6 +31,7 @@
       "mrbuilder",
       "mrbuilder-plugin-env",
       "mrbuilder-plugin-fonts",
+      "mrbuilder-plugin-less",
       "mrbuilder-plugin-filetypes",
       [
         "mrbuilder-plugin-css",
@@ -44,13 +45,19 @@
         "plugins": [
           "mrbuilder-plugin-enzyme",
           "mrbuilder-plugin-mocha",
-          "mrbuilder-plugin-karma"
+          "mrbuilder-plugin-karma",
+          [
+            "mrbuilder-plugin-css",
+            {
+              "useNameHash": "[name].css",
+              "useStyleLoader": true
+            }
+          ]
         ]
       },
       "development": {
         "plugins": [
           "mrbuilder-plugin-eslint",
-          "mrbuilder-plugin-less",
           "mrbuilder-plugin-html",
           "mrbuilder-plugin-webpack-dev-server",
           "mrbuilder-plugin-hot",
@@ -65,11 +72,12 @@
       },
       "production": {
         "plugins": [
-          "mrbuilder-plugin-less",
           [
             "mrbuilder-plugin-webpack",
             {
-              "externalizePeers": true
+              "externalizePeers": true,
+              "libraryTarget": "umd",
+              "useExternals": true
             }
           ]
         ]

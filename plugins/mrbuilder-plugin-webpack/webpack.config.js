@@ -32,6 +32,9 @@ if (publicPath instanceof RegExp) {
 const opts = {
     isProduction  : process.env.NODE_ENV === 'production',
     isLibrary     : optionsManager.config('mrbuilder-plugin-webpack.library')
+                    != null ? true :
+                    optionsManager.config(
+                        'mrbuilder-plugin-webpack.libraryTarget')
                     != null ? true : !(isKarma || isDevServer || isDemo
                                        || isApp),
     isKarma,
@@ -176,5 +179,6 @@ if (webpack.resolve.alias) {
 debug('DEBUG is on');
 debug('optionsManager', stringify(optionsManager.plugins));
 debug('webpack configuration', stringify(webpack));
+info('output filename', webpack.output.filename);
 
 module.exports = webpack;

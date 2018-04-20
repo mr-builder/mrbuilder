@@ -3,26 +3,27 @@ const { camelCased, cwd, resolveMap, enhancedResolve, regexOrFuncApply } = requi
 const DEFAULT_MAIN_FIELDS                                                = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS                                                 = ['source', 'browser', 'main'];
 
-const mod = function ( {
-                           library,
-                           libraryTarget    = 'commonjs2',
-                           extensions       = ['.js', '.jsx', '.json'],
-                           mainFields       = true,
-                           app,
-                           //we don't handle entry here
-                           entry,
-                           demo,
-                           outputPath       = cwd('lib'),
-                           useExternals,
-                           externalizePeers = true,
-                           externals,
-                           devtool          = 'source-maps',
-                           filename         = '[name].[hash].js',
-                           alias            = [],
-                           node,
-                           noParse,
-                           ...rest
-                       }, webpack, om) {
+const mod = function ({
+                          library,
+                          libraryTarget = 'umd',
+                          extensions = ['.js', '.jsx', '.json'],
+                          mainFields = true,
+                          app,
+                          mode,
+                          //we don't handle entry here
+                          entry,
+                          demo,
+                          outputPath = cwd('lib'),
+                          useExternals,
+                          externalizePeers = true,
+                          externals,
+                          devtool = 'source-maps',
+                          filename = '[name].[hash].js',
+                          alias = [],
+                          node,
+                          noParse,
+                          ...rest
+                      }, webpack, om) {
     //If its not in
     if (Object.keys(rest).length > 0) {
         (this.info || console.log)(`Using a not explicitly supported webpack feature, 
@@ -33,6 +34,9 @@ const mod = function ( {
                 
         `);
         Object.assign(webpack, rest);
+    }
+    if (mode) {
+        webpack.mode = mode;
     }
     if (!webpack.resolve) {
         webpack.resolve = {
@@ -70,37 +74,34 @@ const mod = function ( {
                 }, {}));
         }
     }
-
-    if (!webpack.output) {
-        webpack.output = {};
-    }
+    const output = webpack.output || (webpack.output = {});
 
     if (outputPath) {
         //webpack wants an absolute path here.
-        webpack.output.path = enhancedResolve(outputPath);
+        output.path = enhancedResolve(outputPath);
     }
 
     demo = demo || app;
 
     if (this.isLibrary) {
-        webpack.output.library       =
-            typeof library == 'string' ? library : camelCased(pkg.name);
-        webpack.output.libraryTarget = libraryTarget;
+        output.library       =
+            typeof library === 'string' ? library : camelCased(pkg.name);
+        output.libraryTarget = libraryTarget;
         //Don't hash when its a library
-        webpack.output.filename      = filename.replace('[hash].', '');
+        output.filename      = filename.replace('[hash].', '');
+
+        info(`building as library with name "${output.library}"`)
+
     } else if (this.isDevServer) {
         //Don't hash when its running in devServer
-        webpack.output.filename = filename.replace('[hash].', '');
+        output.filename = filename.replace('[hash].', '');
     } else {
-        webpack.output.filename = filename;
+        output.filename = filename;
     }
     if (demo) {
-        webpack.output.path = demo === true ? cwd('demo') : cwd(demo);
+        output.path = demo === true ? cwd('demo') : cwd(demo);
     }
 
-    if (this.isDevServer || demo) {
-        info('output filename', webpack.output.filename);
-    }
 
     if (extensions) {
         if (!webpack.resolve.extensions) {
