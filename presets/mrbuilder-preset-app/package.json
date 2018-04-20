@@ -25,13 +25,8 @@
       "mrbuilder-plugin-browserslist",
       "mrbuilder-plugin-filetypes",
       "mrbuilder-plugin-fonts",
-      "mrbuilder-plugin-env",
-      [
-        "mrbuilder-plugin-html",
-        {
-          "exported": true
-        }
-      ]
+      "mrbuilder-plugin-env"
+
     ],
     "env": {
       "test": {
@@ -66,6 +61,12 @@
             "mrbuilder-plugin-chunk",
             {
               "filename": "js/[name].[hash].js"
+            }
+          ],
+          [
+            "mrbuilder-plugin-html",
+            {
+              "exported": true
             }
           ],
           "mrbuilder-plugin-uglify"
