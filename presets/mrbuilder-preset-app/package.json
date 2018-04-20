@@ -37,26 +37,11 @@
       "test": {
         "presets": [
           "mrbuilder-preset-test"
-        ],
-        "plugins": [
-          [
-            "mrbuilder-plugin-html",
-            false
-          ]
         ]
       },
       "development": {
-        "plugins": [
-          [
-            "mrbuilder-plugin-css",
-            {
-              "useNameHash": "css/[name].css"
-            }
-          ],
-          "mrbuilder-plugin-less",
-          "mrbuilder-plugin-html",
-          "mrbuilder-plugin-webpack-dev-server",
-          "mrbuilder-plugin-hot"
+        "presets": [
+          "mrbuilder-preset-dev"
         ]
       },
       "production": {
@@ -73,7 +58,8 @@
             {
               "app": "app",
               "filename": "js/[name].[hash].js",
-              "externalizePeers": false
+              "externalizePeers": false,
+              "useExternals": false
             }
           ],
           [

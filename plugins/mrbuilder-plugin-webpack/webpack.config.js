@@ -54,21 +54,8 @@ const opts = {
     useTarget     : optionsManager.config('mrbuilder-plugin-webpack.target',
         'web')
 };
-const mode = (val) => {
-    switch (val) {
-        case "development":
-        case "test":
-            return "development";
-        case "production":
-            return "production";
-        default:
-            return "none";
-    }
-
-};
 
 let webpack = {
-    mode   : mode(process.env.NODE_ENV),
     resolve: {
         alias: {}
     },

@@ -2,6 +2,18 @@ const { camelCased, cwd, resolveMap, enhancedResolve, regexOrFuncApply } = requi
     'mrbuilder-utils');
 const DEFAULT_MAIN_FIELDS                                                = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS                                                 = ['source', 'browser', 'main'];
+const returnMode = (val=process.env.NODE_ENV) => {
+    switch (val) {
+        case "development":
+        case "test":
+            return "development";
+        case "production":
+            return "production";
+        default:
+            return "none";
+    }
+
+};
 
 const mod = function ({
                           library,
@@ -26,6 +38,8 @@ const mod = function ({
                           target,
                           ...rest
                       }, webpack, om) {
+
+    webpack.mode = returnMode(mode);
     //ugh - just do it.
     delete rest.public;
     //If its not in

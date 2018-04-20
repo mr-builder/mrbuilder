@@ -5,7 +5,8 @@
     "mrbuilder-plugin-enzyme": "^2.0.4",
     "mrbuilder-plugin-karma": "^2.0.4",
     "mrbuilder-plugin-mocha": "^2.0.4",
-    "mrbuilder-plugin-webpack": "^2.0.4"
+    "mrbuilder-plugin-webpack": "^2.0.4",
+    "mrbuilder-plugin-css": "^2.0.4"
   },
   "peerDependencies": {
     "mrbuilder": "2.x"
@@ -13,8 +14,20 @@
   "mrbuilder": {
     "plugins": [
       [
+        "mrbuilder-plugin-webpack",
+        {
+          "useExternals": false,
+          "externalizePeers": false
+        }
+      ],
+      [
+        "mrbuilder-plugin-html",
+        false
+      ],
+      [
         "mrbuilder-plugin-css",
         {
+          "useNameHash": "[id].[name].css",
           "useStyleLoader": true
         }
       ],

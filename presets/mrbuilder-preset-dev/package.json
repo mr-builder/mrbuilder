@@ -1,0 +1,42 @@
+{
+  "name": "mrbuilder-preset-dev",
+  "version": "2.0.4",
+  "dependencies": {
+    "mrbuilder-preset-app": "^2.0.4",
+    "mrbuilder-plugin-webpack-dev-server": "^2.0.4"
+  },
+  "peerDependencies": {
+    "mrbuilder": "2.x"
+  },
+  "mrbuilder": {
+    "presets": [
+      "mrbuilder-preset-app"
+    ],
+    "plugins": [
+      "mrbuilder-plugin-eslint",
+      [
+        "mrbuilder-plugin-html",
+        {
+          "exported": true
+        }
+      ],
+      "mrbuilder-plugin-hot",
+      [
+        "mrbuilder-plugin-css",
+        {
+          "useNameHash": "[name].css",
+          "useStyleLoader": true
+        }
+      ],
+      [
+        "mrbuilder-plugin-webpack",
+        {
+          "useExternals": false,
+          "externalizePeers": false
+        }
+      ],
+      "mrbuilder-plugin-webpack-dev-server"
+    ]
+  },
+  "license": "0BSD"
+}
