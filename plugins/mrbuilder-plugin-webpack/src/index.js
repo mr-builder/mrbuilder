@@ -19,11 +19,15 @@ const mod = function ({
                           externals,
                           devtool = 'source-maps',
                           filename = '[name].[hash].js',
+
                           alias = [],
                           node,
                           noParse,
+                          target,
                           ...rest
                       }, webpack, om) {
+    //ugh - just do it.
+    delete rest.public;
     //If its not in
     if (Object.keys(rest).length > 0) {
         (this.info || console.log)(`Using a not explicitly supported webpack feature, 
@@ -37,6 +41,9 @@ const mod = function ({
     }
     if (mode) {
         webpack.mode = mode;
+    }
+    if (target){
+        webpack.target = target;
     }
     if (!webpack.resolve) {
         webpack.resolve = {
