@@ -5,10 +5,11 @@ require('mrbuilder-plugin-browserslist');
 const om                 = global._MRBUILDER_OPTIONS_MANAGER;
 const { info }           = om.plugins.get('mrbuilder-plugin-css');
 const mrb                = (v) => om.config('mrbuilder-plugin-css' + (v
-    ? `.${v}` : ''));
-let useNameHash          = mrb('useNameHash');
+                                                                      ? `.${v}`
+                                                                      : ''));
+let useNameHash          = mrb('useNameHash') || mrb('filename');
 let useStyleLoaderLoader = mrb('useStyleLoader');
-let publicPath           = mrb('publicPath');
+let publicPath           = mrb('public');
 
 let isDevServer = om.enabled('mrbuilder-plugin-webpack-dev-server');
 let isLibrary   = om.config('mrbuilder-plugin-webpack.library');
@@ -39,16 +40,20 @@ if (!useStyleLoaderLoader) {
     const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
     module.exports = function useStyleExtractText(webpack, ...args) {
-            const use = [MiniCssExtractPlugin.loader, ...args];
-            if (!addedPlugin) {
-                addedPlugin = true;
-                webpack.plugins.push(new MiniCssExtractPlugin({
-                    filename     : useNameHash,
-                    chunkFilename: `[name].style.css`
-                }));
-            }
-            return use;
+        const use      = [MiniCssExtractPlugin.loader, ...args];
+        const miniOpts = {
+            filename     : useNameHash,
+            chunkFilename: `[name].style.css`
         };
+        if (publicPath) {
+            miniOpts.publicPath = publicPath;
+        }
+        if (!addedPlugin) {
+            addedPlugin = true;
+            webpack.plugins.push(new MiniCssExtractPlugin(miniOpts));
+        }
+        return use;
+    };
 
 } else {
     info('using style loader');

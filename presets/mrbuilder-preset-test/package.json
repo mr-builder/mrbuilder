@@ -1,17 +1,44 @@
 {
   "name": "mrbuilder-preset-test",
-  "version": "2.0.3",
+  "version": "2.1.0-0",
   "dependencies": {
-    "mrbuilder-plugin-enzyme": "^2.0.3",
-    "mrbuilder-plugin-karma": "^2.0.3",
-    "mrbuilder-plugin-mocha": "^2.0.3",
-    "mrbuilder-plugin-webpack": "^2.0.3"
+    "mrbuilder-plugin-css": "^2.1.0-0",
+    "mrbuilder-plugin-enzyme": "^2.1.0-0",
+    "mrbuilder-plugin-karma": "^2.1.0-0",
+    "mrbuilder-plugin-mocha": "^2.1.0-0",
+    "mrbuilder-plugin-webpack": "^2.1.0-0"
   },
   "peerDependencies": {
     "mrbuilder": "2.x"
   },
   "mrbuilder": {
     "plugins": [
+      [
+        "mrbuilder-plugin-webpack",
+        {
+          "useExternals": false,
+          "externalizePeers": false
+        }
+      ],
+      [
+        "mrbuilder-plugin-html",
+        false
+      ],
+      [
+        "mrbuilder-plugin-css",
+        {
+          "useNameHash": "[id].[name].css",
+          "useStyleLoader": true
+        }
+      ],
+      [
+        "mrbuilder-plugin-html",
+        false
+      ],
+      [
+        "mrbuilder-plugin-hot",
+        false
+      ],
       "mrbuilder-plugin-enzyme",
       "mrbuilder-plugin-mocha",
       "mrbuilder-plugin-webpack",

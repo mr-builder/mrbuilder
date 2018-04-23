@@ -51,10 +51,6 @@ module.exports = function ({
     const info = this.info || console.log;
     const pkg  = require(path.join(process.cwd(), 'package.json'));
 
-    if (!this.useHtml) {
-        info('not using html as not in app,demo or development mode');
-        return webpack;
-    }
     if (!title) {
         title = `${pkg.name}: ${pkg.description || ''}`
     }

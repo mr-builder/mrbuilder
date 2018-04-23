@@ -93,6 +93,12 @@ function chunks({
                     minChunks         : 2,
                     priority          : -5,
                     reuseExistingChunk: true,
+                },
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true
                 }
             }
         });

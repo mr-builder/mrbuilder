@@ -3,6 +3,7 @@ const sylist    = require(
     'react-styleguidist/scripts/make-webpack-config');
 const {
           join,
+          resolve,
           relative
       }         = require('path');
 const {
@@ -12,13 +13,17 @@ const {
 
 module.exports = function (options = {}, webpack, om) {
 
-    const resolvePkgDir        = (v, ...args) => join(
-        om.require.resolve(join(v, 'package.json')), '..', ...args);
+    const resolvePkgDir        = (v, ...args) => {
+        if (v === om.topPackage.name || v === '.') {
+            return resolve('.', ...args);
+        }
+        return join(om.require.resolve(join(v, 'package.json')), '..', ...args);
+    }
     const componentsToSections = (opts) => {
         if (!opts) {
             return;
         }
-        const components = opts.components;
+        const components = opts.components
         delete opts.components;
         const sections = components && components.map(function (component) {
             component = Array.isArray(component) ? component : [component];
@@ -36,7 +41,8 @@ module.exports = function (options = {}, webpack, om) {
 
             const _pkgDir = resolvePkgDir(component[0]);
 
-            const _pkg = require(join(_pkgDir, 'package.json'));
+            const pDir = resolve(_pkgDir, 'package.json');
+            const _pkg = require(pDir);
 
             const obj = Object.assign({
                     name       : _pkg.name,
@@ -86,8 +92,16 @@ module.exports = function (options = {}, webpack, om) {
         }
         return opts;
     };
-    options                    = componentsToSections(options);
 
+    if (options.sections == null && options.components == null) {
+        options = componentsToSections(options);
+    } else {
+
+        options = componentsToSections({
+            ...options,
+            components: [om.topPackage.name]
+        });
+    }
     if (options.styleguideComponents) {
         options.styleguideComponents =
             Object.keys(options.styleguideComponents).reduce((ret, key) => {
@@ -120,11 +134,8 @@ module.exports = function (options = {}, webpack, om) {
             return ret;
         };
     }
-
     const ret = sylist(conf, process.env.NODE_ENV);
-    /* webpack.plugins.push(...ret.plugins);
-     ret.entry.splice(0, 1, `${__dirname}/entry.js`);
-     */
+
     webpack.entry = ret.entry;
     webpack.plugins.push(...ret.plugins);
     Object.assign(webpack.resolve.alias, ret.resolve.alias);

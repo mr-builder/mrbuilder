@@ -32,7 +32,11 @@ if (publicPath instanceof RegExp) {
 const opts = {
     isProduction  : process.env.NODE_ENV === 'production',
     isLibrary     : optionsManager.config('mrbuilder-plugin-webpack.library')
-                    || !(isKarma || isDevServer || isDemo || isApp),
+                    != null ? true :
+                    optionsManager.config(
+                        'mrbuilder-plugin-webpack.libraryTarget')
+                    != null ? true : !(isKarma || isDevServer || isDemo
+                                       || isApp),
     isKarma,
     isDemo,
     isApp,
@@ -48,24 +52,10 @@ const opts = {
     useScopeHoist : optionsManager.config(
         'mrbuilder-plugin-webpack.useScopeHoist', true),
     useTarget     : optionsManager.config('mrbuilder-plugin-webpack.target',
-        'web'),
-    useHtml       : !isKarma && (isDevServer || isDemo || isApp)
-};
-const mode = (val) => {
-    switch (val) {
-        case "development":
-        case "test":
-            return "development";
-        case "production":
-            return "production";
-        default:
-            return "none";
-    }
-
+        'web')
 };
 
 let webpack = {
-    mode   : mode(process.env.NODE_ENV),
     resolve: {
         alias: {}
     },
@@ -129,7 +119,7 @@ try {
 }
 //only define entry if it doesn't exist already.
 if (!webpack.entry) {
-    const _pkg = pkg();
+    const _pkg    = pkg();
     webpack.entry = { index: cwd(_pkg.source || 'src/index') };
     info('using default entry', webpack.entry.index)
 }
@@ -146,10 +136,35 @@ if (opts.useDefine) {
 if (opts.useScopeHoist) {
     webpack.plugins.push(new ModuleConcatenationPlugin());
 }
+/**
+ * This is an attempt to fix webpack.resolve.alias.   Currently it uses whatever
+ * was added first to match, rather than what is most specific; which is almost
+ * certainly what you want.
+ */
+if (webpack.resolve.alias) {
+    const countSlash = (v) => {
+        if (!v) {
+            return 0;
+        }
+        let count = 0;
+        for (let i = 0, l = v.length; i < l; i++) {
+            if (v[i] === path.sep) {
+                count++;
+            }
+        }
+        return count;
+    };
 
-
+    webpack.resolve.alias = Object.keys(webpack.resolve.alias)
+                                  .sort((b, a) => countSlash(a) - countSlash(b))
+                                  .reduce((ret, key) => {
+                                      ret[key] = webpack.resolve.alias[key];
+                                      return ret;
+                                  }, {});
+}
 debug('DEBUG is on');
 debug('optionsManager', stringify(optionsManager.plugins));
 debug('webpack configuration', stringify(webpack));
+info('output filename', webpack.output.filename);
 
 module.exports = webpack;
