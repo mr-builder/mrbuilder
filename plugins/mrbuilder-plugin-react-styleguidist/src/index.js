@@ -23,9 +23,7 @@ module.exports = function (options = {}, webpack, om) {
         if (!opts) {
             return;
         }
-        const components = opts.components || [
-            om.topPackage.name
-        ];
+        const components = opts.components
         delete opts.components;
         const sections = components && components.map(function (component) {
             component = Array.isArray(component) ? component : [component];
@@ -94,8 +92,16 @@ module.exports = function (options = {}, webpack, om) {
         }
         return opts;
     };
-    options                    = componentsToSections(options);
 
+    if (options.sections == null && options.components == null) {
+        options = componentsToSections(options);
+    } else {
+
+        options = componentsToSections({
+            ...options,
+            components: [om.topPackage.name]
+        });
+    }
     if (options.styleguideComponents) {
         options.styleguideComponents =
             Object.keys(options.styleguideComponents).reduce((ret, key) => {
@@ -128,11 +134,8 @@ module.exports = function (options = {}, webpack, om) {
             return ret;
         };
     }
-
     const ret = sylist(conf, process.env.NODE_ENV);
-    /* webpack.plugins.push(...ret.plugins);
-     ret.entry.splice(0, 1, `${__dirname}/entry.js`);
-     */
+
     webpack.entry = ret.entry;
     webpack.plugins.push(...ret.plugins);
     Object.assign(webpack.resolve.alias, ret.resolve.alias);
