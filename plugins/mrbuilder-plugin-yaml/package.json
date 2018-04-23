@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-yaml",
-  "version": "2.1.0-0",
+  "version": "2.1.0",
   "dependencies": {
     "json-loader": "^0.5.7",
     "yaml-loader": "^0.5.0"
