@@ -10,7 +10,8 @@
   "devDependencies": {
     "mrbuilder": "^2.1.0",
     "mrbuilder-plugin-version": "^2.1.0",
-    "mrbuilder-preset-app": "^2.1.0"
+    "mrbuilder-preset-app": "^2.1.0",
+    "mrbuilder-preset-dev": "^2.1.0"
   },
   "scripts": {
     "prepublish": "mrbuilder",
