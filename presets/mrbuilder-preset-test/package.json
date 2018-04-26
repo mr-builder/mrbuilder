@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-preset-test",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "dependencies": {
     "mrbuilder-plugin-css": "^2.1.1",
     "mrbuilder-plugin-enzyme": "^2.1.1",
-    "mrbuilder-plugin-karma": "^2.1.1",
+    "mrbuilder-plugin-karma": "^2.1.2",
     "mrbuilder-plugin-mocha": "^2.1.1",
     "mrbuilder-plugin-webpack": "^2.1.1"
   },

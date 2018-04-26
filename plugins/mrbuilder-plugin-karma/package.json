@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-karma",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Tools for developing with mrbuilder and karma",
   "scripts": {
     "test": "mrbuilder-mocha"
