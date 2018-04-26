@@ -1,6 +1,6 @@
-const { pkg, cwd }                               = require('mrbuilder-utils');
-const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
-const { resolve }                                = require('path');
+const { pkg, cwd, enhancedResolve } = require('mrbuilder-utils');
+const { ContextReplacementPlugin }  = require('webpack');
+const { resolve }                   = require('path');
 
 
 module.exports = function ({
@@ -21,6 +21,7 @@ module.exports = function ({
                            }, webpack) {
 
     const info = (this.info || console.log);
+    testDir    = enhancedResolve(testDir);
 
     const packageJson                       = pkg();
     webpack.resolve.alias[packageJson.name] =
