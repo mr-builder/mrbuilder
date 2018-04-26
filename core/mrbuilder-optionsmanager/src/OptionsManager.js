@@ -15,6 +15,8 @@ const handleNotFoundFail             = (e, pkg) => {
     throw e;
 };
 
+
+
 module.exports = class OptionsManager {
 
 
@@ -35,7 +37,7 @@ module.exports = class OptionsManager {
                     topPackage,
                     handleNotFound = handleNotFoundTryInstall
                 } = {}) {
-
+        const seenPresets = new Set();
         this.plugins = new Map();
         this.help    = _help(this);
         if (!prefix) {
@@ -163,8 +165,9 @@ module.exports = class OptionsManager {
 
             const pluginConfig = pkg[confPrefix] ? parseValue(
                 JSON.stringify(pkg[confPrefix]))
-                : parseJSON(resolveFromPkgDir(pkg.name, rcFile))
-                  || {};
+                                                 : parseJSON(
+                resolveFromPkgDir(pkg.name, rcFile))
+                                                   || {};
 
             const envOverride = pluginConfig.env
                                 && pluginConfig.env[ENV] || {};
@@ -269,8 +272,7 @@ module.exports = class OptionsManager {
                     alias));
             return ret;
         };
-
-        const processOpts = (name, {
+        const processOpts   = (name, {
             presets,
             plugins,
             ignoreRc
@@ -294,11 +296,14 @@ module.exports = class OptionsManager {
                 //presets all get the same configuration.
                 presets.forEach(preset => {
                     const [presetName, config] = nameConfig(preset);
-                    scan(ignoreRc, pkg, presetName, void(0), config)
+                    if (!seenPresets.has(presetName)) {
+                        seenPresets.add(presetName);
+                        scan(ignoreRc, pkg, presetName, void(0), config)
+                    }
                 });
             }
         };
-        const processEnv  = (prefix = '') => {
+        const processEnv    = (prefix = '') => {
             const pluginsName = `${envPrefix}_${prefix}PLUGINS`;
             const presetsName = `${envPrefix}_${prefix}PRESETS`;
             const plugins     = split(this.env(pluginsName, ''));
@@ -312,7 +317,7 @@ module.exports = class OptionsManager {
                     this.topPackage);
             }
         };
-        const scan        = (ignoreRc, parent, name, options, override) => {
+        const scan          = (ignoreRc, parent, name, options, override) => {
             this.debug('scanning', name);
 
             if (Array.isArray(name)) {
@@ -403,7 +408,7 @@ class Option {
             name  : this.name,
             plugin: typeof this.plugin === 'function' ? (this.plugin.name
                                                          || '[function]')
-                : this.plugin,
+                                                      : this.plugin,
             config: this.config,
             parent: `[${this.parent && this.parent.name}]`
         }
