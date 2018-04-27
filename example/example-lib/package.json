@@ -3,8 +3,7 @@
   "version": "2.1.2",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^2.1.1",
-    "mrbuilder-preset-lib": "^2.1.2"
+    "mrbuilder": "^2.1.1"
   },
   "source": "src",
   "main": "lib",
@@ -16,10 +15,5 @@
     "prepublish": "mrbuilder-babel",
     "test": "mrbuilder-mocha"
   },
-  "license": "0BSD",
-  "mrbuilder": {
-    "presets": [
-      "mrbuilder-preset-lib"
-    ]
-  }
+  "license": "0BSD"
 }

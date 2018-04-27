@@ -25,7 +25,8 @@
       "mrbuilder-plugin-browserslist",
       "mrbuilder-plugin-filetypes",
       "mrbuilder-plugin-fonts",
-      "mrbuilder-plugin-env"
+      "mrbuilder-plugin-env",
+      "mrbuilder-plugin-less"
     ],
     "env": {
       "test": {
@@ -46,7 +47,6 @@
               "useNameHash": "css/[name].[hash].css"
             }
           ],
-          "mrbuilder-plugin-less",
           [
             "mrbuilder-plugin-webpack",
             {

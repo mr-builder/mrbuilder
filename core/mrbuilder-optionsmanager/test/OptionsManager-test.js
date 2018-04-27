@@ -1,13 +1,14 @@
-const OptionsManager                                                 = require(
-    '../src/OptionsManager');
-const { join }                                                       = require(
-    'path');
-const { expect }                                                     = require(
-    'chai');
-const { stringify }                                                  = require(
-    'mrbuilder-utils');
-const { existsSync, readdirSync, statSync, symlinkSync, unlinkSync } = require(
-    'fs');
+const OptionsManager = require('../src/OptionsManager');
+const { join }       = require('path');
+const { expect }     = require('chai');
+const { stringify }  = require('mrbuilder-utils');
+const {
+          existsSync,
+          readdirSync,
+          statSync,
+          symlinkSync,
+          unlinkSync
+      }              = require('fs');
 
 const isDirectory = sourceDir => {
     try {
@@ -104,6 +105,7 @@ describe('mrbuilder-optionsmanager', function () {
             { "index": { "title": "Index" }, "other": { "title": "Other" } });
     });
     newOptionManagerTest('boot', om => expect(om).to.exist);
+
     newOptionManagerTest('with-presets-env', {
         env: {
             TESTER_ENV: 'merge-with-default'
@@ -126,6 +128,37 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.require(om.plugins.get('named-plugin').plugin)()).to.eql(
             'named plugin');
 
+    });
+    newOptionManagerTest("with-multi-env test:other", {
+        env: {
+            TESTER_ENV           : 'test:other',
+            TESTER_NO_AUTOINSTALL: 1,
+        }
+    }, om => {
+        expect(om.enabled('with-multi-env-p1')).to.be.true;
+        expect(om.enabled('with-multi-env-p2')).to.be.true;
+        expect(om.enabled('with-multi-env-p3')).to.be.true;
+    });
+
+    newOptionManagerTest("with-multi-env other", {
+        env: {
+            TESTER_ENV           : 'other',
+            TESTER_NO_AUTOINSTALL: 1,
+        }
+    }, om => {
+        expect(om.enabled('with-multi-env-p1')).to.be.true;
+        expect(om.enabled('with-multi-env-p2')).to.be.false;
+        expect(om.enabled('with-multi-env-p3')).to.be.true;
+    });
+    newOptionManagerTest("with-multi-env other without test", {
+        env: {
+            TESTER_ENV           : 'other:nosuch',
+            TESTER_NO_AUTOINSTALL: 1,
+        }
+    }, om => {
+        expect(om.enabled('with-multi-env-p1')).to.be.true;
+        expect(om.enabled('with-multi-env-p2')).to.be.false;
+        expect(om.enabled('with-multi-env-p3')).to.be.true;
     });
     newOptionManagerTest('with-merged-plugins', {
         env: {

@@ -19,8 +19,12 @@ package.json or `.${prefix}rc` in addition it searches the ENV for
 All plugins within a preset will get the configuration.
 Presets do not get evaluated only searched, so if a project needs
 another projects presets the originating project can include it as
-a preset.   As it is not a plugin (it is not a plugin) but it uses
-plugins this should add some convience.
+a preset.   As it is not a plugin ) but it uses
+plugins this should add some convenience.
+
+## Presets
+Presets are a collection of configured plugins.   The follow the same env
+resolution protocol as plugins
 
 
 ## ${envPrefix}_ENV -

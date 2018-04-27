@@ -10,13 +10,13 @@
   },
   "bin": {
     "mrbuilder": "bin/mrbuilder.js",
-    "mrbuilder-babel": "bin/mrbuilder-babel.js",
+    "mrbuilder-babel": "bin/mrbuilder.js",
     "mrbuilder-clean": "bin/mrbuilder-clean.js",
-    "mrbuilder-karma": "bin/mrbuilder-karma.js",
-    "mrbuilder-mocha": "bin/mrbuilder-mocha.js",
-    "mrbuilder-webpack": "bin/mrbuilder-webpack.js",
-    "mrbuilder-demo": "bin/mrbuilder-demo.js",
-    "mrbuilder-webpack-dev-server": "bin/mrbuilder-webpack-dev-server.js"
+    "mrbuilder-karma": "bin/mrbuilder.js",
+    "mrbuilder-mocha": "bin/mrbuilder.js",
+    "mrbuilder-webpack": "bin/mrbuilder.js",
+    "mrbuilder-demo": "bin/mrbuilder.js",
+    "mrbuilder-webpack-dev-server": "bin/mrbuilder.js"
   },
   "license": "0BSD",
   "engines": {

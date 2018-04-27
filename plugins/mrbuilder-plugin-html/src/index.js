@@ -42,10 +42,11 @@ module.exports = function ({
                                template,
                                filename = '[name].html',
                                elementId = 'content',
-                               exported,
+                               exported = true,
                                analytics,
                                inlineManifest = true,
-                               hot
+                               hot,
+                               indexSeach
                            },
                            webpack, om) {
     const info = this.info || console.log;
@@ -65,15 +66,35 @@ module.exports = function ({
     entry = entry ? parseEntry(entry) : webpack.entry;
 
     if (!entry) {
-
-        entry = webpack.entry = { index: path.join(publicPath, 'index') };
-        try {
-            require.resolve(entry.index);
-        } catch (e) {
-
-            const index = require.resolve(cwd(pkg.main || './src'));
-            this.info(`no entry using "${index}"`);
-            entry = webpack.entry = { index };
+        indexSeach = indexSeach || [publicPath, pkg.source || 'src', pkg.main || 'lib'];
+        if (!indexSeach.find(v => {
+            if (!v) {
+                return false;
+            }
+            try {
+                const index = require.resolve(cwd(v));
+                entry       = webpack.entry = { index };
+                this.info(`no entry using "${index}"`);
+                return true;
+            } catch (e) {
+                (this.debug || console.warn)(`looking for ${v}`, e);
+            }
+        })) {
+            throw new Error(
+                `Sorry but we could not find an entry in '${indexSeach}'
+                
+                 Possible solutions:
+                 1) create a file at 
+                 '${path.join(publicPath || (pkg.source || 'src') || (pkg.main || 'main'), 'index.js')}'
+                 
+                 2) define an entry in package.json
+                 "mrbuilder":{
+                  "plugins":[ "mrbuilder-plugin-webpack", { "index":"./path/to/index"}]
+                 }
+                 3) pass an entry argument to mrbuilder
+                    $ mrbuilder --entry index=./path/to/index.
+                
+                `)
         }
     }
 

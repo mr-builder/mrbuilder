@@ -40,6 +40,7 @@ const mod = function ({
                       }, webpack, om) {
 
     webpack.mode = returnMode(mode);
+    (this.info||console.log)('webpack mode ', webpack.mode);
     //ugh - just do it.
     delete rest.public;
     //If its not in
@@ -54,9 +55,7 @@ const mod = function ({
         Object.assign(webpack, rest);
     }
 
-    if (mode) {
-        webpack.mode = mode;
-    }
+
     if (target) {
         webpack.target = target;
     }

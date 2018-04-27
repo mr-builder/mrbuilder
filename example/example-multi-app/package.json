@@ -62,7 +62,8 @@
         {
           "pages": {
             "index": {
-              "title": "Index"
+              "title": "Index",
+              "exported": false
             },
             "other": {
               "title": "Other",

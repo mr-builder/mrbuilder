@@ -13,6 +13,7 @@
       "mrbuilder-preset-app"
     ],
     "plugins": [
+      "mrbuilder-plugin-react",
       "mrbuilder-plugin-eslint",
       [
         "mrbuilder-plugin-html",

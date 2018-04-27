@@ -1,0 +1,24 @@
+{
+  "name": "with-mulit-env",
+  "version": "1.0.0",
+  "tester": {
+    "plugins":[
+      "with-multi-env-p1"
+    ],
+    "presets": [
+      "with-multi-env-preset"
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          "with-multi-env-preset2"
+        ]
+      },
+      "other": {
+        "plugins": [
+          "with-multi-env-p3"
+        ]
+      }
+    }
+  }
+}

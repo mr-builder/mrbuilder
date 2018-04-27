@@ -84,7 +84,7 @@ module.exports = function reactPlugin({
             }
         }
         const pages     = om.config('mrbuilder-plugin-html.pages');
-        const exported  = om.config('mrbuilder-plugin-html.exported');
+        const exported  = om.config('mrbuilder-plugin-html.exported', true);
         const elementId = om.config('mrbuilder-plugin-html.elementId',
             'content');
 

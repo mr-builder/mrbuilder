@@ -5,9 +5,25 @@
         "mrbuilder-preset-test"
       ]
     },
+    "karma": {
+      "presets": [
+        "mrbuilder-preset-test"
+      ]
+    },
     "app": {
       "presets": [
         "mrbuilder-preset-app"
+      ]
+    },
+    "mocha": {
+      "plugins": [
+        "mrbuilder-plugin-mocha",
+        "mrbuilder-plugin-enzyme"
+      ]
+    },
+    "babel": {
+      "plugins": [
+        "mrbuilder-plugin-babel"
       ]
     },
     "demo": {
@@ -28,6 +44,19 @@
     "analyze": {
       "plugins": [
         "mrbuilder-plugin-analyze"
+      ]
+    },
+    "start": {
+      "plugins": [
+        "mrbuilder-plugin-webpack-dev-server"
+      ],
+      "presets": [
+        "mrbuilder-preset-dev"
+      ]
+    },
+    "development": {
+      "presets": [
+        "mrbuilder-preset-app"
       ]
     },
     "styleguide": {
