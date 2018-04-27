@@ -71,7 +71,7 @@ describe('mrbuilder-optionsmanager', function () {
 
             assert(new OptionsManager(Object.assign({
                 prefix  : 'tester',
-                cwd     : cwd(name),
+                cwd     : cwd(name.split(' ')[0]),
                 env,
                 _require: require,
                 handleNotFound(e, pkg) {
@@ -97,12 +97,29 @@ describe('mrbuilder-optionsmanager', function () {
     });
 
     newOptionManagerTest("with-cli", {
-        argv: argv([`--with-cli-alias-1-other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`])
+        argv: argv(
+            [`--with-cli-alias-1-other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`])
     }, om => {
         expect(om.config('with-cli-alias-1.other')).to.eql(
-            {"index":{"title":"Index"},"other":{"title":"Other"}});
+            { "index": { "title": "Index" }, "other": { "title": "Other" } });
     });
     newOptionManagerTest('boot', om => expect(om).to.exist);
+    newOptionManagerTest('with-presets-env', {
+        env: {
+            TESTER_ENV: 'merge-with-default'
+        }
+    }, om => {
+        expect(om.enabled('preset-env-plugin-1')).to.eql(true);
+        expect(om.enabled('preset-env-plugin-2')).to.eql(true);
+    });
+    newOptionManagerTest('with-presets-env other env', {
+        env: {
+            TESTER_ENV: 'other'
+        }
+    }, om => {
+        expect(om.enabled('preset-env-plugin-1')).to.eql(true);
+        expect(om.enabled('preset-env-plugin-2')).to.eql(false);
+    });
 
     newOptionManagerTest('with-named-plugin', om => {
         expect(om.enabled('named-plugin')).to.eql(true);

@@ -16,7 +16,6 @@ const handleNotFoundFail             = (e, pkg) => {
 };
 
 
-
 module.exports = class OptionsManager {
 
 
@@ -38,8 +37,8 @@ module.exports = class OptionsManager {
                     handleNotFound = handleNotFoundTryInstall
                 } = {}) {
         const seenPresets = new Set();
-        this.plugins = new Map();
-        this.help    = _help(this);
+        this.plugins      = new Map();
+        this.help         = _help(this);
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
@@ -172,10 +171,10 @@ module.exports = class OptionsManager {
             const envOverride = pluginConfig.env
                                 && pluginConfig.env[ENV] || {};
             return {
-                presets : select(envOverride.presets, pluginConfig.presets),
-                options : select(envOverride.options, pluginConfig.options),
+                presets : mergePlugins(envOverride.presets, pluginConfig.presets),
                 plugins : mergePlugins(envOverride.plugins,
                     pluginConfig.plugins),
+                options : select(envOverride.options, pluginConfig.options),
                 ignoreRc: select(envOverride.ignoreRc, pluginConfig.ignoreRc),
                 plugin  : select(envOverride.plugin, pluginConfig.plugin),
                 alias   : pluginConfig.alias
@@ -280,7 +279,14 @@ module.exports = class OptionsManager {
 
             //install first but don't load first.
             if (presets) {
-                presets.forEach(p => resolvePkgJson(nameConfig(p)[0]));
+
+                presets.forEach(p => {
+                    const name = nameConfig(p)[0];
+                    //just do the check, the add happens later.
+                    if (!seenPresets.has(name)) {
+                        resolvePkgJson(name);
+                    }
+                });
             }
 
             if (plugins) {

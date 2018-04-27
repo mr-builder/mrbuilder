@@ -16,14 +16,6 @@ function chunks({
                             maxInitialRequests: 3,
                             priority          : -20,
                             reuseExistingChunk: true,
-                        },
-
-                        commons: {
-                            name              : 'commons',
-                            chunks            : 'initial',
-                            minChunks         : 2,
-                            priority          : -5,
-                            reuseExistingChunk: true,
                         }
                     }
 
@@ -87,6 +79,7 @@ function chunks({
         if (commons === true) {
             commons = 'commons';
         }
+
         cacheGroups.commons = {
             name              : commons,
             chunks            : 'initial',

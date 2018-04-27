@@ -1,0 +1,16 @@
+{
+  "name": "with-presets-env",
+  "version": 1,
+  "tester": {
+    "presets": [
+      "preset-env-0"
+    ],
+    "env": {
+      "merge-with-default": {
+        "presets": [
+          "preset-env-1"
+        ]
+      }
+    }
+  }
+}
