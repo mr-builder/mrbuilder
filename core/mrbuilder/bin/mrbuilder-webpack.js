@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+if (require('in-publish').inInstall()) {
+    process.exit(0);
+}
+
 const { env, argv } = process;
 //This allows someone to define internal presets to empty
 // to prevent any presets to be used.

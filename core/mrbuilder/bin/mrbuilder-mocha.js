@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+if (require('in-publish').inInstall()) {
+    process.exit(0);
+}
+
 const { env } = process;
 
 env.MRBUILDER_INTERNAL_PLUGINS =

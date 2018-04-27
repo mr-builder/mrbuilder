@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+//for better yarn/npm compatibility.
+if (require('in-publish').inInstall()) {
+    process.exit(0);
+}
 const { env, argv } = process;
 const profile       = env.MRBUILDER_PROFILE || ((idx) => {
                                                 if (idx > -1) {
@@ -93,6 +97,7 @@ switch (profile) {
         script = "./mrbuilder-babel";
         break;
     case "build":
+    case "prepublishOnly":
     case "prepublish":
     case "production":
         if (!env.NODE_ENV) {

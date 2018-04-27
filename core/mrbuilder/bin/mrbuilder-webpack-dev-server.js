@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+if (require('in-publish').inInstall()) {
+    process.exit(0);
+}
+
 const { env, argv } = process;
 if (!('MRBUILDER_INTERNAL_PRESETS' in env)) {
     //make webpack-dev-server has same behaviour as webpack.

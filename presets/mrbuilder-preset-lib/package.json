@@ -34,6 +34,7 @@
           "useStyleLoader": false
         }
       ],
+      "mrbuilder-plugin-less",
       [
         "mrbuilder-plugin-uglify",
         false
@@ -47,10 +48,12 @@
         {
           "externalizePeers": true,
           "libraryTarget": "umd",
-          "useExternals": true
+          "useExternals": true,
+          "devtool": "source-map",
+          "mode": "none",
+          "globalObject": "this"
         }
-      ],
-      "mrbuilder-plugin-less"
+      ]
     ],
     "env": {
       "test": {

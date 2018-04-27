@@ -3,6 +3,7 @@
   "version": "2.1.1",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
+    "in-publish": "^2.0.0",
     "mrbuilder-optionsmanager": "^2.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
