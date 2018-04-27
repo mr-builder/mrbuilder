@@ -7,13 +7,14 @@ const { info }           = om.plugins.get('mrbuilder-plugin-css');
 const mrb                = (v) => om.config('mrbuilder-plugin-css' + (v
                                                                       ? `.${v}`
                                                                       : ''));
-let useNameHash          = mrb('useNameHash') || mrb('filename');
+let useNameHash          = mrb('useNameHash');
+let filename             = mrb('filename');
 let useStyleLoaderLoader = mrb('useStyleLoader');
 let publicPath           = mrb('public');
 
-let isDevServer = om.enabled('mrbuilder-plugin-webpack-dev-server');
-let isLibrary   = om.config('mrbuilder-plugin-webpack.library');
-
+let isDevServer   = om.enabled('mrbuilder-plugin-webpack-dev-server');
+let isLibrary     = om.config('mrbuilder-plugin-webpack.library');
+let chunkFilename = mrb('chunkFilename', `[name].style.css`);
 if (useNameHash == null || useNameHash === true) {
     if (isLibrary) {
         useNameHash = 'style.css';
@@ -27,7 +28,10 @@ if (useNameHash == null || useNameHash === true) {
 if (isDevServer) {
     useNameHash = useNameHash.replace('[hash].', '');
 }
-info('naming style sheet', useNameHash);
+if (!filename) {
+    filename = useNameHash;
+}
+info('naming style sheet', filename);
 //So if its not turned on and its Karma than let's say that
 // we don't use it.
 if (useStyleLoaderLoader == null && isDevServer) {
@@ -42,8 +46,8 @@ if (!useStyleLoaderLoader) {
     module.exports = function useStyleExtractText(webpack, ...args) {
         const use      = [MiniCssExtractPlugin.loader, ...args];
         const miniOpts = {
-            filename     : useNameHash,
-            chunkFilename: `[name].style.css`
+            filename,
+            chunkFilename
         };
         if (publicPath) {
             miniOpts.publicPath = publicPath;

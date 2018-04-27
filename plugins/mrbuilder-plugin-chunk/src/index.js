@@ -2,28 +2,39 @@ function chunks({
                     filename = '[name].[chunkhash].js',
                     manifest = 'manifest',
                     vendors = 'vendors',
+                    styles = 'styles',
+                    commons = 'commons',
                     excludes = [],
                     publicPath,
                     crossOriginLoading,
+                    cacheGroups = {
+                        default: {
+                            chunks            : 'async',
+                            minSize           : 30000,
+                            minChunks         : 2,
+                            maxAsyncRequests  : 5,
+                            maxInitialRequests: 3,
+                            priority          : -20,
+                            reuseExistingChunk: true,
+                        },
+
+                        commons: {
+                            name              : 'commons',
+                            chunks            : 'initial',
+                            minChunks         : 2,
+                            priority          : -5,
+                            reuseExistingChunk: true,
+                        }
+                    }
 
                 },
                 webpack) {
     const info = this.info || console.log;
-    if (this.isKarma) {
-        info('do not run chunk in test mode');
+    if (this.isKarma || this.isDevServer) {
+        info('do not run chunk in test or devServer mode');
         return;
     }
-    const includes = [];
-    if (manifest) {
-        includes.push(manifest);
-    }
-    if (vendors) {
-        includes.push(vendors);
-    }
 
-    if (this.isDevServer) {
-        filename = filename.replace('[chunkhash].', '');
-    }
     if (!webpack.output) {
         webpack.output = {};
     }
@@ -47,7 +58,54 @@ function chunks({
         Object.assign({}, webpack.optimization.runtimeChunk, {
             name: manifest,
         });
-
+    if (vendors) {
+        if (vendors === true) {
+            vendors = 'vendors';
+        }
+        cacheGroups.vendor = {
+            name              : vendors,
+            enforce           : true,
+            test(module) {
+                for (let i = 0, l = excludes.length; i < l; i++) {
+                    if (typeof excludes[i].test === 'function') {
+                        return excludes[i].test(module.context);
+                    } else if (excludes[i] === module.context) {
+                        return false;
+                    }
+                }
+                // this assumes your vendor imports exist in the
+                // node_modules directory
+                return module.context && module.context.indexOf(
+                    'node_modules')
+                       !== -1;
+            },
+            priority          : -10,
+            reuseExistingChunk: true,
+        };
+    }
+    if (commons) {
+        if (commons === true) {
+            commons = 'commons';
+        }
+        cacheGroups.commons = {
+            name              : commons,
+            chunks            : 'initial',
+            minChunks         : 2,
+            priority          : -5,
+            reuseExistingChunk: true,
+        };
+    }
+    if (styles) {
+        if (styles === true) {
+            styles = 'styles';
+        }
+        cacheGroups.styles = {
+            name   : styles,
+            test   : /\.css$/,
+            chunks : 'all',
+            enforce: true
+        };
+    }
     webpack.optimization.splitChunks =
         Object.assign({}, webpack.optimization.splitChunks, {
             chunks            : 'all',
@@ -55,52 +113,7 @@ function chunks({
             maxAsyncRequests  : Infinity,
             maxInitialRequests: Infinity,
             name              : true,
-            cacheGroups       : {
-
-                default: {
-                    chunks            : 'async',
-                    minSize           : 30000,
-                    minChunks         : 2,
-                    maxAsyncRequests  : 5,
-                    maxInitialRequests: 3,
-                    priority          : -20,
-                    reuseExistingChunk: true,
-                },
-                vendor : {
-                    name              : vendors,
-                    enforce           : true,
-                    test(module) {
-                        for (let i = 0, l = excludes.length; i < l; i++) {
-                            if (typeof excludes[i].test === 'function') {
-                                return excludes[i].test(module.context);
-                            } else if (excludes[i] === module.context) {
-                                return false;
-                            }
-                        }
-                        // this assumes your vendor imports exist in the
-                        // node_modules directory
-                        return module.context && module.context.indexOf(
-                            'node_modules')
-                               !== -1;
-                    },
-                    priority          : -10,
-                    reuseExistingChunk: true,
-                },
-
-                commons: {
-                    name              : 'commons',
-                    chunks            : 'initial',
-                    minChunks         : 2,
-                    priority          : -5,
-                    reuseExistingChunk: true,
-                },
-                styles: {
-                    name: 'styles',
-                    test: /\.css$/,
-                    chunks: 'all',
-                    enforce: true
-                }
-            }
+            cacheGroups
         });
 
 
@@ -110,39 +123,6 @@ function chunks({
         }
         webpack.optimization.splitChunks.cacheGroups.vendors = false;
     }
-    /* if (manifest) {
-         //CommonChunksPlugin will now extract all the common modules from
-         // vendor and main bundles
-         webpack.plugins.push(new CommonsChunkPlugin({
-             publicPath,
-             filename,
-             name: manifest
-         }));
-     }
-     if (vendors) {
-         webpack.plugins.push(
-             new CommonsChunkPlugin({
-                 name: vendors,
-                 filename,
-                 publicPath,
-                 minChunks(module) {
-                     for (let i = 0, l = excludes.length; i < l; i++) {
-                         if (typeof excludes[i].test == 'function') {
-                             return excludes[i].test(module.context);
-                         } else if (excludes[i] === module.context) {
-                             return false;
-                         }
-                     }
-                     // this assumes your vendor imports exist in the
-                     // node_modules directory
-                     return module.context && module.context.indexOf(
-                         'node_modules')
-                            !== -1;
-                 }
-             }));
-
-     }*/
-
 
 }
 
