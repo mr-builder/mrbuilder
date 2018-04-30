@@ -89,35 +89,7 @@ switch (profile) {
     case "help":
         help('This helpful message');
         break;
-    case "mocha":
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = 'test';
-        }
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = profile;
-        }
-        script = 'mocha';
-        break;
-    case "karma":
-    case "test":
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = 'test';
-        }
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = 'test';
-        }
 
-        script = 'karma';
-        break;
-    case "babel":
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = 'production';
-        }
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = profile;
-        }
-        script = 'babel';
-        break;
     case "webpack":
     case "build":
     case "prepublishOnly":
@@ -136,12 +108,6 @@ switch (profile) {
             }
         }
         break;
-    case "analyze":
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = profile;
-        }
-        break;
-
     case "server":
     case "start":
     case "dev-server":
@@ -160,14 +126,41 @@ switch (profile) {
     case "lib":
     case "demo":
     case "app":
+    case "mocha":
+    case "karma":
+    case "test":
+    case "babel":
+    case "analyze":
+
     default: {
-        const parts = profile.split(':', 2);
-        if (parts[0] === 'start' || parts[1] === 'start') {
+        const includes = Array.prototype.includes.bind(profile.split(':'));
+        if (includes('build')) {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'production';
+            }
+            script = 'webpack';
+        } else if (includes('start')) {
             if (!env.NODE_ENV) {
                 env.NODE_ENV = 'development';
             }
             script = 'webpack-dev-server'
+        } else if (includes('test')) {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'test';
+            }
+            script = 'karma'
+        } else if (includes('mocha')) {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'test';
+            }
+            script = 'mocha'
+        } else if (includes('babel')) {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'production';
+            }
+            script = 'babel';
         }
+
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = profile;
         }
@@ -182,6 +175,7 @@ if (!global._MRBUILDER_OPTIONS_MANAGER) {
 }
 
 const {
-          MRBUILDER_SCRIPT: endScript = script
+          MRBUILDER_SCRIPT: endScript = `mrbuilder-plugin-${script}/bin/cli`
       } = env;
-require(`mrbuilder-plugin-${endScript}/bin/cli`);
+
+require(endScript);

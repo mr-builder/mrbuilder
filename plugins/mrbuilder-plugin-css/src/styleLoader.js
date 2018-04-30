@@ -39,7 +39,7 @@ if (useStyleLoaderLoader == null && types.isDevServer) {
 let addedPlugin = false;
 
 if (!useStyleLoaderLoader) {
-    info('extracting text', useStyleLoaderLoader);
+    info('extracting text', filename);
     const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
     module.exports = function useStyleExtractText(webpack, ...args) {
