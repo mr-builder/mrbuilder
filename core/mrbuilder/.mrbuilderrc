@@ -1,13 +1,18 @@
 {
+  "plugins": [
+    "mrbuilder-plugin-babel"
+  ],
   "env": {
     "test": {
       "presets": [
-        "mrbuilder-preset-test"
+        "mrbuilder-preset-test",
+        "mrbuilder-preset-app"
       ]
     },
     "karma": {
       "presets": [
-        "mrbuilder-preset-test"
+        "mrbuilder-preset-test",
+        "mrbuilder-preset-app"
       ]
     },
     "app": {

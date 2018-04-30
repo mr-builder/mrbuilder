@@ -30,9 +30,9 @@
       "mainFields": "Sets main fields for easier debugging"
     },
     "plugins": [
-      "mrbuilder-plugin-less",
       "mrbuilder-plugin-browserslist",
       "mrbuilder-plugin-webpack",
+      "mrbuilder-plugin-enzyme",
       "mrbuilder-plugin-mocha"
     ]
   },

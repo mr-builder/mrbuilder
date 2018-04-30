@@ -17,17 +17,21 @@ const profile       = env.MRBUILDER_PROFILE || ((idx) => {
                                                     }
                                                 }
                                             })(argv.slice(2).findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
-                      || argv[1].replace(/^(.*\/)?mrbuilder(-?(.*)(\.js))?$/, '$2')
-                      || env['npm_lifecycle_event'] ;
+                      || argv[1].replace(
+        /^(?:.*\/)?mrbuilder(?:-?(.*)(?:\.js)?)?$/, '$1')
+                      || env['npm_lifecycle_event'];
 
-if (!env.MRBUILDER_INTERNAL_PRESETS){
+
+if (!env.MRBUILDER_INTERNAL_PRESETS) {
     env.MRBUILDER_INTERNAL_PRESETS = 'mrbuilder';
 }
+let script = 'webpack';
 
 function help(message) {
     console.warn(`
     ${message}
-     $ MRBUILDER_PROFILE=${profile || 'test'} ${process.argv[0]} ${process.argv[1]}
+     $ MRBUILDER_PROFILE=${profile
+                           || 'test'} ${process.argv[0]} ${process.argv[1]}
     
      Supported profile's are
 
@@ -80,11 +84,13 @@ if (!profile) {
     help(`Please either run from a scripts in package.json or set the
     MRBUILDER_PROFILE variable`);
 }
+
 switch (profile) {
     case "help":
         help('This helpful message');
         break;
     case "mocha":
+        script = 'mocha';
     case "karma":
     case "test":
         if (!env.NODE_ENV) {
@@ -93,14 +99,18 @@ switch (profile) {
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = profile;
         }
+        if (!script) {
+            script = 'karma';
+        }
         break;
     case "babel":
-        if (!env.NODE_ENV){
+        if (!env.NODE_ENV) {
             env.NODE_ENV = 'production';
         }
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = profile;
         }
+        script = 'babel';
         break;
     case "webpack":
     case "build":
@@ -137,6 +147,7 @@ switch (profile) {
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = 'start:app';
         }
+        script = 'webpack-dev-server';
         break;
     }
     //just for documentation.
@@ -158,7 +169,6 @@ switch (profile) {
 }
 
 
-
 const om = global._MRBUILDER_OPTIONS_MANAGER
            || (global._MRBUILDER_OPTIONS_MANAGER =
         new (require('mrbuilder-optionsmanager'))({
@@ -166,16 +176,4 @@ const om = global._MRBUILDER_OPTIONS_MANAGER
         }));
 
 
-if (om.enabled('mrbuilder-plugin-webpack-dev-server')) {
-    require('mrbuilder-plugin-webpack-dev-server/bin/cli');
-} else if (om.enabled('mrbuilder-plugin-karma')) {
-    require('mrbuilder-plugin-karma/bin/cli');
-} else if (om.enabled('mrbuilder-plugin-webpack')) {
-    require('mrbuilder-plugin-webpack/bin/cli');
-} else if (om.enabled('mrbuilder-plugin-mocha')) {
-    require('mrbuilder-plugin-mocha/bin/cli');
-} else if (om.enabled('mrbuilder-plugin-babel')) {
-    require('mrbuilder-plugin-babel/bin/cli');
-} else {
-    help(`could not find a script to execute for profile '${profile}'.`);
-}
+require(`mrbuilder-plugin-${script}/bin/cli`);

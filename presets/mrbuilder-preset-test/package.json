@@ -6,13 +6,15 @@
     "mrbuilder-plugin-enzyme": "^2.1.1",
     "mrbuilder-plugin-karma": "^2.1.2",
     "mrbuilder-plugin-mocha": "^2.1.1",
-    "mrbuilder-plugin-webpack": "^2.1.1"
+    "mrbuilder-plugin-webpack": "^2.1.1",
+    "mrbuilder-plugin-react": "^2.1.1"
   },
   "peerDependencies": {
     "mrbuilder": "2.x"
   },
   "mrbuilder": {
     "plugins": [
+      "mrbuilder-plugin-react",
       [
         "mrbuilder-plugin-webpack",
         {

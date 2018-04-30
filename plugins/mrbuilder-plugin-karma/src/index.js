@@ -18,15 +18,27 @@ module.exports = function ({
                                include = [cwd('src'), cwd('public')],
                                testIndex = resolve(__dirname, '..',
                                    'test-index.js')
-                           }, webpack) {
+                           }, webpack, om) {
 
     const info = (this.info || console.log);
     testDir    = enhancedResolve(testDir);
-
+    include.push(testDir);
     const packageJson                       = pkg();
     webpack.resolve.alias[packageJson.name] =
         cwd(packageJson.source || packageJson.main
             || 'src');
+
+    if (om.enabled('mrbuilder-plugin-babel')) {
+        webpack.module.rules.unshift({
+            test   : /\.jsx?$/,
+            // instrument only testing sources with Istanbul
+            include: [testDir],
+            use    : {
+                loader : 'babel-loader',
+                options: require('mrbuilder-plugin-babel/babel-config')
+            }
+        });
+    }
 
     if (useCoverage) {
         info(`enabling code coverage for karma`);

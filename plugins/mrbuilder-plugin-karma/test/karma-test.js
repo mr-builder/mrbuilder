@@ -1,6 +1,6 @@
 const mod        = require('../src/');
 const { expect } = require('chai');
-
+const Mock = require('mrbuilder-optionsmanager/src/MockOptionsManager');
 describe('mrbuilder-plugin-karma', function () {
     it('should load', function () {
         const webpack = {
@@ -10,7 +10,7 @@ describe('mrbuilder-plugin-karma', function () {
             }
         };
 
-        mod.call({info(){}, warn(){}}, {}, webpack);
+        mod.call({info(){}, warn(){}}, {}, webpack, new Mock());
 
         expect(webpack.plugins).to.have.length(1);
         expect(webpack.node).to.eql({

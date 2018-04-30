@@ -21,7 +21,7 @@
     "mrbuilder": "2.x"
   },
   "devDependencies": {
-    "lerna": "2.8.0",
+    "lerna": "2.11.0",
     "mrbuilder": "^2.1.1"
   },
   "license": "0BSD"
