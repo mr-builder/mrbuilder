@@ -1,20 +1,20 @@
 {
   "name": "mrbuilder-preset-lib",
-  "version": "2.1.2",
+  "version": "3.0.0-0",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^2.1.1",
-    "mrbuilder-plugin-browserslist": "^2.1.1",
-    "mrbuilder-plugin-css": "^2.1.1",
-    "mrbuilder-plugin-env": "^2.1.1",
-    "mrbuilder-plugin-enzyme": "^2.1.1",
-    "mrbuilder-plugin-eslint": "^2.1.1",
-    "mrbuilder-plugin-filetypes": "^2.1.1",
-    "mrbuilder-plugin-fonts": "^2.1.2",
-    "mrbuilder-plugin-hot": "^2.1.1",
-    "mrbuilder-plugin-html": "^2.1.1",
-    "mrbuilder-plugin-react": "^2.1.1",
-    "mrbuilder-plugin-webpack": "^2.1.1",
-    "mrbuilder-plugin-webpack-dev-server": "^2.1.1"
+    "mrbuilder-plugin-babel": "^3.0.0-0",
+    "mrbuilder-plugin-browserslist": "^3.0.0-0",
+    "mrbuilder-plugin-css": "^3.0.0-0",
+    "mrbuilder-plugin-env": "^3.0.0-0",
+    "mrbuilder-plugin-enzyme": "^3.0.0-0",
+    "mrbuilder-plugin-eslint": "^3.0.0-0",
+    "mrbuilder-plugin-filetypes": "^3.0.0-0",
+    "mrbuilder-plugin-fonts": "^3.0.0-0",
+    "mrbuilder-plugin-hot": "^3.0.0-0",
+    "mrbuilder-plugin-html": "^3.0.0-0",
+    "mrbuilder-plugin-react": "^3.0.0-0",
+    "mrbuilder-plugin-webpack": "^3.0.0-0",
+    "mrbuilder-plugin-webpack-dev-server": "^3.0.0-0"
   },
   "peerDependencies": {
     "mrbuilder": "2.x"
@@ -30,10 +30,11 @@
       [
         "mrbuilder-plugin-css",
         {
-          "useNameHash": "style.css",
+          "useNameHash": false,
           "useStyleLoader": false
         }
       ],
+      "mrbuilder-plugin-less",
       [
         "mrbuilder-plugin-uglify",
         false
@@ -47,10 +48,12 @@
         {
           "externalizePeers": true,
           "libraryTarget": "umd",
-          "useExternals": true
+          "useExternals": true,
+          "devtool": "source-map",
+          "mode": "none",
+          "globalObject": "this"
         }
-      ],
-      "mrbuilder-plugin-less"
+      ]
     ],
     "env": {
       "test": {

@@ -10,7 +10,8 @@ const select = module.exports.select = (...args) => {
 
 const split = module.exports.split =
     (value = []) => (Array.isArray(value) ? value
-        : value.split(/,\s*/)).filter(Boolean);
+                                          : value.split(/,\s*/)).filter(
+        Boolean);
 
 const nameConfig = module.exports.nameConfig = (value) => {
     if (Array.isArray(value)) {
@@ -41,29 +42,25 @@ const mergeOptions = module.exports.mergeOptions = (options) => {
 
 const asArray = module.exports.asArray = v => Array.isArray(v) ? v : [v];
 
-const mergePlugins = module.exports.mergePlugins =
-    (envPlugins, basePlugins = []) => {
-        if (!envPlugins) {
-            return basePlugins;
+const mergePlugins = module.exports.mergePlugins = (...mplugins) => {
+    if (!mplugins.length) {
+        return mplugins;
+    }
+    const m = mplugins.reduce((ret, plugin) => {
+        plugin      = asArray(plugin);
+        const found = ret.findIndex(v => v[0] === plugin[0]);
+        if (found === -1) {
+            ret.push(plugin);
         }
-        envPlugins  = envPlugins.map(asArray);
-        basePlugins = basePlugins.map(function (plugin) {
-            plugin      = asArray(plugin);
-            const found = envPlugins.findIndex(v => v[0] === plugin[0]);
-            if (found > -1) {
-                return envPlugins.splice(found, 1)[0];
-            }
-            return plugin;
-        });
-
-        basePlugins.push(...envPlugins);
-        return basePlugins;
-    };
+        return ret;
+    }, []);
+    return m;
+};
 
 const camel = module.exports.camel =
     (v = '', idx) => !v ? v : `${idx > 0 ? v[0].toUpperCase()
-        : v[0].toLowerCase()}${v.substring(1)
-                                .toLowerCase()}`;
+                                         : v[0].toLowerCase()}${v.substring(1)
+                                                                 .toLowerCase()}`;
 
 const parse = module.exports.parse = (value, name) => {
     try {
@@ -126,7 +123,7 @@ const mergeArgs = module.exports.mergeArgs = (plugin, argv = process.argv) => {
                     }
                     set(ret, key,
                         collect.length === 1 ? collect[0] : collect.length === 0
-                            ? true : collect);
+                                                            ? true : collect);
                 }
 
                 continue;
@@ -194,7 +191,8 @@ const mergeAliasArgs = module.exports.mergeAliasArgs =
                         set(options, key,
                             collect.length === 1 ? collect[0] : collect.length
                                                                 === 0
-                                ? true : collect);
+                                                                ? true
+                                                                : collect);
 
                     }
                     continue;
@@ -207,12 +205,12 @@ const mergeAliasArgs = module.exports.mergeAliasArgs =
     };
 
 const mergeAlias = module.exports.mergeAlias = (alias = [],
-                             aliasObj,
-                             process) => {
+                                                aliasObj,
+                                                process) => {
 
     const options = {};
     const aliases = (Array.isArray(alias) ? alias
-        : Object.keys(alias));
+                                          : Object.keys(alias));
 
     //already got the value;
 
@@ -227,4 +225,29 @@ const mergeAlias = module.exports.mergeAlias = (alias = [],
 };
 
 
+const unique$reduce = (ret, v) => {
+    if (!(v == null || ret.includes(v))) {
+        ret.push(v);
+    }
+    return ret;
+};
 
+const unique = module.exports.unique = arr => arr.reduce(unique$reduce, []);
+
+const resolveEnv = module.exports.resolveEnv = (envName, type, config = {}) => {
+    const ret = [];
+
+    if (envName && config.env) {
+        const envs = unique([envName, ...envName.split(':')]);
+        for (let i = 0, l = envs.length; i < l; i++) {
+            const e = config.env[envs[i]];
+            if (e && e[type]) {
+                ret.push(...e[type]);
+            }
+        }
+    }
+    if (config[type]) {
+        ret.push(...config[type]);
+    }
+    return ret;
+};

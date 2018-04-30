@@ -22,3 +22,4 @@ This plugin is a core plugin that provides the root of the [webpack](https://web
 | public        | string     | ""           | The "publicPath" options in webpack|
 | useTarget     | string     | "web"        | The target property in webpac     |
 | noParse       | regex      |              | A pattern for webpack not to parse|
+| globalThis    | string     |              | The object to use for global, 'this' works server and browser |

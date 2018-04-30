@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+//for better yarn/npm compatibility.
+if (require('in-publish').inInstall()) {
+    process.exit(0);
+}
+
 const { env, argv } = process;
 const profile       = env.MRBUILDER_PROFILE || ((idx) => {
                                                 if (idx > -1) {
@@ -12,13 +17,21 @@ const profile       = env.MRBUILDER_PROFILE || ((idx) => {
                                                     }
                                                 }
                                             })(argv.slice(2).findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
+                      || argv[1].replace(
+        /^(?:.*\/)?mrbuilder(?:-?(.*)(?:\.js)?)?$/, '$1')
                       || env['npm_lifecycle_event'];
+
+
+if (!env.MRBUILDER_INTERNAL_PRESETS) {
+    env.MRBUILDER_INTERNAL_PRESETS = 'mrbuilder';
+}
+let script = 'webpack';
 
 function help(message) {
     console.warn(`
     ${message}
-    ${profile}
-     $ MRBUILDER_PROFILE=test ${process.env[1]}
+     $ MRBUILDER_PROFILE=${profile
+                           || 'test'} ${process.argv[0]} ${process.argv[1]}
     
      Supported profile's are
 
@@ -71,65 +84,82 @@ if (!profile) {
     help(`Please either run from a scripts in package.json or set the
     MRBUILDER_PROFILE variable`);
 }
-let script;
+
 switch (profile) {
     case "help":
         help('This helpful message');
+        break;
     case "mocha":
-        script = "./mrbuilder-mocha";
+        if (!env.NODE_ENV) {
+            env.NODE_ENV = 'test';
+        }
+        if (!env.MRBUILDER_ENV) {
+            env.MRBUILDER_ENV = profile;
+        }
+        script = 'mocha';
+        break;
     case "karma":
     case "test":
         if (!env.NODE_ENV) {
             env.NODE_ENV = 'test';
         }
         if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = env.NODE_ENV;
+            env.MRBUILDER_ENV = profile;
         }
-        if (!script) {
-            script = "./mrbuilder-karma";
-        }
+
+            script = 'karma';
         break;
     case "babel":
-        script = "./mrbuilder-babel";
+        if (!env.NODE_ENV) {
+            env.NODE_ENV = 'production';
+        }
+        if (!env.MRBUILDER_ENV) {
+            env.MRBUILDER_ENV = profile;
+        }
+        script = 'babel';
         break;
+    case "webpack":
     case "build":
+    case "prepublishOnly":
     case "prepublish":
     case "production":
         if (!env.NODE_ENV) {
             env.NODE_ENV = 'production';
         }
         if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = env.NODE_ENV;
+            env.MRBUILDER_ENV = 'production';
+
+            if (argv.slice(2).find(v => /--(app|demo)(=.*)?$/.test(v))) {
+                env.MRBUILDER_ENV = `${env.MRBUILDER_ENV}:app`;
+            } else {
+                env.MRBUILDER_ENV = `${env.MRBUILDER_ENV}:lib`;
+            }
         }
-        script = "./mrbuilder-webpack";
         break;
     case "analyze":
-        env.MRBUILDER_INTERNAL_PLUGINS =
-            `mrbuilder-plugin-analyze,mrbuilder-webpack-dev-server,${env.MRBUILDER_INTERNAL_PLUGINS
-                                                                     || ''}`;
-        script                         = "./mrbuilder-webpack";
+        if (!env.MRBUILDER_ENV) {
+            env.MRBUILDER_ENV = profile;
+        }
         break;
 
     case "server":
     case "start":
     case "dev-server":
+    case "webpack-dev-server":
     case "development": {
         if (!env.NODE_ENV) {
             env.NODE_ENV = 'development';
         }
         if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = env.NODE_ENV;
+            env.MRBUILDER_ENV = 'start:app';
         }
-        script = './mrbuilder-webpack-dev-server';
+        script = 'webpack-dev-server';
         break;
     }
     //just for documentation.
+    case "lib":
     case "demo":
-    case "demo:start":
-    case "start:demo":
     case "app":
-    case "app:start":
-    case "start:app":
     default: {
         const parts      = profile.split(':', 2);
         const [p, start] = parts[0] === 'start' ? [parts[1], parts[0]] : parts;
@@ -137,22 +167,19 @@ switch (profile) {
             if (!env.NODE_ENV) {
                 env.NODE_ENV = 'development';
             }
-            script = "./mrbuilder-webpack-dev-server";
-        } else {
-            if (!env.NODE_ENV) {
-                env.NODE_ENV = 'production';
-            }
-            script = "./mrbuilder-webpack";
         }
         if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = p || env.NODE_ENV;
-        }
-        if (script) {
-            console.log(
-                `starting mrbuilder using profile "${env.MRBUILDER_ENV}" NODE_ENV "${env.NODE_ENV}" and script "${script}"`)
-        } else {
-            help(`not sure what to do`);
+            env.MRBUILDER_ENV = p || profile;
         }
     }
 }
-require(script);
+
+
+const om = global._MRBUILDER_OPTIONS_MANAGER
+           || (global._MRBUILDER_OPTIONS_MANAGER =
+        new (require('mrbuilder-optionsmanager'))({
+            prefix: 'mrbuilder', _require: require
+        }));
+
+
+require(`mrbuilder-plugin-${script}/bin/cli`);

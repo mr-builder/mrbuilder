@@ -1,8 +1,10 @@
-const { camelCased, cwd, resolveMap, enhancedResolve, regexOrFuncApply } = require(
-    'mrbuilder-utils');
-const DEFAULT_MAIN_FIELDS                                                = ['browser', 'main'];
-const SOURCE_MAIN_FIELDS                                                 = ['source', 'browser', 'main'];
-const returnMode = (val=process.env.NODE_ENV) => {
+const {
+          camelCased, cwd, resolveMap,
+          enhancedResolve, regexOrFuncApply
+      }                   = require('mrbuilder-utils');
+const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
+const SOURCE_MAIN_FIELDS  = ['source', 'browser', 'main'];
+const returnMode          = (val = process.env.NODE_ENV) => {
     switch (val) {
         case "development":
         case "test":
@@ -31,7 +33,7 @@ const mod = function ({
                           externals,
                           devtool = 'source-maps',
                           filename = '[name].[hash].js',
-
+                          globalObject,
                           alias = [],
                           node,
                           noParse,
@@ -40,6 +42,7 @@ const mod = function ({
                       }, webpack, om) {
 
     webpack.mode = returnMode(mode);
+    (this.info || console.log)('webpack mode ', webpack.mode);
     //ugh - just do it.
     delete rest.public;
     //If its not in
@@ -48,15 +51,14 @@ const mod = function ({
         this will make your configuration bound to whatever version of webpack you are using. 
         mrbuilder will not be able to manage the version differences for you.
         
-        The mrbuilder unsupported keys are ${Object.keys(rest)}
+        The mrbuilder unsupported keys are '${Object.keys(rest)}'
                 
         `);
         Object.assign(webpack, rest);
     }
-    if (mode) {
-        webpack.mode = mode;
-    }
-    if (target){
+
+
+    if (target) {
         webpack.target = target;
     }
     if (!webpack.resolve) {
@@ -96,6 +98,9 @@ const mod = function ({
         }
     }
     const output = webpack.output || (webpack.output = {});
+    if (globalObject) {
+        output.globalObject = globalObject;
+    }
 
     if (outputPath) {
         //webpack wants an absolute path here.

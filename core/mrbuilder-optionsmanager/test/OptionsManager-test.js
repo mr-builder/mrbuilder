@@ -1,13 +1,14 @@
-const OptionsManager                                                 = require(
-    '../src/OptionsManager');
-const { join }                                                       = require(
-    'path');
-const { expect }                                                     = require(
-    'chai');
-const { stringify }                                                  = require(
-    'mrbuilder-utils');
-const { existsSync, readdirSync, statSync, symlinkSync, unlinkSync } = require(
-    'fs');
+const OptionsManager = require('../src/OptionsManager');
+const { join }       = require('path');
+const { expect }     = require('chai');
+const { stringify }  = require('mrbuilder-utils');
+const {
+          existsSync,
+          readdirSync,
+          statSync,
+          symlinkSync,
+          unlinkSync
+      }              = require('fs');
 
 const isDirectory = sourceDir => {
     try {
@@ -71,7 +72,7 @@ describe('mrbuilder-optionsmanager', function () {
 
             assert(new OptionsManager(Object.assign({
                 prefix  : 'tester',
-                cwd     : cwd(name),
+                cwd     : cwd(name.split(' ')[0]),
                 env,
                 _require: require,
                 handleNotFound(e, pkg) {
@@ -97,18 +98,67 @@ describe('mrbuilder-optionsmanager', function () {
     });
 
     newOptionManagerTest("with-cli", {
-        argv: argv([`--with-cli-alias-1-other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`])
+        argv: argv(
+            [`--with-cli-alias-1-other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`])
     }, om => {
         expect(om.config('with-cli-alias-1.other')).to.eql(
-            {"index":{"title":"Index"},"other":{"title":"Other"}});
+            { "index": { "title": "Index" }, "other": { "title": "Other" } });
     });
     newOptionManagerTest('boot', om => expect(om).to.exist);
+
+    newOptionManagerTest('with-presets-env', {
+        env: {
+            TESTER_ENV: 'merge-with-default'
+        }
+    }, om => {
+        expect(om.enabled('preset-env-plugin-1')).to.eql(true);
+        expect(om.enabled('preset-env-plugin-2')).to.eql(true);
+    });
+    newOptionManagerTest('with-presets-env other env', {
+        env: {
+            TESTER_ENV: 'other'
+        }
+    }, om => {
+        expect(om.enabled('preset-env-plugin-1')).to.eql(true);
+        expect(om.enabled('preset-env-plugin-2')).to.eql(false);
+    });
 
     newOptionManagerTest('with-named-plugin', om => {
         expect(om.enabled('named-plugin')).to.eql(true);
         expect(om.require(om.plugins.get('named-plugin').plugin)()).to.eql(
             'named plugin');
 
+    });
+    newOptionManagerTest("with-multi-env test:other", {
+        env: {
+            TESTER_ENV           : 'test:other',
+            TESTER_NO_AUTOINSTALL: 1,
+        }
+    }, om => {
+        expect(om.enabled('with-multi-env-p1')).to.be.true;
+        expect(om.enabled('with-multi-env-p2')).to.be.true;
+        expect(om.enabled('with-multi-env-p3')).to.be.true;
+    });
+
+    newOptionManagerTest("with-multi-env other", {
+        env: {
+            TESTER_ENV           : 'other',
+            TESTER_NO_AUTOINSTALL: 1,
+        }
+    }, om => {
+        expect(om.enabled('with-multi-env-p1')).to.be.true;
+        expect(om.enabled('with-multi-env-p2')).to.be.false;
+        expect(om.enabled('with-multi-env-p3')).to.be.true;
+    });
+    newOptionManagerTest("with-multi-env other without test", {
+        env: {
+            TESTER_ENV           : 'other:nosuch',
+            TESTER_NO_AUTOINSTALL: 1,
+        }
+    }, om => {
+        expect(om.enabled('with-multi-env-p1')).to.be.true;
+        expect(om.enabled('with-multi-env-p2')).to.be.false;
+        expect(om.enabled('with-multi-env-p3')).to.be.true;
     });
     newOptionManagerTest('with-merged-plugins', {
         env: {

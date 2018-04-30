@@ -1,18 +1,24 @@
-const { LoaderOptionsPlugin } = require('webpack');
-module.exports                = ({
-                                     test = /\.worker\.jsx?$/,
-                                     loader = 'worker-loader',
-                                     filename = "[name].[hash].worker.js",
-                                     chunkFilename = "[id].[hash].worker.js",
-                                     publicPath = '/public/',
-                                     inline = true,
-                                     fallback = false,
-                                 }, webpack) => {
+const { isLibrary } = require('mrbuilder/src/info');
+module.exports      = ({
+                           test = /\.worker\.jsx?$/,
+                           loader = 'worker-loader',
+                           filename = "[name].[hash].js",
+                           publicPath = '/public/',
+                           inline = true,
+                           fallback = false,
+                       }, webpack, om) => {
+    let name = filename;
+    if (isLibrary) {
+        if (!om.config('mrbuilder-plugin-worker.filename')) {
+            name = '[name].js';
+        }
+    }
     webpack.module.rules.push({
         test,
         use: {
             loader,
             options: {
+                name,
                 inline,
                 fallback
             }

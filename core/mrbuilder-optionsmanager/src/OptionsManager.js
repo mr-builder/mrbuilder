@@ -1,20 +1,36 @@
-const cp                             = require('child_process');
-const { basename, join, resolve }    = require('path');
-const { get, parseJSON, parseValue } = require('mrbuilder-utils');
+const cp = require('child_process');
 const {
-          envify, mergeAlias, mergeArgs, mergeEnv, mergeOptions, mergePlugins,
-          nameConfig, select, split
-      }                              = require('./util');
-const _help                          = require('./help');
-const handleNotFoundTryInstall       = require('./handleNotFoundTryInstall');
-const handleNotFoundFail             = (e, pkg) => {
+          basename,
+          join,
+          resolve
+      }  = require('path');
+const {
+          get,
+          parseJSON,
+          parseValue
+      }  = require('mrbuilder-utils');
+const {
+          envify,
+          mergeAlias,
+          mergeArgs,
+          mergeEnv,
+          mergeOptions,
+          mergePlugins,
+          nameConfig,
+          select,
+          split,
+          resolveEnv
+      }  = require('./util');
+
+const _help                    = require('./help');
+const handleNotFoundTryInstall = require('./handleNotFoundTryInstall');
+const handleNotFoundFail       = function (e, pkg) {
     this.warn('could not require "%s/package.json" from "%s"',
         pkg,
         process.cwd()
     );
     throw e;
 };
-
 
 
 module.exports = class OptionsManager {
@@ -38,8 +54,8 @@ module.exports = class OptionsManager {
                     handleNotFound = handleNotFoundTryInstall
                 } = {}) {
         const seenPresets = new Set();
-        this.plugins = new Map();
-        this.help    = _help(this);
+        this.plugins      = new Map();
+        this.help         = _help(this);
         if (!prefix) {
             prefix = basename(argv[1]).split('-').shift()
         }
@@ -58,9 +74,9 @@ module.exports = class OptionsManager {
             return ret;
         };
         if (!handleNotFound || this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
-            handleNotFound = handleNotFoundFail;
+            handleNotFound = handleNotFoundFail.bind(this);
         } else {
-            handleNotFound = handleNotFoundTryInstall;
+            handleNotFound = handleNotFoundTryInstall.bind(this);
         }
 
         this.cwd        = (...paths) => resolve(this.env('MODULE_DIR', cwd()),
@@ -172,10 +188,11 @@ module.exports = class OptionsManager {
             const envOverride = pluginConfig.env
                                 && pluginConfig.env[ENV] || {};
             return {
-                presets : select(envOverride.presets, pluginConfig.presets),
+                presets : mergePlugins(
+                    ...resolveEnv(ENV, 'presets', pluginConfig)),
+                plugins : mergePlugins(
+                    ...resolveEnv(ENV, 'plugins', pluginConfig)),
                 options : select(envOverride.options, pluginConfig.options),
-                plugins : mergePlugins(envOverride.plugins,
-                    pluginConfig.plugins),
                 ignoreRc: select(envOverride.ignoreRc, pluginConfig.ignoreRc),
                 plugin  : select(envOverride.plugin, pluginConfig.plugin),
                 alias   : pluginConfig.alias
@@ -280,7 +297,14 @@ module.exports = class OptionsManager {
 
             //install first but don't load first.
             if (presets) {
-                presets.forEach(p => resolvePkgJson(nameConfig(p)[0]));
+
+                presets.forEach(p => {
+                    const name = nameConfig(p)[0];
+                    //just do the check, the add happens later.
+                    if (!seenPresets.has(name)) {
+                        resolvePkgJson(name);
+                    }
+                });
             }
 
             if (plugins) {
@@ -298,7 +322,9 @@ module.exports = class OptionsManager {
                     const [presetName, config] = nameConfig(preset);
                     if (!seenPresets.has(presetName)) {
                         seenPresets.add(presetName);
-                        scan(ignoreRc, pkg, presetName, void(0), config)
+                        if (config !== false) {
+                            scan(ignoreRc, pkg, presetName, void(0), config)
+                        }
                     }
                 });
             }

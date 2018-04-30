@@ -32,6 +32,10 @@ module.exports = function (options = {}, webpack, om) {
                     content: "./src/docs/monorepo.md"
                 },
                 {
+                    "name" : "Upgrading to 3.0",
+                    content: "./src/docs/upgrade-2-3.md"
+                },
+                {
                     "name" : "Upgrading to 2.0",
                     content: "./src/docs/upgrade-1-2.md"
                 },
