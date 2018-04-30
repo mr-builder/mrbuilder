@@ -1,8 +1,10 @@
-const { camelCased, cwd, resolveMap, enhancedResolve, regexOrFuncApply } = require(
-    'mrbuilder-utils');
-const DEFAULT_MAIN_FIELDS                                                = ['browser', 'main'];
-const SOURCE_MAIN_FIELDS                                                 = ['source', 'browser', 'main'];
-const returnMode                                                         = (val = process.env.NODE_ENV) => {
+const {
+          camelCased, cwd, resolveMap,
+          enhancedResolve, regexOrFuncApply
+      }                   = require('mrbuilder-utils');
+const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
+const SOURCE_MAIN_FIELDS  = ['source', 'browser', 'main'];
+const returnMode          = (val = process.env.NODE_ENV) => {
     switch (val) {
         case "development":
         case "test":
@@ -40,7 +42,7 @@ const mod = function ({
                       }, webpack, om) {
 
     webpack.mode = returnMode(mode);
-    (this.info||console.log)('webpack mode ', webpack.mode);
+    (this.info || console.log)('webpack mode ', webpack.mode);
     //ugh - just do it.
     delete rest.public;
     //If its not in
@@ -96,7 +98,7 @@ const mod = function ({
         }
     }
     const output = webpack.output || (webpack.output = {});
-    if (globalObject){
+    if (globalObject) {
         output.globalObject = globalObject;
     }
 

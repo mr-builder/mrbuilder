@@ -30,7 +30,7 @@
       [
         "mrbuilder-plugin-css",
         {
-          "useNameHash": "style.css",
+          "useNameHash": false,
           "useStyleLoader": false
         }
       ],

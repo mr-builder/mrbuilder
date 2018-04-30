@@ -29,7 +29,7 @@
   "main": "lib",
   "mrbuilder": {
     "presets": [
-      "mrbuilder"
+      "mrbuilder-preset-lib"
     ],
     "plugins": [
       [
@@ -42,7 +42,6 @@
         }
       ],
       "mrbuilder-plugin-yaml",
-      "mrbuilder-plugin-css",
       "mrbuilder-plugin-markdown",
       "mrbuilder-plugin-lodash",
       "mrbuilder-plugin-env",

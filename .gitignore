@@ -3,6 +3,7 @@
 /*/*/node_modules
 test-out
 .idea
+dist
 lerna-debug.log
 *.log
 lib

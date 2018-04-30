@@ -90,7 +90,14 @@ switch (profile) {
         help('This helpful message');
         break;
     case "mocha":
+        if (!env.NODE_ENV) {
+            env.NODE_ENV = 'test';
+        }
+        if (!env.MRBUILDER_ENV) {
+            env.MRBUILDER_ENV = profile;
+        }
         script = 'mocha';
+        break;
     case "karma":
     case "test":
         if (!env.NODE_ENV) {
@@ -99,9 +106,8 @@ switch (profile) {
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = profile;
         }
-        if (!script) {
+
             script = 'karma';
-        }
         break;
     case "babel":
         if (!env.NODE_ENV) {

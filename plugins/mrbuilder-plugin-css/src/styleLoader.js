@@ -2,6 +2,8 @@ if (!global._MRBUILDER_OPTIONS_MANAGER) {
     throw new Error('_MRBUILDER_OPTIONS_MANAGER not set');
 }
 require('mrbuilder-plugin-browserslist');
+const types = require('mrbuilder/src/info');
+
 const om                 = global._MRBUILDER_OPTIONS_MANAGER;
 const { info }           = om.plugins.get('mrbuilder-plugin-css');
 const mrb                = (v) => om.config('mrbuilder-plugin-css' + (v
@@ -11,12 +13,9 @@ let useNameHash          = mrb('useNameHash');
 let filename             = mrb('filename');
 let useStyleLoaderLoader = mrb('useStyleLoader');
 let publicPath           = mrb('public');
-
-let isDevServer   = om.enabled('mrbuilder-plugin-webpack-dev-server');
-let isLibrary     = om.config('mrbuilder-plugin-webpack.library');
-let chunkFilename = mrb('chunkFilename', `[name].style.css`);
+let chunkFilename        = mrb('chunkFilename', `[name].style.css`);
 if (useNameHash == null || useNameHash === true) {
-    if (isLibrary) {
+    if (types.isLibrary) {
         useNameHash = 'style.css';
     } else {
         useNameHash = '[id].[hash].style.css';
@@ -25,7 +24,7 @@ if (useNameHash == null || useNameHash === true) {
     useNameHash = 'style.css';
 }
 
-if (isDevServer) {
+if (types.isDevServer) {
     useNameHash = useNameHash.replace('[hash].', '');
 }
 if (!filename) {
@@ -34,7 +33,7 @@ if (!filename) {
 info('naming style sheet', filename);
 //So if its not turned on and its Karma than let's say that
 // we don't use it.
-if (useStyleLoaderLoader == null && isDevServer) {
+if (useStyleLoaderLoader == null && types.isDevServer) {
     useStyleLoaderLoader = true;
 }
 let addedPlugin = false;
