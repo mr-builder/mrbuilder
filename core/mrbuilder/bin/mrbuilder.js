@@ -89,7 +89,9 @@ switch (profile) {
     case "help":
         help('This helpful message');
         break;
-
+    case "clean":
+        script = 'clean';
+        break;
     case "webpack":
     case "build":
     case "prepublishOnly":
