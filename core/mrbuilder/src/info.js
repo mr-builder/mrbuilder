@@ -18,7 +18,7 @@ const isKarma      = om.enabled('mrbuilder-plugin-karma'),
       isDebug      = MRBUILDER_DEBUG != null,
       isProduction = mode == null ? NODE_ENV === 'production' : mode
                                                                 === 'production',
-     
+
       /**
        * isLibrary can not be true if its running in a dev server, or as an app
        * or as a demo.  But otherwise its true, because library build is the

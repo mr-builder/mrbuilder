@@ -3,7 +3,7 @@
 if (require('in-publish').inInstall()) {
     process.exit(0);
 }
-const profileRe     = /^(?:.*\/)?mrbuilder(?:-?(.*)(?:\.js)?)?$/;
+const profileRe     = /^(?:.*\/)?mrbuilder-(.+?)(?:\.js)?$/;
 const { env, argv } = process;
 const profile       = env.MRBUILDER_PROFILE || ((idx) => {
                                                 if (idx > -1) {
@@ -104,7 +104,7 @@ switch (profile) {
             env.NODE_ENV = 'test';
         }
         if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = profile;
+            env.MRBUILDER_ENV = 'test';
         }
 
         script = 'karma';
