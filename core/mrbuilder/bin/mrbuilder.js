@@ -3,6 +3,7 @@
 if (require('in-publish').inInstall()) {
     process.exit(0);
 }
+const profileRe = /^(?:.*\/)?mrbuilder(?:-?(.*)(?:\.js)?)?$/;
 
 const { env, argv } = process;
 const profile       = env.MRBUILDER_PROFILE || ((idx) => {
@@ -17,9 +18,9 @@ const profile       = env.MRBUILDER_PROFILE || ((idx) => {
                                                     }
                                                 }
                                             })(argv.slice(2).findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
-                      || argv[1].replace(
-        /^(?:.*\/)?mrbuilder(?:-?(.*)(?:\.js)?)?$/, '$1')
-                      || env['npm_lifecycle_event'];
+                      || (v => profileRe.test(v) ? v.replace(profileRe, '$1')
+                                                 : env['npm_lifecycle_event'])(
+        argv[1]);
 
 
 if (!env.MRBUILDER_INTERNAL_PRESETS) {
@@ -107,7 +108,7 @@ switch (profile) {
             env.MRBUILDER_ENV = profile;
         }
 
-            script = 'karma';
+        script = 'karma';
         break;
     case "babel":
         if (!env.NODE_ENV) {
@@ -161,25 +162,28 @@ switch (profile) {
     case "demo":
     case "app":
     default: {
-        const parts      = profile.split(':', 2);
-        const [p, start] = parts[0] === 'start' ? [parts[1], parts[0]] : parts;
-        if (start === 'start') {
+        const parts = profile.split(':', 2);
+        if (parts[0] === 'start' || parts[1] === 'start') {
             if (!env.NODE_ENV) {
                 env.NODE_ENV = 'development';
             }
+            script = 'webpack-dev-server'
         }
         if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = p || profile;
+            env.MRBUILDER_ENV = profile;
         }
     }
 }
 
 
-const om = global._MRBUILDER_OPTIONS_MANAGER
-           || (global._MRBUILDER_OPTIONS_MANAGER =
+if (!global._MRBUILDER_OPTIONS_MANAGER) {
+    global._MRBUILDER_OPTIONS_MANAGER =
         new (require('mrbuilder-optionsmanager'))({
             prefix: 'mrbuilder', _require: require
-        }));
+        })
+}
 
-
-require(`mrbuilder-plugin-${script}/bin/cli`);
+const {
+          MRBUILDER_SCRIPT: endScript = script
+      } = env;
+require(`mrbuilder-plugin-${endScript}/bin/cli`);

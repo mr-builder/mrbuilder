@@ -5,8 +5,8 @@ const {
               NODE_ENV
           }
       }    = process;
-const mode = om.config(
-    'mrbuilder-plugin-webpack.mode');
+
+const mode = om.config('mrbuilder-plugin-webpack.mode');
 
 const isKarma      = om.enabled('mrbuilder-plugin-karma'),
       isDevServer  = om.enabled('mrbuilder-plugin-webpack-dev-server'),
@@ -16,7 +16,7 @@ const isKarma      = om.enabled('mrbuilder-plugin-karma'),
       isHot        = om.enabled('mrbuilder-plugin-hot'),
       isDebug      = MRBUILDER_DEBUG != null,
       isProduction = mode == null ? NODE_ENV === 'production' : mode
-                                                                    === 'prodution',
+                                                                === 'production',
 
       /**
        * isLibrary can not be true if its running in a dev server, or as an app
