@@ -1,11 +1,11 @@
 {
   "name": "example-multi-app",
-  "version": "2.1.2",
+  "version": "3.0.0-0",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^2.1.1",
-    "mrbuilder-plugin-sass": "^2.1.1",
-    "mrbuilder-preset-app": "^2.1.2"
+    "mrbuilder": "^3.0.0-0",
+    "mrbuilder-plugin-sass": "^3.0.0-0",
+    "mrbuilder-preset-app": "^3.0.0-0"
   },
   "scripts": {
     "start": "mrbuilder",
