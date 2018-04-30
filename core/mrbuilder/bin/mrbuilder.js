@@ -3,8 +3,7 @@
 if (require('in-publish').inInstall()) {
     process.exit(0);
 }
-const profileRe = /^(?:.*\/)?mrbuilder(?:-?(.*)(?:\.js)?)?$/;
-
+const profileRe     = /^(?:.*\/)?mrbuilder(?:-?(.*)(?:\.js)?)?$/;
 const { env, argv } = process;
 const profile       = env.MRBUILDER_PROFILE || ((idx) => {
                                                 if (idx > -1) {
@@ -174,7 +173,6 @@ switch (profile) {
         }
     }
 }
-
 
 if (!global._MRBUILDER_OPTIONS_MANAGER) {
     global._MRBUILDER_OPTIONS_MANAGER =
