@@ -10,6 +10,9 @@
   "bin": {
     "mrbuilder-clean": "bin/cli.js"
   },
+  "scripts": {
+    "test": "mrbuilder-mocha"
+  },
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "2.x"

@@ -1,17 +1,32 @@
 #!/usr/bin/env node
-const rimraf = require('rimraf');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 if (process.argv.length === 2) {
     process.argv.push('./lib');
 }
-const parts  = process.argv.slice(2).filter(v => !/^--/.test(v));
-const remove = () => {
-    if (parts.length) {
-        const cur = parts.shift();
-        rimraf(cur, remove);
-        console.log('removed', cur);
+if (!global._MRBUILDER_OPTIONS_MANAGER) {
+    throw new Error('Please call from the mrbuilder script');
+}
 
-    } else {
-        process.exit(0);
+if (global._MRBUILDER_OPTIONS_MANAGER.enabled('mrbuilder-plugin-clean')) {
+
+
+    const conf = global._MRBUILDER_OPTIONS_MANAGER.config(
+        "mrbuilder-plugin-clean");
+    console.log('conf', conf);
+    if (conf) {
+        /**
+         * | paths         | array      | outputPath   | The directories to
+         * clean
+         *   |
+         | root          | string     | $CWD         | The Root directory               |
+         | verbose       | bool       | false        | Be verbose                       |
+         | allowExternal | bool       | false        | Allow external directory deletion|
+         | dry           | bool       | false        | Dry run                          |
+         | exclude       | [string]   |              | Paths to exclude                 |
+         * @type {string[]}
+         */
+        const cleanOptions = Object.assign({root:process.cwd()}, conf);
+        const clean = new CleanWebpackPlugin(cleanOptions.paths, cleanOptions);
+        clean.apply();
     }
-};
-remove();
+}

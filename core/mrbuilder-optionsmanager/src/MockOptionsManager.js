@@ -44,7 +44,7 @@ module.exports = function (configure = []) {
                     return;
                 }
                 return Object.assign({}, om.logger(plugin),
-                    { config: config[0] });
+                    { config: config[1] });
             }
         },
 
