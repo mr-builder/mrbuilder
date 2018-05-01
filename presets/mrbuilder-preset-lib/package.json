@@ -1,17 +1,17 @@
 {
   "name": "mrbuilder-preset-lib",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^3.0.1",
+    "mrbuilder-plugin-babel": "^3.0.2",
     "mrbuilder-plugin-browserslist": "^3.0.1",
-    "mrbuilder-plugin-css": "^3.0.1",
+    "mrbuilder-plugin-css": "^3.0.2",
     "mrbuilder-plugin-env": "^3.0.1",
     "mrbuilder-plugin-enzyme": "^3.0.1",
     "mrbuilder-plugin-eslint": "^3.0.1",
     "mrbuilder-plugin-filetypes": "^3.0.1",
-    "mrbuilder-plugin-fonts": "^3.0.1",
+    "mrbuilder-plugin-fonts": "^3.0.2",
     "mrbuilder-plugin-hot": "^3.0.1",
-    "mrbuilder-plugin-html": "^3.0.1",
+    "mrbuilder-plugin-html": "^3.0.2",
     "mrbuilder-plugin-react": "^3.0.1",
     "mrbuilder-plugin-webpack": "^3.0.1",
     "mrbuilder-plugin-webpack-dev-server": "^3.0.1"

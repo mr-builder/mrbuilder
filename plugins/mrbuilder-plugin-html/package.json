@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-html",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "html plugin for mrbuilder",
   "dependencies": {
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-template": "^3.0.2",
-    "mrbuilder-plugin-babel": "^3.0.1",
+    "mrbuilder-plugin-babel": "^3.0.2",
     "mrbuilder-utils": "^3.0.1"
   },
   "scripts": {
