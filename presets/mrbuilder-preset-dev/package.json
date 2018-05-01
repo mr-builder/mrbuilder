@@ -1,9 +1,9 @@
 {
   "name": "mrbuilder-preset-dev",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "dependencies": {
-    "mrbuilder-plugin-webpack-dev-server": "^3.0.0",
-    "mrbuilder-preset-app": "^3.0.0"
+    "mrbuilder-plugin-webpack-dev-server": "^3.0.1",
+    "mrbuilder-preset-app": "^3.0.1"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
