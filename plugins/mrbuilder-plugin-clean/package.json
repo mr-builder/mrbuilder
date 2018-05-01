@@ -8,7 +8,7 @@
     "rimraf": "^2.6.2"
   },
   "bin": {
-    "mrbuilder-clean": "bin/cli.js"
+    "mrbuilder-clean": "./bin/cli.js"
   },
   "scripts": {
     "test": "mrbuilder-mocha"
