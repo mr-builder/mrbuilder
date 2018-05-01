@@ -89,9 +89,7 @@ switch (profile) {
     case "help":
         help('This helpful message');
         break;
-    case "clean":
-        script = 'clean';
-        break;
+
     case "webpack":
     case "build":
     case "prepublishOnly":
@@ -146,7 +144,7 @@ switch (profile) {
                 env.NODE_ENV = 'development';
             }
             script = 'webpack-dev-server'
-        } else if (includes('test')) {
+        } else if (includes('test') || includes('karma')) {
             if (!env.NODE_ENV) {
                 env.NODE_ENV = 'test';
             }
@@ -161,6 +159,8 @@ switch (profile) {
                 env.NODE_ENV = 'production';
             }
             script = 'babel';
+        } else if (includes('clean')) {
+            script = 'clean';
         }
 
         if (!env.MRBUILDER_ENV) {
@@ -179,5 +179,8 @@ if (!global._MRBUILDER_OPTIONS_MANAGER) {
 const {
           MRBUILDER_SCRIPT: endScript = `mrbuilder-plugin-${script}/bin/cli`
       } = env;
+
+
+global._MRBUILDER_OPTIONS_MANAGER.debug(`running '${endScript}'`);
 
 require(endScript);
