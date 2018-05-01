@@ -10,7 +10,7 @@
     "mrbuilder-plugin-webpack": "^3.0.0"
   },
   "peerDependencies": {
-    "mrbuilder": "2.x"
+    "mrbuilder": "3.x"
   },
   "mrbuilder": {
     "plugins": [

@@ -30,6 +30,6 @@
   },
   "license": "0BSD",
   "peerDependencies": {
-    "mrbuilder": "2.x"
+    "mrbuilder": "3.x"
   }
 }
