@@ -1,9 +1,9 @@
 {
   "name": "example-lib",
-  "version": "3.0.1",
+  "version": "3.0.4",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^3.0.1"
+    "mrbuilder": "^3.0.4"
   },
   "source": "src",
   "main": "lib",

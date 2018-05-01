@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-optionsmanager",
-  "version": "3.0.1",
+  "version": "3.0.4",
   "scripts": {
     "test": "mocha test/**"
   },
@@ -8,7 +8,7 @@
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"
   },
   "dependencies": {
-    "mrbuilder-utils": "^3.0.1",
+    "mrbuilder-utils": "^3.0.4",
     "which": "^1.3.0"
   },
   "devDependencies": {
