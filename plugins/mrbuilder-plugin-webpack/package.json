@@ -6,7 +6,7 @@
     "clean": "mrbuilder-clean"
   },
   "bin": {
-    "mrbuilder-webpack-cli": "./bin/cli"
+    "mrbuilder-webpack-cli": "./bin/cli.js"
   },
   "main": "src",
   "source": "src",
