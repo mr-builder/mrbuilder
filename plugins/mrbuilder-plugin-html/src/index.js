@@ -109,11 +109,11 @@ module.exports = function ({
         if (om && om.enabled('mrbuilder-plugin-chunk')) {
             const { manifest = 'manifest', vendors = 'vendors' } = om.config(
                 'mrbuilder-plugin-chunk');
-            if (manifest) {
-                chunks.unshift(manifest);
-            }
             if (vendors) {
                 chunks.unshift(vendors);
+            }
+            if (manifest) {
+                chunks.unshift(manifest);
             }
             info('using chunks', chunks);
         }
