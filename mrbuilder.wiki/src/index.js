@@ -92,7 +92,7 @@ module.exports = function (options = {}, webpack, om) {
         const place    = obj[category] || obj.other;
 
         const conf = {
-            name   : pkg.name,
+            name   : pkg.name.replace(/mrbuilder-(?:plugin|preset|example)-(.*)$/,'$1'),
             content: path.join(location, 'Readme.md'),
             description,
         };
