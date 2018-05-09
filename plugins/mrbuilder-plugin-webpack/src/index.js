@@ -31,7 +31,7 @@ const mod = function ({
                           useExternals,
                           externalizePeers = true,
                           externals,
-                          devtool = 'source-maps',
+                          devtool = 'source-map',
                           filename = '[name].[hash].js',
                           globalObject,
                           alias = [],

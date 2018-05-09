@@ -117,7 +117,7 @@ switch (profile) {
             env.NODE_ENV = 'development';
         }
         if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = 'start:app';
+            env.MRBUILDER_ENV = `${env.NODE_ENV}:start:app`;
         }
         script = 'webpack-dev-server';
         break;

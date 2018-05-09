@@ -3,22 +3,28 @@ function chunks({
                     manifest = 'manifest',
                     vendors = 'vendors',
                     styles = 'styles',
-                    commons = 'commons',
+                    commons ,
                     excludes = [],
                     publicPath,
                     crossOriginLoading,
                     cacheGroups = {
                         default: {
-                            chunks            : 'async',
-                            minSize           : 30000,
-                            minChunks         : 2,
-                            maxAsyncRequests  : 5,
+                            chunks: 'async',
+                            minSize: 30000,
+                            minChunks: 2,
+                            maxAsyncRequests: 5,
                             maxInitialRequests: 3,
-                            priority          : -20,
+                            priority: -20,
                             reuseExistingChunk: true,
                         }
+                    },
+                    splitChunks = {
+                        chunks: 'all',
+                        minSize: 0,
+                        maxAsyncRequests: Infinity,
+                        maxInitialRequests: Infinity,
+                        name: true,
                     }
-
                 },
                 webpack) {
     const info = this.info || console.log;
@@ -37,26 +43,25 @@ function chunks({
     if (!webpack.optimization) {
         webpack.optimization = {};
     }
+
     if (manifest) {
-        webpack.optimization.runtimeChunk = {
-            name: manifest
-        };
+        if (manifest === true) {
+            webpack.optimization.runtimeChunk = true;
+        } else {
+            webpack.optimization.runtimeChunk = {
+                name: manifest
+            };
+        }
     }
 
-    if (!webpack.optimization.splitChunks) {
-        webpack.optimization.splitChunks = {};
-    }
-    webpack.optimization.runtimeChunk =
-        Object.assign({}, webpack.optimization.runtimeChunk, {
-            name: manifest,
-        });
+
     if (vendors) {
         if (vendors === true) {
             vendors = 'vendors';
         }
         cacheGroups.vendor = {
-            name              : vendors,
-            enforce           : true,
+            name: vendors,
+            enforce: true,
             test(module) {
                 for (let i = 0, l = excludes.length; i < l; i++) {
                     if (typeof excludes[i].test === 'function') {
@@ -69,10 +74,11 @@ function chunks({
                 // node_modules directory
                 return module.context && module.context.indexOf(
                     'node_modules')
-                       !== -1;
+                    !== -1;
             },
-            priority          : -10,
+            priority: -10,
             reuseExistingChunk: true,
+            ...cacheGroups.vendor
         };
     }
     if (commons) {
@@ -81,11 +87,12 @@ function chunks({
         }
 
         cacheGroups.commons = {
-            name              : commons,
-            chunks            : 'initial',
-            minChunks         : 2,
-            priority          : -5,
+            name: commons,
+            chunks: 'initial',
+            minChunks: 2,
+            priority: -5,
             reuseExistingChunk: true,
+            ...cacheGroups.commons
         };
     }
     if (styles) {
@@ -93,29 +100,18 @@ function chunks({
             styles = 'styles';
         }
         cacheGroups.styles = {
-            name   : styles,
-            test   : /\.css$/,
-            chunks : 'all',
-            enforce: true
+            name: styles,
+            test: /\.css$/,
+            chunks: 'all',
+            enforce: true,
+            ...cacheGroups.styles
         };
     }
-    webpack.optimization.splitChunks =
-        Object.assign({}, webpack.optimization.splitChunks, {
-            chunks            : 'all',
-            minSize           : 0,
-            maxAsyncRequests  : Infinity,
-            maxInitialRequests: Infinity,
-            name              : true,
-            cacheGroups
-        });
 
-
-    if (vendors) {
-        if (!webpack.optimization.splitChunks.cacheGroups) {
-            webpack.optimization.splitChunks.cacheGroups = {};
-        }
-        webpack.optimization.splitChunks.cacheGroups.vendors = false;
-    }
+    webpack.optimization.splitChunks = Object.assign({}, webpack.optimization.splitChunks, {
+        ...splitChunks,
+        cacheGroups
+    });
 
 }
 
