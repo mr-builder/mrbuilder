@@ -1,22 +1,22 @@
 {
   "name": "mrbuilder",
-  "version": "3.0.1",
+  "version": "3.0.4",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
     "in-publish": "^2.0.0",
-    "mrbuilder-optionsmanager": "^3.0.1",
+    "mrbuilder-optionsmanager": "^3.0.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
   "bin": {
-    "mrbuilder": "bin/mrbuilder.js",
-    "mrbuilder-babel": "bin/mrbuilder.js",
-    "mrbuilder-clean": "bin/mrbuilder-clean.js",
-    "mrbuilder-karma": "bin/mrbuilder.js",
-    "mrbuilder-mocha": "bin/mrbuilder.js",
-    "mrbuilder-webpack": "bin/mrbuilder.js",
-    "mrbuilder-demo": "bin/mrbuilder.js",
-    "mrbuilder-webpack-dev-server": "bin/mrbuilder.js"
+    "mrbuilder": "./bin/mrbuilder.js",
+    "mrbuilder-babel": "./bin/mrbuilder.js",
+    "mrbuilder-clean": "./bin/mrbuilder.js",
+    "mrbuilder-karma": "./bin/mrbuilder.js",
+    "mrbuilder-mocha": "./bin/mrbuilder.js",
+    "mrbuilder-webpack": "./bin/mrbuilder.js",
+    "mrbuilder-demo": "./bin/mrbuilder.js",
+    "mrbuilder-webpack-dev-server": "./bin/mrbuilder.js"
   },
   "license": "0BSD",
   "engines": {

@@ -1,17 +1,17 @@
 {
   "name": "example-app",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "private": true,
   "dependencies": {
-    "example-lib": "^3.0.1",
-    "example-lib-everything": "^3.0.3",
-    "example-lib-webpack": "^3.0.1"
+    "example-lib": "^3.0.4",
+    "example-lib-everything": "^3.0.4",
+    "example-lib-webpack": "^3.0.4"
   },
   "devDependencies": {
-    "mrbuilder": "^3.0.1",
-    "mrbuilder-plugin-version": "^3.0.1",
-    "mrbuilder-preset-app": "^3.0.3",
-    "mrbuilder-preset-dev": "^3.0.3"
+    "mrbuilder": "^3.0.4",
+    "mrbuilder-plugin-version": "^3.0.4",
+    "mrbuilder-preset-app": "^3.0.4",
+    "mrbuilder-preset-dev": "^3.0.4"
   },
   "scripts": {
     "prepublish": "mrbuilder",
