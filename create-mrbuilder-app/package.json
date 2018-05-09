@@ -1,12 +1,12 @@
 {
   "name": "create-mrbuilder-app",
   "description": "Support for yarn create app",
-  "version": "3.0.1",
+  "version": "3.0.4",
   "bin": {
-    "create-mrbuilder-app": "app.js"
+    "create-mrbuilder-app": "./app.js"
   },
   "dependencies": {
-    "mrbuilder-plugin-init": "^3.0.1"
+    "mrbuilder-plugin-init": "^3.0.4"
   },
   "license": "0BSD"
 }
