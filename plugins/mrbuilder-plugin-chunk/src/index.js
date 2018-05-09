@@ -3,7 +3,7 @@ function chunks({
                     manifest = 'manifest',
                     vendors = 'vendors',
                     styles = 'styles',
-                    commons = 'commons',
+                    commons ,
                     excludes = [],
                     publicPath,
                     crossOriginLoading,
