@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-version",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Expose version information for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
-    "mrbuilder-utils": "^3.0.5"
+    "mrbuilder-utils": "^3.0.6"
   },
   "keywords": [
     "mrbuilder"

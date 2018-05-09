@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-eslint",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "dependencies": {
     "babel-eslint": "^8.2.2",
     "eslint": "^4.19.1",
