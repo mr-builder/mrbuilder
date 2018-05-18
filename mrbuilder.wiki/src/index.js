@@ -74,20 +74,15 @@ module.exports = function (options = {}, webpack, om) {
             name    : 'Examples',
             sections: example,
         },
-        {
-            name    : 'Other',
-            sections: other
-        },
-        {
-            name    : "Core",
-            sections: core
-        }
+
     ];
     const obj        = { core, plugins, presets, other, example };
     ls.filteredPackages.forEach(p => {
 
         const { location, _package: pkg, description = '' } = p;
-
+        if (pkg.name === 'mrbuilder.wiki') {
+            return;
+        }
         const category = path.basename(path.dirname(location));
         const place    = obj[category] || obj.other;
 
@@ -137,8 +132,11 @@ This is the configuration
         }
         if (category == 'components'){
             conf.components = [pkg.name]
+        }else{
+            conf.components = [];
         }
         place.push(conf);
+
 
     });
     webpack.node || (webpack.node = {});
