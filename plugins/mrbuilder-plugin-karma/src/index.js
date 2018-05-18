@@ -1,7 +1,7 @@
-const { pkg, cwd, enhancedResolve } = require('mrbuilder-utils');
-const { ContextReplacementPlugin }  = require('webpack');
-const { resolve }                   = require('path');
-
+const {pkg, cwd, enhancedResolve} = require('mrbuilder-utils');
+const {ContextReplacementPlugin}  = require('webpack');
+const {resolve}                   = require('path');
+const processAlias                = require('mrbuilder-plugin-webpack/src/processAlias');
 
 module.exports = function ({
                                testDir = cwd('test'),
@@ -12,12 +12,12 @@ module.exports = function ({
                                    fs     : 'empty',
                                    net    : 'empty',
                                    console: false,
-                                   util   : true
+                                   util   : true,
                                },
+                               alias = {},
                                mainFields = ['source', 'browser', 'main'],
                                include = [cwd('src'), cwd('public')],
-                               testIndex = resolve(__dirname, '..',
-                                   'test-index.js')
+
                            }, webpack, om) {
 
     const info = (this.info || console.log);
@@ -28,6 +28,8 @@ module.exports = function ({
         cwd(packageJson.source || packageJson.main
             || 'src');
 
+    processAlias(webpack, alias);
+
     if (om.enabled('mrbuilder-plugin-babel')) {
         webpack.module.rules.unshift({
             test   : /\.jsx?$/,
@@ -35,8 +37,8 @@ module.exports = function ({
             include: [testDir],
             use    : {
                 loader : 'babel-loader',
-                options: require('mrbuilder-plugin-babel/babel-config')
-            }
+                options: require('mrbuilder-plugin-babel/babel-config'),
+            },
         });
     }
 
@@ -50,15 +52,14 @@ module.exports = function ({
                 use    : {
                     loader : 'istanbul-instrumenter-loader',
                     options: {
-                        esModules: true
-                    }
+                        esModules: true,
+                    },
                 },
                 enforce: 'post',
-            }
+            },
         );
     }
-    webpack.plugins.push(new ContextReplacementPlugin(
-        /^mrbuilder-karma-test-context$/, pattern));
+    webpack.plugins.push(new ContextReplacementPlugin(/^mrbuilder-karma-test-context$/, pattern));
 
     //muck with webpack
     webpack.resolve.alias['mrbuilder-karma-test-context'] = testDir;
@@ -71,9 +72,9 @@ module.exports = function ({
     Object.assign(webpack.node, node);
     webpack.output          = {};
     webpack.output.pathinfo = pathinfo;
-    webpack.entry           = { test: testIndex };
+    //webpack.entry           = { test: testIndex };
     this.useDefine          = Object.assign({}, this.useDefine, {
-        MRBUILDER_TEST_MODULE: testDir
+        MRBUILDER_TEST_MODULE: testDir,
     });
     (this.info || console.log)('using test dir ', testDir);
     if (mainFields) {

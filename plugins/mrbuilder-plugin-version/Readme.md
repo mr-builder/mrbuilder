@@ -1,4 +1,5 @@
-This plugin is a core plugin that provides the root of the [webpack](https://webpack.js.org) support.
+This plugin provides some version information.  By default it uses
+the version in your package.json
 
 ### Options
 

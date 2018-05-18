@@ -20,7 +20,7 @@ describe('mrbuilder-plugin-karma', function () {
             "util": true
         });
         expect(webpack.devtool).to.eql('inline-source-map');
-        expect(webpack.entry.test).to.exist;
+        expect(webpack.entry).to.eql(void(0));
 
     })
 });

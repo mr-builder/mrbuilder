@@ -1,32 +1,52 @@
 // Karma configuration
-const path               = require('path');
-const { cwd, stringify } = require('mrbuilder-utils');
-process.env.NODE_ENV     = process.env.NODE_ENV || 'test';
-const optionsManager     = global._MRBUILDER_OPTIONS_MANAGER;
-const logger             = optionsManager.logger('mrbuilder-plugin-karma');
-const webpack            = require('mrbuilder-plugin-webpack/webpack.config');
+const path             = require('path');
+const {cwd, stringify} = require('mrbuilder-utils');
+process.env.NODE_ENV   = process.env.NODE_ENV || 'test';
+//we allow for running this script directly so can be run in IDE's.
+const optionsManager   = global._MRBUILDER_OPTIONS_MANAGER || (global._MRBUILDER_OPTIONS_MANAGER = new (require('mrbuilder-optionsmanager'))({
+    prefix: 'mrbuilder', _require: require,
+}));
+const logger           = optionsManager.logger('mrbuilder-plugin-karma');
+const fs               = require('fs');
 
-const mrb = (key, def) => {
-    return optionsManager.config(`mrbuilder-plugin-karma.${key}`,
-        def);
-};
-console.log(optionsManager.config(`mrbuilder-plugin-karma`));
-const chromeDataDir = mrb('chromeDataDir', path.resolve(process.env.HOME,
-    '.mrbuilder-chrome'));
-
-
-const useCoverage   = mrb('coverage');
-const files         = mrb('files', Object.values(webpack.entry));
-const frameworks    = mrb('frameworks', ['mocha']);
-const basePath      = mrb('basePath', cwd());
-const preprocessors = mrb('preprocessors', ['webpack', 'sourcemap']);
-const browsers      = mrb('browsers', ['Chrome']);
-const port          = mrb('port', 9876);
-const reporters     = mrb('reports', ['spec']);
-const colors        = mrb('colors', true);
-logger.info('files:' + files + ' browsers:' + browsers);
 
 module.exports = function (config) {
+    const webpack = require('mrbuilder-plugin-webpack/webpack.config');
+
+    const mrb = (key, def) => optionsManager.config(`mrbuilder-plugin-karma.${key}`, def);
+
+
+    const chromeDataDir   = mrb('chromeDataDir', path.resolve(process.env.HOME, '.mrbuilder-chrome'));
+    const useCoverage     = mrb('coverage');
+    const frameworks      = mrb('frameworks', ['mocha']);
+    const basePath        = mrb('basePath', cwd());
+    const preprocessors   = mrb('preprocessors', ['webpack', 'sourcemap']);
+    const browsers        = mrb('browsers', ['Chrome']);
+    const port            = mrb('port', 9876);
+    const reporters       = mrb('reports', ['spec']);
+    const colors          = mrb('colors', true);
+    const customLaunchers = mrb('customLaunchers', {
+        Chrome_with_debugging: {
+            base: 'Chrome',
+            chromeDataDir,
+        },
+        Chrome_travis_ci     : {
+            base : 'Chrome',
+            flags: ['--no-sandbox'],
+        },
+        SimpleHeadlessChrome : {
+            base : 'ChromeHeadless',
+            flags: ['--disable-translate', '--disable-extensions', '--remote-debugging-port=9223'],
+        },
+    });
+    //otherwise bad things happen, some kind file not found exception.
+    webpack.entry         = null;
+
+    webpack.devtool = mrb('devtool', 'inline-source-map');
+    const testIndex = mrb('testIndex', path.resolve(__dirname, 'test-index.js'));
+    const files     = mrb('files', [testIndex]);
+
+    logger.info('files:' + files + ' browsers:' + browsers);
 
     const karmaConf = {
 
@@ -41,24 +61,13 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files,
 
-        customLaunchers: {
-            Chrome_with_debugging: {
-                base: 'Chrome',
-                chromeDataDir
-            },
-            Chrome_travis_ci     : {
-                base : 'Chrome',
-                flags: ['--no-sandbox']
-            },
-            SimpleHeadlessChrome     : {
-                base : 'ChromeHeadless',
-                flags: ['--disable-translate', '--disable-extensions', '--remote-debugging-port=9223']
-            }
-        },
+        customLaunchers,
 
         // list of preprocessors
-        preprocessors: Object.keys(webpack.entry).reduce(function (ret, key) {
-            ret[webpack.entry[key]] = preprocessors;
+        preprocessors: files.reduce(function (ret, file) {
+            if (typeof file === 'string') {
+                ret[file] = preprocessors;
+            }
             return ret;
         }, {}),
 
@@ -67,8 +76,8 @@ module.exports = function (config) {
 
         webpackMiddleware: {
             stats: {
-                colors
-            }
+                colors,
+            },
         },
 
 
@@ -123,8 +132,8 @@ module.exports = function (config) {
             require('karma-firefox-launcher'),
             require('karma-spec-reporter'),
             require('karma-sourcemap-loader'),
-            require('karma-webpack')
-        ]
+            require('karma-webpack'),
+        ],
     };
     if (useCoverage) {
         karmaConf.reporters.push('coverage-istanbul');
@@ -133,11 +142,14 @@ module.exports = function (config) {
             reports                : ['lcovonly', 'text-summary'],
             fixWebpackSourcePaths  : true,
             skipFilesWithNoCoverage: true,
-            dir                    : optionsManager
+            dir                    : optionsManager,
         };
-        karmaConf.plugins.push('karma-coverage-istanbul-reporter')
+        karmaConf.plugins.push('karma-coverage-istanbul-reporter');
     }
 
-    logger.debug('karma-conf', stringify(karmaConf));
     config.set(karmaConf);
+    if (fs.existsSync(mrb('karmaConf', cwd('karma.conf.js')))) {
+        require(cwd('karma.conf.js')(config));
+    }
+    logger.debug('karma configuration', stringify(config));
 };

@@ -2,6 +2,7 @@ const {
           camelCased, cwd, resolveMap,
           enhancedResolve, regexOrFuncApply
       }                   = require('mrbuilder-utils');
+const processAlias = require('./processAlias');
 const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS  = ['source', 'browser', 'main'];
 const returnMode          = (val = process.env.NODE_ENV) => {
@@ -81,22 +82,8 @@ const mod = function ({
 
     const pkg = require(cwd('package.json'));
 
-    if (alias) {
-        if (typeof alias === 'string') {
-            alias = alias.split(/,\s*/);
-        }
-        if (Array.isArray(alias)) {
-            webpack.resolve.alias =
-                Object.assign({}, webpack.resolve.alias, resolveMap(...alias));
-
-        } else {
-            webpack.resolve.alias = Object.assign({}, webpack.resolve.alias,
-                Object.keys(alias).reduce((ret, key) => {
-                    ret[key] = enhancedResolve(alias[key]);
-                    return ret;
-                }, {}));
-        }
-    }
+    processAlias(webpack, alias);
+    
     const output = webpack.output || (webpack.output = {});
     if (globalObject) {
         output.globalObject = globalObject;
