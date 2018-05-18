@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-preset-lib",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "dependencies": {
     "mrbuilder-plugin-babel": "^3.0.6",
     "mrbuilder-plugin-browserslist": "^3.0.6",
@@ -13,8 +13,8 @@
     "mrbuilder-plugin-hot": "^3.0.6",
     "mrbuilder-plugin-html": "^3.0.6",
     "mrbuilder-plugin-react": "^3.0.6",
-    "mrbuilder-plugin-webpack": "^3.0.6",
-    "mrbuilder-plugin-webpack-dev-server": "^3.0.6"
+    "mrbuilder-plugin-webpack": "^3.0.7",
+    "mrbuilder-plugin-webpack-dev-server": "^3.0.7"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
