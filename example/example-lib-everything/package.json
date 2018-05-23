@@ -12,7 +12,8 @@
     "mrbuilder-plugin-moment": "^3.0.6",
     "mrbuilder-plugin-stylus": "^3.0.6",
     "mrbuilder-plugin-worker": "^3.0.6",
-    "mrbuilder-plugin-yaml": "^3.0.6"
+    "mrbuilder-plugin-yaml": "^3.0.6",
+    "mrbuilder-plugin-graphql":"^3.0.8"
   },
   "scripts": {
     "analyze": "mrbuilder",
@@ -48,7 +49,8 @@
       "mrbuilder-plugin-moment",
       "mrbuilder-plugin-stylus",
       "mrbuilder-plugin-worker",
-      "mrbuilder-plugin-typescript"
+      "mrbuilder-plugin-typescript",
+      "mrbuilder-plugin-graphql"
     ],
     "env": {
       "development": {
