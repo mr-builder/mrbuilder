@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-markdown",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "scripts": {
     "test": " mrbuilder-karma",
     "karma": "mrbuilder-karma",
@@ -14,7 +14,7 @@
     "react-syntax-highlighter": "^6.0.4"
   },
   "devDependencies": {
-    "mrbuilder-plugin-karma": "^3.0.6"
+    "mrbuilder-plugin-karma": "^3.0.7"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
