@@ -25,39 +25,39 @@ module.exports = function (options = {}, webpack, om) {
             "sections": [
                 {
                     "name" : "Overview",
-                    content: "./src/docs/overview.md"
+                    content: "../docs/overview.md"
                 },
                 {
                     "name" : "Do I need a monorepo",
-                    content: "./src/docs/monorepo.md"
+                    content: "../docs/monorepo.md"
                 },
                 {
                     "name" : "Upgrading to 3.0",
-                    content: "./src/docs/upgrade-2-3.md"
+                    content: "../docs/upgrade-2-3.md"
                 },
                 {
                     "name" : "Upgrading to 2.0",
-                    content: "./src/docs/upgrade-1-2.md"
+                    content: "../docs/upgrade-1-2.md"
                 },
                 {
                     "name" : "Multi Module Project",
-                    content: "./src/docs/getting-started.md"
+                    content: "../docs/getting-started.md"
                 },
                 {
                     name     : "Configuration",
-                    "content": "./src/docs/configuration.md"
+                    "content": "../docs/configuration.md"
                 },
                 {
                     name     : "Plugins and Presets",
-                    "content": "./src/docs/plugins_and_presets.md"
+                    content: "../docs/plugins_and_presets.md",
                 },
                 {
                     name     : "Tools",
-                    "content": "./src/docs/tools.md"
+                    content: "../docs/tools.md"
                 },
                 {
                     name   : "Debugging",
-                    content: "./src/docs/debugging.md"
+                    content: "../docs/debugging.md"
                 }
             ]
         },
