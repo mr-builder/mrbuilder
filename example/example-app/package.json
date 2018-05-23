@@ -1,10 +1,10 @@
 {
   "name": "example-app",
-  "version": "3.0.7",
+  "version": "3.0.9",
   "private": true,
   "dependencies": {
     "example-lib": "^3.0.6",
-    "example-lib-everything": "^3.0.7",
+    "example-lib-everything": "^3.0.9",
     "example-lib-webpack": "^3.0.6"
   },
   "devDependencies": {
