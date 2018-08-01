@@ -133,6 +133,7 @@ module.exports    = function reactPlugin({
             } else {
                 webpack.entry[name] = preEntry.concat(webpack.entry[name]);
                 if (!showedWarning) {
+                    showedWarning = true;
                     this.info(
                         `not using exported components, you may need to setup hot and dom mounting manually for ${name}
                      Something like  to your entry point:
