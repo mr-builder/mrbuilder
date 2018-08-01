@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-babel",
-  "version": "3.0.10-3.1.0-b-0.0",
+  "version": "3.1.0-0",
   "description": "Tools for developing babel with mrbuilder",
   "scripts": {
     "clean": "mrbuilder-clean"
@@ -22,8 +22,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-runtime": "^6.26.0",
-    "mrbuilder-optionsmanager": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-browserslist": "^3.0.10-3.1.0-b-0.0",
+    "mrbuilder-optionsmanager": "^3.1.0-0",
+    "mrbuilder-plugin-browserslist": "^3.1.0-0",
     "rimraf": "^2.6.2"
   },
   "source": "src",
@@ -37,5 +37,6 @@
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "3.x"
-  }
+  },
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

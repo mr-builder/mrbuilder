@@ -1,20 +1,20 @@
 {
   "name": "mrbuilder-preset-app",
-  "version": "3.0.10-3.1.0-b-0.0",
+  "version": "3.1.0-0",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-browserslist": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-chunk": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-css": "^3.0.10-3.1.0-b-0.0",
+    "mrbuilder-plugin-babel": "^3.1.0-0",
+    "mrbuilder-plugin-browserslist": "^3.1.0-0",
+    "mrbuilder-plugin-chunk": "^3.1.0-0",
+    "mrbuilder-plugin-css": "^3.1.0-0",
     "mrbuilder-plugin-env": "^3.0.6",
     "mrbuilder-plugin-filetypes": "^3.0.6",
-    "mrbuilder-plugin-fonts": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-hot": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-html": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-less": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-uglify": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-webpack": "^3.0.10-3.1.0-b-0.0",
-    "mrbuilder-plugin-webpack-dev-server": "^3.0.10-3.1.0-b-0.0"
+    "mrbuilder-plugin-fonts": "^3.1.0-0",
+    "mrbuilder-plugin-hot": "^3.1.0-0",
+    "mrbuilder-plugin-html": "^3.1.0-0",
+    "mrbuilder-plugin-less": "^3.1.0-0",
+    "mrbuilder-plugin-uglify": "^3.1.0-0",
+    "mrbuilder-plugin-webpack": "^3.1.0-0",
+    "mrbuilder-plugin-webpack-dev-server": "^3.1.0-0"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
@@ -73,5 +73,6 @@
       }
     }
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

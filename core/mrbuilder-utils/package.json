@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-utils",
-  "version": "3.0.10-3.1.0-b-0.0",
+  "version": "3.1.0-0",
   "description": "Dev utils for mrbuilder dev tools",
   "source": "src",
   "main": "src",
@@ -14,5 +14,6 @@
   "scripts": {
     "test": "mocha ./test/**/*-test.js"
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

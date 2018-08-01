@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder",
-  "version": "3.0.10-3.1.0-b-0.0",
+  "version": "3.1.0-0",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
     "in-publish": "^2.0.0",
-    "mrbuilder-optionsmanager": "^3.0.10-3.1.0-b-0.0"
+    "mrbuilder-optionsmanager": "^3.1.0-0"
   },
   "bin": {
     "mrbuilder": "./bin/mrbuilder.js",
@@ -19,5 +19,6 @@
   "license": "0BSD",
   "engines": {
     "node": ">=8.0.0"
-  }
+  },
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

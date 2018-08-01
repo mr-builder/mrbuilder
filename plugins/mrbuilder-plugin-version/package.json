@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-version",
-  "version": "3.0.10-3.1.0-b-0.0",
+  "version": "3.1.0-0",
   "description": "Expose version information for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
-    "mrbuilder-utils": "^3.0.10-3.1.0-b-0.0"
+    "mrbuilder-utils": "^3.1.0-0"
   },
   "keywords": [
     "mrbuilder"
@@ -13,5 +13,6 @@
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "3.x"
-  }
+  },
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }
