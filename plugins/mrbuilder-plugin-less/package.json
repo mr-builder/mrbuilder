@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-less",
-  "version": "3.1.0-1",
+  "version": "3.1.0-2",
   "description": "less support for mrbuilder",
   "dependencies": {
     "less": "^3.8.0",
     "less-loader": "^4.1.0",
-    "mrbuilder-plugin-css": "^3.1.0-1"
+    "mrbuilder-plugin-css": "^3.1.0-2"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
