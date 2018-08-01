@@ -4,9 +4,7 @@
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
     "in-publish": "^2.0.0",
-    "mrbuilder-optionsmanager": "^3.0.6",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "mrbuilder-optionsmanager": "^3.0.6"
   },
   "bin": {
     "mrbuilder": "./bin/mrbuilder.js",

@@ -1,10 +1,10 @@
-const { spawnSync } = require('child_process');
-const path          = require('path');
+const {spawnSync} = require('child_process');
+const path        = require('path');
 
 function findExecPath() {
     return process.env['$npm_execpath'] || require('which')
-        .sync('yarn', { nothrow: true }) || require('which')
-               .sync('npm', { nothrow: true });
+        .sync('yarn', {nothrow: true}) || require('which')
+        .sync('npm', {nothrow: true});
 
 }
 
@@ -17,76 +17,75 @@ let mrbuilderVersion;
  * @param isDev - set to false if it is not a dev dependency.
  */
 let first      = true;
-module.exports =
-    function handleNotFoundTryInstall(e, pkg, isDev = true) {
-        const warn = this.warn || console.warn;
-        const info = this.info || console.log;
-        if (!pkg || pkg === 'undefined') {
-            warn(`package was null?`);
-            return;
-        }
+module.exports = function handleNotFoundTryInstall(e, pkg, isDev = true) {
+    const warn = this.warn || console.warn;
+    const info = this.info || console.log;
+    if (!pkg || pkg === 'undefined') {
+        warn(`package was null?`);
+        throw new Error('undefined package');
+    }
 
-        const npmPath = findExecPath();
-        if (npmPath) {
-            if (!mrbuilderVersion) {
-                mrbuilderVersion = require('mrbuilder/package.json').version;
-            }
-            const installPkg = `${pkg}@^${mrbuilderVersion}`;
-            const isYarn     = yarnRe.test(npmPath);
-            if (first) {
-                first = false;
-                info(
-                    `using ${isYarn ? 'yarn' : 'npm'} to install '${pkg}' this might take a minute, and
+    const npmPath = findExecPath();
+    if (npmPath) {
+        if (!mrbuilderVersion) {
+            mrbuilderVersion = require('mrbuilder/package.json').version;
+        }
+        const installPkg = `${pkg}@^${mrbuilderVersion}`;
+        const isYarn     = yarnRe.test(npmPath);
+        if (first) {
+            first = false;
+            info(
+                `using ${isYarn ? 'yarn' : 'npm'} to install '${pkg}' this might take a minute, and
                  should only happen when you haven't installed it as a dependency. After it installs
                  successfully it won't do this the next time you run mrbuilder. If you would
                  rather declare it as a ${isDev ? 'devDependency'
-                                                : 'dependency'} in your package.json, 
+                    : 'dependency'} in your package.json, 
                  you can quit now and add it manually.
                  
                  Note: there may be more plugins/presets that need to be installed.  Same
                  rules apply, but you won't get the full message.
                
                 `);
-            } else {
-                info(`using '${isYarn ? 'yarn'
-                                      : 'npm'}' to install '${installPkg}'.`);
-            }
+        } else {
+            info(`using '${isYarn ? 'yarn'
+                : 'npm'}' to install '${installPkg}'.`);
+        }
 
-            const args = isYarn ? ['add', installPkg] : ['install', installPkg];
+        const args = isYarn ? ['add', installPkg] : ['install', installPkg];
 
-            if (isDev) {
-                args.push(isYarn ? '-D' : '--save-dev');
-            }
+        if (isDev) {
+            args.push(isYarn ? '-D' : '--save-dev');
+        }
 
-            const res = spawnSync(npmPath, args, {
-                stdio: ['inherit', 'inherit', 'inherit'],
-                env  : Object.assign({}, process.env, {
-                    NODE_ENV                 : 'development',
-                    MRBUILDER_AUTO_INSTALLING: 1,
-                })
-            });
+        const res = spawnSync(npmPath, args, {
+            stdio: ['inherit', 'inherit', 'inherit'],
+            env  : Object.assign({}, process.env, {
+                NODE_ENV                 : 'development',
+                MRBUILDER_AUTO_INSTALLING: 1,
+            })
+        });
 
-            if (res.status === 0) {
-                info(`install of '${pkg}' succeeded.`);
-                //try sleeping so that things don't go loopy.
-                spawnSync(process.argv[0],
-                    ['-e', 'setTimeout(process.exit, 1000, 0)']);
+        if (res.status === 0) {
+            info(`install of '${pkg}' succeeded.`);
+            //try sleeping so that things don't go loopy.
+            spawnSync(process.argv[0],
+                ['-e', 'setTimeout(process.exit, 1000, 0)']);
 
-                return;
-            }
-            const err = res.stderr + '';
-            warn(`install of '${pkg}' failed with status ${res.status}!
+            return;
+        }
+        const err = res.stderr + '';
+        warn(`install of '${pkg}' failed with status ${res.status}!
             
              try running
 
             # ${isYarn ? 'yarn' : 'npm'} ${args.join(' ')}
             
             \n ` + err);
-            throw (e || err);
+        throw (e || err);
 
-        } else {
-            warn(
-                `could not find yarn or npm to install '${pkg}' 
+    } else {
+        warn(
+            `could not find yarn or npm to install '${pkg}' 
             Try adding a command to your package.json something like
             {
               ...
@@ -98,7 +97,7 @@ module.exports =
             
             or adding the path to yarn to PATH .
             run under package.json scripts for better results.`);
-            throw e;
-        }
+        throw e;
+    }
 
-    };
+};

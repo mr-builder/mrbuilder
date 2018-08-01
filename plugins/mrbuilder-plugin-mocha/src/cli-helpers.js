@@ -13,7 +13,8 @@ function copyProps(src, target) {
                         }), {});
     Object.defineProperties(target, props);
 }
-
+window.Object = Object;
+copyProps(global, window);
 global.window    = window;
 global.document  = window.document;
 global.navigator = {

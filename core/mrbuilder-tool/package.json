@@ -16,12 +16,14 @@
     "link",
     "mrbuilder"
   ],
+  "dependencies": {
+    "mrbuilder-utils": "^3.0.6"
+  },
   "peerDependencies": {
-    "lerna": "*",
-    "mrbuilder": "3.x"
+    "lerna": "3.x || 2.x"
   },
   "devDependencies": {
-    "lerna": "2.11.0",
+    "lerna": "^3.0.0-rc.0",
     "mrbuilder": "^3.0.6"
   },
   "license": "0BSD"

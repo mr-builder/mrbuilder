@@ -7,11 +7,11 @@
     "start": "MRBUILDER_ENV=development node $NODE_DEBUG_OPTION  ./node_modules/.bin/mrbuilder-webpack-dev-server"
   },
   "dependencies": {
-    "markdown-it": "^8.4.0",
+    "markdown-it": "^8.4.2",
     "markdown-it-checkbox": "^1.1.0",
     "mrbuilder-plugin-babel": "^3.0.6",
     "mrbuilder-utils": "^3.0.6",
-    "react-syntax-highlighter": "^6.0.4"
+    "react-syntax-highlighter": "^8.0.1"
   },
   "devDependencies": {
     "mrbuilder-plugin-karma": "^3.0.7"

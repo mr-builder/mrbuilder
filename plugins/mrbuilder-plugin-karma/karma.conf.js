@@ -11,7 +11,8 @@ const fs               = require('fs');
 
 
 module.exports = function (config) {
-    const webpack = require('mrbuilder-plugin-webpack/webpack.config');
+    //karma doesn't handle async webpack configuration.
+    const webpack = global._MRBUILDER_WEBPACK_;
 
     const mrb = (key, def) => optionsManager.config(`mrbuilder-plugin-karma.${key}`, def);
 

@@ -1,25 +1,24 @@
-const lerna = require('lerna');
-const path  = require('path');
-const style = require("mrbuilder-plugin-react-styleguidist");
+const {lernaFilteredPackages} = require('mrbuilder-utils');
+const path                    = require('path');
+const style                   = require("mrbuilder-plugin-react-styleguidist");
 
 module.exports = function (options = {}, webpack, om) {
+
     options.styleguideComponents = {
         LogoRenderer: '~mrbuilder.wiki/src/components/LogoRenderer'
     };
-    options.styles = {
+    options.styles               = {
         StyleGuide: {
-            sidebar: {
+            sidebar   : {
                 width: '18em'
             },
-            hasSidebar:{
-                paddingLeft:'18em'
+            hasSidebar: {
+                paddingLeft: '18em'
             }
         }
     };
-    const ls = new lerna.LsCommand(null, {});
-    ls.runPreparations();
-    const plugins    = [], presets = [], core = [], other = [], example = [];
-    options.sections = [
+    const plugins                = [], presets = [], core = [], other = [], example = [];
+    options.sections             = [
         {
             name      : "Getting Started",
             "sections": [
@@ -48,11 +47,11 @@ module.exports = function (options = {}, webpack, om) {
                     "content": "../docs/configuration.md"
                 },
                 {
-                    name     : "Plugins and Presets",
+                    name   : "Plugins and Presets",
                     content: "../docs/plugins_and_presets.md",
                 },
                 {
-                    name     : "Tools",
+                    name   : "Tools",
                     content: "../docs/tools.md"
                 },
                 {
@@ -76,27 +75,29 @@ module.exports = function (options = {}, webpack, om) {
         },
 
     ];
-    const obj        = { core, plugins, presets, other, example };
-    ls.filteredPackages.forEach(p => {
+    const obj                    = {core, plugins, presets, other, example};
 
-        const { location, _package: pkg, description = '' } = p;
-        if (pkg.name === 'mrbuilder.wiki') {
-            return;
-        }
-        const category = path.basename(path.dirname(location));
-        const place    = obj[category] || obj.other;
+    return lernaFilteredPackages({}).then(filteredPackages => {
+        filteredPackages.forEach(p => {
 
-        const conf = {
-            name   : pkg.name.replace(/mrbuilder-(?:plugin|preset|example)-(.*)$/,'$1'),
-            content: path.join(location, 'Readme.md'),
-            description,
-        };
-        if (category === 'plugins' || category === 'presets') {
-            conf.description += `
+            const {location, name, description = ''} = p;
+            if (name === 'mrbuilder.wiki') {
+                return;
+            }
+            const category = path.basename(path.dirname(location));
+            const place    = obj[category] || obj.other;
+
+            const conf = {
+                name   : name.replace(/mrbuilder-(?:plugin|preset|example)-(.*)$/, '$1'),
+                content: path.join(location, 'Readme.md'),
+                description,
+            };
+            if (category === 'plugins' || category === 'presets') {
+                conf.description += `
 ### Installation
     
 \`\`\`sh
-$ yarn add ${pkg.name} -D   
+$ yarn add ${name} -D   
 \`\`\`            
 
 ### Basic Configuration
@@ -107,39 +108,41 @@ In your \`package.json\`
  "name":"your_component"
  "mrbuilder":{
     "${category}":[
-      "${pkg.name}"
+      "${name}"
     ]
  }
 }
 \`\`\`
 
 `;
-        }
+            }
 
-        if (category === 'example' || category == 'component' || category === 'presets') {
-            conf.description += `
+            if (category === 'example' || category == 'component' || category === 'presets') {
+                conf.description += `
 ### Configuration
 This is the configuration
 
 \`\`\`json
 {
-"name":"${pkg.name}",
+"name":"${name}",
 ...
-"mrbuilder":${JSON.stringify(pkg.mrbuilder || {}, null, 2)}
+"mrbuilder":${JSON.stringify(p.toJSON().mrbuilder || {}, null, 2)}
 }
 \`\`\`            
 `
-        }
-        if (category == 'components'){
-            conf.components = [pkg.name]
-        }else{
-            conf.components = [];
-        }
-        place.push(conf);
+            }
+            if (category == 'components') {
+                conf.components = [name]
+            } else {
+                conf.components = [];
+            }
+            place.push(conf);
 
 
+        });
+        webpack.node || (webpack.node = {});
+        webpack.node.fs = 'empty';
+
+        return style(options, webpack, om);
     });
-    webpack.node || (webpack.node = {});
-    webpack.node.fs = 'empty';
-    return style(options, webpack, om);
 };

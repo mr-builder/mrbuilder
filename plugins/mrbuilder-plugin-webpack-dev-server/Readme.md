@@ -25,3 +25,4 @@ All other options are passed to webpack dev server.
 | contentBase   | string     | ./public     | Directory with assets            |
 | entry         | object     | public/index.js| falls back to src/index.js     |
 | rewrite       | object     |              | Rewrite urls                     |
+| useBuildCache | bool       | false        | Enables build caching that can improve build performance|

@@ -2,7 +2,7 @@
   "name": "mrbuilder-plugin-lodash",
   "version": "3.0.6",
   "dependencies": {
-    "lodash-es": "^4.17.4"
+    "lodash-es": "^4.17.10"
   },
   "main": "src",
   "source": "src",

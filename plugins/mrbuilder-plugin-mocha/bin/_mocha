@@ -1,1 +1,3 @@
-require('./mrbuilder-mocha');
+#!/usr/bin/env node
+require('./cli');
+
