@@ -44,6 +44,10 @@
       ],
       "mrbuilder.wiki",
       [
+        "mrbuilder-plugin-chunk",
+        false
+      ],
+      [
         "mrbuilder-plugin-clean",
         {
           "allowExternal": true,
