@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-karma",
-  "version": "3.1.0-3",
+  "version": "3.1.0",
   "description": "Tools for developing with mrbuilder and karma",
   "scripts": {
     "test": "mrbuilder-mocha"
@@ -18,10 +18,10 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "^0.0.32",
     "karma-webpack": "^3.0.0",
-    "mrbuilder-optionsmanager": "^3.1.0-3",
-    "mrbuilder-plugin-enzyme": "^3.1.0-3",
-    "mrbuilder-plugin-mocha": "^3.1.0-3",
-    "mrbuilder-plugin-webpack": "^3.1.0-3"
+    "mrbuilder-optionsmanager": "^3.1.0",
+    "mrbuilder-plugin-enzyme": "^3.1.0",
+    "mrbuilder-plugin-mocha": "^3.1.0",
+    "mrbuilder-plugin-webpack": "^3.1.0"
   },
   "source": "src",
   "main": "src",
