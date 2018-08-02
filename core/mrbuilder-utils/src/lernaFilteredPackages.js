@@ -17,12 +17,12 @@ module.exports = (opts) => {
             })
         })
     } catch (e) {
-        const LsCommand = require('lerna/lib/commands/LsCommand');
+        const LsCommand = require('lerna/lib/commands/LsCommand').default;
         const ls        = new LsCommand(null, opts, opts.cwd || process.cwd());
         ls.runPreparations();
-        return ls.filteredPackages.map(({_location: location, ...rest}) => ({
+        return Promise.resolve(ls.filteredPackages.map(({_location: location, ...rest}) => ({
             location,
             ...rest,
-        }));
+        })));
     }
 };
