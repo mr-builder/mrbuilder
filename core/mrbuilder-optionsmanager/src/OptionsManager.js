@@ -153,7 +153,7 @@ module.exports = class OptionsManager {
                             // is thrown.
                             cp.execFileSync(process.argv[0],
                                 ['-e', `require.resolve('${pkgPath}')`],
-                                { stdio: 'ignore', cwd: cwd() });
+                                {stdio: 'ignore', cwd: cwd()});
                         }
                     }
 
@@ -181,12 +181,12 @@ module.exports = class OptionsManager {
 
             const pluginConfig = pkg[confPrefix] ? parseValue(
                 JSON.stringify(pkg[confPrefix]))
-                                                 : parseJSON(
+                : parseJSON(
                 resolveFromPkgDir(pkg.name, rcFile))
-                                                   || {};
+                || {};
 
             const envOverride = pluginConfig.env
-                                && pluginConfig.env[ENV] || {};
+                && pluginConfig.env[ENV] || {};
             return {
                 presets : mergePlugins(
                     ...resolveEnv(ENV, 'presets', pluginConfig)),
@@ -232,6 +232,9 @@ module.exports = class OptionsManager {
             let pluginSrc               = pluginName;
             let ret                     = pluginName;
             let alias;
+            if (typeof pluginName !== 'string') {
+                throw new Error(`Plugin name needs to be a string, received ${typeof pluginName} please check your '${prefix}' config from '${includedFrom}'`);
+            }
             if (pluginName.startsWith('.')) {
                 if (includedFrom === this.topPackage.name) {
                     pluginSrc = this.cwd(pluginName);
@@ -243,7 +246,10 @@ module.exports = class OptionsManager {
                 const [rPluginName, rPluginOpts] = nameConfig(plugin);
 
                 options.push(rPluginOpts);
-
+                if (!rPluginName) {
+                    this.warn('could not find plugin name for ', plugin);
+                    return;
+                }
                 const pConfig = resolveConfig(rPluginName);
                 if (pConfig) {
 
@@ -273,7 +279,7 @@ module.exports = class OptionsManager {
             options.unshift(mergeArgs(pluginName, argv));
             options.unshift(mergeEnv(pluginName, env));
             if (alias) {
-                options.unshift(mergeAlias(alias, aliasObj, { env, argv }));
+                options.unshift(mergeAlias(alias, aliasObj, {env, argv}));
             }
 
             const resolvedOptions = mergeOptions(options);
@@ -284,6 +290,7 @@ module.exports = class OptionsManager {
             if (pluginName.startsWith('.')) {
                 pluginName = join(includedFrom, pluginName)
             }
+
             this.plugins.set(pluginName,
                 newOption(pluginName, pluginSrc, resolvedOptions, parent,
                     alias));
@@ -311,7 +318,7 @@ module.exports = class OptionsManager {
                 plugins.map(
                     plugin => processPlugin(pkg.name, plugin, override, pkg,
                         ignoreRc))
-                       .filter(Boolean).forEach(
+                    .filter(Boolean).forEach(
                     (pluginName) => scan(ignoreRc, pkg, pluginName, void(0),
                         override))
             }
@@ -338,7 +345,7 @@ module.exports = class OptionsManager {
                 this.debug('process from env', pluginsName, plugins,
                     presetsName, presets);
                 processOpts(`${envPrefix}_${prefix}ENV`,
-                    { plugins, presets, plugin: false },
+                    {plugins, presets, plugin: false},
                     void(0),
                     this.topPackage);
             }
@@ -349,7 +356,7 @@ module.exports = class OptionsManager {
             if (Array.isArray(name)) {
                 throw new Error(
                     `${name} can not be an array import from ${parent
-                                                               && parent.name}`);
+                    && parent.name}`);
             }
 
             const pkg        = resolvePkgJson(name);
@@ -373,7 +380,7 @@ module.exports = class OptionsManager {
     }
 
     logger(plugin) {
-        const { warn, info, debug } = this.plugins.get(plugin) || this;
+        const {warn, info, debug} = this.plugins.get(plugin) || this;
         return {
             warn,
             info,
@@ -433,8 +440,8 @@ class Option {
         return {
             name  : this.name,
             plugin: typeof this.plugin === 'function' ? (this.plugin.name
-                                                         || '[function]')
-                                                      : this.plugin,
+                || '[function]')
+                : this.plugin,
             config: this.config,
             parent: `[${this.parent && this.parent.name}]`
         }

@@ -1,12 +1,13 @@
 {
   "name": "mrbuilder-plugin-chunk",
-  "version": "3.0.7",
+  "version": "3.1.0-3",
   "main": "src",
   "dependencies": {
-    "mrbuilder-utils": "^3.0.6"
+    "mrbuilder-utils": "^3.1.0-3"
   },
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "3.x"
-  }
+  },
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

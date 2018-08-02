@@ -1,5 +1,5 @@
-const { cwd, parseEntry } = require('mrbuilder-utils');
-const DEV_SERVER          = {
+const {cwd, parseEntry} = require('mrbuilder-utils');
+const DEV_SERVER        = {
     filename          : 'index.js',
     historyApiFallback: true,
     inline            : true,
@@ -8,13 +8,14 @@ const DEV_SERVER          = {
 };
 
 module.exports = function (opts, webpack) {
-    const { socketTimeout, entry, rewrite } = opts;
+    const {socketTimeout, entry, rewrite, useBuildCache} = opts;
     delete opts.socketTimeout;
     delete opts.noHot;
     delete opts.useExternals;
     delete opts.loader;
     delete opts.entry;
     delete opts.rewrite;
+    delete opts.useBuildCache;
 
     const devServer = Object.assign({}, webpack.devServer, DEV_SERVER, opts);
     if (entry) {
@@ -36,7 +37,7 @@ module.exports = function (opts, webpack) {
 
     //yeah, prolly should do this, but more is better?
     if (socketTimeout) {
-        const { before }         = webpack.devServer;
+        const {before}           = webpack.devServer;
         webpack.devServer.before = (app) => {
             before && before(app);
             app.use((req, res, next) => {
@@ -48,7 +49,7 @@ module.exports = function (opts, webpack) {
     //rewrite urls a little different than proxy.
 
     if (rewrite) {
-        const { before }         = webpack.devServer;
+        const {before}           = webpack.devServer;
         const debug              = this.debug || console.log;
         webpack.devServer.before = (app) => {
             before && before.call(this, app);
@@ -78,6 +79,17 @@ module.exports = function (opts, webpack) {
             }
         }
     }
+    if (useBuildCache) {
+        webpack.optimization          = {
+            removeAvailableModules: false,
+            removeEmptyChunks     : false,
+            splitChunks           : false,
+        };
+        webpack.output.pathinfo       = false;
+        const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+        webpack.plugins.push(new HardSourceWebpackPlugin);
 
+
+    }
     return webpack;
 };

@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-fonts",
-  "version": "3.0.6",
+  "version": "3.1.0-3",
   "description": "Loadin fonts types via webpack",
   "scripts": {
     "test": "mrbuilder-mocha"
@@ -10,12 +10,13 @@
     "url-loader": "^1.0.1"
   },
   "devDependencies": {
-    "mrbuilder-plugin-mocha": "^3.0.6"
+    "mrbuilder-plugin-mocha": "^3.1.0-3"
   },
   "source": "src",
   "main": "src",
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "3.x"
-  }
+  },
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

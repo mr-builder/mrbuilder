@@ -18,7 +18,9 @@ to publish them as presets.
 The plugin api is relatively simple. Create a node module with a package.json,
  add a index.js and implement a function as below.  Where webpack is the webpack config.  Options
 are the options passed into the plugin and optionsManager is the optionsManager
-in case you need to check another plugin exists or configuration.
+in case you need to check another plugin exists or configuration.  You can also return
+a Promise that resolves to null or a webpack config.  Useful for plugins that need async
+access to some server.
 
 ```js static
 module.exports = function(options, webpack, optionsManager){

@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-tool",
-  "version": "3.0.6",
+  "version": "3.1.0-3",
   "description": "Tool for changing package files",
   "main": "lib",
   "source": "source",
@@ -16,13 +16,16 @@
     "link",
     "mrbuilder"
   ],
+  "dependencies": {
+    "mrbuilder-utils": "^3.1.0-3"
+  },
   "peerDependencies": {
-    "lerna": "*",
-    "mrbuilder": "3.x"
+    "lerna": "3.x || 2.x"
   },
   "devDependencies": {
-    "lerna": "2.11.0",
-    "mrbuilder": "^3.0.6"
+    "lerna": "^3.0.0-rc.0",
+    "mrbuilder": "^3.1.0-3"
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

@@ -1,17 +1,18 @@
-const path                         = require('path');
-const { existsSync, readFileSync } = require('fs');
+const path                       = require('path');
+const lernaFilteredPackages      = require('./lernaFilteredPackages');
+const {existsSync, readFileSync} = require('fs');
 const {
           stringify,
           parseValue,
           parseRe,
-      }                            = require('./parse');
+      }                          = require('./parse');
 //JSON5 allows for a lot more convienent syntax.
-const JSON5                        = require('json5');
+const JSON5                      = require('json5');
 const {
           SUBSCHEMA_PROJECT_DIR
               = process.cwd(),
           SUBSCHEMA_DEBUG
-      }                            = process.env;
+      }                          = process.env;
 
 const asArray = Function.call.bind(
     Array.prototype.slice);
@@ -181,7 +182,7 @@ function parseEntry(entryNoParse) {
     let entry        = {};
     const entryArray = Array.isArray(entryNoParse) ? entryNoParse
         : typeof entryNoParse === 'string' ? entryNoParse.split(/,\s*/)
-                           : entryNoParse;
+            : entryNoParse;
 
 
     for (let i = 0, l = entryArray.length; i < l; i++) {
@@ -212,16 +213,16 @@ const enhancedResolve  = (p, _require = require) => {
         return cwd(p);
     }
     if (p.startsWith('~')) {
-        const parts  = p.substring(1).split(path.sep);
-        const pkg = parts.shift();
+        const parts = p.substring(1).split(path.sep);
+        const pkg   = parts.shift();
         try {
             const pkgDir = path.resolve(
                 _require.resolve(path.join(pkg, 'package.json')),
                 '..');
 
             return path.resolve(pkgDir, ...parts);
-        }catch(e){
-            if (e.code === 'MODULE_NOT_FOUND'){
+        } catch (e) {
+            if (e.code === 'MODULE_NOT_FOUND') {
                 console.warn(`Could not resolve ${pkg} from ${p} check spelling and location`);
             }
             throw e;
@@ -253,7 +254,7 @@ const regexOrFuncApply = (first, second) => {
     }
 };
 
-module.exports         = {
+module.exports = {
     parseValue,
     stringify,
     get,
@@ -270,6 +271,6 @@ module.exports         = {
     regexOrFuncApply,
     parseJSON,
     info,
-    cwd, sliced, resolveMap, resolvePkgDir, camelToHyphen
+    cwd, sliced, resolveMap, resolvePkgDir, camelToHyphen, lernaFilteredPackages
 
 };

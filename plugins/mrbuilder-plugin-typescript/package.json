@@ -1,19 +1,19 @@
 {
   "name": "mrbuilder-plugin-typescript",
-  "version": "3.0.6",
+  "version": "3.1.0-3",
   "description": "Typescript plugin for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
-    "@types/lodash": "^4.14.106",
-    "@types/node": "^9.6.2",
+    "@types/lodash": "^4.14.115",
+    "@types/node": "^10.5.5",
     "@types/promise": "^7.1.30",
-    "@types/puppeteer": "^1.2.1",
-    "@types/react": "^16.3.5",
+    "@types/puppeteer": "^1.6.0",
+    "@types/react": "^16.4.7",
     "source-map-loader": "^0.2.3",
-    "ts-loader": "^4.1.0",
-    "tsconfig-paths-webpack-plugin": "^3.0.3",
-    "typescript": "^2.8.1",
+    "ts-loader": "^4.4.2",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.0.1",
     "webpack-utils": "^1.0.0"
   },
   "keywords": [
@@ -23,5 +23,6 @@
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "3.x"
-  }
+  },
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

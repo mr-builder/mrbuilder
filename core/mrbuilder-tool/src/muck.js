@@ -1,13 +1,12 @@
 #!/usr/bin/env node
-import LsCommand from 'lerna/lib/commands/LsCommand'
-import set from 'lodash/set';
-import unset from 'lodash/unset';
-import has from 'lodash/has';
-import get from 'lodash/get';
-import fs from 'fs';
-import path from 'path';
-import inquirer from 'inquirer';
-
+import set                     from 'lodash/set';
+import unset                   from 'lodash/unset';
+import has                     from 'lodash/has';
+import get                     from 'lodash/get';
+import fs                      from 'fs';
+import path                    from 'path';
+import inquirer                from 'inquirer';
+import {lernaFilteredPackages} from 'mrbuilder-utils';
 
 export const settings = {
     exit : process.exit,
@@ -47,10 +46,10 @@ function parse(value) {
 }
 
 
-async function confirm(message, { confirm = false }) {
+async function confirm(message, {confirm = false}) {
     if (confirm) {
         const answer = await inquirer.prompt(
-            [{ message, type: 'confirm', name: 'confirm' }]);
+            [{message, type: 'confirm', name: 'confirm'}]);
         return answer.confirm;
     }
     return true;
@@ -74,8 +73,8 @@ async function _set(json, [key, value], filename, options) {
     }
 
     if (await confirm(
-            `Are you sure you want to change ${key} in '${this.name}/${filename}?' ${hasKey
-                ? `[${JSON.stringify(current, null, 2)}]` : ''}`, options)) {
+        `Are you sure you want to change ${key} in '${this.name}/${filename}?' ${hasKey
+            ? `[${JSON.stringify(current, null, 2)}]` : ''}`, options)) {
         set(json, key, value);
         return true;
     }
@@ -93,8 +92,8 @@ async function _move(json, keys, filename, opts) {
     }
     if (has(json, from)) {
         if (!await confirm(
-                `Are you sure you want to move '${from}' to '${to}' in '${filename}?'`,
-                opts)) {
+            `Are you sure you want to move '${from}' to '${to}' in '${filename}?'`,
+            opts)) {
             return false;
         }
         const f = get(json, from);
@@ -133,7 +132,7 @@ async function _delete(json, keys, filename, opts) {
     for (const key of keys) {
         if (has(json, key)) {
             if (!(await confirm(`Are you sure you want to delete '${key}'`,
-                    opts))) {
+                opts))) {
                 continue;
             }
         }
@@ -164,7 +163,7 @@ async function _prompt(json, args, filename, options) {
             return false
         }
     }
-    if (await confirm(message, { confirm: true })) {
+    if (await confirm(message, {confirm: true})) {
         const answer = await inquirer.prompt([{
             type   : 'input',
             name   : 'value',
@@ -187,7 +186,7 @@ async function _prompt(json, args, filename, options) {
 
 export async function muckFile(pkg, file, opts) {
     let saveMuck   = false;
-    const fullname = path.resolve(pkg._location, file);
+    const fullname = path.resolve(pkg.location, file);
     let json;
     try {
         json = await read(fullname);
@@ -211,14 +210,14 @@ export async function muckFile(pkg, file, opts) {
         if (opts.preview) {
             settings.log(JSON.stringify(json, null, 2));
             if (!await confirm(`Does above look correct for ${fullname}`,
-                    { confirm: true })) {
+                {confirm: true})) {
                 return false;
             }
         }
         if (!opts.noExtension) {
             if (fs.existsSync(backup) && !await confirm(
-                    `a file named ${newfile} already, do want to overwrite?`,
-                    opts)) {
+                `a file named ${newfile} already, do want to overwrite?`,
+                opts)) {
                 return false;
             }
             //rename the current file.
@@ -391,13 +390,18 @@ export function makeOptions(name, args,) {
 export async function muck(opts) {
     if (!opts.noLerna) {
 
-        const ls = new LsCommand(null, opts.files ? {
-            scope: opts.scope,
-        } : {}, process.cwd());
-        ls.runPreparations();
-        opts.filteredPackages = ls.filteredPackages;
+        const options = {};
+        if (opts.cwd) {
+            options.cwd = opts.cwd;
+        }
+        if (opts.scope) {
+            options.scope = opts.scope;
+        }
+        const filteredPackages = await lernaFilteredPackages(opts);
 
-        for (const pkg of ls.filteredPackages) {
+
+        opts.filteredPackages = filteredPackages;
+        for (const pkg of filteredPackages) {
             for (const file of opts.files) {
                 await muckFile(pkg, file, opts);
             }
@@ -405,7 +409,7 @@ export async function muck(opts) {
     } else {
         for (const file of opts.files) {
 
-            await muckFile({ name: '.', _location: process.cwd() }, file, opts);
+            await muckFile({name: '.', location: process.cwd()}, file, opts);
         }
     }
 }

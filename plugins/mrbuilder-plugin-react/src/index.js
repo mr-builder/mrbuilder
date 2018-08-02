@@ -1,10 +1,11 @@
-const path                   = require('path');
-const { cwd, resolvePkgDir } = require('mrbuilder-utils');
+const path                 = require('path');
+const {cwd, resolvePkgDir} = require('mrbuilder-utils');
 
-module.exports = function reactPlugin({
-                                          compatMode = false,
-                                      }, webpack,
-                                      om) {
+let showedWarning = false;
+module.exports    = function reactPlugin({
+                                             compatMode = false,
+                                         }, webpack,
+                                         om) {
     if (!webpack.resolve) {
         webpack.resolve = {};
     }
@@ -43,7 +44,7 @@ module.exports = function reactPlugin({
     //so styleguidist tries to do this, but it fails.  So we do it instead.
     // webpack resolve alias is super flackey.  It depends on entry order, rather
     // than depth specified.
-    if (!webpack.resolve.alias['prop-types/checkPropTypes']){
+    if (!webpack.resolve.alias['prop-types/checkPropTypes']) {
         webpack.resolve.alias['prop-types/checkPropTypes'] = require.resolve('prop-types/checkPropTypes');
     }
 
@@ -72,7 +73,7 @@ module.exports = function reactPlugin({
 
         if (!entry) {
 
-            entry = webpack.entry = { index: path.join(publicPath, 'index') };
+            entry = webpack.entry = {index: path.join(publicPath, 'index')};
             try {
                 require.resolve(entry.index);
             } catch (e) {
@@ -80,7 +81,7 @@ module.exports = function reactPlugin({
                 const index = require.resolve(
                     cwd(pkg.source || pkg.main || './src'));
                 this.info(`no entry using "${index}"`);
-                entry = webpack.entry = { index };
+                entry = webpack.entry = {index};
             }
         }
         const pages     = om.config('mrbuilder-plugin-html.pages');
@@ -90,7 +91,7 @@ module.exports = function reactPlugin({
 
         this.info('pages', pages);
 
-        const { generateHot, generate } = require('./loader');
+        const {generateHot, generate} = require('./loader');
 
         const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
@@ -104,7 +105,7 @@ module.exports = function reactPlugin({
                     name);
                 const val          = webpack.entry[name];
                 const current      = Array.isArray(val) ? val[val.length - 1]
-                                                        : val;
+                    : val;
                 const currentAlias = `mrbuilder-plugin-react-${name}`;
 
                 webpack.resolve.alias[currentAlias] = current;
@@ -131,13 +132,16 @@ module.exports = function reactPlugin({
                 );
             } else {
                 webpack.entry[name] = preEntry.concat(webpack.entry[name]);
-                this.info(
-                    `not using exported components, you may need to setup hot and dom mounting manually for ${name}
+                if (!showedWarning) {
+                    showedWarning = true;
+                    this.info(
+                        `not using exported components, you may need to setup hot and dom mounting manually for ${name}
                      Something like  to your entry point:
                      
                      ${(hot ? generateHot : generate)(name, 'content', true) }
                     
                     `);
+                }
 
 
             }

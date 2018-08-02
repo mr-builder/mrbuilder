@@ -1,16 +1,17 @@
 {
   "name": "mrbuilder-plugin-eslint",
-  "version": "3.0.6",
+  "version": "3.1.0-3",
   "dependencies": {
-    "babel-eslint": "^8.2.2",
-    "eslint": "^4.19.1",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-react": "^7.5.1"
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.2.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-react": "^7.10.0"
   },
   "source": "src",
   "main": "src",
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "3.x"
-  }
+  },
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

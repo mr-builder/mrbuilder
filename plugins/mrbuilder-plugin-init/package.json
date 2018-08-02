@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-plugin-init",
-  "version": "3.0.6",
+  "version": "3.1.0-3",
   "main": "src",
   "dependencies": {
-    "mrbuilder": "^3.0.6",
-    "mrbuilder-optionsmanager": "^3.0.6"
+    "mrbuilder": "^3.1.0-3",
+    "mrbuilder-optionsmanager": "^3.1.0-3"
   },
   "scripts": {
     "mrbuilder-init": "./bin/mrbuilder-init.js"
@@ -32,5 +32,6 @@
   "license": "0BSD",
   "peerDependencies": {
     "mrbuilder": "3.x"
-  }
+  },
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

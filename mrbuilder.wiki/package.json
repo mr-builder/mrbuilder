@@ -1,19 +1,20 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "3.0.7",
+  "version": "3.1.0-3",
   "dependencies": {
-    "mrbuilder": "^3.0.6",
-    "mrbuilder-plugin-clean": "^3.0.6",
-    "mrbuilder-plugin-react-styleguidist": "^3.0.6"
+    "mrbuilder": "^3.1.0-3",
+    "mrbuilder-plugin-clean": "^3.1.0-3",
+    "mrbuilder-plugin-react-styleguidist": "^3.1.0-3"
   },
   "scripts": {
     "prepublish": "NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io",
     "start": "mrbuilder-webpack-dev-server",
     "test": "NODE_ENV=production MRBUILDER_ENV=production mrbuilder-webpack --app ./test-out"
   },
+  "source": "src",
   "mrbuilder": {
-    "plugin": "src/index",
+    "plugin": "./src/index",
     "plugins": [
       [
         "mrbuilder-plugin-version",

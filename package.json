@@ -20,7 +20,7 @@
     "components/*"
   ],
   "dependencies": {
-    "lerna": "^2.10.1",
+    "lerna": "^3.0.0-rc.0",
     "json5": "^1.0.1"
   },
   "publishConfig": {

@@ -1,55 +1,28 @@
 #!/usr/bin/env node
 
-const { camelCased }   = require('mrbuilder-utils');
-const { argv }         = process;
-const { join }         = require('path');
+const {camelCased}     = require('mrbuilder-utils');
+const {argv}           = process;
+const {join}           = require('path');
 const root             = require(join(__dirname, '..', 'package.json'));
 const mrbuilderVersion = root.dependencies['mrbuilder'];
 
+const PRESETS = ["mrbuilder-preset-app", "mrbuilder-preset-lib", "mrbuilder-preset-dev"];
 
 const generatePackage = ({
                              name,
                              version = '0.0.1',
-                             type,
+                             type = 'lib',
                              description = '',
-                             start,
-                             prepublish,
-                             clean,
-                             test,
-                             karma,
                              plugins,
-                             presets,
+                             presets = PRESETS,
                              repository,
                              rootRepository,
                          }) => {
     if (!name) {
         throw new Error('--name is required');
     }
-    let demo, main;
     if (rootRepository) {
         repository = `${rootRepository}/${name}`;
-    }
-    switch (type) {
-        case 'app': {
-            prepublish = prepublish || 'mrbuilder-webpack --app app';
-            start      = start || 'mrbuilder-webpack-dev-server';
-            clean      = clean || 'mrbuilder-clean app';
-            test       = test || 'mrbuilder-karma';
-            karma      = karma || 'mrbuilder-karma';
-            break;
-        }
-        case 'demo':
-            prepublish = prepublish || 'mrbuilder-webpack';
-            demo       = "mrbuilder-webpack --demo demo";
-        default:
-            type       = 'lib';
-            main       = 'lib';
-            prepublish = 'mrbuilder-webpack';
-            start      = start || 'mrbuilder-webpack-dev-server';
-            clean      = clean || 'mrbuilder-clean';
-            test       = test || 'mrbuilder-karma';
-            karma      = karma || test || 'mrbuilder-karma';
-
     }
 
     const ret = {
@@ -57,35 +30,28 @@ const generatePackage = ({
         version,
         description,
         repository,
-        "source"       : main ? "src" : void(0),
-        main,
+        source         : "src",
+        main           : "lib",
         devDependencies: {
-            "mrbuilder": mrbuilderVersion
+            "mrbuilder": `^${mrbuilderVersion}`
         },
         scripts        : {
-            demo,
-            start,
-            prepublish,
-            clean,
-            test,
-            karma
+            demo      : "mrbuilder --app demo",
+            start     : "mrbuilder",
+            prepublish: "mrbuilder",
+            clean     : "mrbuilder",
+            test      : "mrbuilder",
+            karma     : "mrbuilder"
         },
         mrbuilder      : {
             plugins,
             presets
         }
     };
-
-    plugins && plugins.forEach(plugin => {
-        if (/^mrbuilder-plugin-/.test(plugin)) {
-            ret.devDependencies[plugin] = mrbuilderVersion;
-        }
-    });
-    presets && presets.forEach(plugin => {
-        if (/mrbuilder-preset-/.test(plugin)) {
-            ret.devDependencies[plugin] = mrbuilderVersion;
-        }
-    });
+    [].concat(plugins, presets).reduce((ret, plugin) => {
+        ret[plugin] = `^${mrbuilderVersion}`;
+        return ret;
+    }, ret.devDependencies);
 
     return ret;
 };
@@ -99,7 +65,7 @@ $ yarn run ${cmd}
 \`\`\``;
 };
 
-const generateReadme = ({ type, rootDemo }, {
+const generateReadme = ({type, rootDemo}, {
     name,
     version,
     description,
@@ -147,7 +113,7 @@ ${karma ? `- karma ${cmd('karma')}` : ''}
 ${prepublish ? `- build ${cmd('prepublish')}` : ''}
 `
 };
-const generateIndex  = ({ name }) => {
+const generateIndex  = ({name}) => {
     return `
 import React, {PureComponent} from 'react';
     
@@ -159,7 +125,7 @@ export default class ${camelCased(name, true)} extends PureComponent {
     
     `
 };
-const generateTest   = ({ name }) => {
+const generateTest   = ({name}) => {
     const Component = camelCased(name, true);
     return `
 import React from 'react';
@@ -184,14 +150,10 @@ const main           = () => {
 
     process.env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-init';
     const optionsManager                   = global._MRBUILDER_OPTIONS_MANAGER
-                                             || (
-                                                 global._MRBUILDER_OPTIONS_MANAGER =
-                                                     new (require(
-                                                         'mrbuilder-optionsmanager')
-                                                         .default)({
-                                                         prefix    : 'mrbuilder',
-                                                         topPackage: root
-                                                     }));
+        || (global._MRBUILDER_OPTIONS_MANAGER = new (require('mrbuilder-optionsmanager').default)({
+            prefix    : 'mrbuilder',
+            topPackage: root
+        }));
     if (argv.includes('-h', 2) || process.argv.includes('--help')) {
         console.log(optionsManager.help());
     }
@@ -201,8 +163,8 @@ const main           = () => {
               warn = console.warn
           }      = optionsManager.logger('mrbuilder-plugin-init');
     if (!config.name) {
-        info(optionsManager.help());
-        throw new Error(`must supply name`)
+        warn(`must supply name`);
+        return 1;
     }
     const dir   = join(process.cwd(), config.name);
     const mkdir = (subdir = '') => {
@@ -228,9 +190,10 @@ const main           = () => {
     if (_pkg.scripts.test) {
         write(`test/${_pkg.name}-test.js`, generateTest(config));
     }
+    return 0;
 };
 if (require.main === module) {
-    main();
+    process.exit(main());
 } else {
     module.exports = {
         main,

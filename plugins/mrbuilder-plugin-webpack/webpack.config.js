@@ -1,7 +1,7 @@
 require('mrbuilder-plugin-browserslist');
-const path                                            = require('path');
-const optionsManager                                  = global._MRBUILDER_OPTIONS_MANAGER;
-const { stringify, pkg, cwd, resolveMap, parseEntry } = require(
+const path                                          = require('path');
+const optionsManager                                = global._MRBUILDER_OPTIONS_MANAGER;
+const {stringify, pkg, cwd, resolveMap, parseEntry} = require(
     'mrbuilder-utils');
 
 const {
@@ -72,21 +72,36 @@ let webpack = {
 })(optionsManager.config('mrbuilder-plugin-webpack.entry'));
 
 //This is where the magic happens
-try {
+const resolveWebpack = (__webpack) => new Promise((res, rej) => {
+    let p = Promise.resolve(__webpack);
+
+
     optionsManager.forEach((option, key) => {
         if (option.plugin) {
-            const plugin = optionsManager.require(option.plugin);
+
+            let plugin;
+            try {
+                plugin = optionsManager.require(option.plugin);
+            } catch (e) {
+                warn(`error loading plugin '${key}' from '${option && option.plugin}'`, e);
+                throw e;
+            }
+
             if (typeof plugin === 'function') {
-                opts.warn        = option.warn;
-                opts.info        = option.info;
-                opts.debug       = option.debug;
-                const tmpWebpack = plugin.call(opts, option.config || {},
-                    webpack,
-                    optionsManager);
-                if (tmpWebpack) {
-                    webpack = tmpWebpack;
-                }
-                option.info('loaded.');
+                p = p.then(_webpack => {
+                    opts.warn  = option.warn;
+                    opts.info  = option.info;
+                    opts.debug = option.debug;
+
+                    return plugin.call(opts, option.config || {}, _webpack, optionsManager)
+                }).then(tmpWebpack => {
+                    option.info(option.name, 'loaded.');
+                    if (tmpWebpack) {
+                        return tmpWebpack
+                    }
+                    return __webpack;
+                });
+
             } else if (plugin) {
                 option.info('not loaded');
                 //TODO - better merge.
@@ -96,58 +111,65 @@ try {
             option.info('disabled loading webpack plugin', key);
         }
     });
-} catch (e) {
-    warn('caught error', e);
-    throw e;
-}
+    return p.then(w => {
+        opts.debug = debug;
+        opts.info  = info;
+        opts.warn  = warn;
+        return w;
+    }).then(res, rej);
+});
+
+module.exports = resolveWebpack(webpack).then(webpack => {
+
 //only define entry if it doesn't exist already.
-if (!webpack.entry) {
-    const _pkg    = pkg();
-    webpack.entry = { index: cwd(_pkg.source || 'src/index') };
-    info('using default entry', webpack.entry.index)
-}
-if (opts.useDefine) {
-    webpack.plugins.push(
-        new DefinePlugin(
-            Object.keys(opts.useDefine).reduce(function (ret, key) {
-                ret[key] = JSON.stringify(opts.useDefine[key]);
-                return ret;
-            }, {})));
-}
+    if (!webpack.entry) {
+        const _pkg    = pkg();
+        webpack.entry = {index: cwd(_pkg.source || 'src/index')};
+        info('using default entry', webpack.entry.index)
+    }
+    if (opts.useDefine) {
+        webpack.plugins.push(
+            new DefinePlugin(
+                Object.keys(opts.useDefine).reduce(function (ret, key) {
+                    ret[key] = JSON.stringify(opts.useDefine[key]);
+                    return ret;
+                }, {})));
+    }
 
 
-if (opts.useScopeHoist) {
-    webpack.plugins.push(new ModuleConcatenationPlugin());
-}
-/**
- * This is an attempt to fix webpack.resolve.alias.   Currently it uses whatever
- * was added first to match, rather than what is most specific; which is almost
- * certainly what you want.
- */
-if (webpack.resolve.alias) {
-    const countSlash = (v) => {
-        if (!v) {
-            return 0;
-        }
-        let count = 0;
-        for (let i = 0, l = v.length; i < l; i++) {
-            if (v[i] === path.sep) {
-                count++;
+    if (opts.useScopeHoist) {
+        webpack.plugins.push(new ModuleConcatenationPlugin());
+    }
+    /**
+     * This is an attempt to fix webpack.resolve.alias.   Currently it uses whatever
+     * was added first to match, rather than what is most specific; which is almost
+     * certainly what you want.
+     */
+    if (webpack.resolve.alias) {
+        const countSlash = (v) => {
+            if (!v) {
+                return 0;
             }
-        }
-        return count;
-    };
+            let count = 0;
+            for (let i = 0, l = v.length; i < l; i++) {
+                if (v[i] === path.sep) {
+                    count++;
+                }
+            }
+            return count;
+        };
 
-    webpack.resolve.alias = Object.keys(webpack.resolve.alias)
-                                  .sort((b, a) => countSlash(a) - countSlash(b))
-                                  .reduce((ret, key) => {
-                                      ret[key] = webpack.resolve.alias[key];
-                                      return ret;
-                                  }, {});
-}
-debug('DEBUG is on');
-debug('optionsManager', stringify(optionsManager.plugins));
-debug('webpack configuration', stringify(webpack));
-info('output filename', webpack.output.filename);
+        webpack.resolve.alias = Object.keys(webpack.resolve.alias)
+            .sort((b, a) => countSlash(a) - countSlash(b))
+            .reduce((ret, key) => {
+                ret[key] = webpack.resolve.alias[key];
+                return ret;
+            }, {});
+    }
+    debug('DEBUG is on');
+    debug('optionsManager', stringify(optionsManager.plugins));
+    debug('webpack configuration', stringify(webpack));
+    info('output filename', webpack.output.filename);
 
-module.exports = webpack;
+    return webpack;
+});

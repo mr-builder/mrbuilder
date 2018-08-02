@@ -1,20 +1,20 @@
 {
   "name": "mrbuilder-plugin-markdown",
-  "version": "3.0.7",
+  "version": "3.1.0-3",
   "scripts": {
     "test": " mrbuilder-karma",
     "karma": "mrbuilder-karma",
     "start": "MRBUILDER_ENV=development node $NODE_DEBUG_OPTION  ./node_modules/.bin/mrbuilder-webpack-dev-server"
   },
   "dependencies": {
-    "markdown-it": "^8.4.0",
+    "markdown-it": "^8.4.2",
     "markdown-it-checkbox": "^1.1.0",
-    "mrbuilder-plugin-babel": "^3.0.6",
-    "mrbuilder-utils": "^3.0.6",
-    "react-syntax-highlighter": "^6.0.4"
+    "mrbuilder-plugin-babel": "^3.1.0-3",
+    "mrbuilder-utils": "^3.1.0-3",
+    "react-syntax-highlighter": "^8.0.1"
   },
   "devDependencies": {
-    "mrbuilder-plugin-karma": "^3.0.7"
+    "mrbuilder-plugin-karma": "^3.1.0-3"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
@@ -26,5 +26,6 @@
       "mrbuilder-plugin-markdown"
     ]
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
 }

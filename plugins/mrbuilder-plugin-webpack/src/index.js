@@ -1,8 +1,8 @@
 const {
-          camelCased, cwd, resolveMap,
+          camelCased, cwd, stringify,
           enhancedResolve, regexOrFuncApply
       }                   = require('mrbuilder-utils');
-const processAlias = require('./processAlias');
+const processAlias        = require('./processAlias');
 const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS  = ['source', 'browser', 'main'];
 const returnMode          = (val = process.env.NODE_ENV) => {
@@ -70,7 +70,7 @@ const mod = function ({
     if (noParse) {
 
         if (!webpack.module) {
-            webpack.module = { noParse };
+            webpack.module = {noParse};
         } else {
             webpack.module.noParse =
                 regexOrFuncApply(noParse, webpack.module.noParse);
@@ -83,7 +83,7 @@ const mod = function ({
     const pkg = require(cwd('package.json'));
 
     processAlias(webpack, alias);
-    
+
     const output = webpack.output || (webpack.output = {});
     if (globalObject) {
         output.globalObject = globalObject;
@@ -146,21 +146,17 @@ const mod = function ({
     }
 
     if (mainFields) {
-        mainFields                 =
-            typeof mainFields === 'string' ? mainFields.split(/,\s*/)
-                                           : mainFields;
-        mainFields                 =
-            Array.isArray(mainFields) ? mainFields : mainFields === true
-                                                     ? webpack.target == 'node'
-                                                       ? ['source', 'main']
-                                                       : SOURCE_MAIN_FIELDS
-                                                     : DEFAULT_MAIN_FIELDS;
+        mainFields = typeof mainFields === 'string' ? mainFields.split(/,\s*/) : mainFields;
+        mainFields = Array.isArray(mainFields) ? mainFields : mainFields === true
+            ? webpack.target === 'node' ? ['source', 'main'] : SOURCE_MAIN_FIELDS
+            : DEFAULT_MAIN_FIELDS;
+
         webpack.resolve.mainFields = mainFields;
         info(`using mainFields`, mainFields);
     }
     if (node) {
         webpack.node = Object.assign({}, webpack.node, node);
-        info('using node config %O', webpack.node);
+        info('using node config', stringify(webpack.node));
     }
 
     webpack.devtool = devtool;
