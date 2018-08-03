@@ -1,13 +1,13 @@
 {
   "name": "mrbuilder-plugin-webpack-dev-server",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "webpack dev server for mrbuilder",
   "dependencies": {
     "hard-source-webpack-plugin": "^0.12.0",
     "loglevel": "^1.6.0",
-    "mrbuilder-optionsmanager": "^3.1.0",
-    "mrbuilder-plugin-webpack": "^3.1.0",
-    "mrbuilder-utils": "^3.1.0",
+    "mrbuilder-optionsmanager": "^3.1.1",
+    "mrbuilder-plugin-webpack": "^3.1.1",
+    "mrbuilder-utils": "^3.1.1",
     "webpack-dev-server": "^3.1.5"
   },
   "source": "src",

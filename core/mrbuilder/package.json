@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Tools for developing with mrbuilder and webpack",
   "dependencies": {
     "in-publish": "^2.0.0",
-    "mrbuilder-optionsmanager": "^3.1.0"
+    "mrbuilder-optionsmanager": "^3.1.1"
   },
   "bin": {
     "mrbuilder": "./bin/mrbuilder.js",
