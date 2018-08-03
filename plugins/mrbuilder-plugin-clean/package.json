@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-plugin-clean",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "main": "src",
   "dependencies": {
     "clean-webpack-plugin": "^0.1.19",
-    "mrbuilder-utils": "^3.1.1",
+    "mrbuilder-utils": "^3.1.2",
     "rimraf": "^2.6.2"
   },
   "bin": {

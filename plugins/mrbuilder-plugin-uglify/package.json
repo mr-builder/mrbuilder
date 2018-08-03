@@ -1,12 +1,12 @@
 {
   "name": "mrbuilder-plugin-uglify",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "uglify support for mrbuilder",
   "dependencies": {
     "uglifyjs-webpack-plugin": "^1.2.7"
   },
   "devDependencies": {
-    "mrbuilder-plugin-mocha": "^3.1.1"
+    "mrbuilder-plugin-mocha": "^3.1.2"
   },
   "main": "src",
   "source": "src",
