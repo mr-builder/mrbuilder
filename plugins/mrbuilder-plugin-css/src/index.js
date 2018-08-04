@@ -4,13 +4,13 @@ module.exports  = function ({
                                 useNameHash,
                                 publicPath = '/public',
                                 css = true,
-                                modules = false,
+                                modules,
                             }, webpack, om) {
 
     if (css) {
-        cssLoader(webpack, css === true ? /\.css/ : css, false, om);
+        cssLoader(webpack, css === true ? /\.css$/ : css, false, om);
     }
-    if (modules) {
+    if (modules !== false) {
         cssLoader(webpack, modules === true ? /\.cssm$/ : modules, true, om);
     }
     return webpack;
