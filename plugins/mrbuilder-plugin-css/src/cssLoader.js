@@ -24,7 +24,7 @@ module.exports = function (webpack, test, modules = false, om, ...conf) {
             context  : mrb('context', 'src')
         }
     }];
-    if (mrb('autoloader')) {
+    if (mrb('autoprefixer')) {
         loaders.push({
             loader : 'postcss-loader',
             options: {
