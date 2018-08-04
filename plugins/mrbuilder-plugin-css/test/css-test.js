@@ -18,7 +18,7 @@ describe('mrbuilder-plugin-css', function () {
             ]);
         const mod = require('../src');
 
-        mod.call(ctx, {}, webpack, FAKE);
+        mod.call(ctx, {css:false}, webpack, FAKE);
 
         expect(webpack.module.rules).to.have.length(1);
 
