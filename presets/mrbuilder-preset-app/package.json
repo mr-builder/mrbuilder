@@ -13,6 +13,7 @@
     "mrbuilder-plugin-html": "^3.1.2",
     "mrbuilder-plugin-less": "^3.1.2",
     "mrbuilder-plugin-uglify": "^3.1.2",
+    "mrbuilder-plugin-react": "^3.1.2",
     "mrbuilder-plugin-webpack": "^3.1.2",
     "mrbuilder-plugin-webpack-dev-server": "^3.1.2"
   },
@@ -26,7 +27,8 @@
       "mrbuilder-plugin-filetypes",
       "mrbuilder-plugin-fonts",
       "mrbuilder-plugin-env",
-      "mrbuilder-plugin-less"
+      "mrbuilder-plugin-less",
+      "mrbuilder-plugin-react"
     ],
     "env": {
       "test": {
@@ -41,6 +43,10 @@
       },
       "production": {
         "plugins": [
+          [
+            "mrbuilder-plugin-hot",
+            false
+          ],
           [
             "mrbuilder-plugin-css",
             {
