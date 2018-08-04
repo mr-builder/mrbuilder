@@ -8,7 +8,7 @@ module.exports  = function ({
                             }, webpack, om) {
 
     if (css) {
-        cssLoader(webpack, css === true ? /\.css/ : css, false, om);
+        cssLoader(webpack, css === true ? /\.css$/ : css, false, om);
     }
     if (modules) {
         cssLoader(webpack, modules === true ? /\.cssm$/ : modules, true, om);

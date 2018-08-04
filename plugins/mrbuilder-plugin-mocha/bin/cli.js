@@ -13,22 +13,21 @@ if (!global._MRBUILDER_OPTIONS_MANAGER) {
 const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
 
 
-const { cwd }  = require('mrbuilder-utils');
-const path     = require('path');
-const { argv } = process;
-const { info } = optionsManager.plugins.get('mrbuilder-plugin-mocha');
+const {cwd}  = require('mrbuilder-utils');
+const path   = require('path');
+const {argv} = process;
+const {info} = optionsManager.plugins.get('mrbuilder-plugin-mocha');
 
 const coverageDir    = optionsManager.config(
     'mrbuilder-plugin-mocha.coverageDir');
 const coverageGLobal = optionsManager.config(
     'mrbuilder-plugin-mocha.coverageGLobal');
-const testDir        = optionsManager.config('mrbuilder-plugin-mocha.testDir',
-    cwd('test'));
+const testDir        = optionsManager.config('mrbuilder-plugin-mocha.testDir', cwd('test'));
 const filePattern    = optionsManager.config(
     'mrbuilder-plugin-mocha.filePattern', '**/*-test.js');
 const timeout        = optionsManager.config('mrbuilder-plugin-mocha.timeout',
     20000);
-
+const useBabel       = optionsManager.config('mrbuilder-plugin-mocha.useBabel', optionsManager.enabled('mrbuilder-plugin-babel'));
 info(`running tests '${testDir}/${filePattern}'`);
 
 let mocha;
@@ -47,23 +46,26 @@ if (coverageDir || coverageGLobal) {
         '--include=src/**/*.js', mocha);
     mocha = path.resolve(__dirname, '..', 'node_modules', '.bin', 'nyc');
 } else {
-    argv.push('--require', require.resolve('babel-polyfill'));
+    if (useBabel) {
+        argv.push('--require', require.resolve('babel-polyfill'));
+    }
 }
+
 if (timeout) {
     argv.push('--timeout', timeout);
 }
-argv.push('--require',
-    require.resolve('mrbuilder-plugin-babel/babel-register'));
+
+if (useBabel) {
+    argv.push('--require', require.resolve('mrbuilder-plugin-babel/babel-register'));
+}
 
 if (optionsManager.enabled('mrbuilder-plugin-enzyme')) {
     argv.push('--require', path.join(__dirname, '..', 'src', 'cli-helpers'));
     argv.push('--require', 'mrbuilder-plugin-enzyme/src/enzyme-mocha');
 }
 
-argv.push(testDir);
-argv.push(filePattern);
+argv.push(testDir + '/' + filePattern);
 
-optionsManager.plugins.get('mrbuilder-plugin-mocha')
-              .debug(`[mrbuilder-mocha] running with args `, argv);
+optionsManager.plugins.get('mrbuilder-plugin-mocha').debug(`[mrbuilder-mocha] running with args `, argv);
 
 require(mocha);

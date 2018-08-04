@@ -1,20 +1,20 @@
 {
   "name": "mrbuilder-preset-app",
-  "version": "3.1.0",
+  "version": "3.1.2",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^3.1.0",
-    "mrbuilder-plugin-browserslist": "^3.1.0",
-    "mrbuilder-plugin-chunk": "^3.1.0",
-    "mrbuilder-plugin-css": "^3.1.0",
-    "mrbuilder-plugin-env": "^3.1.0",
-    "mrbuilder-plugin-filetypes": "^3.1.0",
-    "mrbuilder-plugin-fonts": "^3.1.0",
-    "mrbuilder-plugin-hot": "^3.1.0",
-    "mrbuilder-plugin-html": "^3.1.0",
-    "mrbuilder-plugin-less": "^3.1.0",
-    "mrbuilder-plugin-uglify": "^3.1.0",
-    "mrbuilder-plugin-webpack": "^3.1.0",
-    "mrbuilder-plugin-webpack-dev-server": "^3.1.0"
+    "mrbuilder-plugin-babel": "^3.1.2",
+    "mrbuilder-plugin-browserslist": "^3.1.2",
+    "mrbuilder-plugin-chunk": "^3.1.2",
+    "mrbuilder-plugin-css": "^3.1.2",
+    "mrbuilder-plugin-env": "^3.1.2",
+    "mrbuilder-plugin-filetypes": "^3.1.2",
+    "mrbuilder-plugin-fonts": "^3.1.2",
+    "mrbuilder-plugin-hot": "^3.1.2",
+    "mrbuilder-plugin-html": "^3.1.2",
+    "mrbuilder-plugin-less": "^3.1.2",
+    "mrbuilder-plugin-uglify": "^3.1.2",
+    "mrbuilder-plugin-webpack": "^3.1.2",
+    "mrbuilder-plugin-webpack-dev-server": "^3.1.2"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
