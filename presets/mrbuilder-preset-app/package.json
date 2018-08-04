@@ -13,6 +13,7 @@
     "mrbuilder-plugin-html": "^3.1.2",
     "mrbuilder-plugin-less": "^3.1.2",
     "mrbuilder-plugin-uglify": "^3.1.2",
+    "mrbuilder-plugin-react": "^3.1.2",
     "mrbuilder-plugin-webpack": "^3.1.2",
     "mrbuilder-plugin-webpack-dev-server": "^3.1.2"
   },
@@ -26,10 +27,23 @@
       "mrbuilder-plugin-filetypes",
       "mrbuilder-plugin-fonts",
       "mrbuilder-plugin-env",
-      "mrbuilder-plugin-less"
+      "mrbuilder-plugin-less",
+      "mrbuilder-plugin-react",
+      [
+        "mrbuilder-plugin-html",
+        {
+          "exported": true
+        }
+      ]
     ],
     "env": {
       "test": {
+        "plugins": [
+          [
+            "mrbuilder-plugin-html",
+            false
+          ]
+        ],
         "presets": [
           "mrbuilder-preset-test"
         ]
@@ -41,6 +55,10 @@
       },
       "production": {
         "plugins": [
+          [
+            "mrbuilder-plugin-hot",
+            false
+          ],
           [
             "mrbuilder-plugin-css",
             {
@@ -60,12 +78,6 @@
             "mrbuilder-plugin-chunk",
             {
               "filename": "js/[name].[hash].js"
-            }
-          ],
-          [
-            "mrbuilder-plugin-html",
-            {
-              "exported": true
             }
           ],
           "mrbuilder-plugin-uglify"

@@ -10,11 +10,10 @@
     "mrbuilder-plugin-eslint": "^3.1.2",
     "mrbuilder-plugin-filetypes": "^3.1.2",
     "mrbuilder-plugin-fonts": "^3.1.2",
-    "mrbuilder-plugin-hot": "^3.1.2",
     "mrbuilder-plugin-html": "^3.1.2",
     "mrbuilder-plugin-react": "^3.1.2",
     "mrbuilder-plugin-webpack": "^3.1.2",
-    "mrbuilder-plugin-webpack-dev-server": "^3.1.2"
+    "mrbuilder-plugin-less": "^3.1.2"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
