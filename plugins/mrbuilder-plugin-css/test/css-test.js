@@ -12,13 +12,13 @@ describe('mrbuilder-plugin-css', function () {
             }
         };
         const ctx     = {};
-        const FAKE    = global._MRBUILDER_OPTIONS_MANAGER = fakeOptionsManager([
-            ['mrbuilder-plugin-babel', {}],
-            ['mrbuilder-plugin-css', {}]
-        ]);
+        const FAKE    = global._MRBUILDER_OPTIONS_MANAGER =            fakeOptionsManager([
+                ['mrbuilder-plugin-babel', {}],
+                ['mrbuilder-plugin-css', {css: false}]
+            ]);
         const mod = require('../src');
 
-        mod.call(ctx, {css:false}, webpack, FAKE);
+        mod.call(ctx, {}, webpack, FAKE);
 
         expect(webpack.module.rules).to.have.length(1);
 
