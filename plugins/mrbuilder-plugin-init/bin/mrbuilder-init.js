@@ -123,13 +123,13 @@ import React, {PureComponent} from 'react';
     
 export default class ${camelCased(name, true)} extends PureComponent {
    render(){
-       return 'hello from ${name}'
+       return <div>hello from ${name}</div>
    }
 }
 `;
 
 const generateIndex     = ({name}) => {
-    const className = camelCased(name, true)
+    const className = camelCased(name, true);
     return `
 export ${className} from './${className}';
 export default from './${className}';
