@@ -46,10 +46,6 @@ const generatePackage = ({
             prepublish: "mrbuilder",
             test      : "mrbuilder",
             karma     : "mrbuilder"
-        },
-        mrbuilder      : {
-            plugins,
-            presets
         }
     };
     [].concat(plugins, presets).reduce((ret, plugin) => {
@@ -128,7 +124,7 @@ export default class ${camelCased(name, true)} extends PureComponent {
 }
 `;
 
-const generateIndex     = ({name}) => {
+const generateIndex = ({name}) => {
     const className = camelCased(name, true);
     return `
 export ${className} from './${className}';
@@ -136,10 +132,10 @@ export default from './${className}';
 `;
 };
 
-const generateExample = ({name})=>{
-   const Component = camelCased(name, true);
+const generateExample = ({name}) => {
+    const Component = camelCased(name, true);
 
-   return `
+    return `
    An example:
    
    \`\`\`js 
@@ -147,7 +143,7 @@ const generateExample = ({name})=>{
    \`\`\`
    `;
 };
-const generateTest = ({name}) => {
+const generateTest    = ({name}) => {
     const Component = camelCased(name, true);
     return `
 import React        from 'react';
@@ -163,7 +159,7 @@ describe('${name}',function(){
 });
 `
 };
-const main         = () => {
+const main            = () => {
 
 
     process.env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-init';
@@ -182,7 +178,7 @@ const main         = () => {
         return 1;
     }
     const className = camelCased(config.name, true);
-    const dir = join(process.cwd(), config.name);
+    const dir       = join(process.cwd(), config.name);
 
     const mkdir = (subdir = '') => {
         if (!existsSync(join(dir, subdir))) {

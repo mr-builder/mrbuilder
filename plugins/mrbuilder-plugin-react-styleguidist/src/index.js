@@ -101,10 +101,10 @@ module.exports = function (options = {}, webpack, om) {
                  *
                  *
                  */
-                if (component[0].lerna) {
-                    return handleLerna(component[0].lerna).then
+      /*          if (component[0].lerna) {
+                    return handleLerna(component[0].lerna);
                 }
-
+*/
                 const _pkgDir  = resolvePkgDir(component[0]);
                 const pDir     = resolve(_pkgDir, 'package.json');
                 const _pkg     = require(pDir);
