@@ -44,7 +44,6 @@ const generatePackage = ({
             demo      : "mrbuilder --app demo",
             start     : "mrbuilder",
             prepublish: "mrbuilder",
-            clean     : "mrbuilder",
             test      : "mrbuilder",
             karma     : "mrbuilder"
         },
@@ -128,6 +127,7 @@ export default class ${camelCased(name, true)} extends PureComponent {
    }
 }
 `;
+
 const generateIndex     = ({name}) => {
     const className = camelCased(name, true)
     return `
@@ -136,6 +136,17 @@ export default from './${className}';
 `;
 };
 
+const generateExample = ({name})=>{
+   const Component = camelCased(name, true);
+
+   return `
+   An example:
+   
+   \`\`\`js 
+   <${Component}/>
+   \`\`\`
+   `;
+};
 const generateTest = ({name}) => {
     const Component = camelCased(name, true);
     return `
@@ -170,6 +181,7 @@ const main         = () => {
         warn(`must supply name`);
         return 1;
     }
+    const className = camelCased(config.name, true);
     const dir = join(process.cwd(), config.name);
 
     const mkdir = (subdir = '') => {
@@ -193,8 +205,8 @@ const main         = () => {
     write('package.json', JSON.stringify(_pkg, null, 2));
     write('Readme.md', generateReadme(config, _pkg));
     write('src/index.js', generateIndex(config));
-    write(`src/${camelCased(config.name, true)}.js`, generateComponent(config));
-
+    write(`src/${className}.js`, generateComponent(config));
+    write(`src/${className}.md`, generateExample(config));
     if (_pkg.scripts.test) {
         write(`test/${_pkg.name}-test.js`, generateTest(config));
     }
@@ -205,6 +217,7 @@ if (require.main === module) {
 } else {
     module.exports = {
         main,
+        generateExample,
         generatePackage,
         generateReadme,
         generateIndex,
