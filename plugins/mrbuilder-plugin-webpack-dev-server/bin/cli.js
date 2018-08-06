@@ -25,4 +25,9 @@ if (!process.argv.includes('--config', 2)) {
 
 optionsManager.debug(devServer, process.argv.slice(2));
 
-require(devServer);
+try {
+    require(devServer);
+}catch(e){
+    console.warn(`wrong version of webpack trying to locate correct version`, devServer);
+    require('mrbuilder-plugin-webpack-dev-server/node_modules/webpack-dev-server/bin/webpack-dev-server')
+}
