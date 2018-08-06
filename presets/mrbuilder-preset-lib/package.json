@@ -1,19 +1,19 @@
 {
   "name": "mrbuilder-preset-lib",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^3.1.4",
-    "mrbuilder-plugin-browserslist": "^3.1.4",
-    "mrbuilder-plugin-css": "^3.1.4",
-    "mrbuilder-plugin-env": "^3.1.4",
-    "mrbuilder-plugin-enzyme": "^3.1.4",
-    "mrbuilder-plugin-eslint": "^3.1.4",
-    "mrbuilder-plugin-filetypes": "^3.1.4",
-    "mrbuilder-plugin-fonts": "^3.1.4",
-    "mrbuilder-plugin-html": "^3.1.4",
-    "mrbuilder-plugin-less": "^3.1.4",
-    "mrbuilder-plugin-react": "^3.1.4",
-    "mrbuilder-plugin-webpack": "^3.1.4"
+    "mrbuilder-plugin-babel": "^3.1.5",
+    "mrbuilder-plugin-browserslist": "^3.1.5",
+    "mrbuilder-plugin-css": "^3.1.5",
+    "mrbuilder-plugin-env": "^3.1.5",
+    "mrbuilder-plugin-enzyme": "^3.1.5",
+    "mrbuilder-plugin-eslint": "^3.1.5",
+    "mrbuilder-plugin-filetypes": "^3.1.5",
+    "mrbuilder-plugin-fonts": "^3.1.5",
+    "mrbuilder-plugin-html": "^3.1.5",
+    "mrbuilder-plugin-less": "^3.1.5",
+    "mrbuilder-plugin-react": "^3.1.5",
+    "mrbuilder-plugin-webpack": "^3.1.5"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
@@ -68,5 +68,5 @@
     }
   },
   "license": "0BSD",
-  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
+  "gitHead": "35ac714629506729803ad821911b3f0ed70cb347"
 }

@@ -1,13 +1,13 @@
 {
   "name": "mrbuilder-plugin-webpack-dev-server",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "webpack dev server for mrbuilder",
   "dependencies": {
     "hard-source-webpack-plugin": "^0.12.0",
     "loglevel": "^1.6.0",
-    "mrbuilder-optionsmanager": "^3.1.4",
-    "mrbuilder-plugin-webpack": "^3.1.4",
-    "mrbuilder-utils": "^3.1.4",
+    "mrbuilder-optionsmanager": "^3.1.5",
+    "mrbuilder-plugin-webpack": "^3.1.5",
+    "mrbuilder-utils": "^3.1.5",
     "webpack": "^4.16.5",
     "webpack-dev-server": "^3.1.5"
   },
@@ -34,5 +34,5 @@
   "peerDependencies": {
     "mrbuilder": "3.x"
   },
-  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
+  "gitHead": "35ac714629506729803ad821911b3f0ed70cb347"
 }

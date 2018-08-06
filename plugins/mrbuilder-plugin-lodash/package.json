@@ -1,7 +1,7 @@
 {
   "name": "mrbuilder-plugin-lodash",
   "description": "Provides lodash alias's for all of lodash",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "dependencies": {
     "lodash-es": "^4.17.10"
   },
@@ -11,5 +11,5 @@
   "peerDependencies": {
     "mrbuilder": "3.x"
   },
-  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
+  "gitHead": "35ac714629506729803ad821911b3f0ed70cb347"
 }

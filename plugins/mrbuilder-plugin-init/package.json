@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-plugin-init",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "main": "bin/mrbuilder-init",
   "dependencies": {
-    "mrbuilder": "^3.1.4",
-    "mrbuilder-optionsmanager": "^3.1.4"
+    "mrbuilder": "^3.1.5",
+    "mrbuilder-optionsmanager": "^3.1.5"
   },
   "scripts": {
     "mrbuilder-init": "./bin/mrbuilder-init.js"
@@ -33,5 +33,5 @@
   "peerDependencies": {
     "mrbuilder": "3.x"
   },
-  "gitHead": "8480796a0ee92932e218723e26f8221a855f4d4c"
+  "gitHead": "35ac714629506729803ad821911b3f0ed70cb347"
 }
