@@ -1,5 +1,6 @@
 {
   "name": "example-app",
+  "description": "Sample application using mrbuilder components",
   "version": "3.1.2",
   "private": true,
   "dependencies": {
