@@ -1,5 +1,6 @@
 {
   "name": "mrbuilder-plugin-clean",
+  "description": "Cleans up build directories",
   "version": "3.1.2",
   "main": "src",
   "dependencies": {

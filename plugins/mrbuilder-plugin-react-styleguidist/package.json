@@ -29,9 +29,7 @@
               "demo": "./styleguide"
             }
           ],
-          [
-            "mrbuilder-plugin-react-styleguidist"
-          ]
+          "mrbuilder-plugin-react-styleguidist"
         ]
       }
     }

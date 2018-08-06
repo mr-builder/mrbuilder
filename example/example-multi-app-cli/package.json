@@ -1,5 +1,6 @@
 {
   "name": "example-multi-cli",
+  "description": "Shows how you can use cli to configure mrbuilder",
   "version": "3.1.2",
   "private": true,
   "devDependencies": {

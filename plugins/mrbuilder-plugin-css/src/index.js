@@ -4,7 +4,7 @@ module.exports  = function ({
                                 useNameHash,
                                 publicPath = '/public',
                                 css = true,
-                                modules = false,
+                                modules,
                             }, webpack, om) {
 
     if (css) {

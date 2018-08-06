@@ -1,5 +1,6 @@
 {
   "name": "example-multi-app",
+  "description": "Shows how you can have multiple entry points",
   "version": "3.1.2",
   "private": true,
   "devDependencies": {
