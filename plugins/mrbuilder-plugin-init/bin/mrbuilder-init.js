@@ -3,6 +3,11 @@
 const {camelCased}     = require('mrbuilder-utils');
 const {argv}           = process;
 const {join}           = require('path');
+const {
+          existsSync,
+          writeFileSync,
+          mkdirSync
+      }                = require('fs');
 const root             = require(join(__dirname, '..', 'package.json'));
 const mrbuilderVersion = root.dependencies['mrbuilder'];
 
@@ -13,7 +18,7 @@ const generatePackage = ({
                              version = '0.0.1',
                              type = 'lib',
                              description = '',
-                             plugins,
+                             plugins = [],
                              presets = PRESETS,
                              repository,
                              rootRepository,
@@ -33,13 +38,12 @@ const generatePackage = ({
         source         : "src",
         main           : "lib",
         devDependencies: {
-            "mrbuilder": `^${mrbuilderVersion}`
+            "mrbuilder": `${mrbuilderVersion}`
         },
         scripts        : {
             demo      : "mrbuilder --app demo",
             start     : "mrbuilder",
             prepublish: "mrbuilder",
-            clean     : "mrbuilder",
             test      : "mrbuilder",
             karma     : "mrbuilder"
         },
@@ -49,7 +53,9 @@ const generatePackage = ({
         }
     };
     [].concat(plugins, presets).reduce((ret, plugin) => {
-        ret[plugin] = `^${mrbuilderVersion}`;
+        if (plugin != null) {
+            ret[plugin] = mrbuilderVersion;
+        }
         return ret;
     }, ret.devDependencies);
 
@@ -65,7 +71,7 @@ $ yarn run ${cmd}
 \`\`\``;
 };
 
-const generateReadme = ({type, rootDemo}, {
+const generateReadme    = ({type, rootDemo}, {
     name,
     version,
     description,
@@ -86,35 +92,33 @@ const generateReadme = ({type, rootDemo}, {
         throw new Error(`name is required`);
     }
     return `
-${name}
-===
+
 ${description}
 
 ${rootDemo ? `A demo can be found [here](${rootDemo}/${demo}/${name})` : ''}
 
-## Installation    
+### Installation    
 \`\`\`sh
  $ yarn add ${name}
 \`\`\`      
 
 ${(type === 'lib' || !type) ? `
-## Usage
+### Usage
 In your javascript 
-\`\`\`js
+\`\`\`js static
 import ${camelCased(name, true)} from "${name}";
 \`\`\`
 ` : ''} 
 
-## Running
-${start ? `- start ${cmd('start')}` : ''}
-${clean ? `- clean ${cmd('clean')}` : ''}
-${test ? `- test ${cmd('test')}` : ''  }
-${karma ? `- karma ${cmd('karma')}` : ''}
-${prepublish ? `- build ${cmd('prepublish')}` : ''}
+### Running
+${start ? `- start \n${cmd('start')}` : ''}
+${clean ? `- clean \n${cmd('clean')}` : ''}
+${test ? `- test \n${cmd('test')}` : ''  }
+${karma ? `- karma \n${cmd('karma')}` : ''}
+${prepublish ? `- build \n${cmd('prepublish')}` : ''}
 `
 };
-const generateIndex  = ({name}) => {
-    return `
+const generateComponent = ({name}) => `
 import React, {PureComponent} from 'react';
     
 export default class ${camelCased(name, true)} extends PureComponent {
@@ -122,16 +126,34 @@ export default class ${camelCased(name, true)} extends PureComponent {
        return 'hello from ${name}'
    }
 }
-    
-    `
+`;
+
+const generateIndex     = ({name}) => {
+    const className = camelCased(name, true)
+    return `
+export ${className} from './${className}';
+export default from './${className}';
+`;
 };
-const generateTest   = ({name}) => {
+
+const generateExample = ({name})=>{
+   const Component = camelCased(name, true);
+
+   return `
+   An example:
+   
+   \`\`\`js 
+   <${Component}/>
+   \`\`\`
+   `;
+};
+const generateTest = ({name}) => {
     const Component = camelCased(name, true);
     return `
-import React from 'react';
-import ${Component} from '${name}';
-import {expect} from 'chai';
-import {mount} from 'enzyme';
+import React        from 'react';
+import ${Component} from '../src';
+import {expect}     from 'chai';
+import {mount}      from 'enzyme';
     
 describe('${name}',function(){
       it('should render', function(){
@@ -141,12 +163,8 @@ describe('${name}',function(){
 });
 `
 };
-const main           = () => {
-    const {
-              existsSync,
-              writeFileSync,
-              mkdirSync
-          } = require('fs');
+const main         = () => {
+
 
     process.env.MRBUILDER_INTERNAL_PLUGINS = 'mrbuilder-plugin-init';
     const optionsManager                   = global._MRBUILDER_OPTIONS_MANAGER
@@ -157,22 +175,22 @@ const main           = () => {
     if (argv.includes('-h', 2) || process.argv.includes('--help')) {
         console.log(optionsManager.help());
     }
-    const config = optionsManager.config('mrbuilder-plugin-init');
-    const {
-              info = console.log,
-              warn = console.warn
-          }      = optionsManager.logger('mrbuilder-plugin-init');
+    const config                                    = optionsManager.config('mrbuilder-plugin-init');
+    const {info = console.log, warn = console.warn} = optionsManager.logger('mrbuilder-plugin-init');
     if (!config.name) {
         warn(`must supply name`);
         return 1;
     }
-    const dir   = join(process.cwd(), config.name);
+    const className = camelCased(config.name, true);
+    const dir = join(process.cwd(), config.name);
+
     const mkdir = (subdir = '') => {
         if (!existsSync(join(dir, subdir))) {
             info('Making Dir', join(dir, subdir));
             mkdirSync(join(dir, subdir));
         }
     };
+
     const write = (file, content) => {
         file = join(dir, file);
         if (!existsSync(file)) {
@@ -187,6 +205,8 @@ const main           = () => {
     write('package.json', JSON.stringify(_pkg, null, 2));
     write('Readme.md', generateReadme(config, _pkg));
     write('src/index.js', generateIndex(config));
+    write(`src/${className}.js`, generateComponent(config));
+    write(`src/${className}.md`, generateExample(config));
     if (_pkg.scripts.test) {
         write(`test/${_pkg.name}-test.js`, generateTest(config));
     }
@@ -197,9 +217,11 @@ if (require.main === module) {
 } else {
     module.exports = {
         main,
+        generateExample,
         generatePackage,
         generateReadme,
         generateIndex,
+        generateComponent,
         generateTest,
     }
 }

@@ -1,7 +1,7 @@
 {
   "name": "mrbuilder-plugin-init",
   "version": "3.1.2",
-  "main": "src",
+  "main": "bin/mrbuilder-init",
   "dependencies": {
     "mrbuilder": "^3.1.2",
     "mrbuilder-optionsmanager": "^3.1.2"

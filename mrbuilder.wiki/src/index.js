@@ -1,104 +1,27 @@
-const {lernaFilteredPackages} = require('mrbuilder-utils');
-const path                    = require('path');
-const style                   = require("mrbuilder-plugin-react-styleguidist");
+const styleguide = require('mrbuilder-plugin-react-styleguidist');
 
-module.exports = function (options = {}, webpack, om) {
+const first = (r) => r && r[1];
 
-    options.styleguideComponents = {
-        LogoRenderer: '~mrbuilder.wiki/src/components/LogoRenderer'
-    };
-    options.styles               = {
-        StyleGuide: {
-            sidebar   : {
-                width: '18em'
-            },
-            hasSidebar: {
-                paddingLeft: '18em'
-            }
-        }
-    };
-    const plugins                = [], presets = [], core = [], other = [], example = [];
-    options.sections             = [
-        {
-            name      : "Getting Started",
-            "sections": [
-                {
-                    "name" : "Overview",
-                    content: "../docs/overview.md"
-                },
-                {
-                    "name" : "Do I need a monorepo",
-                    content: "../docs/monorepo.md"
-                },
-                {
-                    "name" : "Upgrading to 3.0",
-                    content: "../docs/upgrade-2-3.md"
-                },
-                {
-                    "name" : "Upgrading to 2.0",
-                    content: "../docs/upgrade-1-2.md"
-                },
-                {
-                    "name" : "Multi Module Project",
-                    content: "../docs/getting-started.md"
-                },
-                {
-                    name     : "Configuration",
-                    "content": "../docs/configuration.md"
-                },
-                {
-                    name   : "Plugins and Presets",
-                    content: "../docs/plugins_and_presets.md",
-                },
-                {
-                    name   : "Tools",
-                    content: "../docs/tools.md"
-                },
-                {
-                    name   : "Debugging",
-                    content: "../docs/debugging.md"
-                }
-            ]
-        },
+module.exports = (options, webpack, om) => {
 
-        {
-            name    : "Plugins",
-            sections: plugins
-        },
-        {
-            name    : "Presets",
-            sections: presets
-        },
-        {
-            name    : 'Examples',
-            sections: example,
-        },
+    options.description = (pkg) => {
+        const category  = first(/.*-(preset|plugin|core)-.*/.exec(pkg.name));
+        let description = pkg.description |'';
 
-    ];
-    const obj                    = {core, plugins, presets, other, example};
+            const src   = pkg.homepage || category ? `https://github.com/mr-builder/${category}s/${pkg.name}` : `https://github.com/mr-builder/${pkg.name}`;
+            description = `${description}
 
-    return lernaFilteredPackages({}).then(filteredPackages => {
-        filteredPackages.forEach(p => {
+  *v${pkg.version}* [Source](${src})
 
-            const {location, name, description = ''} = p;
-            if (name === 'mrbuilder.wiki') {
-                return;
-            }
-            const category = path.basename(path.dirname(location));
-            const place    = obj[category] || obj.other;
-
-            const conf = {
-                name   : name.replace(/mrbuilder-(?:plugin|preset|example)-(.*)$/, '$1'),
-                content: path.join(location, 'Readme.md'),
-                description,
-            };
-            if (category === 'plugins' || category === 'presets') {
-                conf.description += `
 ### Installation
-    
-\`\`\`sh
-$ yarn add ${name} -D   
-\`\`\`            
+\`\`\`sh\n
+$ yarn add ${pkg.name} -D   
+\`\`\``;
+
+
+        if (category === 'preset' || category === 'plugin') {
+            description = `
+${description}
 
 ### Basic Configuration
 In your \`package.json\`
@@ -107,42 +30,34 @@ In your \`package.json\`
 {
  "name":"your_component"
  "mrbuilder":{
-    "${category}":[
-      "${name}"
+    "${category}s":[
+      "${pkg.name}"
     ]
  }
 }
 \`\`\`
 
 `;
-            }
+        }
 
-            if (category === 'example' || category == 'component' || category === 'presets') {
-                conf.description += `
+        if (category === 'example' || category == 'component' || category === 'presets') {
+            description = `
+${description}
+            
 ### Configuration
 This is the configuration
 
 \`\`\`json
 {
-"name":"${name}",
+"name":"${pkg.name}",
 ...
-"mrbuilder":${JSON.stringify(p.toJSON().mrbuilder || {}, null, 2)}
+"mrbuilder":${JSON.stringify(p.mrbuilder || {}, null, 2)}
 }
 \`\`\`            
 `
-            }
-            if (category == 'components') {
-                conf.components = [name]
-            } else {
-                conf.components = [];
-            }
-            place.push(conf);
+        }
+        return description;
+    };
 
-
-        });
-        webpack.node || (webpack.node = {});
-        webpack.node.fs = 'empty';
-
-        return style(options, webpack, om);
-    });
+    return styleguide(options, webpack, om);
 };
