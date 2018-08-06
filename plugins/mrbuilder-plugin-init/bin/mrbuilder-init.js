@@ -12,6 +12,15 @@ const root             = require(join(__dirname, '..', 'package.json'));
 const mrbuilderVersion = root.dependencies['mrbuilder'];
 
 const PRESETS = ["mrbuilder-preset-app", "mrbuilder-preset-lib", "mrbuilder-preset-dev"];
+const generateGitIgnore = ()=>{
+    return `.idea
+    .DS_Store
+    yarn-error.log
+    .DS_Store?
+    ._*
+    node_modules
+    `
+};
 
 const generatePackage = ({
                              name,
@@ -191,13 +200,16 @@ const main            = () => {
         file = join(dir, file);
         if (!existsSync(file)) {
             info('Creating', file);
+            writeFileSync(file, content, 'utf8');
+        }else{
+            info('Skipping ', file, 'as it already exits.');
         }
-        writeFileSync(file, content, 'utf8');
     };
     mkdir();
     const _pkg = generatePackage(config);
     mkdir('src');
     mkdir('test');
+    write('.gitignore', generateGitIgnore());
     write('package.json', JSON.stringify(_pkg, null, 2));
     write('Readme.md', generateReadme(config, _pkg));
     write('src/index.js', generateIndex(config));
@@ -218,6 +230,7 @@ if (require.main === module) {
         generateReadme,
         generateIndex,
         generateComponent,
+        generateGitIgnore,
         generateTest,
     }
 }
