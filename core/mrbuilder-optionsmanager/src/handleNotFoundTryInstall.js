@@ -9,7 +9,7 @@ function findExecPath() {
 }
 
 const yarnRe   = /.*[/]?yarn([.]js)?$/;
-let mrbuilderVersion;
+let mrbuilderVersion = 'latest';
 /**
  * Tries to install a package as dev dependency.
  * @param e
@@ -29,6 +29,9 @@ module.exports = function handleNotFoundTryInstall(e, pkg, isDev = true) {
     if (npmPath) {
         if (!mrbuilderVersion) {
             mrbuilderVersion = require('mrbuilder/package.json').version;
+            if (mrbuilderVersion){
+                mrbuilderVersion = (mrbuilderVersion+'').replace(/^[\^~=]+?/, '');
+            }
         }
         const installPkg = `${pkg}@^${mrbuilderVersion}`;
         const isYarn     = yarnRe.test(npmPath);

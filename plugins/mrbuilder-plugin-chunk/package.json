@@ -1,5 +1,6 @@
 {
   "name": "mrbuilder-plugin-chunk",
+  "description": "Configures chunking for webpack",
   "version": "3.1.2",
   "main": "src",
   "dependencies": {
