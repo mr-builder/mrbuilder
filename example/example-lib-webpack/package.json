@@ -1,10 +1,10 @@
 {
   "name": "example-lib-webpack",
   "description": "Example showing a lib build for webpack",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^3.1.3"
+    "mrbuilder": "^3.1.4"
   },
   "scripts": {
     "prepublish": "mrbuilder",
