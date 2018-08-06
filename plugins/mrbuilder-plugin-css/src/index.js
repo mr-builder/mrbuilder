@@ -10,7 +10,7 @@ module.exports  = function ({
     if (css) {
         cssLoader(webpack, css === true ? /\.css$/ : css, false, om);
     }
-    if (modules !== false) {
+    if (modules) {
         cssLoader(webpack, modules === true ? /\.cssm$/ : modules, true, om);
     }
     return webpack;
