@@ -1,10 +1,4 @@
 {
-  "plugins": [
-    "mrbuilder-plugin-emeth",
-    "mrbuilder-plugin-css",
-    "mrbuilder-plugin-stylus",
-    "mrbuilder-plugin-doc-prop-types"
-  ],
   "env": {
     "development": {
       "plugins": [
