@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-analyze",
-  "version": "3.1.5",
+  "version": "3.1.6",
   "description": "analyze support for mrbuilder",
   "dependencies": {
     "webpack-bundle-analyzer": "^2.13.1"
@@ -15,7 +15,7 @@
     "mrbuilder": "3.x"
   },
   "devDependencies": {
-    "mrbuilder-plugin-enzyme": "^3.1.5"
+    "mrbuilder-plugin-enzyme": "^3.1.6"
   },
   "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
 }

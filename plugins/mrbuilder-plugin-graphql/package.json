@@ -1,12 +1,12 @@
 {
   "name": "mrbuilder-plugin-graphql",
-  "version": "3.1.5",
+  "version": "3.1.6",
   "description": "Loading graphql webpack",
   "dependencies": {
     "graphql-tag": "^2.9.2"
   },
   "devDependencies": {
-    "mrbuilder-plugin-mocha": "^3.1.5"
+    "mrbuilder-plugin-mocha": "^3.1.6"
   },
   "source": "src",
   "main": "src",

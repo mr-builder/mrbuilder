@@ -1,13 +1,13 @@
 {
   "name": "mrbuilder-preset-dev",
-  "version": "3.1.5",
+  "version": "3.1.6",
   "dependencies": {
-    "mrbuilder-plugin-css": "^3.1.5",
-    "mrbuilder-plugin-eslint": "^3.1.5",
-    "mrbuilder-plugin-hot": "^3.1.5",
-    "mrbuilder-plugin-react": "^3.1.5",
-    "mrbuilder-plugin-webpack-dev-server": "^3.1.5",
-    "mrbuilder-preset-app": "^3.1.5"
+    "mrbuilder-plugin-css": "^3.1.6",
+    "mrbuilder-plugin-eslint": "^3.1.6",
+    "mrbuilder-plugin-hot": "^3.1.6",
+    "mrbuilder-plugin-react": "^3.1.6",
+    "mrbuilder-plugin-webpack-dev-server": "^3.1.6",
+    "mrbuilder-preset-app": "^3.1.6"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
