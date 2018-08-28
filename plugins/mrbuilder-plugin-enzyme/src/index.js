@@ -1,3 +1,4 @@
+const path = require('path');
 /**
  * Sets up enzyme alias so that
  * everything uses same enzyme.
@@ -14,7 +15,7 @@ module.exports = function (options, webpack) {
         webpack.resolve.alias = {}
     }
     webpack.resolve.alias.enzyme = require.resolve('./enzyme');
-
+    webpack.resolve.alias['enzyme/build'] = path.dirname(require.resolve('enzyme'));
     webpack.resolve.alias['enzyme-internal'] = require.resolve('enzyme');
 
     return webpack;

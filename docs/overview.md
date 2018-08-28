@@ -20,6 +20,10 @@ for all the modules; often without having to modify the modules themselves.
 
 Using mrbuilder you can get advanced builds, along with easy to use documentation.
 
+A couple of blog posts for getting started.
+  [Why I wrote MrBuilder ](https://medium.com/@speajus/why-i-wrote-mrbuilder-a1cd8c110c3d)
+  and
+  [Monorepos for Styleguides]( https://medium.com/@speajus/monorepos-for-styleguides-bbf0abd6ab80)
 
 ### Why Mr Builder
 I really didn't want to write another build tool.  Webpack is great, lerna, babel, mocha
