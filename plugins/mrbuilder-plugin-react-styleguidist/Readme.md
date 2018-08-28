@@ -24,3 +24,4 @@ react styleguist.
    $ yarn add webpack-dev-server@^4 -D
 ```
 
+To see an example using lerna visit [https://mr-builder.github.io/mrbuilder-example-styleguide/]( https://mr-builder.github.io/mrbuilder-example-styleguide/)
