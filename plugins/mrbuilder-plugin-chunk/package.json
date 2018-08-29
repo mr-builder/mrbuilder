@@ -1,10 +1,10 @@
 {
   "name": "mrbuilder-plugin-chunk",
   "description": "Configures chunking for webpack",
-  "version": "3.1.6",
+  "version": "3.1.7",
   "main": "src",
   "dependencies": {
-    "mrbuilder-utils": "^3.1.6"
+    "mrbuilder-utils": "^3.1.7"
   },
   "license": "0BSD",
   "peerDependencies": {
