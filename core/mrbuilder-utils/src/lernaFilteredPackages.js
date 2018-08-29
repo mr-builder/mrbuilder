@@ -9,10 +9,20 @@ module.exports = (opts) => {
         const LsCommand = require('@lerna/list');
         return new Promise((res, onRejected) => {
             const ls = new LsCommand({
+                _   : [],
+                json: true,
                 ...opts,
                 onRejected,
                 onResolved() {
-                    res(ls.filteredPackages);
+                    //different version of lerna3 are well different.
+                    if (ls.filteredPackages) {
+                        res(ls.filteredPackages);
+                    } else if (ls.result) {
+                        res(JSON.parse(ls.result.text));
+                    } else {
+                        //throw?
+                        res([]);
+                    }
                 }
             })
         })
