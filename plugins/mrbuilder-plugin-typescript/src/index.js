@@ -5,13 +5,17 @@ module.exports = function ({
                                test = /[.]tsx?$/,
                                baseUrl = process.cwd(),
                                extensions = [".ts", ".tsx"],
+                               allowTsInNodeModules = false,
                                context,
                                configFile
                            },
                            webpack, om) {
 
 
-    const options = {};
+    const options = {
+        allowTsInNodeModules,
+
+    };
 
     if (context) {
         (this.info || console.log)('using context', context);
