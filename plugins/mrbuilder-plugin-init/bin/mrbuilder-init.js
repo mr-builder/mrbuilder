@@ -87,10 +87,6 @@ const generateReadme    = ({type, rootDemo}, {
         test,
         karma,
         demo
-    },
-    mrbuilder: {
-        plugins,
-        presets
     }
 }) => {
     if (!name) {
