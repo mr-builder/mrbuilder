@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-init",
-  "version": "3.1.7",
+  "version": "3.1.9",
   "main": "bin/mrbuilder-init",
   "dependencies": {
     "mrbuilder": "^3.1.7",
