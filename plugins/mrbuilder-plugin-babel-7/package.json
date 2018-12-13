@@ -1,0 +1,42 @@
+{
+  "name": "mrbuilder-plugin-babel-6",
+  "version": "3.1.7",
+  "description": "Tools for developing babel with mrbuilder",
+  "scripts": {
+    "clean": "mrbuilder-clean"
+  },
+  "bin": {
+    "mrbuilder-babel-cli": "bin/cli.js"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-istanbul": "^4.1.6",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-function-bind": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-runtime": "^6.26.0",
+    "mrbuilder-optionsmanager": "^3.1.7",
+    "mrbuilder-plugin-browserslist": "^3.1.7",
+    "rimraf": "^2.6.2"
+  },
+  "source": "src",
+  "main": "src",
+  "mrbuilder": {
+    "alias": {
+      "coverage": "Run with code coverage, not for production",
+      "hot": "Run with hot configuration"
+    }
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "mrbuilder": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}
