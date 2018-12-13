@@ -1,7 +1,7 @@
 {
   "name": "example-lib",
   "description": "Shows how to build a simple lib without webpack",
-  "version": "3.1.7",
+  "version": "3.1.10-alpha.0",
   "private": true,
   "devDependencies": {
     "mrbuilder": "^3.1.7"
