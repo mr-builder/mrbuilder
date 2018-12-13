@@ -16,7 +16,7 @@
   },
   "scripts": {
     "prepublish": "mrbuilder",
-    "start": "mrbuilder",
+    "start": "mrbuilder  --mrbuilder-plugin-webpack-entry=src/index",
     "test": "mrbuilder",
     "karma": "mrbuilder",
     "analyze": "mrbuilder"

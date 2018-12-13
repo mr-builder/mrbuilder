@@ -1,8 +1,8 @@
-const options     = require('../babel-config');
-const { cwd }     = require('mrbuilder-utils');
+const options = require('../babel-config');
+const {cwd}   = require('mrbuilder-utils');
 
 module.exports = ({
-                      test = /\.jsx?$/,
+                      test,
                       include = [
                           cwd('src'),
                           cwd('public'),
@@ -14,8 +14,21 @@ module.exports = ({
                           loader: 'babel-loader',
                           options
                       },
-                  }, webpack) => {
-
+                  }, webpack, om) => {
+    const resolveLoader = webpack.resolveLoader || (webpack.resolveLoader = {});
+    if (!resolveLoader.alias) {
+        resolveLoader.alias = {};
+    }
+    resolveLoader.alias = Object.assign(resolveLoader.alias, {
+        'babel-loader': require.resolve('babel-loader')
+    });
+    if (!test) {
+        if (om.config('mrbuilder-plugin-typescript.useBabel')) {
+            test = /\.[jet]sx?$/
+        } else {
+            test = /\.jsx?$/;
+        }
+    }
 
     webpack.module.rules.push({
         test,

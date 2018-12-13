@@ -25,4 +25,4 @@ if (!argv.includes('--plugins')) {
 if (!(argv.includes('--out-file') || argv.includes('--filename'))) {
     argv.push('src');
 }
-require('babel-cli/bin/babel');
+require('@babel/cli/bin/babel');

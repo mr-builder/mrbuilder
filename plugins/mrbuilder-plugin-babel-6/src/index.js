@@ -1,5 +1,5 @@
-const options     = require('../babel-config');
-const { cwd }     = require('mrbuilder-utils');
+const options = require('../babel-config');
+const {cwd}   = require('mrbuilder-utils');
 
 module.exports = ({
                       test = /\.jsx?$/,
@@ -15,7 +15,10 @@ module.exports = ({
                           options
                       },
                   }, webpack) => {
-
+    const resolveLoader = webpack.resolveLoader || (webpack.resolveLoader = {});
+    resolveLoader.alias = Object.assign(resolveLoader.alias || {}, {
+        'babel-loader': require.resolve('babel-loader')
+    });
 
     webpack.module.rules.push({
         test,

@@ -1,4 +1,2 @@
-"use strict";
-const babelRegister = require('babel-register');
-babelRegister(require('./babel-config'));
-
+const config = require('./babel-config');
+require('@babel/register')(config);

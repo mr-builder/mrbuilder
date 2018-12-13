@@ -1,26 +1,5 @@
-const options     = require('../babel-config');
-const { cwd }     = require('mrbuilder-utils');
-
-module.exports = ({
-                      test = /\.jsx?$/,
-                      include = [
-                          cwd('src'),
-                          cwd('public'),
-                          /\/src\//,
-                          /\/public\//,
-                          /mrbuilder-plugin-html\/.*/
-                      ],
-                      use = {
-                          loader: 'babel-loader',
-                          options
-                      },
-                  }, webpack) => {
-
-
-    webpack.module.rules.push({
-        test,
-        include,
-        use,
-    });
-    return webpack;
+module.exports = function (conf) {
+    const {babelVersion = 6} = conf;
+    (this.info || console.log)('using babel version', babelVersion);
+    return require(`mrbuilder-plugin-babel-${babelVersion}/src/index`).apply(null, arguments);
 };

@@ -31,6 +31,9 @@ module.exports = function babelProcess(conf, resolve = _resolve, coverage) {
             if (v.startsWith('./')) {
                 return _resolve(v);
             }
+            if (v.startsWith('mrbuilder-plugin')){
+                return  _resolve(v);
+            }
 
             return resolve(`${prefix}-${v}`);
         }

@@ -4,28 +4,10 @@ provides support for babel to webpack via [babel-loader](https://github.com/babe
 
 The default babel configuration:
 
-```json
-{
-  "presets": [
-    "env",
-    "react",
-    "stage-2"
-  ],
-  "plugins": [
-    "./react-class-display-name",
-    "transform-function-bind",
-    "transform-class-properties",
-    "transform-async-to-generator",
-    "transform-export-extensions",
-    "transform-runtime"
-  ]
-}
-
-```
-
 
 | Property      | Type       | Default      | Description                      |
 | ------------- | -----------| -------------| ---------------------------------|
+| babelVersion  | number     | 6            | Uses babel 6 or babel 7 |
 | hot           | bool       | false        | Turns hot loading supoprt for hmr usually automatically|
 | test          | regex      | /\.jsx?$/    | Webpack module test to transpile |
 | includes      | arrayOf: string,regex|./src,./public,./test| Webpack module includes option |
@@ -33,3 +15,17 @@ The default babel configuration:
 | <babel_plugin>| object     |              | configure babel plugins |
 
 
+To use Babel 7 will need to set the babelVersion to 7 and include the mrbuilder-plugin-babel-7 plugin in your configuration,
+and you should exclude the mrbuilder-plugin-babel-6 while your at it
+
+```json
+{
+  mrbuilder:{
+    "plugins": [
+      "mrbuilder-plugin-babel-7"
+    ]
+  }
+}
+
+
+```

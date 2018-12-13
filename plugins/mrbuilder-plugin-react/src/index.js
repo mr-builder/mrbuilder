@@ -67,9 +67,7 @@ module.exports    = function reactPlugin({
 
         const pkg = require(cwd('package.json'));
 
-        const publicPath = om.config('mrbuilder-plugin-html.publicPath',
-            cwd('public'));
-
+        const publicPath = om.config('mrbuilder-plugin-html.publicPath', cwd('public'));
 
         if (!entry) {
 
@@ -138,7 +136,7 @@ module.exports    = function reactPlugin({
                         `not using exported components, you may need to setup hot and dom mounting manually for ${name}
                      Something like  to your entry point:
                      
-                     ${(hot ? generateHot : generate)(name, 'content', true) }
+                     ${(hot ? generateHot : generate)(name, 'content', true)}
                     
                     `);
                 }
@@ -155,11 +153,10 @@ module.exports    = function reactPlugin({
         }
     } else if (isHot) {
         //its hot, but not serving html, so we just add the preEntry stuff.
-        webpack.entry =
-            Object.entries(webpack.entry).reduce((ret, [key, value]) => {
-                ret[key] = preEntry.concat(value);
-                return ret;
-            }, {});
+        webpack.entry = Object.entries(webpack.entry).reduce((ret, [key, value]) => {
+            ret[key] = preEntry.concat(value);
+            return ret;
+        }, {});
     }
     return webpack;
 };

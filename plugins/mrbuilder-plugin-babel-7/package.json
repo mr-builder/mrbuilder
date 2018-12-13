@@ -1,7 +1,7 @@
 {
-  "name": "mrbuilder-plugin-babel-6",
+  "name": "mrbuilder-plugin-babel-7",
   "version": "3.1.7",
-  "description": "Tools for developing babel with mrbuilder",
+  "description": "Tools for developing babel 7 with mrbuilder",
   "scripts": {
     "clean": "mrbuilder-clean"
   },
@@ -9,19 +9,27 @@
     "mrbuilder-babel-cli": "bin/cli.js"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-bind": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/plugin-transform-async-to-generator": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
+    "babel-loader": "^8.0.0",
     "babel-plugin-istanbul": "^4.1.6",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-export-extensions": "^6.22.0",
-    "babel-plugin-transform-function-bind": "^6.22.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-runtime": "^6.26.0",
+    "babel-upgrade": "^0.0.24",
     "mrbuilder-optionsmanager": "^3.1.7",
     "mrbuilder-plugin-browserslist": "^3.1.7",
     "rimraf": "^2.6.2"
@@ -32,7 +40,13 @@
     "alias": {
       "coverage": "Run with code coverage, not for production",
       "hot": "Run with hot configuration"
-    }
+    },
+    "plugins": [
+      [
+        "mrbuilder-plugin-babel-6",
+        false
+      ]
+    ]
   },
   "license": "0BSD",
   "peerDependencies": {

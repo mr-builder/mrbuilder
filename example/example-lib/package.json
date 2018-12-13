@@ -13,7 +13,7 @@
     "start": "mrbuilder",
     "demo": "mrbuilder",
     "babel": "mrbuilder",
-    "prepublish": "mrbuilder-babel",
+    "prepublish": "MRBUILDER_PLUGIN_BABEL_BABEL_VERSION=7 MRBUILDER_DEBUG=1 mrbuilder-babel",
     "test": "mrbuilder-mocha"
   },
   "license": "0BSD"
