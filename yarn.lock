@@ -914,6 +914,21 @@
     package-json "^4.0.1"
     semver "^5.5.0"
 
+"@lerna/add@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/add/-/add-3.6.0.tgz#eea53efff0b3237774ddac6eaa84957140e89238"
+  integrity sha1-7qU+//CzI3d03axuqoSVcUDokjg=
+  dependencies:
+    "@lerna/bootstrap" "^3.6.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/filter-options" "^3.6.0"
+    "@lerna/npm-conf" "^3.4.1"
+    "@lerna/validation-error" "^3.6.0"
+    dedent "^0.7.0"
+    libnpm "^2.0.1"
+    p-map "^1.2.0"
+    semver "^5.5.0"
+
 "@lerna/batch-packages@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/batch-packages/-/batch-packages-3.0.0-rc.0.tgz#8e630a8042da8dd8cf5d3c61ab55f669d9a67d56"
@@ -921,6 +936,15 @@
     "@lerna/package-graph" "^3.0.0-rc.0"
     "@lerna/validation-error" "^3.0.0-rc.0"
     npmlog "^4.1.2"
+
+"@lerna/batch-packages@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/batch-packages/-/batch-packages-3.6.0.tgz#66cf3ce914bbd0532071c58d5f0c913315054158"
+  integrity sha1-Zs886RS70FMgccWNXwyRMxUFQVg=
+  dependencies:
+    "@lerna/package-graph" "^3.6.0"
+    "@lerna/validation-error" "^3.6.0"
+    libnpm "^2.0.1"
 
 "@lerna/bootstrap@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -949,6 +973,35 @@
     read-package-tree "^5.1.6"
     semver "^5.5.0"
 
+"@lerna/bootstrap@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/bootstrap/-/bootstrap-3.6.0.tgz#a47cd484ad60638d518a606d627b9997d5f7c960"
+  integrity sha1-pHzUhK1gY41RimBtYnuZl9X3yWA=
+  dependencies:
+    "@lerna/batch-packages" "^3.6.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/filter-options" "^3.6.0"
+    "@lerna/has-npm-version" "^3.3.0"
+    "@lerna/npm-conf" "^3.4.1"
+    "@lerna/npm-install" "^3.6.0"
+    "@lerna/package-graph" "^3.6.0"
+    "@lerna/rimraf-dir" "^3.6.0"
+    "@lerna/run-lifecycle" "^3.6.0"
+    "@lerna/run-parallel-batches" "^3.0.0"
+    "@lerna/symlink-binary" "^3.6.0"
+    "@lerna/symlink-dependencies" "^3.6.0"
+    "@lerna/validation-error" "^3.6.0"
+    dedent "^0.7.0"
+    get-port "^3.2.0"
+    libnpm "^2.0.1"
+    multimatch "^2.1.0"
+    p-finally "^1.0.0"
+    p-map "^1.2.0"
+    p-map-series "^1.0.0"
+    p-waterfall "^1.0.0"
+    read-package-tree "^5.1.6"
+    semver "^5.5.0"
+
 "@lerna/changed@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/changed/-/changed-3.0.0-rc.0.tgz#7686a93dcd0630eac3b6114153dc8a301df6870c"
@@ -959,6 +1012,25 @@
     "@lerna/publish" "^3.0.0-rc.0"
     chalk "^2.3.1"
 
+"@lerna/changed@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/changed/-/changed-3.6.0.tgz#a6c97b9c4829d294a1d8e8a7140667bc89c996e2"
+  integrity sha1-psl7nEgp0pSh2OinFAZnvInJluI=
+  dependencies:
+    "@lerna/collect-updates" "^3.6.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/listable" "^3.6.0"
+    "@lerna/output" "^3.6.0"
+    "@lerna/version" "^3.6.0"
+
+"@lerna/check-working-tree@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/check-working-tree/-/check-working-tree-3.6.0.tgz#638ee7f5976fe607d544629b1ef4ae67887984b5"
+  integrity sha1-Y47n9Zdv5gfVRGKbHvSuZ4h5hLU=
+  dependencies:
+    "@lerna/describe-ref" "^3.6.0"
+    "@lerna/validation-error" "^3.6.0"
+
 "@lerna/child-process@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/child-process/-/child-process-3.0.0-rc.0.tgz#52bede46bd244992bbea41c79893cefe5c90e17a"
@@ -966,6 +1038,15 @@
     chalk "^2.3.1"
     execa "^0.10.0"
     strong-log-transformer "^1.0.6"
+
+"@lerna/child-process@^3.3.0":
+  version "3.3.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/child-process/-/child-process-3.3.0.tgz#71184a763105b6c8ece27f43f166498d90fe680f"
+  integrity sha1-cRhKdjEFtsjs4n9D8WZJjZD+aA8=
+  dependencies:
+    chalk "^2.3.1"
+    execa "^1.0.0"
+    strong-log-transformer "^2.0.0"
 
 "@lerna/clean@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -975,6 +1056,19 @@
     "@lerna/filter-options" "^3.0.0-rc.0"
     "@lerna/prompt" "^3.0.0-rc.0"
     "@lerna/rimraf-dir" "^3.0.0-rc.0"
+    p-map "^1.2.0"
+    p-map-series "^1.0.0"
+    p-waterfall "^1.0.0"
+
+"@lerna/clean@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/clean/-/clean-3.6.0.tgz#9a9d73324389cba694b19a913229c19d58e62485"
+  integrity sha1-mp1zMkOJy6aUsZqRMinBnVjmJIU=
+  dependencies:
+    "@lerna/command" "^3.6.0"
+    "@lerna/filter-options" "^3.6.0"
+    "@lerna/prompt" "^3.6.0"
+    "@lerna/rimraf-dir" "^3.6.0"
     p-map "^1.2.0"
     p-map-series "^1.0.0"
     p-waterfall "^1.0.0"
@@ -1002,6 +1096,16 @@
     npmlog "^4.1.2"
     yargs "^12.0.1"
 
+"@lerna/cli@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/cli/-/cli-3.6.0.tgz#f86c16a095bd5506e927b9385ddefb13c605b1df"
+  integrity sha1-+GwWoJW9VQbpJ7k4Xd77E8YFsd8=
+  dependencies:
+    "@lerna/global-options" "^3.1.3"
+    dedent "^0.7.0"
+    libnpm "^2.0.1"
+    yargs "^12.0.1"
+
 "@lerna/collect-updates@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/collect-updates/-/collect-updates-3.0.0-rc.0.tgz#f00f4b70750d21fa14100dcc83f665d8ee7c1e53"
@@ -1010,6 +1114,17 @@
     minimatch "^3.0.4"
     npmlog "^4.1.2"
     semver "^5.5.0"
+    slash "^1.0.0"
+
+"@lerna/collect-updates@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/collect-updates/-/collect-updates-3.6.0.tgz#8520d64852c5059b453db53afee22539853f2bde"
+  integrity sha1-hSDWSFLFBZtFPbU6/uIlOYU/K94=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/describe-ref" "^3.6.0"
+    libnpm "^2.0.1"
+    minimatch "^3.0.4"
     slash "^1.0.0"
 
 "@lerna/command@^3.0.0-rc.0":
@@ -1028,6 +1143,22 @@
     lodash "^4.17.5"
     npmlog "^4.1.2"
 
+"@lerna/command@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/command/-/command-3.6.0.tgz#b3289d1f72d2bebb7375d424b1778121a3d4e82c"
+  integrity sha1-syidH3LSvrtzddQksXeBIaPU6Cw=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/package-graph" "^3.6.0"
+    "@lerna/project" "^3.6.0"
+    "@lerna/validation-error" "^3.6.0"
+    "@lerna/write-log-file" "^3.6.0"
+    dedent "^0.7.0"
+    execa "^1.0.0"
+    is-ci "^1.0.10"
+    libnpm "^2.0.1"
+    lodash "^4.17.5"
+
 "@lerna/conventional-commits@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/conventional-commits/-/conventional-commits-3.0.0-rc.0.tgz#da5e1a0f6f6cc6bd7426a54274cccdfefa761d7c"
@@ -1043,6 +1174,20 @@
     npmlog "^4.1.2"
     semver "^5.5.0"
 
+"@lerna/conventional-commits@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/conventional-commits/-/conventional-commits-3.6.0.tgz#b44edb60e23453d8b15dcd1accf28c421581a8c5"
+  integrity sha1-tE7bYOI0U9ixXc0azPKMQhWBqMU=
+  dependencies:
+    "@lerna/validation-error" "^3.6.0"
+    conventional-changelog-angular "^5.0.2"
+    conventional-changelog-core "^3.1.5"
+    conventional-recommended-bump "^4.0.4"
+    fs-extra "^7.0.0"
+    get-stream "^4.0.0"
+    libnpm "^2.0.1"
+    semver "^5.5.0"
+
 "@lerna/create-symlink@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/create-symlink/-/create-symlink-3.0.0-rc.0.tgz#88c998cb352194ecc0596fcab132e657f1ada02d"
@@ -1050,6 +1195,15 @@
     cmd-shim "^2.0.2"
     fs-extra "^6.0.1"
     npmlog "^4.1.2"
+
+"@lerna/create-symlink@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/create-symlink/-/create-symlink-3.6.0.tgz#f1815cde2fc9d8d2315dfea44ee880f2f1bc65f1"
+  integrity sha1-8YFc3i/J2NIxXf6kTuiA8vG8ZfE=
+  dependencies:
+    cmd-shim "^2.0.2"
+    fs-extra "^7.0.0"
+    libnpm "^2.0.1"
 
 "@lerna/create@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -1071,6 +1225,37 @@
     validate-npm-package-license "^3.0.3"
     validate-npm-package-name "^3.0.0"
 
+"@lerna/create@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/create/-/create-3.6.0.tgz#4540c9ee69f63d11b3138eb5eac1942348643af1"
+  integrity sha1-RUDJ7mn2PRGzE4616sGUI0hkOvE=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/npm-conf" "^3.4.1"
+    "@lerna/validation-error" "^3.6.0"
+    camelcase "^4.1.0"
+    dedent "^0.7.0"
+    fs-extra "^7.0.0"
+    globby "^8.0.1"
+    init-package-json "^1.10.3"
+    libnpm "^2.0.1"
+    p-reduce "^1.0.0"
+    pify "^3.0.0"
+    semver "^5.5.0"
+    slash "^1.0.0"
+    validate-npm-package-license "^3.0.3"
+    validate-npm-package-name "^3.0.0"
+    whatwg-url "^7.0.0"
+
+"@lerna/describe-ref@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/describe-ref/-/describe-ref-3.6.0.tgz#29eda334c81cd4c0a2942f309936bcb69a4543a0"
+  integrity sha1-Ke2jNMgc1MCilC8wmTa8tppFQ6A=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    libnpm "^2.0.1"
+
 "@lerna/diff@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/diff/-/diff-3.0.0-rc.0.tgz#e52e54c104618ca60d3e55a314cf8312f6005df9"
@@ -1079,6 +1264,16 @@
     "@lerna/command" "^3.0.0-rc.0"
     "@lerna/validation-error" "^3.0.0-rc.0"
     npmlog "^4.1.2"
+
+"@lerna/diff@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/diff/-/diff-3.6.0.tgz#ea8a77e712daf951c05316c81fe4065bf6b5e22c"
+  integrity sha1-6op35xLa+VHAUxbIH+QGW/a14iw=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/validation-error" "^3.6.0"
+    libnpm "^2.0.1"
 
 "@lerna/exec@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -1091,10 +1286,31 @@
     "@lerna/run-parallel-batches" "^3.0.0-rc.0"
     "@lerna/validation-error" "^3.0.0-rc.0"
 
+"@lerna/exec@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/exec/-/exec-3.6.0.tgz#757e96e890e436a31efc59dc72c5a7c2944d1a44"
+  integrity sha1-dX6W6JDkNqMe/FnccsWnwpRNGkQ=
+  dependencies:
+    "@lerna/batch-packages" "^3.6.0"
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/filter-options" "^3.6.0"
+    "@lerna/run-parallel-batches" "^3.0.0"
+    "@lerna/validation-error" "^3.6.0"
+
 "@lerna/filter-options@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/filter-options/-/filter-options-3.0.0-rc.0.tgz#9e22b3326eece8f45adad878d44c905271967a59"
   dependencies:
+    dedent "^0.7.0"
+
+"@lerna/filter-options@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/filter-options/-/filter-options-3.6.0.tgz#8100a3f2e18a9772a61138711e1fe1f14969f814"
+  integrity sha1-gQCj8uGKl3KmEThxHh/h8Ulp+BQ=
+  dependencies:
+    "@lerna/collect-updates" "^3.6.0"
+    "@lerna/filter-packages" "^3.6.0"
     dedent "^0.7.0"
 
 "@lerna/filter-packages@^3.0.0-rc.0":
@@ -1105,15 +1321,44 @@
     multimatch "^2.1.0"
     npmlog "^4.1.2"
 
+"@lerna/filter-packages@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/filter-packages/-/filter-packages-3.6.0.tgz#4cad0bd5b32974b546b845283ac870d62ea4646a"
+  integrity sha1-TK0L1bMpdLVGuEUoOshw1i6kZGo=
+  dependencies:
+    "@lerna/validation-error" "^3.6.0"
+    libnpm "^2.0.1"
+    multimatch "^2.1.0"
+
 "@lerna/get-npm-exec-opts@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/get-npm-exec-opts/-/get-npm-exec-opts-3.0.0-rc.0.tgz#74cf4364fac1b3c8b6645259e892e34509c3b1d9"
   dependencies:
     npmlog "^4.1.2"
 
+"@lerna/get-npm-exec-opts@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/get-npm-exec-opts/-/get-npm-exec-opts-3.6.0.tgz#ea595eb28d1f34ba61a92ee8391f374282b4b76e"
+  integrity sha1-6lleso0fNLphqS7oOR83QoK0t24=
+  dependencies:
+    libnpm "^2.0.1"
+
 "@lerna/global-options@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/global-options/-/global-options-3.0.0-rc.0.tgz#1745cf71c473099f8e0fb12cf426dc6a2dd1f2c5"
+
+"@lerna/global-options@^3.1.3":
+  version "3.1.3"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/global-options/-/global-options-3.1.3.tgz#cf85e24655a91d04d4efc9a80c1f83fc768d08ae"
+  integrity sha1-z4XiRlWpHQTU78moDB+D/HaNCK4=
+
+"@lerna/has-npm-version@^3.3.0":
+  version "3.3.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/has-npm-version/-/has-npm-version-3.3.0.tgz#8a73c2c437a0e1e68a19ccbd0dd3c014d4d39135"
+  integrity sha1-inPCxDeg4eaKGcy9DdPAFNTTkTU=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    semver "^5.5.0"
 
 "@lerna/import@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -1127,6 +1372,19 @@
     fs-extra "^6.0.1"
     p-map-series "^1.0.0"
 
+"@lerna/import@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/import/-/import-3.6.0.tgz#84ef5eea61ab9a284054be32367906d092aadab5"
+  integrity sha1-hO9e6mGrmihAVL4yNnkG0JKq2rU=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/prompt" "^3.6.0"
+    "@lerna/validation-error" "^3.6.0"
+    dedent "^0.7.0"
+    fs-extra "^7.0.0"
+    p-map-series "^1.0.0"
+
 "@lerna/init@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/init/-/init-3.0.0-rc.0.tgz#d75929096b3a2b09de2afa067cb9ea36f2a284cb"
@@ -1134,6 +1392,17 @@
     "@lerna/child-process" "^3.0.0-rc.0"
     "@lerna/command" "^3.0.0-rc.0"
     fs-extra "^6.0.1"
+    p-map "^1.2.0"
+    write-json-file "^2.3.0"
+
+"@lerna/init@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/init/-/init-3.6.0.tgz#6e23c3db632b713e23250d33519ed844a79a145e"
+  integrity sha1-biPD22MrcT4jJQ0zUZ7YRKeaFF4=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/command" "^3.6.0"
+    fs-extra "^7.0.0"
     p-map "^1.2.0"
     write-json-file "^2.3.0"
 
@@ -1147,6 +1416,17 @@
     p-map "^1.2.0"
     slash "^1.0.0"
 
+"@lerna/link@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/link/-/link-3.6.0.tgz#490f14216b489fd66d9d3d3d0765f75dbbf52178"
+  integrity sha1-SQ8UIWtIn9ZtnT09B2X3Xbv1IXg=
+  dependencies:
+    "@lerna/command" "^3.6.0"
+    "@lerna/package-graph" "^3.6.0"
+    "@lerna/symlink-dependencies" "^3.6.0"
+    p-map "^1.2.0"
+    slash "^1.0.0"
+
 "@lerna/list@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/list/-/list-3.0.0-rc.0.tgz#14acc6839f8fe1e1a0f3c20e9b2312160bda5b85"
@@ -1157,9 +1437,46 @@
     chalk "^2.3.1"
     columnify "^1.5.4"
 
+"@lerna/list@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/list/-/list-3.6.0.tgz#18ae4b1e375ef1329261c9d21be27098ca0edf63"
+  integrity sha1-GK5LHjde8TKSYcnSG+JwmMoO32M=
+  dependencies:
+    "@lerna/command" "^3.6.0"
+    "@lerna/filter-options" "^3.6.0"
+    "@lerna/listable" "^3.6.0"
+    "@lerna/output" "^3.6.0"
+
+"@lerna/listable@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/listable/-/listable-3.6.0.tgz#25c9cc062ae0d3e78c53da30cdf9f011696ae48f"
+  integrity sha1-JcnMBirg0+eMU9owzfnwEWlq5I8=
+  dependencies:
+    "@lerna/batch-packages" "^3.6.0"
+    chalk "^2.3.1"
+    columnify "^1.5.4"
+
+"@lerna/log-packed@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/log-packed/-/log-packed-3.6.0.tgz#bed96c2bdd47f076d9957d0c6069b2edc1518145"
+  integrity sha1-vtlsK91H8HbZlX0MYGmy7cFRgUU=
+  dependencies:
+    byte-size "^4.0.3"
+    columnify "^1.5.4"
+    has-unicode "^2.0.1"
+    libnpm "^2.0.1"
+
 "@lerna/npm-conf@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/npm-conf/-/npm-conf-3.0.0-rc.0.tgz#8b38a3ce8280c9f5cd2958ef7a14861f2e540060"
+  dependencies:
+    config-chain "^1.1.11"
+    pify "^3.0.0"
+
+"@lerna/npm-conf@^3.4.1":
+  version "3.4.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/npm-conf/-/npm-conf-3.4.1.tgz#859e931b0bc9a5eed86309cc09508810c1e7d121"
+  integrity sha1-hZ6TGwvJpe7YYwnMCVCIEMHn0SE=
   dependencies:
     config-chain "^1.1.11"
     pify "^3.0.0"
@@ -1171,6 +1488,14 @@
     "@lerna/child-process" "^3.0.0-rc.0"
     "@lerna/get-npm-exec-opts" "^3.0.0-rc.0"
     npmlog "^4.1.2"
+
+"@lerna/npm-dist-tag@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/npm-dist-tag/-/npm-dist-tag-3.6.0.tgz#8f8c8567810bd9ee1c1277a71b57cec1acc101f4"
+  integrity sha1-j4yFZ4EL2e4cEnenG1fOwazBAfQ=
+  dependencies:
+    libnpm "^2.0.1"
+    npm-registry-fetch "^3.8.0"
 
 "@lerna/npm-install@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -1184,6 +1509,18 @@
     signal-exit "^3.0.2"
     write-pkg "^3.1.0"
 
+"@lerna/npm-install@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/npm-install/-/npm-install-3.6.0.tgz#314fc0d0c35429e2b5db1e7de87b3ddb1ab77606"
+  integrity sha1-MU/A0MNUKeK12x596Hs92xq3dgY=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/get-npm-exec-opts" "^3.6.0"
+    fs-extra "^7.0.0"
+    libnpm "^2.0.1"
+    signal-exit "^3.0.2"
+    write-pkg "^3.1.0"
+
 "@lerna/npm-publish@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/npm-publish/-/npm-publish-3.0.0-rc.0.tgz#9c3058ca5a35e239f4219a84b0ae76b1589f7de3"
@@ -1191,6 +1528,19 @@
     "@lerna/child-process" "^3.0.0-rc.0"
     "@lerna/get-npm-exec-opts" "^3.0.0-rc.0"
     npmlog "^4.1.2"
+
+"@lerna/npm-publish@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/npm-publish/-/npm-publish-3.6.0.tgz#8981a9744779c55955a8c4249fe6b44a0485f9d3"
+  integrity sha1-iYGpdEd5xVlVqMQkn+a0SgSF+dM=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/get-npm-exec-opts" "^3.6.0"
+    "@lerna/has-npm-version" "^3.3.0"
+    "@lerna/log-packed" "^3.6.0"
+    fs-extra "^7.0.0"
+    libnpm "^2.0.1"
+    p-map "^1.2.0"
 
 "@lerna/npm-run-script@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -1200,11 +1550,27 @@
     "@lerna/get-npm-exec-opts" "^3.0.0-rc.0"
     npmlog "^4.1.2"
 
+"@lerna/npm-run-script@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/npm-run-script/-/npm-run-script-3.6.0.tgz#4b97e6f571ae9fdabed21d5d4fc35a2b7e9d5267"
+  integrity sha1-S5fm9XGun9q+0h1dT8NaK36dUmc=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/get-npm-exec-opts" "^3.6.0"
+    libnpm "^2.0.1"
+
 "@lerna/output@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/output/-/output-3.0.0-rc.0.tgz#5d7f4278842d79be0636a1863e23ba478116c0c9"
   dependencies:
     npmlog "^4.1.2"
+
+"@lerna/output@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/output/-/output-3.6.0.tgz#a69384bc685cf3b21aa1bfc697eb2b9db3333d0b"
+  integrity sha1-ppOEvGhc87Iaob/Gl+srnbMzPQs=
+  dependencies:
+    libnpm "^2.0.1"
 
 "@lerna/package-graph@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -1213,11 +1579,28 @@
     npm-package-arg "^6.0.0"
     semver "^5.5.0"
 
+"@lerna/package-graph@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/package-graph/-/package-graph-3.6.0.tgz#d13e6e80d30e2e29226d335412997b9ddf646305"
+  integrity sha1-0T5ugNMOLikibTNUEpl7nd9kYwU=
+  dependencies:
+    "@lerna/validation-error" "^3.6.0"
+    libnpm "^2.0.1"
+    semver "^5.5.0"
+
 "@lerna/package@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/package/-/package-3.0.0-rc.0.tgz#40dd1939d8a644b6ab4afa297d35ef52b1997d4e"
   dependencies:
     npm-package-arg "^6.0.0"
+    write-pkg "^3.1.0"
+
+"@lerna/package@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/package/-/package-3.6.0.tgz#1095b91d277820b7ae8a2cfeeb73d57c6cd9b17e"
+  integrity sha1-EJW5HSd4ILeuiiz+63PVfGzZsX4=
+  dependencies:
+    libnpm "^2.0.1"
     write-pkg "^3.1.0"
 
 "@lerna/project@^3.0.0-rc.0":
@@ -1237,12 +1620,38 @@
     resolve-from "^4.0.0"
     write-json-file "^2.3.0"
 
+"@lerna/project@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/project/-/project-3.6.0.tgz#b5dd2b94fae6f58478be1c53962c2570498867ab"
+  integrity sha1-td0rlPrm9YR4vhxTliwlcEmIZ6s=
+  dependencies:
+    "@lerna/package" "^3.6.0"
+    "@lerna/validation-error" "^3.6.0"
+    cosmiconfig "^5.0.2"
+    dedent "^0.7.0"
+    dot-prop "^4.2.0"
+    glob-parent "^3.1.0"
+    globby "^8.0.1"
+    libnpm "^2.0.1"
+    load-json-file "^4.0.0"
+    p-map "^1.2.0"
+    resolve-from "^4.0.0"
+    write-json-file "^2.3.0"
+
 "@lerna/prompt@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/prompt/-/prompt-3.0.0-rc.0.tgz#5d9a4c192f10f3a0050869c5cfefc7671229b3fd"
   dependencies:
     inquirer "^5.1.0"
     npmlog "^4.1.2"
+
+"@lerna/prompt@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/prompt/-/prompt-3.6.0.tgz#b17cc464dec9d830619723e879dc747367378217"
+  integrity sha1-sXzEZN7J2DBhlyPoedx0c2c3ghc=
+  dependencies:
+    inquirer "^6.2.0"
+    libnpm "^2.0.1"
 
 "@lerna/publish@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -1274,12 +1683,51 @@
     temp-write "^3.4.0"
     write-json-file "^2.3.0"
 
+"@lerna/publish@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/publish/-/publish-3.6.0.tgz#7985b8c549c83114180e99a9e291e8b82db57aac"
+  integrity sha1-eYW4xUnIMRQYDpmp4pHouC21eqw=
+  dependencies:
+    "@lerna/batch-packages" "^3.6.0"
+    "@lerna/check-working-tree" "^3.6.0"
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/collect-updates" "^3.6.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/describe-ref" "^3.6.0"
+    "@lerna/get-npm-exec-opts" "^3.6.0"
+    "@lerna/npm-conf" "^3.4.1"
+    "@lerna/npm-dist-tag" "^3.6.0"
+    "@lerna/npm-publish" "^3.6.0"
+    "@lerna/output" "^3.6.0"
+    "@lerna/prompt" "^3.6.0"
+    "@lerna/run-lifecycle" "^3.6.0"
+    "@lerna/run-parallel-batches" "^3.0.0"
+    "@lerna/validation-error" "^3.6.0"
+    "@lerna/version" "^3.6.0"
+    fs-extra "^7.0.0"
+    libnpm "^2.0.1"
+    npm-registry-fetch "^3.8.0"
+    p-finally "^1.0.0"
+    p-map "^1.2.0"
+    p-pipe "^1.2.0"
+    p-reduce "^1.0.0"
+    semver "^5.5.0"
+
 "@lerna/resolve-symlink@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/resolve-symlink/-/resolve-symlink-3.0.0-rc.0.tgz#fe7c8663e36761e51ffb6977de142fa6ea960bdd"
   dependencies:
     fs-extra "^6.0.1"
     npmlog "^4.1.2"
+    read-cmd-shim "^1.0.1"
+
+"@lerna/resolve-symlink@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/resolve-symlink/-/resolve-symlink-3.6.0.tgz#985344796b704ff32afa923901e795e80741b86e"
+  integrity sha1-mFNEeWtwT/Mq+pI5AeeV6AdBuG4=
+  dependencies:
+    fs-extra "^7.0.0"
+    libnpm "^2.0.1"
     read-cmd-shim "^1.0.1"
 
 "@lerna/rimraf-dir@^3.0.0-rc.0":
@@ -1291,6 +1739,16 @@
     path-exists "^3.0.0"
     rimraf "^2.6.2"
 
+"@lerna/rimraf-dir@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/rimraf-dir/-/rimraf-dir-3.6.0.tgz#a02c4ad14d9a65c005021da79d545702b7085a74"
+  integrity sha1-oCxK0U2aZcAFAh2nnVRXArcIWnQ=
+  dependencies:
+    "@lerna/child-process" "^3.3.0"
+    libnpm "^2.0.1"
+    path-exists "^3.0.0"
+    rimraf "^2.6.2"
+
 "@lerna/run-lifecycle@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/run-lifecycle/-/run-lifecycle-3.0.0-rc.0.tgz#50787d9d8726723fe625f7b6418f41f446c86b21"
@@ -1298,6 +1756,22 @@
     "@lerna/npm-conf" "^3.0.0-rc.0"
     npm-lifecycle "^2.0.0"
     npmlog "^4.1.2"
+
+"@lerna/run-lifecycle@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/run-lifecycle/-/run-lifecycle-3.6.0.tgz#2381fd827b4a4135613e7d73d25ae76b7af5e6ef"
+  integrity sha1-I4H9gntKQTVhPn1z0lrna3r15u8=
+  dependencies:
+    "@lerna/npm-conf" "^3.4.1"
+    libnpm "^2.0.1"
+
+"@lerna/run-parallel-batches@^3.0.0":
+  version "3.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/run-parallel-batches/-/run-parallel-batches-3.0.0.tgz#468704934084c74991d3124d80607857d4dfa840"
+  integrity sha1-RocEk0CEx0mR0xJNgGB4V9TfqEA=
+  dependencies:
+    p-map "^1.2.0"
+    p-map-series "^1.0.0"
 
 "@lerna/run-parallel-batches@^3.0.0-rc.0":
   version "3.0.0-rc.0"
@@ -1319,6 +1793,21 @@
     "@lerna/validation-error" "^3.0.0-rc.0"
     p-map "^1.2.0"
 
+"@lerna/run@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/run/-/run-3.6.0.tgz#f545fcde889d7a1433b3f2cc444eeec39713ea62"
+  integrity sha1-9UX83oidehQzs/LMRE7uw5cT6mI=
+  dependencies:
+    "@lerna/batch-packages" "^3.6.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/filter-options" "^3.6.0"
+    "@lerna/npm-run-script" "^3.6.0"
+    "@lerna/output" "^3.6.0"
+    "@lerna/run-parallel-batches" "^3.0.0"
+    "@lerna/timer" "^3.5.0"
+    "@lerna/validation-error" "^3.6.0"
+    p-map "^1.2.0"
+
 "@lerna/symlink-binary@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/symlink-binary/-/symlink-binary-3.0.0-rc.0.tgz#0b3a6723fb857942baec6118ecee35ee0c6d082e"
@@ -1326,6 +1815,17 @@
     "@lerna/create-symlink" "^3.0.0-rc.0"
     "@lerna/package" "^3.0.0-rc.0"
     fs-extra "^6.0.1"
+    p-map "^1.2.0"
+    read-pkg "^3.0.0"
+
+"@lerna/symlink-binary@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/symlink-binary/-/symlink-binary-3.6.0.tgz#935a5b98908578da7f9eed20818899f728b9f3d9"
+  integrity sha1-k1pbmJCFeNp/nu0ggYiZ9yi589k=
+  dependencies:
+    "@lerna/create-symlink" "^3.6.0"
+    "@lerna/package" "^3.6.0"
+    fs-extra "^7.0.0"
     p-map "^1.2.0"
     read-pkg "^3.0.0"
 
@@ -1341,17 +1841,77 @@
     p-map "^1.2.0"
     p-map-series "^1.0.0"
 
+"@lerna/symlink-dependencies@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/symlink-dependencies/-/symlink-dependencies-3.6.0.tgz#76e9d54f6fd3af3e24221cce3ee546e5657ea2d8"
+  integrity sha1-dunVT2/Trz4kIhzOPuVG5WV+otg=
+  dependencies:
+    "@lerna/create-symlink" "^3.6.0"
+    "@lerna/resolve-symlink" "^3.6.0"
+    "@lerna/symlink-binary" "^3.6.0"
+    fs-extra "^7.0.0"
+    p-finally "^1.0.0"
+    p-map "^1.2.0"
+    p-map-series "^1.0.0"
+
+"@lerna/timer@^3.5.0":
+  version "3.5.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/timer/-/timer-3.5.0.tgz#8dee6acf002c55de64678c66ef37ca52143f1b9b"
+  integrity sha1-je5qzwAsVd5kZ4xm7zfKUhQ/G5s=
+
 "@lerna/validation-error@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/validation-error/-/validation-error-3.0.0-rc.0.tgz#da81862666992b6befab25a4c855440679005e46"
   dependencies:
     npmlog "^4.1.2"
 
+"@lerna/validation-error@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/validation-error/-/validation-error-3.6.0.tgz#550cf66bb2ef88edc02e36017b575a7a9100d5d8"
+  integrity sha1-VQz2a7LviO3ALjYBe1daepEA1dg=
+  dependencies:
+    libnpm "^2.0.1"
+
+"@lerna/version@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/version/-/version-3.6.0.tgz#7360d8a93b1cc5fe6a7588d7266812b916a281f7"
+  integrity sha1-c2DYqTscxf5qdYjXJmgSuRaigfc=
+  dependencies:
+    "@lerna/batch-packages" "^3.6.0"
+    "@lerna/check-working-tree" "^3.6.0"
+    "@lerna/child-process" "^3.3.0"
+    "@lerna/collect-updates" "^3.6.0"
+    "@lerna/command" "^3.6.0"
+    "@lerna/conventional-commits" "^3.6.0"
+    "@lerna/output" "^3.6.0"
+    "@lerna/prompt" "^3.6.0"
+    "@lerna/run-lifecycle" "^3.6.0"
+    "@lerna/validation-error" "^3.6.0"
+    chalk "^2.3.1"
+    dedent "^0.7.0"
+    libnpm "^2.0.1"
+    minimatch "^3.0.4"
+    p-map "^1.2.0"
+    p-pipe "^1.2.0"
+    p-reduce "^1.0.0"
+    p-waterfall "^1.0.0"
+    semver "^5.5.0"
+    slash "^1.0.0"
+    temp-write "^3.4.0"
+
 "@lerna/write-log-file@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@lerna/write-log-file/-/write-log-file-3.0.0-rc.0.tgz#c506b0024f77ee8333c5b825b4bfae2243c471ab"
   dependencies:
     npmlog "^4.1.2"
+    write-file-atomic "^2.3.0"
+
+"@lerna/write-log-file@^3.6.0":
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@lerna/write-log-file/-/write-log-file-3.6.0.tgz#b8d5a7efc84fa93cbd67d724d11120343b2a849a"
+  integrity sha1-uNWn78hPqTy9Z9ck0REgNDsqhJo=
+  dependencies:
+    libnpm "^2.0.1"
     write-file-atomic "^2.3.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -1558,6 +2118,14 @@ JSONStream@^1.0.4:
     jsonparse "^1.2.0"
     through ">=2.2.7 <3"
 
+JSONStream@^1.3.4:
+  version "1.3.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/JSONStream/-/JSONStream-1.3.5.tgz#3208c1f08d3a4d99261ab64f92302bc15e111ca0"
+  integrity sha1-MgjB8I06TZkmGrZPkjArwV4RHKA=
+  dependencies:
+    jsonparse "^1.2.0"
+    through ">=2.2.7 <3"
+
 JSV@^4.0.x:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/JSV/-/JSV-4.0.2.tgz#d077f6825571f82132f9dffaed587b4029feff57"
@@ -1620,6 +2188,13 @@ agent-base@4, agent-base@^4.1.0, agent-base@^4.2.0, agent-base@~4.2.0:
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-4.2.1.tgz#d89e5999f797875674c07d87f260fc41e83e8ca9"
   dependencies:
     es6-promisify "^5.0.0"
+
+agentkeepalive@^3.4.1:
+  version "3.5.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/agentkeepalive/-/agentkeepalive-3.5.2.tgz#a113924dd3fa24a0bc3b78108c450c2abee00f67"
+  integrity sha1-oROSTdP6JKC8O3gQjEUMKr7gD2c=
+  dependencies:
+    humanize-ms "^1.2.1"
 
 ajv-keywords@^3.0.0, ajv-keywords@^3.1.0:
   version "3.2.0"
@@ -1692,6 +2267,11 @@ ansi-regex@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
 
+ansi-regex@^4.0.0:
+  version "4.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/ansi-regex/-/ansi-regex-4.0.0.tgz#70de791edf021404c3fd615aa89118ae0432e5a9"
+  integrity sha1-cN55Ht8CFATD/WFaqJEYrgQy5ak=
+
 ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
@@ -1726,9 +2306,14 @@ append-transform@^1.0.0:
   dependencies:
     default-require-extensions "^2.0.0"
 
-aproba@^1.0.3, aproba@^1.1.1:
+aproba@^1.0.3, aproba@^1.1.1, aproba@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
+
+"aproba@^1.1.2 || 2", aproba@^2.0.0:
+  version "2.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/aproba/-/aproba-2.0.0.tgz#52520b8ae5b569215b354efc0caa3fe1e45a8adc"
+  integrity sha1-UlILiuW1aSFbNU78DKo/4eRaitw=
 
 are-we-there-yet@~1.1.2:
   version "1.1.5"
@@ -2764,6 +3349,17 @@ big.js@^3.1.3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
 
+bin-links@^1.1.2:
+  version "1.1.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/bin-links/-/bin-links-1.1.2.tgz#fb74bd54bae6b7befc6c6221f25322ac830d9757"
+  integrity sha1-+3S9VLrmt778bGIh8lMirIMNl1c=
+  dependencies:
+    bluebird "^3.5.0"
+    cmd-shim "^2.0.2"
+    gentle-fs "^2.0.0"
+    graceful-fs "^4.1.11"
+    write-file-atomic "^2.3.0"
+
 binary-extensions@^1.0.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.11.0.tgz#46aa1751fb6a2f93ee5e689bb1087d4b14c6c205"
@@ -2793,6 +3389,11 @@ block-stream@*:
 bluebird@^3.3.0, bluebird@^3.4.6, bluebird@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
+
+bluebird@^3.5.0, bluebird@^3.5.2, bluebird@^3.5.3:
+  version "3.5.3"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/bluebird/-/bluebird-3.5.3.tgz#7d01c6f9616c9a51ab0f8c549a79dfe6ec33efa7"
+  integrity sha1-fQHG+WFsmlGrD4xUmnnf5uwz76c=
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
@@ -3046,6 +3647,11 @@ byline@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/byline/-/byline-5.0.0.tgz#741c5216468eadc457b03410118ad77de8c1ddb1"
 
+byte-size@^4.0.3:
+  version "4.0.4"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/byte-size/-/byte-size-4.0.4.tgz#29d381709f41aae0d89c631f1c81aec88cd40b23"
+  integrity sha1-KdOBcJ9BquDYnGMfHIGuyIzUCyM=
+
 bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
@@ -3065,6 +3671,26 @@ cacache@^10.0.4:
     promise-inflight "^1.0.1"
     rimraf "^2.6.2"
     ssri "^5.2.4"
+    unique-filename "^1.1.0"
+    y18n "^4.0.0"
+
+cacache@^11.0.1, cacache@^11.2.0:
+  version "11.3.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/cacache/-/cacache-11.3.1.tgz#d09d25f6c4aca7a6d305d141ae332613aa1d515f"
+  integrity sha1-0J0l9sSsp6bTBdFBrjMmE6odUV8=
+  dependencies:
+    bluebird "^3.5.1"
+    chownr "^1.0.1"
+    figgy-pudding "^3.1.0"
+    glob "^7.1.2"
+    graceful-fs "^4.1.11"
+    lru-cache "^4.1.3"
+    mississippi "^3.0.0"
+    mkdirp "^0.5.1"
+    move-concurrently "^1.0.1"
+    promise-inflight "^1.0.1"
+    rimraf "^2.6.2"
+    ssri "^6.0.0"
     unique-filename "^1.1.0"
     y18n "^4.0.0"
 
@@ -3300,6 +3926,11 @@ chokidar@^2.0.0, chokidar@^2.0.2, chokidar@^2.0.3:
 chownr@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.0.1.tgz#e2a75042a9551908bebd25b8523d5f9769d79181"
+
+chownr@^1.1.1:
+  version "1.1.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/chownr/-/chownr-1.1.1.tgz#54726b8b8fff4df053c42187e801fb4412df1494"
+  integrity sha1-VHJri4//TfBTxCGH6AH7RBLfFJQ=
 
 chrome-trace-event@^1.0.0:
   version "1.0.0"
@@ -3679,6 +4310,14 @@ conventional-changelog-angular@^1.6.6:
     compare-func "^1.3.1"
     q "^1.5.1"
 
+conventional-changelog-angular@^5.0.2:
+  version "5.0.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/conventional-changelog-angular/-/conventional-changelog-angular-5.0.2.tgz#39d945635e03b6d0c9d4078b1df74e06163dc66a"
+  integrity sha1-OdlFY14DttDJ1AeLHfdOBhY9xmo=
+  dependencies:
+    compare-func "^1.3.1"
+    q "^1.5.1"
+
 conventional-changelog-core@^2.0.5:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/conventional-changelog-core/-/conventional-changelog-core-2.0.11.tgz#19b5fbd55a9697773ed6661f4e32030ed7e30287"
@@ -3697,9 +4336,33 @@ conventional-changelog-core@^2.0.5:
     read-pkg-up "^1.0.1"
     through2 "^2.0.0"
 
+conventional-changelog-core@^3.1.5:
+  version "3.1.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/conventional-changelog-core/-/conventional-changelog-core-3.1.5.tgz#c2edf928539308b54fe1b90a2fc731abc021852c"
+  integrity sha1-wu35KFOTCLVP4bkKL8cxq8AhhSw=
+  dependencies:
+    conventional-changelog-writer "^4.0.2"
+    conventional-commits-parser "^3.0.1"
+    dateformat "^3.0.0"
+    get-pkg-repo "^1.0.0"
+    git-raw-commits "2.0.0"
+    git-remote-origin-url "^2.0.0"
+    git-semver-tags "^2.0.2"
+    lodash "^4.2.1"
+    normalize-package-data "^2.3.5"
+    q "^1.5.1"
+    read-pkg "^3.0.0"
+    read-pkg-up "^3.0.0"
+    through2 "^2.0.0"
+
 conventional-changelog-preset-loader@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/conventional-changelog-preset-loader/-/conventional-changelog-preset-loader-1.1.8.tgz#40bb0f142cd27d16839ec6c74ee8db418099b373"
+
+conventional-changelog-preset-loader@^2.0.2:
+  version "2.0.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/conventional-changelog-preset-loader/-/conventional-changelog-preset-loader-2.0.2.tgz#81d1a07523913f3d17da3a49f0091f967ad345b0"
+  integrity sha1-gdGgdSORPz0X2jpJ8AkflnrTRbA=
 
 conventional-changelog-writer@^3.0.9:
   version "3.0.9"
@@ -3716,6 +4379,22 @@ conventional-changelog-writer@^3.0.9:
     split "^1.0.0"
     through2 "^2.0.0"
 
+conventional-changelog-writer@^4.0.2:
+  version "4.0.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/conventional-changelog-writer/-/conventional-changelog-writer-4.0.2.tgz#eb493ed84269e7a663da36e49af51c54639c9a67"
+  integrity sha1-60k+2EJp56Zj2jbkmvUcVGOcmmc=
+  dependencies:
+    compare-func "^1.3.1"
+    conventional-commits-filter "^2.0.1"
+    dateformat "^3.0.0"
+    handlebars "^4.0.2"
+    json-stringify-safe "^5.0.1"
+    lodash "^4.2.1"
+    meow "^4.0.0"
+    semver "^5.5.0"
+    split "^1.0.0"
+    through2 "^2.0.0"
+
 conventional-commits-filter@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/conventional-commits-filter/-/conventional-commits-filter-1.1.6.tgz#4389cd8e58fe89750c0b5fb58f1d7f0cc8ad3831"
@@ -3723,9 +4402,30 @@ conventional-commits-filter@^1.1.6:
     is-subset "^0.1.1"
     modify-values "^1.0.0"
 
+conventional-commits-filter@^2.0.1:
+  version "2.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/conventional-commits-filter/-/conventional-commits-filter-2.0.1.tgz#55a135de1802f6510b6758e0a6aa9e0b28618db3"
+  integrity sha1-VaE13hgC9lELZ1jgpqqeCyhhjbM=
+  dependencies:
+    is-subset "^0.1.1"
+    modify-values "^1.0.0"
+
 conventional-commits-parser@^2.1.7:
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/conventional-commits-parser/-/conventional-commits-parser-2.1.7.tgz#eca45ed6140d72ba9722ee4132674d639e644e8e"
+  dependencies:
+    JSONStream "^1.0.4"
+    is-text-path "^1.0.0"
+    lodash "^4.2.1"
+    meow "^4.0.0"
+    split2 "^2.0.0"
+    through2 "^2.0.0"
+    trim-off-newlines "^1.0.0"
+
+conventional-commits-parser@^3.0.1:
+  version "3.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/conventional-commits-parser/-/conventional-commits-parser-3.0.1.tgz#fe1c49753df3f98edb2285a5e485e11ffa7f2e4c"
+  integrity sha1-/hxJdT3z+Y7bIoWl5IXhH/p/Lkw=
   dependencies:
     JSONStream "^1.0.4"
     is-text-path "^1.0.0"
@@ -3745,6 +4445,20 @@ conventional-recommended-bump@^2.0.6:
     conventional-commits-parser "^2.1.7"
     git-raw-commits "^1.3.6"
     git-semver-tags "^1.3.6"
+    meow "^4.0.0"
+    q "^1.5.1"
+
+conventional-recommended-bump@^4.0.4:
+  version "4.0.4"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/conventional-recommended-bump/-/conventional-recommended-bump-4.0.4.tgz#05540584641d3da758c8863c09788fcaeb586872"
+  integrity sha1-BVQFhGQdPadYyIY8CXiPyutYaHI=
+  dependencies:
+    concat-stream "^1.6.0"
+    conventional-changelog-preset-loader "^2.0.2"
+    conventional-commits-filter "^2.0.1"
+    conventional-commits-parser "^3.0.1"
+    git-raw-commits "2.0.0"
+    git-semver-tags "^2.0.2"
     meow "^4.0.0"
     q "^1.5.1"
 
@@ -4629,6 +5343,11 @@ enzyme@^3.2.0:
     raf "^3.4.0"
     rst-selector-parser "^2.2.3"
 
+err-code@^1.0.0:
+  version "1.1.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/err-code/-/err-code-1.1.2.tgz#06e0116d3028f6aef4806849eb0ea6a748ae6960"
+  integrity sha1-BuARbTAo9q70gGhJ6w6mp0iuaWA=
+
 errno@^0.1.1, errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.7.tgz#4684d71779ad39af177e3f007996f7c67c852618"
@@ -4888,6 +5607,19 @@ execa@^0.7.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+execa@^1.0.0:
+  version "1.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/execa/-/execa-1.0.0.tgz#c6236a5bb4df6d6f15e88e7f017798216749ddd8"
+  integrity sha1-xiNqW7TfbW8V6I5/AXeYIWdJ3dg=
+  dependencies:
+    cross-spawn "^6.0.0"
+    get-stream "^4.0.0"
+    is-stream "^1.1.0"
+    npm-run-path "^2.0.0"
+    p-finally "^1.0.0"
+    signal-exit "^3.0.0"
+    strip-eof "^1.0.0"
+
 expand-braces@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/expand-braces/-/expand-braces-0.1.2.tgz#488b1d1d2451cb3d3a6b192cfc030f44c5855fea"
@@ -5089,6 +5821,11 @@ fbjs@^0.8.16, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
+figgy-pudding@^3.1.0, figgy-pudding@^3.4.1, figgy-pudding@^3.5.1:
+  version "3.5.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
+  integrity sha1-hiRwESkBxyeg5JWoB0S9W6odZ5A=
+
 figures@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/figures/-/figures-2.0.0.tgz#3ab1a2d2a62c8bfb431a0c94cb797a2fce27c962"
@@ -5198,6 +5935,11 @@ find-cache-dir@^2.0.0:
     commondir "^1.0.1"
     make-dir "^1.0.0"
     pkg-dir "^3.0.0"
+
+find-npm-prefix@^1.0.2:
+  version "1.0.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/find-npm-prefix/-/find-npm-prefix-1.0.2.tgz#8d8ce2c78b3b4b9e66c8acc6a37c231eb841cfdf"
+  integrity sha1-jYzix4s7S55myKzGo3wjHrhBz98=
 
 find-package@^1.0.0:
   version "1.0.0"
@@ -5354,6 +6096,15 @@ fs-extra@^6.0.1:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
+fs-extra@^7.0.0:
+  version "7.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
+  integrity sha1-TxicRKoSO4lfcigE9V6iPq3DSOk=
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
+
 fs-minipass@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/fs-minipass/-/fs-minipass-1.2.5.tgz#06c277218454ec288df77ada54a03b8702aacb9d"
@@ -5363,6 +6114,15 @@ fs-minipass@^1.2.5:
 fs-readdir-recursive@^1.0.0, fs-readdir-recursive@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fs-readdir-recursive/-/fs-readdir-recursive-1.1.0.tgz#e32fc030a2ccee44a6b5371308da54be0b397d27"
+
+fs-vacuum@^1.2.10:
+  version "1.2.10"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/fs-vacuum/-/fs-vacuum-1.2.10.tgz#b7629bec07a4031a2548fdf99f5ecf1cc8b31e36"
+  integrity sha1-t2Kb7AekAxolSP35n17PHMizHjY=
+  dependencies:
+    graceful-fs "^4.1.2"
+    path-is-inside "^1.0.1"
+    rimraf "^2.5.2"
 
 fs-write-stream-atomic@^1.0.8:
   version "1.0.10"
@@ -5449,6 +6209,25 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
+genfun@^5.0.0:
+  version "5.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/genfun/-/genfun-5.0.0.tgz#9dd9710a06900a5c4a5bf57aca5da4e52fe76537"
+  integrity sha1-ndlxCgaQClxKW/V6yl2k5S/nZTc=
+
+gentle-fs@^2.0.0:
+  version "2.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/gentle-fs/-/gentle-fs-2.0.1.tgz#585cfd612bfc5cd52471fdb42537f016a5ce3687"
+  integrity sha1-WFz9YSv8XNUkcf20JTfwFqXONoc=
+  dependencies:
+    aproba "^1.1.2"
+    fs-vacuum "^1.2.10"
+    graceful-fs "^4.1.11"
+    iferr "^0.1.5"
+    mkdirp "^0.5.1"
+    path-is-inside "^1.0.2"
+    read-cmd-shim "^1.0.1"
+    slide "^1.1.6"
+
 get-caller-file@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
@@ -5483,6 +6262,13 @@ get-stream@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-3.0.0.tgz#8e943d1358dc37555054ecbe2edb05aa174ede14"
 
+get-stream@^4.0.0, get-stream@^4.1.0:
+  version "4.1.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/get-stream/-/get-stream-4.1.0.tgz#c1b255575f3dc21d59bfc79cd3d2b46b1c3a54b5"
+  integrity sha1-wbJVV189wh1Zv8ec09K0axw6VLU=
+  dependencies:
+    pump "^3.0.0"
+
 get-uri@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/get-uri/-/get-uri-2.0.2.tgz#5c795e71326f6ca1286f2fc82575cd2bab2af578"
@@ -5504,6 +6290,17 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+git-raw-commits@2.0.0:
+  version "2.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/git-raw-commits/-/git-raw-commits-2.0.0.tgz#d92addf74440c14bcc5c83ecce3fb7f8a79118b5"
+  integrity sha1-2Srd90RAwUvMXIPszj+3+KeRGLU=
+  dependencies:
+    dargs "^4.0.1"
+    lodash.template "^4.0.2"
+    meow "^4.0.0"
+    split2 "^2.0.0"
+    through2 "^2.0.0"
+
 git-raw-commits@^1.3.6:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/git-raw-commits/-/git-raw-commits-1.3.6.tgz#27c35a32a67777c1ecd412a239a6c19d71b95aff"
@@ -5524,6 +6321,14 @@ git-remote-origin-url@^2.0.0:
 git-semver-tags@^1.3.6:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/git-semver-tags/-/git-semver-tags-1.3.6.tgz#357ea01f7280794fe0927f2806bee6414d2caba5"
+  dependencies:
+    meow "^4.0.0"
+    semver "^5.5.0"
+
+git-semver-tags@^2.0.2:
+  version "2.0.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/git-semver-tags/-/git-semver-tags-2.0.2.tgz#f506ec07caade191ac0c8d5a21bdb8131b4934e3"
+  integrity sha1-9QbsB8qt4ZGsDI1aIb24ExtJNOM=
   dependencies:
     meow "^4.0.0"
     semver "^5.5.0"
@@ -5602,6 +6407,18 @@ glob@^6.0.4:
     inflight "^1.0.4"
     inherits "2"
     minimatch "2 || 3"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
+
+glob@^7.1.3:
+  version "7.1.3"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/glob/-/glob-7.1.3.tgz#3960832d3f1574108342dafd3a67b332c0969df1"
+  integrity sha1-OWCDLT8VdBCDQtr9OmezMsCWnfE=
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.4"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
@@ -5840,7 +6657,7 @@ has-symbols@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/has-symbols/-/has-symbols-1.0.0.tgz#ba1a8f1af2a0fc39650f5c850367704122063b44"
 
-has-unicode@^2.0.0:
+has-unicode@^2.0.0, has-unicode@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/has-unicode/-/has-unicode-2.0.1.tgz#e0e6fe6a28cf51138855e086d1691e771de2a8b9"
 
@@ -6037,6 +6854,11 @@ htmlparser2@~3.3.0:
     domutils "1.1"
     readable-stream "1.0"
 
+http-cache-semantics@^3.8.1:
+  version "3.8.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/http-cache-semantics/-/http-cache-semantics-3.8.1.tgz#39b0e16add9b605bf0a9ef3d9daaf4843b4cacd2"
+  integrity sha1-ObDhat2bYFvwqe89nar0hDtMrNI=
+
 http-deceiver@^1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/http-deceiver/-/http-deceiver-1.2.7.tgz#fa7168944ab9a519d337cb0bec7284dc3e723d87"
@@ -6133,6 +6955,13 @@ https-proxy-agent@^2.2.1:
   dependencies:
     agent-base "^4.1.0"
     debug "^3.1.0"
+
+humanize-ms@^1.2.1:
+  version "1.2.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/humanize-ms/-/humanize-ms-1.2.1.tgz#c46e3159a293f6b896da29316d8b6fe8bb79bbed"
+  integrity sha1-xG4xWaKT9riW2ikxbYtv6Lt5u+0=
+  dependencies:
+    ms "^2.0.0"
 
 hyphenate-style-name@^1.0.2:
   version "1.0.2"
@@ -6256,7 +7085,7 @@ inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
-ini@^1.3.2, ini@^1.3.4, ini@~1.3.0:
+ini@^1.3.2, ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
 
@@ -6326,6 +7155,25 @@ inquirer@^6.0.0:
     rxjs "^6.1.0"
     string-width "^2.1.0"
     strip-ansi "^4.0.0"
+    through "^2.3.6"
+
+inquirer@^6.2.0:
+  version "6.2.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/inquirer/-/inquirer-6.2.1.tgz#9943fc4882161bdb0b0c9276769c75b32dbfcd52"
+  integrity sha1-mUP8SIIWG9sLDJJ2dpx1sy2/zVI=
+  dependencies:
+    ansi-escapes "^3.0.0"
+    chalk "^2.0.0"
+    cli-cursor "^2.1.0"
+    cli-width "^2.0.0"
+    external-editor "^3.0.0"
+    figures "^2.0.0"
+    lodash "^4.17.10"
+    mute-stream "0.0.7"
+    run-async "^2.2.0"
+    rxjs "^6.1.0"
+    string-width "^2.1.0"
+    strip-ansi "^5.0.0"
     through "^2.3.6"
 
 internal-ip@1.2.0:
@@ -6890,7 +7738,7 @@ json-manifest@^1.0.1:
   dependencies:
     glob "^4.3.5"
 
-json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
+json-parse-better-errors@^1.0.0, json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
 
@@ -7152,6 +8000,29 @@ lerna@^3.0.0-rc.0:
     import-local "^1.0.0"
     npmlog "^4.1.2"
 
+lerna@^3.6.0:
+  version "3.6.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/lerna/-/lerna-3.6.0.tgz#b6616873fa038ee1dae514e04322c191ff71a369"
+  integrity sha1-tmFoc/oDjuHa5RTgQyLBkf9xo2k=
+  dependencies:
+    "@lerna/add" "^3.6.0"
+    "@lerna/bootstrap" "^3.6.0"
+    "@lerna/changed" "^3.6.0"
+    "@lerna/clean" "^3.6.0"
+    "@lerna/cli" "^3.6.0"
+    "@lerna/create" "^3.6.0"
+    "@lerna/diff" "^3.6.0"
+    "@lerna/exec" "^3.6.0"
+    "@lerna/import" "^3.6.0"
+    "@lerna/init" "^3.6.0"
+    "@lerna/link" "^3.6.0"
+    "@lerna/list" "^3.6.0"
+    "@lerna/publish" "^3.6.0"
+    "@lerna/run" "^3.6.0"
+    "@lerna/version" "^3.6.0"
+    import-local "^1.0.0"
+    libnpm "^2.0.1"
+
 less-loader@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/less-loader/-/less-loader-4.1.0.tgz#2c1352c5b09a4f84101490274fd51674de41363e"
@@ -7195,6 +8066,105 @@ libmime@3.0.0:
     iconv-lite "0.4.15"
     libbase64 "0.1.0"
     libqp "1.1.0"
+
+libnpm@^2.0.1:
+  version "2.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/libnpm/-/libnpm-2.0.1.tgz#a48fcdee3c25e13c77eb7c60a0efe561d7fb0d8f"
+  integrity sha1-pI/N7jwl4Tx363xgoO/lYdf7DY8=
+  dependencies:
+    bin-links "^1.1.2"
+    bluebird "^3.5.3"
+    find-npm-prefix "^1.0.2"
+    libnpmaccess "^3.0.1"
+    libnpmconfig "^1.2.1"
+    libnpmhook "^5.0.2"
+    libnpmorg "^1.0.0"
+    libnpmpublish "^1.1.0"
+    libnpmsearch "^2.0.0"
+    libnpmteam "^1.0.1"
+    lock-verify "^2.0.2"
+    npm-lifecycle "^2.1.0"
+    npm-logical-tree "^1.2.1"
+    npm-package-arg "^6.1.0"
+    npm-profile "^4.0.1"
+    npm-registry-fetch "^3.8.0"
+    npmlog "^4.1.2"
+    pacote "^9.2.3"
+    read-package-json "^2.0.13"
+    stringify-package "^1.0.0"
+
+libnpmaccess@^3.0.1:
+  version "3.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/libnpmaccess/-/libnpmaccess-3.0.1.tgz#5b3a9de621f293d425191aa2e779102f84167fa8"
+  integrity sha1-Wzqd5iHyk9QlGRqi53kQL4QWf6g=
+  dependencies:
+    aproba "^2.0.0"
+    get-stream "^4.0.0"
+    npm-package-arg "^6.1.0"
+    npm-registry-fetch "^3.8.0"
+
+libnpmconfig@^1.2.1:
+  version "1.2.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/libnpmconfig/-/libnpmconfig-1.2.1.tgz#c0c2f793a74e67d4825e5039e7a02a0044dfcbc0"
+  integrity sha1-wML3k6dOZ9SCXlA556AqAETfy8A=
+  dependencies:
+    figgy-pudding "^3.5.1"
+    find-up "^3.0.0"
+    ini "^1.3.5"
+
+libnpmhook@^5.0.2:
+  version "5.0.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/libnpmhook/-/libnpmhook-5.0.2.tgz#d12817b0fb893f36f1d5be20017f2aea25825d94"
+  integrity sha1-0SgXsPuJPzbx1b4gAX8q6iWCXZQ=
+  dependencies:
+    aproba "^2.0.0"
+    figgy-pudding "^3.4.1"
+    get-stream "^4.0.0"
+    npm-registry-fetch "^3.8.0"
+
+libnpmorg@^1.0.0:
+  version "1.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/libnpmorg/-/libnpmorg-1.0.0.tgz#979b868c48ba28c5820e3bb9d9e73c883c16a232"
+  integrity sha1-l5uGjEi6KMWCDju52ec8iDwWojI=
+  dependencies:
+    aproba "^2.0.0"
+    figgy-pudding "^3.4.1"
+    get-stream "^4.0.0"
+    npm-registry-fetch "^3.8.0"
+
+libnpmpublish@^1.1.0:
+  version "1.1.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/libnpmpublish/-/libnpmpublish-1.1.0.tgz#773bd6fc9ed247e4a41a68ebd69fdc096ea630a3"
+  integrity sha1-dzvW/J7SR+SkGmjr1p/cCW6mMKM=
+  dependencies:
+    aproba "^2.0.0"
+    figgy-pudding "^3.5.1"
+    get-stream "^4.0.0"
+    lodash.clonedeep "^4.5.0"
+    normalize-package-data "^2.4.0"
+    npm-package-arg "^6.1.0"
+    npm-registry-fetch "^3.8.0"
+    semver "^5.5.1"
+    ssri "^6.0.1"
+
+libnpmsearch@^2.0.0:
+  version "2.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/libnpmsearch/-/libnpmsearch-2.0.0.tgz#de05af47ada81554a5f64276a69599070d4a5685"
+  integrity sha1-3gWvR62oFVSl9kJ2ppWZBw1KVoU=
+  dependencies:
+    figgy-pudding "^3.5.1"
+    get-stream "^4.0.0"
+    npm-registry-fetch "^3.8.0"
+
+libnpmteam@^1.0.1:
+  version "1.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/libnpmteam/-/libnpmteam-1.0.1.tgz#ff704b1b6c06ea674b3b1101ac3e305f5114f213"
+  integrity sha1-/3BLG2wG6mdLOxEBrD4wX1EU8hM=
+  dependencies:
+    aproba "^2.0.0"
+    figgy-pudding "^3.4.1"
+    get-stream "^4.0.0"
+    npm-registry-fetch "^3.8.0"
 
 libqp@1.1.0:
   version "1.1.0"
@@ -7270,6 +8240,14 @@ locate-path@^3.0.0:
   dependencies:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
+
+lock-verify@^2.0.2:
+  version "2.0.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/lock-verify/-/lock-verify-2.0.2.tgz#148e4f85974915c9e3c34d694b7de9ecb18ee7a8"
+  integrity sha1-FI5PhZdJFcnjw01pS33p7LGO56g=
+  dependencies:
+    npm-package-arg "^5.1.2 || 6"
+    semver "^5.4.1"
 
 lodash-es@^4.17.10:
   version "4.17.10"
@@ -7435,6 +8413,14 @@ lru-cache@^4.0.1, lru-cache@^4.1.1, lru-cache@^4.1.2:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
+lru-cache@^4.1.3:
+  version "4.1.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
+  integrity sha1-i75Q6oW+1ZvJ4z3KuCNe6bz0Q80=
+  dependencies:
+    pseudomap "^1.0.2"
+    yallist "^2.1.2"
+
 magic-string@^0.22.4:
   version "0.22.5"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.22.5.tgz#8e9cf5afddf44385c1da5bc2a6a0dbd10b03657e"
@@ -7467,6 +8453,23 @@ make-dir@^1.0.0:
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.3.0.tgz#79c1033b80515bd6d24ec9933e860ca75ee27f0c"
   dependencies:
     pify "^3.0.0"
+
+make-fetch-happen@^4.0.1:
+  version "4.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/make-fetch-happen/-/make-fetch-happen-4.0.1.tgz#141497cb878f243ba93136c83d8aba12c216c083"
+  integrity sha1-FBSXy4ePJDupMTbIPYq6EsIWwIM=
+  dependencies:
+    agentkeepalive "^3.4.1"
+    cacache "^11.0.1"
+    http-cache-semantics "^3.8.1"
+    http-proxy-agent "^2.1.0"
+    https-proxy-agent "^2.2.1"
+    lru-cache "^4.1.2"
+    mississippi "^3.0.0"
+    node-fetch-npm "^2.0.2"
+    promise-retry "^1.1.1"
+    socks-proxy-agent "^4.0.0"
+    ssri "^6.0.0"
 
 mamacro@^0.0.3:
   version "0.0.3"
@@ -7750,9 +8753,24 @@ minipass@^2.2.1, minipass@^2.3.3:
     safe-buffer "^5.1.2"
     yallist "^3.0.0"
 
+minipass@^2.3.4, minipass@^2.3.5:
+  version "2.3.5"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/minipass/-/minipass-2.3.5.tgz#cacebe492022497f656b0f0f51e2682a9ed2d848"
+  integrity sha1-ys6+SSAiSX9law8PUeJoKp7S2Eg=
+  dependencies:
+    safe-buffer "^5.1.2"
+    yallist "^3.0.0"
+
 minizlib@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-1.1.0.tgz#11e13658ce46bc3a70a267aac58359d1e0c29ceb"
+  dependencies:
+    minipass "^2.2.1"
+
+minizlib@^1.1.1:
+  version "1.2.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/minizlib/-/minizlib-1.2.1.tgz#dd27ea6136243c7c880684e8672bb3a45fd9b614"
+  integrity sha1-3SfqYTYkPHyIBoToZyuzpF/ZthQ=
   dependencies:
     minipass "^2.2.1"
 
@@ -7767,6 +8785,22 @@ mississippi@^2.0.0:
     from2 "^2.1.0"
     parallel-transform "^1.1.0"
     pump "^2.0.1"
+    pumpify "^1.3.3"
+    stream-each "^1.1.0"
+    through2 "^2.0.0"
+
+mississippi@^3.0.0:
+  version "3.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mississippi/-/mississippi-3.0.0.tgz#ea0a3291f97e0b5e8776b363d5f0a12d94c67022"
+  integrity sha1-6goykfl+C16HdrNj1fChLZTGcCI=
+  dependencies:
+    concat-stream "^1.5.0"
+    duplexify "^3.4.2"
+    end-of-stream "^1.1.0"
+    flush-write-stream "^1.0.0"
+    from2 "^2.1.0"
+    parallel-transform "^1.1.0"
+    pump "^3.0.0"
     pumpify "^1.3.3"
     stream-each "^1.1.0"
     through2 "^2.0.0"
@@ -7834,7 +8868,7 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-ms@^2.1.1:
+ms@^2.0.0, ms@^2.1.1:
   version "2.1.1"
   resolved "https://artifacts.netflix.com/api/npm/npm-netflix/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha1-MKWGTrPrsKZvLr5tcnrwagnYbgo=
@@ -7943,6 +8977,15 @@ node-dir@^0.1.10:
   dependencies:
     minimatch "^3.0.2"
 
+node-fetch-npm@^2.0.2:
+  version "2.0.2"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/node-fetch-npm/-/node-fetch-npm-2.0.2.tgz#7258c9046182dca345b4208eda918daf33697ff7"
+  integrity sha1-cljJBGGC3KNFtCCO2pGNrzNpf/c=
+  dependencies:
+    encoding "^0.1.11"
+    json-parse-better-errors "^1.0.0"
+    safe-buffer "^5.1.1"
+
 node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
@@ -7966,6 +9009,24 @@ node-gyp@^3.3.1, node-gyp@^3.6.2:
     npmlog "0 || 1 || 2 || 3 || 4"
     osenv "0"
     request ">=2.9.0 <2.82.0"
+    rimraf "2"
+    semver "~5.3.0"
+    tar "^2.0.0"
+    which "1"
+
+node-gyp@^3.8.0:
+  version "3.8.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/node-gyp/-/node-gyp-3.8.0.tgz#540304261c330e80d0d5edce253a68cb3964218c"
+  integrity sha1-VAMEJhwzDoDQ1e3OJTpoyzlkIYw=
+  dependencies:
+    fstream "^1.0.0"
+    glob "^7.0.3"
+    graceful-fs "^4.1.2"
+    mkdirp "^0.5.0"
+    nopt "2 || 3"
+    npmlog "0 || 1 || 2 || 3 || 4"
+    osenv "0"
+    request "^2.87.0"
     rimraf "2"
     semver "~5.3.0"
     tar "^2.0.0"
@@ -8135,7 +9196,7 @@ nopt@^4.0.1:
     abbrev "1"
     osenv "^0.1.4"
 
-normalize-package-data@^2.0.0, normalize-package-data@^2.3.0, normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, normalize-package-data@^2.3.5:
+normalize-package-data@^2.0.0, normalize-package-data@^2.3.0, normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, normalize-package-data@^2.3.5, normalize-package-data@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.4.0.tgz#12f95a307d58352075a04907b84ac8be98ac012f"
   dependencies:
@@ -8180,7 +9241,26 @@ npm-lifecycle@^2.0.0:
     umask "^1.1.0"
     which "^1.3.0"
 
-"npm-package-arg@^4.0.0 || ^5.0.0 || ^6.0.0", npm-package-arg@^6.0.0:
+npm-lifecycle@^2.1.0:
+  version "2.1.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/npm-lifecycle/-/npm-lifecycle-2.1.0.tgz#1eda2eedb82db929e3a0c50341ab0aad140ed569"
+  integrity sha1-Htou7bgtuSnjoMUDQasKrRQO1Wk=
+  dependencies:
+    byline "^5.0.0"
+    graceful-fs "^4.1.11"
+    node-gyp "^3.8.0"
+    resolve-from "^4.0.0"
+    slide "^1.1.6"
+    uid-number "0.0.6"
+    umask "^1.1.0"
+    which "^1.3.1"
+
+npm-logical-tree@^1.2.1:
+  version "1.2.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/npm-logical-tree/-/npm-logical-tree-1.2.1.tgz#44610141ca24664cad35d1e607176193fd8f5b88"
+  integrity sha1-RGEBQcokZkytNdHmBxdhk/2PW4g=
+
+"npm-package-arg@^4.0.0 || ^5.0.0 || ^6.0.0", "npm-package-arg@^5.1.2 || 6", npm-package-arg@^6.0.0, npm-package-arg@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/npm-package-arg/-/npm-package-arg-6.1.0.tgz#15ae1e2758a5027efb4c250554b85a737db7fcc1"
   dependencies:
@@ -8189,12 +9269,50 @@ npm-lifecycle@^2.0.0:
     semver "^5.5.0"
     validate-npm-package-name "^3.0.0"
 
+npm-packlist@^1.1.12:
+  version "1.1.12"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/npm-packlist/-/npm-packlist-1.1.12.tgz#22bde2ebc12e72ca482abd67afc51eb49377243a"
+  integrity sha1-Ir3i68EucspIKr1nr8UetJN3JDo=
+  dependencies:
+    ignore-walk "^3.0.1"
+    npm-bundled "^1.0.1"
+
 npm-packlist@^1.1.6:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/npm-packlist/-/npm-packlist-1.1.11.tgz#84e8c683cbe7867d34b1d357d893ce29e28a02de"
   dependencies:
     ignore-walk "^3.0.1"
     npm-bundled "^1.0.1"
+
+npm-pick-manifest@^2.2.3:
+  version "2.2.3"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/npm-pick-manifest/-/npm-pick-manifest-2.2.3.tgz#32111d2a9562638bb2c8f2bf27f7f3092c8fae40"
+  integrity sha1-MhEdKpViY4uyyPK/J/fzCSyPrkA=
+  dependencies:
+    figgy-pudding "^3.5.1"
+    npm-package-arg "^6.0.0"
+    semver "^5.4.1"
+
+npm-profile@^4.0.1:
+  version "4.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/npm-profile/-/npm-profile-4.0.1.tgz#d350f7a5e6b60691c7168fbb8392c3603583f5aa"
+  integrity sha1-01D3pea2BpHHFo+7g5LDYDWD9ao=
+  dependencies:
+    aproba "^1.1.2 || 2"
+    figgy-pudding "^3.4.1"
+    npm-registry-fetch "^3.8.0"
+
+npm-registry-fetch@^3.8.0:
+  version "3.8.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/npm-registry-fetch/-/npm-registry-fetch-3.8.0.tgz#aa7d9a7c92aff94f48dba0984bdef4bd131c88cc"
+  integrity sha1-qn2afJKv+U9I26CYS970vRMciMw=
+  dependencies:
+    JSONStream "^1.3.4"
+    bluebird "^3.5.1"
+    figgy-pudding "^3.4.1"
+    lru-cache "^4.1.3"
+    make-fetch-happen "^4.0.1"
+    npm-package-arg "^6.1.0"
 
 npm-run-path@^2.0.0:
   version "2.0.2"
@@ -8487,6 +9605,11 @@ p-map@^1.1.1, p-map@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
 
+p-pipe@^1.2.0:
+  version "1.2.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/p-pipe/-/p-pipe-1.2.0.tgz#4b1a11399a11520a67790ee5a0c1d5881d6befe9"
+  integrity sha1-SxoROZoRUgpneQ7loMHViB1r7+k=
+
 p-reduce@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/p-reduce/-/p-reduce-1.0.0.tgz#18c2b0dd936a4690a529f8231f58a0fdb6a47dfa"
@@ -8536,6 +9659,39 @@ package-json@^4.0.1:
     registry-auth-token "^3.0.1"
     registry-url "^3.0.3"
     semver "^5.1.0"
+
+pacote@^9.2.3:
+  version "9.2.3"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/pacote/-/pacote-9.2.3.tgz#48cfe87beb9177acd6594355a584a538835424b3"
+  integrity sha1-SM/oe+uRd6zWWUNVpYSlOINUJLM=
+  dependencies:
+    bluebird "^3.5.2"
+    cacache "^11.2.0"
+    figgy-pudding "^3.5.1"
+    get-stream "^4.1.0"
+    glob "^7.1.3"
+    lru-cache "^4.1.3"
+    make-fetch-happen "^4.0.1"
+    minimatch "^3.0.4"
+    minipass "^2.3.5"
+    mississippi "^3.0.0"
+    mkdirp "^0.5.1"
+    normalize-package-data "^2.4.0"
+    npm-package-arg "^6.1.0"
+    npm-packlist "^1.1.12"
+    npm-pick-manifest "^2.2.3"
+    npm-registry-fetch "^3.8.0"
+    osenv "^0.1.5"
+    promise-inflight "^1.0.1"
+    promise-retry "^1.1.1"
+    protoduck "^5.0.1"
+    rimraf "^2.6.2"
+    safe-buffer "^5.1.2"
+    semver "^5.6.0"
+    ssri "^6.0.1"
+    tar "^4.4.6"
+    unique-filename "^1.1.1"
+    which "^1.3.1"
 
 pako@~1.0.5:
   version "1.0.6"
@@ -9104,6 +10260,14 @@ promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
 
+promise-retry@^1.1.1:
+  version "1.1.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/promise-retry/-/promise-retry-1.1.1.tgz#6739e968e3051da20ce6497fb2b50f6911df3d6d"
+  integrity sha1-ZznpaOMFHaIM5kl/srUPaRHfPW0=
+  dependencies:
+    err-code "^1.0.0"
+    retry "^0.10.0"
+
 promise@^7.1.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
@@ -9138,6 +10302,13 @@ property-information@^4.0.0:
 proto-list@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
+
+protoduck@^5.0.1:
+  version "5.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/protoduck/-/protoduck-5.0.1.tgz#03c3659ca18007b69a50fd82a7ebcc516261151f"
+  integrity sha1-A8NlnKGAB7aaUP2Cp+vMUWJhFR8=
+  dependencies:
+    genfun "^5.0.0"
 
 proxy-addr@~2.0.3:
   version "2.0.4"
@@ -9188,6 +10359,14 @@ public-encrypt@^4.0.0:
 pump@^2.0.0, pump@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pump/-/pump-2.0.1.tgz#12399add6e4cf7526d973cbc8b5ce2e2908b3909"
+  dependencies:
+    end-of-stream "^1.1.0"
+    once "^1.3.1"
+
+pump@^3.0.0:
+  version "3.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/pump/-/pump-3.0.0.tgz#b4a2116815bde2f4e1ea602354e8c75565107a64"
+  integrity sha1-tKIRaBW94vTh6mAjVOjHVWUQemQ=
   dependencies:
     end-of-stream "^1.1.0"
     once "^1.3.1"
@@ -9542,7 +10721,7 @@ read-cmd-shim@^1.0.1:
   dependencies:
     graceful-fs "^4.1.2"
 
-"read-package-json@1 || 2", read-package-json@^2.0.0:
+"read-package-json@1 || 2", read-package-json@^2.0.0, read-package-json@^2.0.13:
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/read-package-json/-/read-package-json-2.0.13.tgz#2e82ebd9f613baa6d2ebe3aa72cefe3f68e41f4a"
   dependencies:
@@ -10107,13 +11286,18 @@ ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
 
+retry@^0.10.0:
+  version "0.10.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
+  integrity sha1-52OI0heZLCUnUCQdPTlW/tmNj/Q=
+
 right-align@^0.1.1:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/right-align/-/right-align-0.1.3.tgz#61339b722fe6a3515689210d24e14c96148613ef"
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.0, rimraf@^2.6.1, rimraf@^2.6.2:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.5.2, rimraf@^2.5.4, rimraf@^2.6.0, rimraf@^2.6.1, rimraf@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
@@ -10245,7 +11429,7 @@ selfsigned@^1.9.1:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
-semver@^5.5.1:
+semver@^5.5.1, semver@^5.6.0:
   version "5.6.0"
   resolved "https://artifacts.netflix.com/api/npm/npm-netflix/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   integrity sha1-fnQlb7qknHWqfHogXMInmcrIAAQ=
@@ -10527,9 +11711,10 @@ socks-proxy-agent@^3.0.0:
     agent-base "^4.1.0"
     socks "^1.1.10"
 
-socks-proxy-agent@^4.0.1:
+socks-proxy-agent@^4.0.0, socks-proxy-agent@^4.0.1:
   version "4.0.1"
-  resolved "https://registry.yarnpkg.com/socks-proxy-agent/-/socks-proxy-agent-4.0.1.tgz#5936bf8b707a993079c6f37db2091821bffa6473"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/socks-proxy-agent/-/socks-proxy-agent-4.0.1.tgz#5936bf8b707a993079c6f37db2091821bffa6473"
+  integrity sha1-WTa/i3B6mTB5xvN9sgkYIb/6ZHM=
   dependencies:
     agent-base "~4.2.0"
     socks "~2.2.0"
@@ -10717,6 +11902,13 @@ ssri@^5.2.4:
   dependencies:
     safe-buffer "^5.1.1"
 
+ssri@^6.0.0, ssri@^6.0.1:
+  version "6.0.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
+  integrity sha1-KjxBso3UW2K2Nnbst0ABJlrp7dg=
+  dependencies:
+    figgy-pudding "^3.5.1"
+
 state-toggle@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/state-toggle/-/state-toggle-1.0.1.tgz#c3cb0974f40a6a0f8e905b96789eb41afa1cde3a"
@@ -10843,6 +12035,11 @@ stringify-object@^3.2.0:
     is-obj "^1.0.1"
     is-regexp "^1.0.0"
 
+stringify-package@^1.0.0:
+  version "1.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/stringify-package/-/stringify-package-1.0.0.tgz#e02828089333d7d45cd8c287c30aa9a13375081b"
+  integrity sha1-4CgoCJMz19Rc2MKHwwqpoTN1CBs=
+
 stringstream@~0.0.4:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.6.tgz#7880225b0d4ad10e30927d167a1d6f2fd3b33a72"
@@ -10858,6 +12055,13 @@ strip-ansi@^4.0.0:
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-4.0.0.tgz#a8479022eb1ac368a871389b635262c505ee368f"
   dependencies:
     ansi-regex "^3.0.0"
+
+strip-ansi@^5.0.0:
+  version "5.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/strip-ansi/-/strip-ansi-5.0.0.tgz#f78f68b5d0866c20b2c9b8c61b5298508dc8756f"
+  integrity sha1-949otdCGbCCyybjGG1KYUI3IdW8=
+  dependencies:
+    ansi-regex "^4.0.0"
 
 strip-ansi@~0.1.0:
   version "0.1.1"
@@ -10899,6 +12103,16 @@ strong-log-transformer@^1.0.6:
     duplexer "^0.1.1"
     minimist "^0.1.0"
     moment "^2.6.0"
+    through "^2.3.4"
+
+strong-log-transformer@^2.0.0:
+  version "2.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/strong-log-transformer/-/strong-log-transformer-2.0.0.tgz#fa6d8e0a9e62b3c168c3cad5ae5d00dc97ba26cc"
+  integrity sha1-+m2OCp5is8Fow8rVrl0A3Je6Jsw=
+  dependencies:
+    byline "^5.0.0"
+    duplexer "^0.1.1"
+    minimist "^1.2.0"
     through "^2.3.4"
 
 style-loader@^0.21.0:
@@ -10998,6 +12212,19 @@ tar@^4:
     fs-minipass "^1.2.5"
     minipass "^2.3.3"
     minizlib "^1.1.0"
+    mkdirp "^0.5.0"
+    safe-buffer "^5.1.2"
+    yallist "^3.0.2"
+
+tar@^4.4.6:
+  version "4.4.8"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/tar/-/tar-4.4.8.tgz#b19eec3fde2a96e64666df9fdb40c5ca1bc3747d"
+  integrity sha1-sZ7sP94qluZGZt+f20DFyhvDdH0=
+  dependencies:
+    chownr "^1.1.1"
+    fs-minipass "^1.2.5"
+    minipass "^2.3.4"
+    minizlib "^1.1.1"
     mkdirp "^0.5.0"
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
@@ -11404,6 +12631,13 @@ uniqs@^2.0.0:
 unique-filename@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/unique-filename/-/unique-filename-1.1.0.tgz#d05f2fe4032560871f30e93cbe735eea201514f3"
+  dependencies:
+    unique-slug "^2.0.0"
+
+unique-filename@^1.1.1:
+  version "1.1.1"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/unique-filename/-/unique-filename-1.1.1.tgz#1d69769369ada0583103a1e6ae87681b56573230"
+  integrity sha1-HWl2k2mtoFgxA6HmrodoG1ZXMjA=
   dependencies:
     unique-slug "^2.0.0"
 
@@ -11948,6 +13182,15 @@ whatwg-mimetype@^2.0.0, whatwg-mimetype@^2.1.0:
 whatwg-url@^6.4.0, whatwg-url@^6.4.1:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-6.5.0.tgz#f2df02bff176fd65070df74ad5ccbb5a199965a8"
+  dependencies:
+    lodash.sortby "^4.7.0"
+    tr46 "^1.0.1"
+    webidl-conversions "^4.0.2"
+
+whatwg-url@^7.0.0:
+  version "7.0.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/whatwg-url/-/whatwg-url-7.0.0.tgz#fde926fa54a599f3adf82dff25a9f7be02dc6edd"
+  integrity sha1-/ekm+lSlmfOt+C3/Jan3vgLcbt0=
   dependencies:
     lodash.sortby "^4.7.0"
     tr46 "^1.0.1"
