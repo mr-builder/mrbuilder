@@ -55,12 +55,12 @@ module.exports = function (options = {}, webpack, om) {
             } : component[1] != null ? component[1] : {});
 
 
-        const makeComponent = (name = '[A-Z]*') => {
+        const makeComponent = (name = '**/*.{js,jsx,ts,tsx}') => {
 
 
             const key = join(relative(cwd(), join(_pkg._location, 'src')), name);
 
-            return {components: `${key}.{js,jsx}`};
+            return {components: `${key}.{js,jsx,ts,tsx}`};
         };
 
         if (!obj.components) {
@@ -96,15 +96,15 @@ module.exports = function (options = {}, webpack, om) {
                  * ['pkg', 'MyComponent'],
                  * ['pkg', ['A', 'B'],
                  * ['pkg', {
-             *    components:['A','B']
-             * }]
+                 *    components:['A','B']
+                 * }]
                  *
                  *
                  */
-      /*          if (component[0].lerna) {
-                    return handleLerna(component[0].lerna);
-                }
-*/
+                /*          if (component[0].lerna) {
+                              return handleLerna(component[0].lerna);
+                          }
+          */
                 const _pkgDir  = resolvePkgDir(component[0]);
                 const pDir     = resolve(_pkgDir, 'package.json');
                 const _pkg     = require(pDir);
@@ -159,8 +159,7 @@ module.exports = function (options = {}, webpack, om) {
         if (!options.getComponentPathLine) {
             conf.getComponentPathLine = (componentPath) => {
 
-                const [all, name, comp] = /.*\/(.+?)\/src\/(?:.*\/)?([A-Z].+?)\.(js|jsx)$/.exec(
-                    componentPath) || [];
+                const [all, name, comp] = /.*\/(.+?)\/src\/(?:.*\/)?(.+?)\.(js|ts|tsx|jsx)$/i.exec(componentPath) || [];
                 let ret                 = componentPath;
                 if (comp && name) {
                     ret = `import {${comp}} from '${name}'`;
