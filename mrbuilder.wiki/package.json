@@ -1,9 +1,9 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "3.2.0",
+  "version": "3.2.1",
   "dependencies": {
-    "mrbuilder": "^3.2.0",
+    "mrbuilder": "^3.2.1",
     "mrbuilder-plugin-clean": "^3.1.7",
     "mrbuilder-plugin-react-styleguidist": "^3.2.0"
   },

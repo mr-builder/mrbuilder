@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-babel",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Tools for developing babel with mrbuilder",
   "scripts": {
     "clean": "mrbuilder-clean"
@@ -9,7 +9,7 @@
     "mrbuilder-babel-cli": "bin/cli.js"
   },
   "dependencies": {
-    "mrbuilder-optionsmanager": "^3.1.7",
+    "mrbuilder-optionsmanager": "^3.2.1",
     "mrbuilder-plugin-browserslist": "^3.1.7",
     "rimraf": "^2.6.2"
   },
