@@ -11,7 +11,6 @@
     "mrbuilder": "3.x"
   },
   "scripts": {
-    "test": "mrbuilder-karma",
     "karma": "mrbuilder-karma",
     "demo": "mrbuilder-demo  --mrbuilder-plugin-html-exported=true",
     "start": "mrbuilder-webpack-dev-server --mrbuilder-plugin-html-exported=true"
