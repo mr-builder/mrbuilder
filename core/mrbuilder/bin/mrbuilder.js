@@ -3,22 +3,22 @@
 if (require('in-publish').inInstall()) {
     process.exit(0);
 }
-const profileRe     = /^(?:.*\/)?mrbuilder-(.+?)(?:\.js)?$/;
-const { env, argv } = process;
-const profile       = env.MRBUILDER_PROFILE || ((idx) => {
-                                                if (idx > -1) {
-                                                    if (argv[idx].includes('=')) {
-                                                        argv.splice(idx, 1);
-                                                        return argv[idx].split('=', 2).pop();
-                                                    } else {
-                                                        let arg = process.argv[idx + 1];
-                                                        argv.splice(idx, 2);
-                                                        return arg;
-                                                    }
-                                                }
-                                            })(argv.slice(2).findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
-                      || (v => profileRe.test(v) ? v.replace(profileRe, '$1')
-                                                 : env['npm_lifecycle_event'])(
+const profileRe   = /^(?:.*\/)?mrbuilder-(.+?)(?:\.js)?$/;
+const {env, argv} = process;
+const profile     = env.MRBUILDER_PROFILE || ((idx) => {
+        if (idx > -1) {
+            if (argv[idx].includes('=')) {
+                argv.splice(idx, 1);
+                return argv[idx].split('=', 2).pop();
+            } else {
+                let arg = process.argv[idx + 1];
+                argv.splice(idx, 2);
+                return arg;
+            }
+        }
+    })(argv.slice(2).findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
+    || (v => profileRe.test(v) ? v.replace(profileRe, '$1')
+        : env['npm_lifecycle_event'])(
         argv[1]);
 
 
@@ -31,7 +31,7 @@ function help(message) {
     console.warn(`
     ${message}
      $ MRBUILDER_PROFILE=${profile
-                           || 'test'} ${process.argv[0]} ${process.argv[1]}
+    || 'test'} ${process.argv[0]} ${process.argv[1]}
     
      Supported profile's are
 
@@ -148,6 +148,7 @@ switch (profile) {
             if (!env.NODE_ENV) {
                 env.NODE_ENV = 'test';
             }
+            env.MRBUILDER_ENV = 'test';
             script = 'karma'
         } else if (includes('mocha')) {
             if (!env.NODE_ENV) {

@@ -52,6 +52,7 @@
       "mrbuilder-plugin-worker",
       "mrbuilder-plugin-typescript",
       "mrbuilder-plugin-graphql"
+
     ],
     "env": {
       "development": {
@@ -65,8 +66,10 @@
       "test": {
         "plugins": [
           [
-            "mrbuilder-plugin-lodash",
-            false
+            "mrbuilder-plugin-css",
+            {
+              "useStyleLoader": true
+            }
           ]
         ]
       }
