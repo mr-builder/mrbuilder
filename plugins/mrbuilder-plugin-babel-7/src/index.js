@@ -26,7 +26,7 @@ module.exports = ({
         if (om.config('mrbuilder-plugin-typescript.useBabel')) {
             test = /\.[jet]sx?$/
         } else {
-            test = /\.jsx?$/;
+            test = /\.[je]sx?$/;
         }
     }
 

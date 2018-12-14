@@ -8,19 +8,23 @@ module.exports = function ({
                                configFile
                            },
                            webpack, om) {
-
+    if (extensions) {
+        if (!webpack.resolve.extensions) {
+            webpack.resolve.extensions = [];
+        }
+        webpack.resolve.extensions.push(...extensions)
+    }
     if (useBabel) {
-        if (om.config('mrbuilder-plugin-babel.babelVersion') > 6) {
+        if (require('mrbuilder-plugin-babel/version') > 6) {
             return webpack;
         } else {
-            (this.warn || console.warn)(`Sorry can only use typescript babel plugin with mrbuilder-plugin-babel-7  and babel 7
-            this option has no effect with the babel 6 loader.
+            (this.warn || console.warn)(`Sorry we can only support typescript babel plugin with mrbuilder-plugin-babel-7  
+            and this option has no effect with the babel 6 loader.
             `);
         }
     }
     const options = {
         allowTsInNodeModules,
-
     };
 
     if (context) {
@@ -49,11 +53,6 @@ module.exports = function ({
         use
     });
 
-    if (extensions) {
-        if (!webpack.resolve.extensions) {
-            webpack.resolve.extensions = [];
-        }
-        webpack.resolve.extensions.push(...extensions)
-    }
+
     return webpack;
 };

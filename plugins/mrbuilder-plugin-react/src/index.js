@@ -60,8 +60,7 @@ module.exports    = function reactPlugin({
     const babelConfig = require('mrbuilder-plugin-babel/babel-config');
     let entry         = webpack.entry;
 
-    const preEntry = isHot ? om.config('mrbuilder-plugin-hot.preEntry',
-        ['react-hot-loader/patch']) : [];
+    const preEntry = isHot ? om.config('mrbuilder-plugin-hot.preEntry', ['react-hot-loader/patch']) : [];
 
     if (om.enabled('mrbuilder-plugin-html')) {
 

@@ -7,7 +7,6 @@ The default babel configuration:
 
 | Property      | Type       | Default      | Description                      |
 | ------------- | -----------| -------------| ---------------------------------|
-| babelVersion  | number     | 6            | Uses babel 6 or babel 7 |
 | hot           | bool       | false        | Turns hot loading supoprt for hmr usually automatically|
 | test          | regex      | /\.jsx?$/    | Webpack module test to transpile |
 | includes      | arrayOf: string,regex|./src,./public,./test| Webpack module includes option |

@@ -2,7 +2,7 @@
   "name": "mrbuilder-preset-lib",
   "version": "3.1.10-alpha.0",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^3.1.10-alpha.0",
+    "mrbuilder-plugin-babel": "^3.1.0-alpha.1",
     "mrbuilder-plugin-browserslist": "^3.1.7",
     "mrbuilder-plugin-css": "^3.1.10-alpha.0",
     "mrbuilder-plugin-env": "^3.1.6",

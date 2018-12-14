@@ -10,7 +10,7 @@
   "dependencies": {
     "markdown-it": "^8.4.2",
     "markdown-it-checkbox": "^1.1.0",
-    "mrbuilder-plugin-babel": "^3.1.10-alpha.0",
+    "mrbuilder-plugin-babel": "^3.1.0-alpha.1",
     "mrbuilder-utils": "^3.1.7",
     "react-syntax-highlighter": "^8.0.1"
   },

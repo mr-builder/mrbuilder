@@ -1,6 +1,6 @@
-const options = require('../babel-config');
-const {cwd}   = require('mrbuilder-utils');
-
+const options  = require('../babel-config');
+const {cwd}    = require('mrbuilder-utils');
+const version  = require('mrbuilder-plugin-babel/version');
 module.exports = ({
                       test = /\.jsx?$/,
                       include = [
@@ -15,6 +15,11 @@ module.exports = ({
                           options
                       },
                   }, webpack) => {
+
+    if (version > 6) {
+        return webpack;
+    }
+
     const resolveLoader = webpack.resolveLoader || (webpack.resolveLoader = {});
     resolveLoader.alias = Object.assign(resolveLoader.alias || {}, {
         'babel-loader': require.resolve('babel-loader')

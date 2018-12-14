@@ -2,7 +2,7 @@
   "name": "mrbuilder-preset-app",
   "version": "3.1.10-alpha.0",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^3.1.10-alpha.0",
+    "mrbuilder-plugin-babel": "^3.1.0-alpha.1",
     "mrbuilder-plugin-browserslist": "^3.1.7",
     "mrbuilder-plugin-chunk": "^3.1.7",
     "mrbuilder-plugin-css": "^3.1.10-alpha.0",
@@ -69,6 +69,10 @@
             "mrbuilder-plugin-webpack",
             {
               "app": "app",
+              "entry": [
+                "src/index",
+                "examples/src/index"
+              ],
               "filename": "js/[name].[hash].js",
               "externalizePeers": false,
               "useExternals": false

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const tmp = require('tmp');
 const fs  = require('fs');
+const version = require('../version');
 
 let om = global._MRBUILDER_OPTIONS_MANAGER;
 if (!om) {
@@ -9,7 +10,6 @@ if (!om) {
     om = global._MRBUILDER_OPTIONS_MANAGER = new (require('mrbuilder-optionsmanager').default)
 }
 
-const version = om.config('mrbuilder-plugin-babel.babelVersion', '6');
 const {argv}  = process;
 
 let useConfig = true;

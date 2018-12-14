@@ -45,7 +45,7 @@ if (mrb('hot') || optionsManager.enabled('mrbuilder-plugin-hot')) {
 }
 if (useModules) {
     logger.info('allow exporting as ES6 modules');
-    const envRe = /\/@babel\/preset-env\/|^(env|es2015)$|\/@babel\/preset-es2015\//;
+    const envRe = /@babel\/(?:preset-)?(?:env|es2015)$/;
     const idx   = conf.presets.findIndex(v => envRe.test(v));
     if (idx > -1) {
         let newMod    = conf.presets[idx];
@@ -53,17 +53,19 @@ if (useModules) {
         c.modules     = false;
         conf.presets.splice(idx, 1, [mod, c])
     } else {
-        conf.presets.push(['@babel-preset/env', {modules: false}])
+        conf.presets.push(['@babel/preset-env', {modules: false}])
     }
 }
 if (optionsManager.config('mrbuilder-plugin-typescript.useBabel')) {
-    conf.presets.push(['@babel/preset-typescript', {isTSX: true, allExtensions: true}]);
+
+    if (conf.presets.findIndex(v => /@babel\/(preset-?)typescript$/.test(v)) === -1) {
+        conf.presets.push(['@babel/preset-typescript', {isTSX: true, allExtensions: true}]);
+    }
 }
 
 const applyConfig = (type) => (op) => {
     const preset = camelToHyphen(Array.isArray(op) ? op[0] : op);
-    const short  = (new RegExp(
-        `/babel-${type}-(${preset})/|^(${preset})$`).exec(preset));
+    const short  = (new RegExp(`/@babel/${type}-(${preset})/|^(${preset})$`).exec(preset));
     const conf   = mrb(short[1] || short[2]);
     if (conf != null) {
         if (conf === false) {

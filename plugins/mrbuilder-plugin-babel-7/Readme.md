@@ -1,4 +1,4 @@
-This plugin provides [babel](https://babeljs.io/) support to mrbuilder.   It allows for configuration
+This plugin provides [babel 7](https://babeljs.io/) support to mrbuilder.   It allows for configuration
 via .babelrc or via normal mrbuilder configuration methods. It also
 provides support for babel to webpack via [babel-loader](https://github.com/babel/babel-loader)
 
