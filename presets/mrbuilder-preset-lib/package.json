@@ -1,18 +1,18 @@
 {
   "name": "mrbuilder-preset-lib",
-  "version": "3.1.10-alpha.0",
+  "version": "3.2.0",
   "dependencies": {
-    "mrbuilder-plugin-babel": "^3.1.0-alpha.1",
+    "mrbuilder-plugin-babel": "^3.2.0",
     "mrbuilder-plugin-browserslist": "^3.1.7",
-    "mrbuilder-plugin-css": "^3.1.10-alpha.0",
+    "mrbuilder-plugin-css": "^3.2.0",
     "mrbuilder-plugin-env": "^3.1.6",
     "mrbuilder-plugin-enzyme": "^3.1.6",
     "mrbuilder-plugin-eslint": "^3.1.6",
     "mrbuilder-plugin-filetypes": "^3.1.6",
-    "mrbuilder-plugin-fonts": "^3.1.10-alpha.0",
-    "mrbuilder-plugin-html": "^3.1.10-alpha.0",
-    "mrbuilder-plugin-less": "^3.1.10-alpha.0",
-    "mrbuilder-plugin-react": "^3.1.10-alpha.0",
+    "mrbuilder-plugin-fonts": "^3.2.0",
+    "mrbuilder-plugin-html": "^3.2.0",
+    "mrbuilder-plugin-less": "^3.2.0",
+    "mrbuilder-plugin-react": "^3.2.0",
     "mrbuilder-plugin-webpack": "^3.1.7"
   },
   "peerDependencies": {

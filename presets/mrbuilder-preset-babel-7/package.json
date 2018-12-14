@@ -1,8 +1,8 @@
 {
   "name": "mrbuilder-preset-babel-7",
-  "version": "3.1.10-alpha.0",
+  "version": "3.2.0",
   "dependencies": {
-    "mrbuilder-plugin-babel-7": "^3.1.10-alpha.0"
+    "mrbuilder-plugin-babel-7": "^3.2.0"
   },
   "peerDependencies": {
     "mrbuilder": "3.x"
