@@ -505,6 +505,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
+"@babel/plugin-syntax-typescript@^7.2.0":
+  version "7.2.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.2.0.tgz#55d240536bd314dcbbec70fd949c5cabaed1de29"
+  integrity sha1-VdJAU2vTFNy77HD9lJxcq67R3ik=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+
 "@babel/plugin-transform-arrow-functions@^7.2.0":
   version "7.2.0"
   resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.2.0.tgz#9aeafbe4d6ffc6563bf8f8372091628f00779550"
@@ -753,6 +760,14 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
+"@babel/plugin-transform-typescript@^7.1.0":
+  version "7.2.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.2.0.tgz#bce7c06300434de6a860ae8acf6a442ef74a99d1"
+  integrity sha1-vOfAYwBDTeaoYK6Kz2pELvdKmdE=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/plugin-syntax-typescript" "^7.2.0"
+
 "@babel/plugin-transform-unicode-regex@^7.2.0":
   version "7.2.0"
   resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@babel/plugin-transform-unicode-regex/-/plugin-transform-unicode-regex-7.2.0.tgz#4eb8db16f972f8abb5062c161b8b115546ade08b"
@@ -827,6 +842,14 @@
     "@babel/plugin-transform-react-jsx" "^7.0.0"
     "@babel/plugin-transform-react-jsx-self" "^7.0.0"
     "@babel/plugin-transform-react-jsx-source" "^7.0.0"
+
+"@babel/preset-typescript@^7.1.0":
+  version "7.1.0"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/@babel/preset-typescript/-/preset-typescript-7.1.0.tgz#49ad6e2084ff0bfb5f1f7fb3b5e76c434d442c7f"
+  integrity sha1-Sa1uIIT/C/tfH3+ztedsQ01ELH8=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/plugin-transform-typescript" "^7.1.0"
 
 "@babel/runtime@^7.0.0":
   version "7.2.0"
@@ -8863,6 +8886,28 @@ move-concurrently@^1.0.1:
     mkdirp "^0.5.1"
     rimraf "^2.5.4"
     run-queue "^1.0.3"
+
+mrbuilder-plugin-babel@^3.1.10-alpha.0:
+  version "3.1.7"
+  resolved "https://artifacts.netflix.com/api/npm/npm-netflix/mrbuilder-plugin-babel/-/mrbuilder-plugin-babel-3.1.7.tgz#db051f65f78ebb990e65367adfb691d05b10a771"
+  integrity sha1-2wUfZfeOu5kOZTZ637aR0FsQp3E=
+  dependencies:
+    babel-cli "^6.26.0"
+    babel-core "^6.26.3"
+    babel-loader "^7.1.5"
+    babel-plugin-istanbul "^4.1.6"
+    babel-plugin-transform-async-to-generator "^6.24.1"
+    babel-plugin-transform-class-properties "^6.24.1"
+    babel-plugin-transform-export-extensions "^6.22.0"
+    babel-plugin-transform-function-bind "^6.22.0"
+    babel-plugin-transform-runtime "^6.23.0"
+    babel-preset-env "^1.7.0"
+    babel-preset-react "^6.24.1"
+    babel-preset-stage-2 "^6.24.1"
+    babel-runtime "^6.26.0"
+    mrbuilder-optionsmanager "^3.1.7"
+    mrbuilder-plugin-browserslist "^3.1.7"
+    rimraf "^2.6.2"
 
 ms@2.0.0:
   version "2.0.0"

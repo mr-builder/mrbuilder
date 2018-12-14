@@ -1,4 +1,3 @@
-
 const path = require('path');
 
 function _resolve(value) {
@@ -13,27 +12,22 @@ function _resolve(value) {
 module.exports = function babelProcess(conf, resolve = _resolve, coverage) {
 
     function fix(prefix) {
-        return function (v) {
-            if (Array.isArray(v)) {
-                if (v[0].startsWith('./')|| v[0].startsWith(prefix) || v[0].startsWith('mrbuilder-plugin-')) {
-                    v[0] = _resolve(v[0]);
-                    return v;
-                }
-                if (v[0].startsWith('/')) {
-                    return v;
-                }
-                v[0] = resolve(`${prefix}-${v[0]}`);
+        const toAbs = (v) => {
+            if (v.startsWith('./') || v.startsWith(prefix) || v.startsWith('mrbuilder-plugin-')) {
                 return v;
             }
-
             if (v.startsWith('/')) {
                 return v;
             }
-            if (v.startsWith('./') || v.startsWith('mrbuilder-plugin-') || v.startsWith(prefix)) {
-                return _resolve(v);
-            }
-
             return resolve(`${prefix}-${v}`);
+        };
+
+        return function (v) {
+            if (Array.isArray(v)) {
+                v[0] = toAbs(v[0]);
+                return v;
+            }
+            return toAbs(v);
         }
     }
 

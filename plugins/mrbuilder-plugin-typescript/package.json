@@ -5,6 +5,7 @@
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
+    "@babel/preset-typescript": "^7.1.0",
     "@types/lodash": "^4.14.115",
     "@types/node": "^10.5.5",
     "@types/promise": "^7.1.30",

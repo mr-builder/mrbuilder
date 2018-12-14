@@ -57,7 +57,7 @@ if (useModules) {
     }
 }
 if (optionsManager.config('mrbuilder-plugin-typescript.useBabel')) {
-    conf.presets.push(['@babel/plugin-transform-typescript'], {isTSX: true, allExtensions: true});
+    conf.presets.push(['@babel/preset-typescript', {isTSX: true, allExtensions: true}]);
 }
 
 const applyConfig = (type) => (op) => {
