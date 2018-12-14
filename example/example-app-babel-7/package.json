@@ -13,7 +13,7 @@
     "mrbuilder-plugin-version": "^3.1.7",
     "mrbuilder-preset-app": "^3.1.10-alpha.0",
     "mrbuilder-preset-dev": "^3.1.10-alpha.0",
-    "mrbuilder-plugin-babel-7": "^3.1.10-alpha.0"
+    "mrbuilder-preset-babel-7": "^3.1.10-alpha.0"
   },
   "scripts": {
     "prepublish": "mrbuilder",
@@ -24,10 +24,10 @@
   },
   "mrbuilder": {
     "plugins": [
-      "mrbuilder-plugin-babel-7",
       "mrbuilder-plugin-version"
     ],
     "presets": [
+      "mrbuilder-preset-babel-7",
       "mrbuilder-preset-app",
       "example-lib-everything"
     ]
