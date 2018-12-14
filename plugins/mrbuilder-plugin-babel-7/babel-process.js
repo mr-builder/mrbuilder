@@ -11,25 +11,15 @@ function _resolve(value) {
 
 module.exports = function babelProcess(conf, resolve = _resolve, coverage) {
 
-    function fix(prefix) {
-        const toAbs = (v) => {
-            if (v.startsWith('./') || v.startsWith(prefix) || v.startsWith('mrbuilder-plugin-')) {
-                return v;
-            }
-            if (v.startsWith('/')) {
-                return v;
-            }
-            return resolve(`${prefix}-${v}`);
-        };
-
-        return function (v) {
-            if (Array.isArray(v)) {
-                v[0] = toAbs(v[0]);
-                return v;
-            }
-            return toAbs(v);
+    const toAbs = (v) => (v.startsWith('./') || v.startsWith('/')) ? v : resolve(v);
+    const fix   = function (v) {
+        if (Array.isArray(v)) {
+            v[0] = toAbs(v[0]);
+            return v;
         }
-    }
+        return toAbs(v);
+    };
+
 
     if (!conf.plugins) {
         conf.plugins = [];
@@ -48,7 +38,7 @@ module.exports = function babelProcess(conf, resolve = _resolve, coverage) {
             }
         ]);
     }
-    conf.plugins = conf.plugins.filter(Boolean).map(fix(`@babel/plugin`));
-    conf.presets = conf.presets.filter(Boolean).map(fix(`@babel/preset`));
+    conf.plugins = conf.plugins.filter(Boolean).map(fix);
+    conf.presets = conf.presets.filter(Boolean).map(fix);
     return conf;
 };
