@@ -148,6 +148,7 @@ switch (profile) {
             if (!env.NODE_ENV) {
                 env.NODE_ENV = 'test';
             }
+            env.MRBUILDER_INTERNAL_PRESET =`${env.MRBUILDER_INTERNAL_PRESET ||''}, mrbuilder-preset-test`;
             env.MRBUILDER_ENV = 'test';
             script = 'karma'
         } else if (includes('mocha')) {

@@ -12,8 +12,8 @@ describe('mrbuilder-plugin-less', function () {
         };
         const om = fakeOptionsManager(['mrbuilder-plugin-less', 'mrbuilder-plugin-css', 'mrbuilder-plugin-babel']);
         mod.call({}, { modules: true }, webpack,om);
-        expect(webpack.module.rules).to.have.length(2);
-        expect(webpack.plugins).to.have.length(1);
-        expect(webpack.module.rules[0].use).to.have.length(3);
+        expect(webpack.module.rules,'rules').to.have.length(2);
+        expect(webpack.plugins, 'plugins').to.have.length(0);
+        expect(webpack.module.rules[0].use, 'rules[0].use').to.have.length(3);
     });
 });
