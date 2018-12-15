@@ -1,5 +1,5 @@
 {
-  "plugin":"./src/index",
+  "plugin": "./src/index",
   "plugins": [
     [
       "mrbuilder-plugin-version",
@@ -125,7 +125,9 @@
           {
             "name": "Examples",
             "lerna": {
-              "scope": "example-*"
+              "scope": "example-*",
+              "private": true,
+              "all": true
             }
           }
         ]
