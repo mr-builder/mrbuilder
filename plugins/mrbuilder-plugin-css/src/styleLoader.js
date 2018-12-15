@@ -33,7 +33,7 @@ if (!filename) {
 info('naming style sheet', filename);
 //So if its not turned on and its Karma than let's say that
 // we don't use it.
-if (useStyleLoaderLoader == null && types.isDevServer) {
+if (process.env.NODE_ENV === 'test' || useStyleLoaderLoader == null && types.isDevServer) {
     useStyleLoaderLoader = true;
 }
 let addedPlugin = false;

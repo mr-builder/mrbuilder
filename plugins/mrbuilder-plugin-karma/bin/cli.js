@@ -6,7 +6,6 @@ if (!env.NODE_ENV) {
     env.NODE_ENV = 'test';
 }
 
-
 const {
           MRBUILDER_COVERAGE,
           MRBUILDER_COVERAGE_DIR,

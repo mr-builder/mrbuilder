@@ -2,6 +2,9 @@ This plugin provides [babel 7](https://babeljs.io/) support to mrbuilder.   It a
 via .babelrc or via normal mrbuilder configuration methods. It also
 provides support for babel to webpack via [babel-loader](https://github.com/babel/babel-loader)
 
+If your upgrading from babel 6 and have a custom .babelrc try running [babel-upgrade](https://github.com/babel/babel-upgrade)
+to convert your .babelrc.   If your using mrbuilders defaults it should "just work".
+
 The default babel configuration:
 
 ```json

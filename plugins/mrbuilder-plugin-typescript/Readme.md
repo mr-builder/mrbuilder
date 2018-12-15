@@ -2,7 +2,7 @@ Provides typescript
 
 | Property      | Type       | Default      | Description                      |
 | ------------- | -----------| -------------| ---------------------------------|
-| useBabel      | bool       | false        | Use babel instead of tsc all other options are ignored        |
+| useBabel      | bool       | false        | Use [babel instead of tsc and ts-loader](https://github.com/a-tarasyuk/webpack-typescript-babel/) all other options are ignored        |
 
 
 Please add a tsconfig.json to your project's root to be able to use

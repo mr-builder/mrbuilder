@@ -1,6 +1,6 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path               = require('path');
-module.exports = function (options={}, webpack, om) {
+module.exports           = function (options = {}, webpack, om) {
     const paths = [];
 
     if (options.paths) {
@@ -16,11 +16,10 @@ module.exports = function (options={}, webpack, om) {
     }
 
     if (paths.length) {
-        const cleanOptions = Object.assign({root:process.cwd()}, options);
+        const cleanOptions = Object.assign({root: process.cwd()}, options);
         webpack.plugins.push(new CleanWebpackPlugin(paths, cleanOptions));
     } else {
-        (this.warn || console.warn)(
-            'no directory found not adding clean plugin');
+        (this.warn || console.warn)('no directory found not adding clean plugin');
     }
     return webpack;
 };

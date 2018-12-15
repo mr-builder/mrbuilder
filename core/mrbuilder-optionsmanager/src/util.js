@@ -1,46 +1,35 @@
-const { configOrBool, parseValue, set } = require('mrbuilder-utils');
+const {configOrBool, parseValue, set} = require('mrbuilder-utils');
 
 const select = module.exports.select = (...args) => {
     for (let i = 0, l = args.length; i < l; i++) {
-        if (args[i] !== void(0)) {
+        if (args[i] !== void (0)) {
             return args[i];
         }
     }
 };
 
-const split = module.exports.split =
-    (value = []) => (Array.isArray(value) ? value
-                                          : value.split(/,\s*/)).filter(
-        Boolean);
+const split = module.exports.split = (v = []) => (Array.isArray(v) ? v : v.split(/,\s*/)).filter(Boolean);
 
-const nameConfig = module.exports.nameConfig = (value) => {
-    if (Array.isArray(value)) {
-        return value;
-    }
-    return [value];
-};
+const nameConfig = module.exports.nameConfig = (value) => Array.isArray(value) ? value : value == null ? [] : [value];
 
+/**
+ * Merges options. If an option if false, than we return false.
+ *
+ * @type {function(*): *}
+ */
 const mergeOptions = module.exports.mergeOptions = (options) => {
-    const ret = {};
+    let ret;
     for (let i = options.length - 1; i >= 0; i--) {
         const opt = options[i];
         if (opt === false) {
             return false;
         }
-        if (opt == null) {
-            continue;
-        }
-        Object.keys(opt).reduce(function (ret, key) {
-            if (opt[key] !== void(0)) {
-                ret[key] = opt[key];
-            }
-            return ret;
-        }, ret);
+        ret = Object.assign(ret && ret !== true ? ret : {}, opt);
     }
     return ret;
 };
 
-const asArray = module.exports.asArray = v => Array.isArray(v) ? v : [v];
+const asArray = module.exports.asArray = v => Array.isArray(v) ? v : v == null ? [] : [v];
 
 const mergePlugins = module.exports.mergePlugins = (...mplugins) => {
     if (!mplugins.length) {
@@ -59,8 +48,8 @@ const mergePlugins = module.exports.mergePlugins = (...mplugins) => {
 
 const camel = module.exports.camel =
     (v = '', idx) => !v ? v : `${idx > 0 ? v[0].toUpperCase()
-                                         : v[0].toLowerCase()}${v.substring(1)
-                                                                 .toLowerCase()}`;
+        : v[0].toLowerCase()}${v.substring(1)
+        .toLowerCase()}`;
 
 const parse = module.exports.parse = (value, name) => {
     try {
@@ -98,7 +87,7 @@ const mergeEnv = module.exports.mergeEnv = (plugin, env = process.env) => {
     return ret;
 };
 
-const mergeArgs = module.exports.mergeArgs = (plugin, argv = process.argv) => {
+const mergeArgs     = module.exports.mergeArgs = (plugin, argv = process.argv) => {
 
     const copy = [];
     let ret    = {};
@@ -109,7 +98,7 @@ const mergeArgs = module.exports.mergeArgs = (plugin, argv = process.argv) => {
             const argPart = arg.substring(2);
             if (argPart.startsWith(plugin)) {
                 const parts = argPart.substring(plugin.length + 1)
-                                     .split('=', 2);
+                    .split('=', 2);
                 const key   = parts.shift().split('-').map(camel).join('');
                 if (parts.length) {
                     set(ret, key,
@@ -123,7 +112,7 @@ const mergeArgs = module.exports.mergeArgs = (plugin, argv = process.argv) => {
                     }
                     set(ret, key,
                         collect.length === 1 ? collect[0] : collect.length === 0
-                                                            ? true : collect);
+                            ? true : collect);
                 }
 
                 continue;
@@ -135,7 +124,7 @@ const mergeArgs = module.exports.mergeArgs = (plugin, argv = process.argv) => {
     return ret;
 };
 const mergeAliasEnv = module.exports.mergeAliasEnv =
-    (aliases, options, { env } = process) => {
+    (aliases, options, {env} = process) => {
         aliases = Array.isArray(aliases) ? aliases : Object.keys(aliases);
         if (options === false) {
             options = {};
@@ -160,7 +149,7 @@ const mergeAliasEnv = module.exports.mergeAliasEnv =
     };
 
 const mergeAliasArgs = module.exports.mergeAliasArgs =
-    (aliases, options, { argv } = process) => {
+    (aliases, options, {argv} = process) => {
         if (options === false) {
             options = {};
         }
@@ -190,9 +179,9 @@ const mergeAliasArgs = module.exports.mergeAliasArgs =
                         }
                         set(options, key,
                             collect.length === 1 ? collect[0] : collect.length
-                                                                === 0
-                                                                ? true
-                                                                : collect);
+                            === 0
+                                ? true
+                                : collect);
 
                     }
                     continue;
@@ -210,14 +199,14 @@ const mergeAlias = module.exports.mergeAlias = (alias = [],
 
     const options = {};
     const aliases = (Array.isArray(alias) ? alias
-                                          : Object.keys(alias));
+        : Object.keys(alias));
 
     //already got the value;
 
     aliasObj = mergeAliasArgs(aliases, aliasObj, process);
     aliasObj = mergeAliasEnv(aliases, aliasObj, process);
     aliases.forEach(function (key) {
-        if (aliasObj[key] !== void(0)) {
+        if (aliasObj[key] !== void (0)) {
             options[key] = aliasObj[key];
         }
     });

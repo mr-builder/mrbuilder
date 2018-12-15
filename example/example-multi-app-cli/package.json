@@ -1,10 +1,10 @@
 {
   "name": "example-multi-cli",
   "description": "Shows how you can use cli to configure mrbuilder",
-  "version": "3.1.7",
+  "version": "3.2.1",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^3.1.7"
+    "mrbuilder": "^3.2.1"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",
