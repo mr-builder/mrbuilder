@@ -3,7 +3,7 @@
   "version": "3.3.0-alpha.0",
   "description": "uglify support for mrbuilder",
   "dependencies": {
-    "uglifyjs-webpack-plugin": "^2.0.1"
+    "terser-webpack-plugin": "^1.1.0"
   },
   "devDependencies": {
     "mrbuilder-plugin-mocha": "^3.3.0-alpha.0"
