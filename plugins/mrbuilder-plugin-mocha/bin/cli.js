@@ -47,7 +47,11 @@ if (coverageDir || coverageGLobal) {
     mocha = path.resolve(__dirname, '..', 'node_modules', '.bin', 'nyc');
 } else {
     if (useBabel) {
-        argv.push('--require', require.resolve('babel-polyfill'));
+        if (require('mrbuilder-plugin-babel/version') > 6 ) {
+            argv.push('--require', require.resolve('@babel/polyfill'));
+        }else{
+            argv.push('--require', require.resolve('babel-polyfill'));
+        }
     }
 }
 
