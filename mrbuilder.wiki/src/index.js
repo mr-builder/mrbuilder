@@ -1,12 +1,12 @@
-const styleguide = require('mrbuilder-plugin-react-styleguidist');
+    const styleguide = require('mrbuilder-plugin-react-styleguidist');
 
 const first = (r) => r && r[1];
 
 module.exports = (options, webpack, om) => {
 
     options.description = (pkg) => {
-        const category  = first(/.*-(preset|plugin|core)-.*/.exec(pkg.name));
-        let description = pkg.description |'';
+        const category  = first(/.*(-preset|-plugin|-core|example)-.*/.exec(pkg.name));
+        let description = pkg.description || '';
 
             const src   = pkg.homepage || category ? `https://github.com/mr-builder/${category}s/${pkg.name}` : `https://github.com/mr-builder/${pkg.name}`;
             description = `${description}
@@ -40,7 +40,7 @@ In your \`package.json\`
 `;
         }
 
-        if (category === 'example' || category == 'component' || category === 'presets') {
+        if ( category == 'component' || category === 'presets') {
             description = `
 ${description}
             
@@ -56,8 +56,19 @@ This is the configuration
 \`\`\`            
 `
         }
+
+        if (category ==='example'){
+            description = `
+${description}
+            
+To start the examples:
+
+\`\`\`sh
+  $ yarn start
+\`\`\`          
+`
+        }
         return description;
     };
-
     return styleguide(options, webpack, om);
 };
