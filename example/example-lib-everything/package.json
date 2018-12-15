@@ -1,18 +1,18 @@
 {
   "name": "example-lib-everything",
   "description": "An everything example",
-  "version": "3.2.1",
+  "version": "3.3.0-alpha.0",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^3.2.1"
+    "mrbuilder": "^3.3.0-alpha.0"
   },
   "dependencies": {
     "mrbuilder-plugin-env": "^3.1.6",
-    "mrbuilder-plugin-graphql": "^3.2.1",
+    "mrbuilder-plugin-graphql": "^3.3.0-alpha.0",
     "mrbuilder-plugin-lodash": "^3.1.6",
-    "mrbuilder-plugin-markdown": "^3.2.1",
+    "mrbuilder-plugin-markdown": "^3.3.0-alpha.0",
     "mrbuilder-plugin-moment": "^3.1.6",
-    "mrbuilder-plugin-stylus": "^3.2.1",
+    "mrbuilder-plugin-stylus": "^3.3.0-alpha.0",
     "mrbuilder-plugin-worker": "^3.1.6",
     "mrbuilder-plugin-yaml": "^3.1.6"
   },
