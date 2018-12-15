@@ -29,18 +29,10 @@ const mergeOptions = module.exports.mergeOptions = (options) => {
     let ret;
     for (let i = options.length - 1; i >= 0; i--) {
         const opt = options[i];
-        if (opt == null) {
-            continue;
-        } else if (opt === false) {
+        if (opt === false) {
             return false;
-        } else {
-            ret = Object.keys(opt).reduce(function (r, key) {
-                if (opt[key] !== void (0)) {
-                    r[key] = opt[key];
-                }
-                return r;
-            }, ret && ret !== true ? ret : {});
         }
+        ret = Object.assign(ret && ret !== true ? ret : {}, opt);
     }
     return ret;
 };
