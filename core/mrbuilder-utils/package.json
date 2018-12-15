@@ -5,7 +5,7 @@
   "source": "src",
   "main": "src",
   "dependencies": {
-    "json5": "^1.0.1"
+    "json5": "^2.1.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",

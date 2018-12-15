@@ -20,8 +20,7 @@
     "components/*"
   ],
   "dependencies": {
-    "lerna": "^3.6.0",
-    "json5": "^1.0.1"
+    "lerna": "^3.6.0"
   },
   "publishConfig": {
     "registry":"https://registry.npm.orig"

@@ -12,7 +12,7 @@
     "markdown-it-checkbox": "^1.1.0",
     "mrbuilder-plugin-babel": "^3.2.1",
     "mrbuilder-utils": "^3.1.7",
-    "react-syntax-highlighter": "^8.0.1"
+    "react-syntax-highlighter": "^10.1.2"
   },
   "devDependencies": {
     "mrbuilder-plugin-karma": "^3.2.1"
