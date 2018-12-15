@@ -40,13 +40,7 @@
     "alias": {
       "coverage": "Run with code coverage, not for production",
       "hot": "Run with hot configuration"
-    },
-    "plugins": [
-      [
-        "mrbuilder-plugin-babel-6",
-        false
-      ]
-    ]
+    }
   },
   "license": "0BSD",
   "peerDependencies": {

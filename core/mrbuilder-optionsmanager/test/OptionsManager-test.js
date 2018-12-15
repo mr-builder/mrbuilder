@@ -245,6 +245,7 @@ describe('mrbuilder-optionsmanager', function () {
         expect(om.enabled('enabled')).to.be.true;
     });
 
+
     newOptionManagerTest('with-presets', {
         argv: argv(
             '--p1-stuff=3',
@@ -348,5 +349,11 @@ with-alias-2 - [enabled]
         expect(calls.pop().join(' ')).to.eql('INFO [tester:p1] test');
     });
 
+    newOptionManagerTest("with-disabled-plugin", {
+        "argv":argv("--plugin-disabled.stuff=1")
+    }, om=>{
+        expect(om.enabled('plugin-enables')).to.be.true;
+        expect(om.enabled('plugin-disabled')).to.be.false;
 
+    });
 });

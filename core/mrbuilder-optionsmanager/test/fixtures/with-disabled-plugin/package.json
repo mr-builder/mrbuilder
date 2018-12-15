@@ -1,0 +1,11 @@
+{
+  "name": "with-disabled-plugin",
+  "tester": {
+    "presets": [
+      "preset-disabled"
+    ],
+    "plugins": [
+      "plugin-enables"
+    ]
+  }
+}

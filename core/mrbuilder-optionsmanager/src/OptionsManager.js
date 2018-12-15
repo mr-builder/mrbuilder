@@ -68,7 +68,7 @@ module.exports = class OptionsManager {
 
         this.env = (key, def) => {
             const ret = env[key.toUpperCase()];
-            if (ret === null || ret === void(0)) {
+            if (ret === null || ret === void (0)) {
                 return def;
             }
             return ret;
@@ -228,13 +228,27 @@ module.exports = class OptionsManager {
 
         const processPlugin = (includedFrom, plugin, override, parent) => {
             let [pluginName, pluginOpt] = nameConfig(plugin);
-            const options               = [override, pluginOpt];
-            let pluginSrc               = pluginName;
-            let ret                     = pluginName;
-            let alias;
+
             if (typeof pluginName !== 'string') {
                 throw new Error(`Plugin name needs to be a string, received ${typeof pluginName} please check your '${prefix}' config from '${includedFrom}'`);
             }
+
+            if (this.plugins.has(pluginName)) {
+                return false;
+            }
+            //We don't handle alias options here because we may have to install the package to handle the alias.
+            // but if the resolvedOptions where false by now the alias would not matter.
+            const resolvedOptions = mergeOptions([mergeEnv(pluginName, env), mergeArgs(pluginName, argv), override, pluginOpt]);
+            if (resolvedOptions === false) {
+                //nothing more to do.
+                this.plugins.set(pluginName, false);
+                return;
+            }
+            const options = [resolvedOptions];
+            let pluginSrc = pluginName;
+            let ret       = pluginName;
+            let alias;
+
             if (pluginName.startsWith('.')) {
                 if (includedFrom === this.topPackage.name) {
                     pluginSrc = this.cwd(pluginName);
@@ -243,26 +257,19 @@ module.exports = class OptionsManager {
                 }
                 ret = false;
             } else {
-                const [rPluginName, rPluginOpts] = nameConfig(plugin);
-
-                options.push(rPluginOpts);
-                if (!rPluginName) {
-                    this.warn('could not find plugin name for ', plugin);
-                    return;
-                }
-                const pConfig = resolveConfig(rPluginName);
+                //warning this could trigger a plugin install.
+                const pConfig = resolveConfig(pluginName);
                 if (pConfig) {
-
                     if (pConfig.plugin) {
-                        let [pluginPath, prPluginOpts] = nameConfig(
-                            pConfig.plugin);
-
-                        options.push(prPluginOpts);
+                        let [pluginPath, prPluginOpts] = nameConfig(pConfig.plugin);
+                        //this bugger - i think its probably not right but...  That a plugin can define its own defaults.
+                        // but I guess so...
+                        options.unshift(prPluginOpts);
                         if (pluginPath) {
-                            if (rPluginName === this.topPackage.name) {
+                            if (pluginName === this.topPackage.name) {
                                 pluginSrc = this.cwd(pluginPath);
                             } else {
-                                pluginSrc = join(rPluginName, pluginPath);
+                                pluginSrc = join(pluginName, pluginPath);
                             }
                         }
                     }
@@ -270,30 +277,19 @@ module.exports = class OptionsManager {
                 }
             }
 
-            if (this.plugins.has(pluginName)) {
-                return;
-            }
-            //nothing enables a disabled plugin.
 
+            //At this point nothing can disable the plugin.   If an alias was false, well it was probably a property
+            // you can't set a module false inside of itself.  so I think its reasonable.
 
-            options.unshift(mergeArgs(pluginName, argv));
-            options.unshift(mergeEnv(pluginName, env));
             if (alias) {
                 options.unshift(mergeAlias(alias, aliasObj, {env, argv}));
             }
 
-            const resolvedOptions = mergeOptions(options);
-            if (resolvedOptions === false) {
-                this.plugins.set(pluginName, false);
-                return;
-            }
             if (pluginName.startsWith('.')) {
                 pluginName = join(includedFrom, pluginName)
             }
 
-            this.plugins.set(pluginName,
-                newOption(pluginName, pluginSrc, resolvedOptions, parent,
-                    alias));
+            this.plugins.set(pluginName, newOption(pluginName, pluginSrc, mergeOptions(options), parent, alias));
             return ret;
         };
         const processOpts   = (name, {
@@ -319,7 +315,7 @@ module.exports = class OptionsManager {
                     plugin => processPlugin(pkg.name, plugin, override, pkg,
                         ignoreRc))
                     .filter(Boolean).forEach(
-                    (pluginName) => scan(ignoreRc, pkg, pluginName, void(0),
+                    (pluginName) => scan(ignoreRc, pkg, pluginName, void (0),
                         override))
             }
 
@@ -330,7 +326,7 @@ module.exports = class OptionsManager {
                     if (!seenPresets.has(presetName)) {
                         seenPresets.add(presetName);
                         if (config !== false) {
-                            scan(ignoreRc, pkg, presetName, void(0), config)
+                            scan(ignoreRc, pkg, presetName, void (0), config)
                         }
                     }
                 });
@@ -346,7 +342,7 @@ module.exports = class OptionsManager {
                     presetsName, presets);
                 processOpts(`${envPrefix}_${prefix}ENV`,
                     {plugins, presets, plugin: false},
-                    void(0),
+                    void (0),
                     this.topPackage);
             }
         };
