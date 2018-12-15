@@ -8,17 +8,9 @@ const select = module.exports.select = (...args) => {
     }
 };
 
-const split = module.exports.split =
-    (value = []) => (Array.isArray(value) ? value
-        : value.split(/,\s*/)).filter(
-        Boolean);
+const split = module.exports.split = (v = []) => (Array.isArray(v) ? v : v.split(/,\s*/)).filter(Boolean);
 
-const nameConfig = module.exports.nameConfig = (value) => {
-    if (Array.isArray(value)) {
-        return value;
-    }
-    return [value];
-};
+const nameConfig = module.exports.nameConfig = (value) => Array.isArray(value) ? value : value == null ? [] : [value];
 
 /**
  * Merges options. If an option if false, than we return false.
@@ -37,7 +29,7 @@ const mergeOptions = module.exports.mergeOptions = (options) => {
     return ret;
 };
 
-const asArray = module.exports.asArray = v => Array.isArray(v) ? v : [v];
+const asArray = module.exports.asArray = v => Array.isArray(v) ? v : v == null ? [] : [v];
 
 const mergePlugins = module.exports.mergePlugins = (...mplugins) => {
     if (!mplugins.length) {
