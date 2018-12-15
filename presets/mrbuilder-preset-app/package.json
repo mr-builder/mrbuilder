@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-preset-app",
-  "version": "3.3.0-alpha.0",
+  "version": "3.3.0-alpha.1",
   "dependencies": {
     "mrbuilder-plugin-babel": "^3.3.0-alpha.0",
     "mrbuilder-plugin-browserslist": "^3.3.0-alpha.0",
@@ -13,7 +13,7 @@
     "mrbuilder-plugin-html": "^3.3.0-alpha.0",
     "mrbuilder-plugin-less": "^3.3.0-alpha.0",
     "mrbuilder-plugin-react": "^3.3.0-alpha.0",
-    "mrbuilder-plugin-uglify": "^3.3.0-alpha.0",
+    "mrbuilder-plugin-uglify": "^3.3.0-alpha.1",
     "mrbuilder-plugin-webpack": "^3.3.0-alpha.0",
     "mrbuilder-plugin-webpack-dev-server": "^3.3.0-alpha.0"
   },

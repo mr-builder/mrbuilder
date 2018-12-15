@@ -1,7 +1,7 @@
 {
   "name": "mrbuilder.wiki",
   "private": true,
-  "version": "3.3.0-alpha.0",
+  "version": "3.3.0-alpha.1",
   "dependencies": {
     "mrbuilder": "^3.3.0-alpha.0",
     "mrbuilder-plugin-clean": "^3.3.0-alpha.0",
