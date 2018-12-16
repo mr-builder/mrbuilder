@@ -1,6 +1,6 @@
 {
   "name": "mrbuilder-plugin-filetypes",
-  "version": "3.3.0-alpha.2",
+  "version": "3.3.0",
   "description": "Loading file types via webpack",
   "dependencies": {
     "file-loader": "^2.0.0",

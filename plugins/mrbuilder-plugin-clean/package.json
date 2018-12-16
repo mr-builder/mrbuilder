@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-clean",
   "description": "Cleans up build directories",
-  "version": "3.3.0-alpha.2",
+  "version": "3.3.0",
   "main": "src",
   "dependencies": {
     "clean-webpack-plugin": "^1.0.0",
-    "mrbuilder-utils": "^3.3.0-alpha.2",
+    "mrbuilder-utils": "^3.3.0",
     "rimraf": "^2.6.2"
   },
   "bin": {

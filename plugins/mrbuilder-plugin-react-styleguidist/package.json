@@ -1,11 +1,11 @@
 {
   "name": "mrbuilder-plugin-react-styleguidist",
-  "version": "3.3.0-alpha.3",
+  "version": "3.3.0",
   "description": "Mrbuilder Plugin for styleguidist",
   "main": "src",
   "dependencies": {
-    "mrbuilder-plugin-doc-prop-types": "^3.3.0-alpha.2",
-    "mrbuilder-plugin-webpack": "^3.3.0-alpha.3",
+    "mrbuilder-plugin-doc-prop-types": "^3.3.0",
+    "mrbuilder-plugin-webpack": "^3.3.0",
     "react-styleguidist": "^8.0.6"
   },
   "mrbuilder": {
