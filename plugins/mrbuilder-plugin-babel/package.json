@@ -8,11 +8,6 @@
   "bin": {
     "mrbuilder-babel-cli": "bin/cli.js"
   },
-  "dependencies": {
-    "mrbuilder-optionsmanager": "^3.3.0-alpha.2",
-    "mrbuilder-plugin-browserslist": "^3.3.0-alpha.2",
-    "rimraf": "^2.6.2"
-  },
   "source": "src",
   "main": "src",
   "mrbuilder": {

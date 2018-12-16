@@ -1,15 +1,13 @@
 require('mrbuilder-plugin-browserslist');
-const path                                          = require('path');
-const optionsManager                                = global._MRBUILDER_OPTIONS_MANAGER;
-const {stringify, pkg, cwd, resolveMap, parseEntry} = require(
-    'mrbuilder-utils');
-
+const path                              = require('path');
+const optionsManager                    = global._MRBUILDER_OPTIONS_MANAGER;
+const {stringify, pkg, cwd, parseEntry} = require('mrbuilder-utils');
 const {
           DefinePlugin,
           optimize: {
               ModuleConcatenationPlugin
           }
-      } = require('webpack');
+      }                                 = require('webpack');
 
 const {
           warn  = console.warn,
@@ -17,8 +15,21 @@ const {
           info  = console.log,
       } = optionsManager.logger('mrbuilder-plugin-webpack');
 
-let publicPath = optionsManager.config('mrbuilder-plugin-webpack.public',
-    '');
+const countSlash  = (v) => {
+          if (!v) {
+              return 0;
+          }
+          let count = 0;
+          for (let i = 0, l = v.length; i < l; i++) {
+              if (v[i] === path.sep) {
+                  count++;
+              }
+          }
+          return count;
+      },
+      sortByDepth = (b, a) => countSlash(a) - countSlash(b);
+
+let publicPath = optionsManager.config('mrbuilder-plugin-webpack.public', '');
 //So if you defined publicPath to /public/ it will parse as a regex.
 // this fixes that.
 if (publicPath instanceof RegExp) {
@@ -27,15 +38,10 @@ if (publicPath instanceof RegExp) {
 const opts = {
     ...require('mrbuilder/src/info'),
     publicPath,
-    outputPath    : optionsManager.config('mrbuilder-plugin-webpack.outputPath',
-        cwd('lib')),
-    outputFilename: optionsManager.config(
-        'mrbuilder-plugin-webpack.outputFilename',
-        '[name].js'),
-    useScopeHoist : optionsManager.config(
-        'mrbuilder-plugin-webpack.useScopeHoist', true),
-    useTarget     : optionsManager.config('mrbuilder-plugin-webpack.target',
-        'web')
+    outputPath    : optionsManager.config('mrbuilder-plugin-webpack.outputPath', cwd('lib')),
+    outputFilename: optionsManager.config('mrbuilder-plugin-webpack.outputFilename', '[name].js'),
+    useScopeHoist : optionsManager.config('mrbuilder-plugin-webpack.useScopeHoist', true),
+    useTarget     : optionsManager.config('mrbuilder-plugin-webpack.target', 'web')
 };
 
 let webpack = {
@@ -49,7 +55,7 @@ let webpack = {
             cwd('node_modules'),
             path.resolve(__dirname, 'node_modules'),
         ],
-        alias  : resolveMap('raw-loader')
+        alias  : {}
     },
     output       : {
         path    : opts.outputPath,
@@ -143,24 +149,12 @@ module.exports = resolveWebpack(webpack).then(webpack => {
     /**
      * This is an attempt to fix webpack.resolve.alias.   Currently it uses whatever
      * was added first to match, rather than what is most specific; which is almost
-     * certainly what you want.
+     * certainly what you want; that is the deepest (most slashes) are matched first,
+     * as they are more specific.
      */
     if (webpack.resolve.alias) {
-        const countSlash = (v) => {
-            if (!v) {
-                return 0;
-            }
-            let count = 0;
-            for (let i = 0, l = v.length; i < l; i++) {
-                if (v[i] === path.sep) {
-                    count++;
-                }
-            }
-            return count;
-        };
-
         webpack.resolve.alias = Object.keys(webpack.resolve.alias)
-            .sort((b, a) => countSlash(a) - countSlash(b))
+            .sort(sortByDepth)
             .reduce((ret, key) => {
                 ret[key] = webpack.resolve.alias[key];
                 return ret;
