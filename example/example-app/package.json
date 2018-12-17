@@ -1,18 +1,18 @@
 {
   "name": "example-app",
   "description": "Sample application using mrbuilder components",
-  "version": "3.3.0",
+  "version": "3.3.1-alpha.0",
   "private": true,
   "dependencies": {
-    "example-lib": "^3.3.0",
-    "example-lib-everything": "^3.3.0",
-    "example-lib-webpack": "^3.3.0"
+    "example-lib": "^3.3.1-alpha.0",
+    "example-lib-everything": "^3.3.1-alpha.0",
+    "example-lib-webpack": "^3.3.1-alpha.0"
   },
   "devDependencies": {
-    "mrbuilder": "^3.3.0",
-    "mrbuilder-plugin-version": "^3.3.0",
-    "mrbuilder-preset-app": "^3.3.0",
-    "mrbuilder-preset-dev": "^3.3.0"
+    "mrbuilder": "^3.3.1-alpha.0",
+    "mrbuilder-plugin-version": "^3.3.1-alpha.0",
+    "mrbuilder-preset-app": "^3.3.1-alpha.0",
+    "mrbuilder-preset-dev": "^3.3.1-alpha.0"
   },
   "scripts": {
     "prepublish": "mrbuilder",
