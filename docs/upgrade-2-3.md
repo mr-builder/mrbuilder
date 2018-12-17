@@ -1,4 +1,4 @@
-Mrbuilder 3.0 uses webpack4.5 under the covers.   The configuration should remain
+Mrbuilder 3.0 uses webpack 4.5 under the covers.   The configuration should remain
 the same, however there are a 3 steps to get it to work.  This should only take
 a minute or 2.  Mrbuilder now installs configured plugins/presets automatically.
 
@@ -6,7 +6,7 @@ a minute or 2.  Mrbuilder now installs configured plugins/presets automatically.
 - [ ] Remove your `node_modules`.
 - [ ] Add mrbuilder back again
 ```sh
-   $ yarn add mrbuilder@^3.0.0
+   $ yarn add mrbuilder@latest
 ```
 
 ### Incompatible Changes

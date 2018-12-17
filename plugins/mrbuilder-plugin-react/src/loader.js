@@ -21,18 +21,15 @@ render(<App/>, document.getElementById('${node}'));
 const generateHot = (name, node, exported) => `
 import {render} from 'react-dom';
 import React from 'react';
-import { AppContainer } from 'react-hot-loader'
+import { hot } from 'react-hot-loader/root';
 import ${importAs(exported)} from '${name}';
 
+const HotApp = hot(App);
 const init = Component => {
-  render(
-    <AppContainer>
-      <Component />
-    </AppContainer>,
-    document.getElementById('${node}'),
-  )
+  render(<Component/>, document.getElementById('${node}'));
 }
-init(App);
+
+init(HotApp);
 
 // Webpack Hot Module Replacement API
 if (module.hot) {

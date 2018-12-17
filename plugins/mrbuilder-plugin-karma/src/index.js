@@ -1,24 +1,23 @@
 const {pkg, cwd, enhancedResolve} = require('mrbuilder-utils');
 const {ContextReplacementPlugin}  = require('webpack');
-const {resolve}                   = require('path');
 const processAlias                = require('mrbuilder-plugin-webpack/src/processAlias');
+const use                         = require('mrbuilder-plugin-babel/use-babel');
+module.exports                    = function ({
+                                                  testDir = cwd('test'),
+                                                  pattern = /.*-test\.jsx?$/,
+                                                  useCoverage = false,
+                                                  pathinfo = true,
+                                                  node = {
+                                                      fs     : 'empty',
+                                                      net    : 'empty',
+                                                      console: false,
+                                                      util   : true,
+                                                  },
+                                                  alias = {},
+                                                  mainFields = ['source', 'browser', 'main'],
+                                                  include = [cwd('src'), cwd('public')],
 
-module.exports = function ({
-                               testDir = cwd('test'),
-                               pattern = /.*-test\.jsx?$/,
-                               useCoverage = false,
-                               pathinfo = true,
-                               node = {
-                                   fs     : 'empty',
-                                   net    : 'empty',
-                                   console: false,
-                                   util   : true,
-                               },
-                               alias = {},
-                               mainFields = ['source', 'browser', 'main'],
-                               include = [cwd('src'), cwd('public')],
-
-                           }, webpack, om) {
+                                              }, webpack, om) {
 
     const info = (this.info || console.log);
     testDir    = enhancedResolve(testDir);
@@ -35,10 +34,7 @@ module.exports = function ({
             test   : /\.jsx?$/,
             // instrument only testing sources with Istanbul
             include: [testDir],
-            use    : {
-                loader : 'babel-loader',
-                options: require('mrbuilder-plugin-babel/babel-config'),
-            },
+            use    : use(om),
         });
     }
 

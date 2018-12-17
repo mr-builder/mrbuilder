@@ -4,7 +4,6 @@
     "@babel/preset-react"
   ],
   "plugins": [
-    "mrbuilder-plugin-babel/react-class-display-name",
     "@babel/plugin-proposal-function-bind",
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-transform-async-to-generator",

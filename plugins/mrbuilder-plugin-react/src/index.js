@@ -1,7 +1,7 @@
 const path                 = require('path');
 const {cwd, resolvePkgDir} = require('mrbuilder-utils');
-
-let showedWarning = false;
+const useBabel = require('../../mrbuilder-plugin-babel/use-babel.js');
+ let showedWarning = false;
 module.exports    = function reactPlugin({
                                              compatMode = false,
                                          }, webpack,
@@ -56,8 +56,8 @@ module.exports    = function reactPlugin({
         webpack.resolve.alias['prop-types'] = resolvePkgDir('prop-types');
     }
 
+
     const isHot       = om.enabled('mrbuilder-plugin-hot');
-    const babelConfig = require('mrbuilder-plugin-babel/babel-config');
     let entry         = webpack.entry;
 
     const preEntry = isHot ? om.config('mrbuilder-plugin-hot.preEntry', ['react-hot-loader/patch']) : [];
@@ -83,8 +83,7 @@ module.exports    = function reactPlugin({
         }
         const pages     = om.config('mrbuilder-plugin-html.pages');
         const exported  = om.config('mrbuilder-plugin-html.exported', true);
-        const elementId = om.config('mrbuilder-plugin-html.elementId',
-            'content');
+        const elementId = om.config('mrbuilder-plugin-html.elementId', 'content');
 
         this.info('pages', pages);
 
@@ -98,6 +97,7 @@ module.exports    = function reactPlugin({
 
 
             if (('exported' in page) ? page.exported : exported) {
+
                 this.info('expecting a react component to be exported from ',
                     name);
                 const val          = webpack.entry[name];
@@ -113,8 +113,7 @@ module.exports    = function reactPlugin({
                     {
                         [name]: [
                             ...preEntry,
-                            `babel-loader?${JSON.stringify(
-                                babelConfig)}!mrbuilder-plugin-react/src/loader?${JSON.stringify(
+                            `babel-loader?${JSON.stringify(useBabel(om).options)}!mrbuilder-plugin-react/src/loader?${JSON.stringify(
                                 {
                                     name     : currentAlias,
                                     hot,
@@ -127,6 +126,7 @@ module.exports    = function reactPlugin({
                         // file to be inspected.
                     }
                 );
+
             } else {
                 webpack.entry[name] = preEntry.concat(webpack.entry[name]);
                 if (!showedWarning) {

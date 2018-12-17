@@ -16,8 +16,7 @@ if (babelrc && fs.existsSync(babelrc)) {
     conf = JSON.parse(fs.readFileSync(babelrc, 'utf8'));
 } else {
     const defConf = mrb('babelConfig', `${__dirname}/babelrc.json`) || './babelrc.json';
-    logger.info('loading', optionsManager.enabled('mrbuilder-plugin-babel'),
-        defConf);
+    logger.info('loading', optionsManager.enabled('mrbuilder-plugin-babel'), defConf);
     conf = require(defConf);
 }
 let _plugins = mrb('plugins'), _presets = mrb('presets');
@@ -38,11 +37,6 @@ if (_presets != null) {
 
 
 let useModules = mrb('useModules');
-if (mrb('hot') || optionsManager.enabled('mrbuilder-plugin-hot')) {
-    logger.info('using hot babel configuration');
-    conf.plugins.unshift(require.resolve("react-hot-loader/babel"));
-    useModules = true;
-}
 if (useModules) {
     logger.info('allow exporting as ES6 modules');
     const envRe = /@babel\/(?:preset-)?(?:env|es2015)$/;
@@ -81,4 +75,10 @@ if (conf.presets) {
 if (conf.plugins) {
     conf.plugins = conf.plugins.map(applyConfig('plugin')).filter(Boolean);
 }
+/*if (mrb('hot') || optionsManager.enabled('mrbuilder-plugin-hot')) {
+    logger.info('using hot babel configuration');
+    conf.plugins.push(require.resolve("react-hot-loader/babel"));
+    useModules = true;
+}*/
+
 module.exports = babelProcess(conf, optionsManager.require.resolve, mrb('coverage', false));

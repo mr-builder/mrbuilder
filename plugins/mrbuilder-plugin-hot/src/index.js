@@ -1,9 +1,7 @@
-const { NamedModulesPlugin, HotModuleReplacementPlugin } = require('webpack');
+const {NamedModulesPlugin, HotModuleReplacementPlugin} = require('webpack');
 
 module.exports = function ({
                                preEntry = ['react-hot-loader/patch'],
-                               babel = require(
-                                   'mrbuilder-plugin-babel/babel-config'),
                                hot = true,
                                inline = true,
                                devtool,

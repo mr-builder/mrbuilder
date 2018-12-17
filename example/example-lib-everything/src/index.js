@@ -27,7 +27,7 @@ export default class WebpackExample extends Component {
     }
 
     componentWillUnmount() {
-        this.time.stop();
+        this.time && this.time.stop();
     }
 
     renderItem(idx) {
