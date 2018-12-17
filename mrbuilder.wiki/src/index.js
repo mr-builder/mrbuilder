@@ -1,6 +1,11 @@
-    const styleguide = require('mrbuilder-plugin-react-styleguidist');
+const styleguide = require('mrbuilder-plugin-react-styleguidist');
 
 const first = (r) => r && r[1];
+const quote = (lang, content) => `
+\`\`\`${lang}
+${content.trim()}    
+\`\`\`
+`;
 
 module.exports = (options, webpack, om) => {
 
@@ -8,25 +13,46 @@ module.exports = (options, webpack, om) => {
         const category  = first(/.*(-preset|-plugin|-core|example)-.*/.exec(pkg.name));
         let description = pkg.description || '';
 
-            const src   = pkg.homepage || category ? `https://github.com/mr-builder/${category}s/${pkg.name}` : `https://github.com/mr-builder/${pkg.name}`;
-            description = `${description}
+        const src = pkg.homepage || category ? `https://github.com/mr-builder/${category}s/${pkg.name}` : `https://github.com/mr-builder/${pkg.name}`;
+        if (category === 'example') {
+            return `
+---
+${description}         
+   
+### Installation
+${quote('sh', `
+$ git clone git@github.com:mr-builder/mrbuilder.git
+$ cd example/${pkg.name}
+$ yarn install
+`)}
+           
+To start the examples:
+
+${quote('sh', `
+  $ yarn start
+`)}`;
+        }
+
+        description = `${description}
+---
 
   *v${pkg.version}* [Source](${src})
 
 ### Installation
-\`\`\`sh\n
+${quote('sh', `
 $ yarn add ${pkg.name} -D   
-\`\`\``;
+`)}`;
 
 
         if (category === 'preset' || category === 'plugin') {
             description = `
+---            
 ${description}
 
 ### Basic Configuration
 In your \`package.json\`
 
-\`\`\`json
+${quote('json', `
 {
  "name":"your_component"
  "mrbuilder":{
@@ -35,39 +61,25 @@ In your \`package.json\`
     ]
  }
 }
-\`\`\`
-
-`;
+`)}`;
         }
 
-        if ( category == 'component' || category === 'presets') {
+        if (category == 'component' || category === 'presets') {
             description = `
 ${description}
             
 ### Configuration
 This is the configuration
 
-\`\`\`json
+${quote('json', `
 {
 "name":"${pkg.name}",
 ...
 "mrbuilder":${JSON.stringify(p.mrbuilder || {}, null, 2)}
 }
-\`\`\`            
-`
+`)}`
         }
 
-        if (category ==='example'){
-            description = `
-${description}
-            
-To start the examples:
-
-\`\`\`sh
-  $ yarn start
-\`\`\`          
-`
-        }
         return description;
     };
     return styleguide(options, webpack, om);

@@ -1,8 +1,6 @@
-const HtmlWebpackPlugin                    = require('html-webpack-plugin');
-const path                                 = require('path');
-const babelConfig                          = require(
-    'mrbuilder-plugin-babel/babel-config');
-const { parseEntry, cwd, enhancedResolve } = require('mrbuilder-utils');
+const HtmlWebpackPlugin                  = require('html-webpack-plugin');
+const path                               = require('path');
+const {parseEntry, cwd, enhancedResolve} = require('mrbuilder-utils');
 /**
  *   title     : (deps.description ? deps.description : deps.name),
  hash      : opts.useNameHash,
@@ -13,7 +11,7 @@ const { parseEntry, cwd, enhancedResolve } = require('mrbuilder-utils');
  * @param config
  * @param webpack
  */
-const ogenerateAssetTags                   = HtmlWebpackPlugin.prototype.generateAssetTags;
+const ogenerateAssetTags                 = HtmlWebpackPlugin.prototype.generateAssetTags;
 
 function charset(ele) {
     if (!ele.attributes) {
@@ -73,7 +71,7 @@ module.exports = function ({
             }
             try {
                 const index = require.resolve(cwd(v));
-                entry       = webpack.entry = { index };
+                entry       = webpack.entry = {index};
                 this.info(`no entry using "${index}"`);
                 return true;
             } catch (e) {
@@ -107,8 +105,7 @@ module.exports = function ({
         const chunks = [name];
         //html plugin is kinda borked, so this is a nasty workaround.
         if (om && om.enabled('mrbuilder-plugin-chunk')) {
-            const { manifest = 'manifest', vendors = 'vendors' } = om.config(
-                'mrbuilder-plugin-chunk');
+            const {manifest = 'manifest', vendors = 'vendors'} = om.config('mrbuilder-plugin-chunk');
             if (vendors) {
                 chunks.unshift(vendors);
             }

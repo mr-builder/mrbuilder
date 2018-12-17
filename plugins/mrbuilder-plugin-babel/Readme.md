@@ -12,6 +12,7 @@ The default babel configuration:
 | includes      | arrayOf: string,regex|./src,./public,./test| Webpack module includes option |
 | use           | object     | {use:{loader:'babel-loader}}| Allows for a different babel-loader |
 | <babel_plugin>| object     |              | configure babel plugins |
+| cacheDirectory | bool or string| true |  use the cache directory to speed up builds.
 
 
 To use Babel 7 will need to set the babelVersion to 7 and include the mrbuilder-plugin-babel-7 plugin in your configuration,
