@@ -1,5 +1,6 @@
 {
   "name": "mrbuilder-component-editor",
+  "private": true,
   "version": "3.3.0",
   "description": "A simplish editor for mr builder",
   "main": "src",
