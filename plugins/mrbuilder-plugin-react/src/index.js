@@ -60,7 +60,7 @@ module.exports    = function reactPlugin({
     const isHot       = om.enabled('mrbuilder-plugin-hot');
     let entry         = webpack.entry;
 
-    const preEntry = isHot ? om.config('mrbuilder-plugin-hot.preEntry', ['react-hot-loader/patch']) : [];
+    const preEntry = isHot ? om.config('mrbuilder-plugin-hot.preEntry', []) : [];
 
     if (om.enabled('mrbuilder-plugin-html')) {
 

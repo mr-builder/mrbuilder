@@ -25,7 +25,7 @@ const profile     = env.MRBUILDER_PROFILE || ((idx) => {
 if (!env.MRBUILDER_INTERNAL_PRESETS) {
     env.MRBUILDER_INTERNAL_PRESETS = 'mrbuilder';
 }
-let script = 'webpack';
+let script = 'mrbuilder-plugin-webpack';
 
 function help(message) {
     console.warn(`
@@ -51,9 +51,7 @@ function help(message) {
             start       - starts webpack-dev-server
             dev-server  - starts webpack-dev-server
             development - starts webpack-dev-server
-            analyze     - starts webpack-dev-server in analyze mode
-            
-            
+            analyze     - starts webpack-dev-server in analyze mode           
             or
             start:{PROFILE} - starts webpack-dev-server in whatever PROFILE is specified.
             {PROFILE} - starts webpack in whatevever PROFILE is specified.
@@ -119,7 +117,7 @@ switch (profile) {
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = `${env.NODE_ENV}:start:app`;
         }
-        script = 'webpack-dev-server';
+        script = 'mrbuilder-plugin-webpack-dev-server';
         break;
     }
     //just for documentation.
@@ -134,36 +132,52 @@ switch (profile) {
 
     default: {
         const includes = Array.prototype.includes.bind(profile.split(':'));
-        if (includes('build')) {
-            if (!env.NODE_ENV) {
-                env.NODE_ENV = 'production';
+        switch(true){
+            case includes('build'):{
+                if (!env.NODE_ENV) {
+                    env.NODE_ENV = 'production';
+                }
+                script = 'mrbuilder-plugin-webpack';
+                break;
             }
-            script = 'webpack';
-        } else if (includes('start')) {
-            if (!env.NODE_ENV) {
-                env.NODE_ENV = 'development';
+            case includes('start'):{
+                    if (!env.NODE_ENV) {
+                        env.NODE_ENV = 'development';
+                    }
+                    script = 'mrbuilder-plugin-webpack-dev-server';
+                    break;
             }
-            script = 'webpack-dev-server'
-        } else if (includes('test') || includes('karma')) {
-            if (!env.NODE_ENV) {
-                env.NODE_ENV = 'test';
+            case includes('mocha'):{
+                if (!env.NODE_ENV) {
+                    env.NODE_ENV = 'test';
+                }
+                script = 'mrbuilder-plugin-mocha';
+                break;
             }
-            env.MRBUILDER_INTERNAL_PRESET =`${env.MRBUILDER_INTERNAL_PRESET ||''}, mrbuilder-preset-test`;
-            env.MRBUILDER_ENV = 'test';
-            script = 'karma'
-        } else if (includes('mocha')) {
-            if (!env.NODE_ENV) {
-                env.NODE_ENV = 'test';
+            case includes('test'):
+            case includes('karma'):{
+                if (!env.NODE_ENV) {
+                    env.NODE_ENV = 'test';
+                }
+                env.MRBUILDER_INTERNAL_PRESET = `${env.MRBUILDER_INTERNAL_PRESET || ''}, mrbuilder-preset-test`;
+                env.MRBUILDER_ENV             = 'test';
+                script                        = 'mrbuilder-plugin-karma';
+                break;
             }
-            script = 'mocha'
-        } else if (includes('babel')) {
-            if (!env.NODE_ENV) {
-                env.NODE_ENV = 'production';
+            case includes('babel'):{
+                if (!env.NODE_ENV) {
+                    env.NODE_ENV = 'production';
+                }
+                script = 'mrbuilder-plugin-babel';
+                break;
             }
-            script = 'babel';
-        } else if (includes('clean')) {
-            script = 'clean';
+            case includes('clean'):{
+                script = 'mrbuilder-plugin-clean';
+                break;
+            }
+
         }
+
 
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = profile;
@@ -178,10 +192,10 @@ if (!global._MRBUILDER_OPTIONS_MANAGER) {
         })
 }
 
-const {
-          MRBUILDER_SCRIPT: endScript = `mrbuilder-plugin-${script}/bin/cli`
-      } = env;
 
+const {
+          MRBUILDER_SCRIPT: endScript = require.resolve(`${script}/bin/cli`)
+      } = env;
 
 global._MRBUILDER_OPTIONS_MANAGER.debug(`running '${endScript}'`);
 

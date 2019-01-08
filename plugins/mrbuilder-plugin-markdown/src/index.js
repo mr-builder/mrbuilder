@@ -1,4 +1,4 @@
-const babel = require('mrbuilder-plugin-babel/babel-config');
+const useBabel = require('mrbuilder-plugin-babel/use-babel');
 /**
  * {
         "extensions": {
@@ -28,7 +28,7 @@ const babel = require('mrbuilder-plugin-babel/babel-config');
  highlighter = 'hljs',
  theme = 'atom-one-light'
  */
-const omit  = (obj, keys) => {
+const omit     = (obj, keys) => {
     if (!obj) {
         return obj;
     }
@@ -42,7 +42,7 @@ const omit  = (obj, keys) => {
 };
 
 module.exports = function (conf = {},
-                           webpack) {
+                           webpack, om) {
     const {
               test = /\.md$/,
               include,
@@ -50,7 +50,7 @@ module.exports = function (conf = {},
           } = conf;
 
     const options = Object.assign({
-        extensions : {
+        extensions     : {
             'sh'  : 'shell',
             'js'  : 'javascript',
             'es6' : 'javascript',
@@ -59,10 +59,10 @@ module.exports = function (conf = {},
             'less': 'less',
             'styl': 'stylus'
         },
-        highlighter: 'hljs',
-        theme      : 'atom-one-light',
-        html       : true,
-        markdownPlugins:['markdown-it-checkbox']
+        highlighter    : 'hljs',
+        theme          : 'atom-one-light',
+        html           : true,
+        markdownPlugins: ['markdown-it-checkbox']
     }, omit(conf, ['test', 'include', 'exclude']));
 
 
@@ -71,13 +71,12 @@ module.exports = function (conf = {},
             test,
             include,
             exclude,
-            use: [{
-                loader : 'babel-loader',
-                options: babel
-            }, {
-                loader: require.resolve('./markdown-loader'),
-                options
-            }]
+            use: [
+                useBabel(om),
+                {
+                    loader: require.resolve('./markdown-loader'),
+                    options
+                }]
         });
     return webpack;
 }

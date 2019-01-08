@@ -25,18 +25,8 @@ import { hot } from 'react-hot-loader/root';
 import ${importAs(exported)} from '${name}';
 
 const HotApp = hot(App);
-const init = Component => {
-  render(<Component/>, document.getElementById('${node}'));
-}
-
-init(HotApp);
-
-// Webpack Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept('${name}', () => init(App))
-}
+render(<HotApp/>, document.getElementById('${node}'));
 `;
-
 
 module.exports = function () {
     this.cacheable && this.cacheable();

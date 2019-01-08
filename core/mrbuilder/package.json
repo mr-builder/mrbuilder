@@ -15,7 +15,8 @@
     "mrbuilder-webpack": "./bin/mrbuilder.js",
     "mrbuilder-demo": "./bin/mrbuilder.js",
     "mrbuilder-analyze": "./bin/mrbuilder.js",
-    "mrbuilder-webpack-dev-server": "./bin/mrbuilder.js"
+    "mrbuilder-webpack-dev-server": "./bin/mrbuilder.js",
+    "mrbuilder-dashboard": "./bin/mrbuilder.js"
   },
   "license": "0BSD",
   "engines": {
