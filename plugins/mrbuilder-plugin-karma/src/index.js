@@ -23,18 +23,15 @@ module.exports                    = function ({
     testDir    = enhancedResolve(testDir);
     include.push(testDir);
     const packageJson                       = pkg();
-    webpack.resolve.alias[packageJson.name] =
-        cwd(packageJson.source || packageJson.main
-            || 'src');
+    webpack.resolve.alias[packageJson.name] = cwd(packageJson.source || packageJson.main || 'src');
 
     processAlias(webpack, alias);
 
     if (om.enabled('mrbuilder-plugin-babel')) {
         webpack.module.rules.unshift({
-            test   : /\.jsx?$/,
-            // instrument only testing sources with Istanbul
-            include: [testDir],
-            use    : use(om),
+            test: /\.[jte]sx?$/,
+            include,
+            use : use(om),
         });
     }
 
@@ -42,7 +39,7 @@ module.exports                    = function ({
         info(`enabling code coverage for karma`);
         webpack.module.rules.unshift(
             {
-                test   : /\.jsx?$/,
+                test   : /\.[jet]sx?$/,
                 // instrument only testing sources with Istanbul
                 include,
                 use    : {

@@ -51,9 +51,7 @@ function help(message) {
             start       - starts webpack-dev-server
             dev-server  - starts webpack-dev-server
             development - starts webpack-dev-server
-            analyze     - starts webpack-dev-server in analyze mode
-            
-            
+            analyze     - starts webpack-dev-server in analyze mode           
             or
             start:{PROFILE} - starts webpack-dev-server in whatever PROFILE is specified.
             {PROFILE} - starts webpack in whatevever PROFILE is specified.
@@ -119,7 +117,7 @@ switch (profile) {
         if (!env.MRBUILDER_ENV) {
             env.MRBUILDER_ENV = `${env.NODE_ENV}:start:app`;
         }
-        script = 'webpack-dev-server';
+        script = 'mrbuilder-plugin-webpack-dev-server';
         break;
     }
     //just for documentation.
@@ -177,6 +175,7 @@ switch (profile) {
                 script = 'mrbuilder-plugin-clean';
                 break;
             }
+
         }
 
 

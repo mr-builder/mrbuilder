@@ -13,7 +13,6 @@ module.exports = function ({
     }
     webpack.devServer.hot    = hot;
     webpack.devServer.inline = inline;
-    webpack.plugins.push(new NamedModulesPlugin(),
-        new HotModuleReplacementPlugin());
+    webpack.plugins.push(new NamedModulesPlugin(), new HotModuleReplacementPlugin());
 
 };
