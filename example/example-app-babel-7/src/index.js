@@ -8,7 +8,7 @@ export default class App extends Component {
     render() {
         /* eslint-disable no-undef */
         return (<div>
-            <h1 id='hello-from-app'>Hello from App v{EXAMPLE_APP_BABEL_7_VERSION} with Babel 7</h1>
+            <h1 id='hello-from-app'>Hello from App v{EXAMPLE_APP_BABEL_7_VERSION} with Babel <b>7</b></h1>
             <ExampleLib/>
             <ExampleWebpack/>
             <ExampleEverything/>
