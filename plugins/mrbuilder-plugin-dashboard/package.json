@@ -1,8 +1,8 @@
 {
   "name": "mrbuilder-plugin-dashboard",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "main": "src",
- "dependencies": {
+  "dependencies": {
     "webpack-dashboard": "^2.0.0"
   }
 }
