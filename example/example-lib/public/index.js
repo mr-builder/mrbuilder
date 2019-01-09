@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import Lib from 'example-lib';
+import Lib from '@mrbuilder/example-lib';
 
 
 export default class LibDemo extends Component {

@@ -1,0 +1,37 @@
+{
+  "name": "@mrbuilder/plugin-mocha",
+  "version": "3.3.1",
+  "description": "Tools for developing with mrbuilder and mocha",
+  "scripts": {
+    "clean": "mrbuilder-clean"
+  },
+  "bin": {
+    "mrbuilder-mocha-cli": "./bin/cli.js"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "jsdom": "^13.1.0",
+    "mocha": "^5.2.0",
+    "@mrbuilder/optionsmanager": "^3.3.1",
+    "@mrbuilder/plugin-babel": "^3.3.1",
+    "raf": "^3.4.0"
+  },
+  "main": "src",
+  "source": "src",
+  "mrbuilder": {
+    "alias": {
+      "coverageDir": "Output directory for code coverage",
+      "testDir": "Directory to test",
+      "filePattern": "Pattern of files to test",
+      "timeout": "Time allowed to run test"
+    },
+    "plugins": [
+      "@mrbuilder/plugin-mocha"
+    ]
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

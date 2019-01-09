@@ -1,0 +1,27 @@
+{
+  "name": "@mrbuilder/preset-babel-7",
+  "version": "3.3.1",
+  "dependencies": {
+    "@mrbuilder/plugin-babel-7": "^3.3.1"
+  },
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "mrbuilder": {
+    "plugins": [
+      [
+        "@mrbuilder/plugin-babel-6",
+        false
+      ],
+      "@mrbuilder/plugin-babel-7",
+      [
+        "@mrbuilder/plugin-typescript",
+        {
+          "useBabel": true
+        }
+      ]
+    ]
+  },
+  "license": "0BSD",
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Editor } from 'mrbuilder-component-editor';
+import { Editor } from '@mrbuilder/component-editor';
 import PropTypes from 'prop-types';
 
 describe('Editor', function () {
@@ -43,7 +43,7 @@ describe('Editor', function () {
             { select: PropTypes.oneOf(['one', 'two', 'three']) });
 
         expect(root.html()).to.eql(
-            '<div class="mrbuilder-component-editor_editor_sample undefined"><pre class="mrbuilder-component-editor_editor_code">&lt;<span class="mrbuilder-component-editor_editor_component" title="Click to reset to defaults">Test</span><span class="mrbuilder-component-editor_editor_props"> <span class="mrbuilder-component-editor_property_prop-val"><span class="mrbuilder-component-editor_property_prop-name">select</span><span class="mrbuilder-component-editor_property_eq">=</span><span class="mrbuilder-component-editor_property_left-curly">{</span><span class="mrbuilder-component-editor_property_value-container"><span class="mrbuilder-component-editor_property_value-value"><select class="select" name="select"><option value="one">one</option><option value="two">two</option><option value="three">three</option></select></span></span><span class="mrbuilder-component-editor_property_right-curly">}</span></span> /&gt;</span></pre><div><div>{}</div></div></div>'
+            '<div class="@mrbuilder/component-editor_editor_sample undefined"><pre class="@mrbuilder/component-editor_editor_code">&lt;<span class="@mrbuilder/component-editor_editor_component" title="Click to reset to defaults">Test</span><span class="@mrbuilder/component-editor_editor_props"> <span class="@mrbuilder/component-editor_property_prop-val"><span class="@mrbuilder/component-editor_property_prop-name">select</span><span class="@mrbuilder/component-editor_property_eq">=</span><span class="@mrbuilder/component-editor_property_left-curly">{</span><span class="@mrbuilder/component-editor_property_value-container"><span class="@mrbuilder/component-editor_property_value-value"><select class="select" name="select"><option value="one">one</option><option value="two">two</option><option value="three">three</option></select></span></span><span class="@mrbuilder/component-editor_property_right-curly">}</span></span> /&gt;</span></pre><div><div>{}</div></div></div>'
         );
 
     });

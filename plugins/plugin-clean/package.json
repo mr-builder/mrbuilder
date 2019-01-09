@@ -1,0 +1,22 @@
+{
+  "name": "@mrbuilder/plugin-clean",
+  "description": "Cleans up build directories",
+  "version": "3.3.1",
+  "main": "src",
+  "dependencies": {
+    "clean-webpack-plugin": "^1.0.0",
+    "@mrbuilder/utils": "^3.3.1",
+    "rimraf": "^2.6.2"
+  },
+  "bin": {
+    "mrbuilder-clean": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "mrbuilder-mocha"
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

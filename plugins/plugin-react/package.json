@@ -1,0 +1,25 @@
+{
+  "name": "@mrbuilder/plugin-react",
+  "version": "3.3.1",
+  "description": "React plugin for mrbuilder",
+  "main": "./src/index",
+  "author": "Justin Spears <speajus@gmail.com>",
+  "dependencies": {
+    "create-react-class": "^15.6.3",
+    "json5": "^2.1.0",
+    "loader-utils": "^1.1.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-hot-loader": "^4.6.2"
+  },
+  "keywords": [
+    "react",
+    "mrbuilder"
+  ],
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

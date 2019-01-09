@@ -1,0 +1,26 @@
+{
+  "name": "@mrbuilder/cli",
+  "version": "3.3.1",
+  "description": "Tools for developing with mrbuilder and webpack",
+  "dependencies": {
+    "in-publish": "^2.0.0",
+    "@mrbuilder/optionsmanager": "^3.3.1"
+  },
+  "bin": {
+    "mrbuilder": "./bin/mrbuilder.js",
+    "mrbuilder-babel": "./bin/mrbuilder.js",
+    "mrbuilder-clean": "./bin/mrbuilder.js",
+    "mrbuilder-karma": "./bin/mrbuilder.js",
+    "mrbuilder-mocha": "./bin/mrbuilder.js",
+    "mrbuilder-webpack": "./bin/mrbuilder.js",
+    "mrbuilder-demo": "./bin/mrbuilder.js",
+    "mrbuilder-analyze": "./bin/mrbuilder.js",
+    "mrbuilder-webpack-dev-server": "./bin/mrbuilder.js",
+    "mrbuilder-dashboard": "./bin/mrbuilder.js"
+  },
+  "license": "0BSD",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

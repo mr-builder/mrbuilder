@@ -1,5 +1,5 @@
 import React from 'react';
-import Everything from 'example-lib-everything';
+import Everything from '@mrbuilder/example-lib-everything';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 

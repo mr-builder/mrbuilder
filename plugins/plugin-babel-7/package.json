@@ -1,0 +1,51 @@
+{
+  "name": "@mrbuilder/plugin-babel-7",
+  "version": "3.3.1",
+  "description": "Tools for developing babel 7 with mrbuilder",
+  "scripts": {
+    "clean": "mrbuilder-clean"
+  },
+  "bin": {
+    "mrbuilder-babel-cli": "bin/cli.js"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-proposal-decorators": "^7.2.2",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
+    "@babel/plugin-proposal-function-bind": "^7.2.0",
+    "@babel/plugin-proposal-function-sent": "^7.2.0",
+    "@babel/plugin-proposal-json-strings": "^7.2.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-import-meta": "^7.2.0",
+    "@babel/plugin-transform-async-to-generator": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.2.0",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-istanbul": "^5.1.0",
+    "@mrbuilder/optionsmanager": "^3.3.1",
+    "@mrbuilder/plugin-browserslist": "^3.3.1",
+    "rimraf": "^2.6.2"
+  },
+  "source": "src",
+  "main": "src",
+  "mrbuilder": {
+    "alias": {
+      "coverage": "Run with code coverage, not for production",
+      "hot": "Run with hot configuration"
+    }
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

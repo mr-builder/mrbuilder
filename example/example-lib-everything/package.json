@@ -1,20 +1,20 @@
 {
-  "name": "example-lib-everything",
+  "name": "@mrbuilder/example-lib-everything",
   "description": "An everything example",
   "version": "3.3.1",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^3.3.1"
+    "@mrbuilder/cli": "^3.3.1"
   },
   "dependencies": {
-    "mrbuilder-plugin-env": "^3.3.1",
-    "mrbuilder-plugin-graphql": "^3.3.1",
-    "mrbuilder-plugin-lodash": "^3.3.1",
-    "mrbuilder-plugin-markdown": "^3.3.1",
-    "mrbuilder-plugin-moment": "^3.3.1",
-    "mrbuilder-plugin-stylus": "^3.3.1",
-    "mrbuilder-plugin-worker": "^3.3.1",
-    "mrbuilder-plugin-yaml": "^3.3.1"
+    "@mrbuilder/plugin-env": "^3.3.1",
+    "@mrbuilder/plugin-graphql": "^3.3.1",
+    "@mrbuilder/plugin-lodash": "^3.3.1",
+    "@mrbuilder/plugin-markdown": "^3.3.1",
+    "@mrbuilder/plugin-moment": "^3.3.1",
+    "@mrbuilder/plugin-stylus": "^3.3.1",
+    "@mrbuilder/plugin-worker": "^3.3.1",
+    "@mrbuilder/plugin-yaml": "^3.3.1"
   },
   "scripts": {
     "analyze": "mrbuilder",
@@ -31,11 +31,11 @@
   "main": "lib",
   "mrbuilder": {
     "presets": [
-      "mrbuilder-preset-lib"
+      "@mrbuilder/preset-lib"
     ],
     "plugins": [
       [
-        "mrbuilder-plugin-env",
+        "@mrbuilder/plugin-env",
         {
           "environment": [
             "NODE_ENV",
@@ -43,21 +43,21 @@
           ]
         }
       ],
-      "mrbuilder-plugin-yaml",
-      "mrbuilder-plugin-markdown",
-      "mrbuilder-plugin-lodash",
-      "mrbuilder-plugin-env",
-      "mrbuilder-plugin-moment",
-      "mrbuilder-plugin-stylus",
-      "mrbuilder-plugin-worker",
-      "mrbuilder-plugin-typescript",
-      "mrbuilder-plugin-graphql"
+      "@mrbuilder/plugin-yaml",
+      "@mrbuilder/plugin-markdown",
+      "@mrbuilder/plugin-lodash",
+      "@mrbuilder/plugin-env",
+      "@mrbuilder/plugin-moment",
+      "@mrbuilder/plugin-stylus",
+      "@mrbuilder/plugin-worker",
+      "@mrbuilder/plugin-typescript",
+      "@mrbuilder/plugin-graphql"
     ],
     "env": {
       "development": {
         "plugins": [
           [
-            "mrbuilder-plugin-html",
+            "@mrbuilder/plugin-html",
             false
           ]
         ]
@@ -65,7 +65,7 @@
       "test": {
         "plugins": [
           [
-            "mrbuilder-plugin-css",
+            "@mrbuilder/plugin-css",
             {
               "useStyleLoader": true
             }

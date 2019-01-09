@@ -1,0 +1,8 @@
+{
+  "name": "@mrbuilder/plugin-dashboard",
+  "version": "3.3.1",
+  "main": "src",
+  "dependencies": {
+    "webpack-dashboard": "^2.0.0"
+  }
+}

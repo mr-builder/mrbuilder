@@ -15,9 +15,8 @@
     "presets/*",
     "plugins/*",
     "create-mrbuilder-app",
-    "mrbuilder.wiki",
-    "example/*",
-    "components/*"
+    "wiki",
+    "example/*"
   ],
   "dependencies": {
     "lerna": "^3.6.0"

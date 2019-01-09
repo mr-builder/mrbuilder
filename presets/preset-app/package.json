@@ -1,0 +1,94 @@
+{
+  "name": "@mrbuilder/preset-app",
+  "version": "3.3.1",
+  "dependencies": {
+    "@mrbuilder/plugin-babel": "^3.3.1",
+    "@mrbuilder/plugin-browserslist": "^3.3.1",
+    "@mrbuilder/plugin-chunk": "^3.3.1",
+    "@mrbuilder/plugin-css": "^3.3.1",
+    "@mrbuilder/plugin-env": "^3.3.1",
+    "@mrbuilder/plugin-filetypes": "^3.3.1",
+    "@mrbuilder/plugin-fonts": "^3.3.1",
+    "@mrbuilder/plugin-hot": "^3.3.1",
+    "@mrbuilder/plugin-html": "^3.3.1",
+    "@mrbuilder/plugin-less": "^3.3.1",
+    "@mrbuilder/plugin-react": "^3.3.1",
+    "@mrbuilder/plugin-uglify": "^3.3.1",
+    "@mrbuilder/plugin-webpack": "^3.3.1",
+    "@mrbuilder/plugin-webpack-dev-server": "^3.3.1"
+  },
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "mrbuilder": {
+    "plugins": [
+      "@mrbuilder/plugin-babel",
+      "@mrbuilder/plugin-browserslist",
+      "@mrbuilder/plugin-filetypes",
+      "@mrbuilder/plugin-fonts",
+      "@mrbuilder/plugin-env",
+      "@mrbuilder/plugin-less",
+      "@mrbuilder/plugin-react",
+      [
+        "@mrbuilder/plugin-html",
+        {
+          "exported": true
+        }
+      ]
+    ],
+    "env": {
+      "test": {
+        "plugins": [
+          [
+            "@mrbuilder/plugin-html",
+            false
+          ]
+        ],
+        "presets": [
+          "@mrbuilder/preset-test"
+        ]
+      },
+      "development": {
+        "presets": [
+          "@mrbuilder/preset-dev"
+        ]
+      },
+      "production": {
+        "plugins": [
+          [
+            "@mrbuilder/plugin-hot",
+            false
+          ],
+          [
+            "@mrbuilder/plugin-css",
+            {
+              "useNameHash": "css/[name].[hash].css"
+            }
+          ],
+          [
+            "@mrbuilder/plugin-webpack",
+            {
+              "app": "app",
+              "entry": [
+                "src/index",
+                "examples/src/index"
+              ],
+              "filename": "js/[name].[hash].js",
+              "externalizePeers": false,
+              "useExternals": false
+            }
+          ],
+          [
+            "@mrbuilder/plugin-chunk",
+            {
+              "filename": "js/[name].[hash].js"
+            }
+          ],
+          "@mrbuilder/plugin-uglify"
+        ]
+      }
+    }
+  },
+  "license": "0BSD",
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

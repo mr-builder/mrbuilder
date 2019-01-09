@@ -1,10 +1,12 @@
 {
-  "name": "example-lib",
+  "name": "@mrbuilder/example-lib",
   "description": "Shows how to build a simple lib without webpack",
   "version": "3.3.1",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^3.3.1"
+    "@mrbuilder/cli": "^3.3.1",
+    "@mrbuilder/plugin-typescript": "^3.3.1",
+    "@mrbuilder/preset-babel-7": "^3.3.1"
   },
   "source": "src",
   "main": "lib",
@@ -14,7 +16,7 @@
     "demo": "mrbuilder",
     "babel": "mrbuilder",
     "prepublish": "mrbuilder-babel",
-    "babel-7": "MRBUILDER_INTERNAL_PRESETS=mrbuilder-preset-babel-7 mrbuilder-babel",
+    "babel-7": "MRBUILDER_INTERNAL_PRESETS=@mrbuilder/preset-babel-7 mrbuilder-babel",
     "test": "mrbuilder-mocha && yarn run babel-7"
   },
   "license": "0BSD"

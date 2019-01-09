@@ -1,0 +1,17 @@
+{
+  "name": "@mrbuilder/wiki",
+  "private": true,
+  "version": "3.3.1",
+  "dependencies": {
+    "@mrbuilder/cli": "^3.3.1",
+    "@mrbuilder/plugin-clean": "^3.3.1",
+    "@mrbuilder/plugin-react-styleguidist": "^3.3.1"
+  },
+  "scripts": {
+    "prepublish": "MRBUILDER_INTERNAL_PRESETS=@mrbuilder/preset-babel-7 NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io",
+    "start": "MRBUILDER_INTERNAL_PRESETS=@mrbuilder/preset-babel-7 mrbuilder-webpack-dev-server",
+    "test": "NODE_ENV=production MRBUILDER_ENV=production mrbuilder-webpack --app ./test-out"
+  },
+  "source": "src",
+  "license": "0BSD"
+}
