@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/plugin-lodash",
   "description": "Provides lodash alias's for all of lodash",
-  "version": "3.3.1",
+  "version": "4.0.0-alpha.0",
   "dependencies": {
     "lodash-es": "^4.17.10"
   },

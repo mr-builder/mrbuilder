@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-mocha",
-  "version": "3.3.1",
+  "version": "4.0.0-alpha.0",
   "description": "Tools for developing with mrbuilder and mocha",
   "scripts": {
     "clean": "mrbuilder-clean"
@@ -9,11 +9,11 @@
     "mrbuilder-mocha-cli": "./bin/cli.js"
   },
   "dependencies": {
+    "@mrbuilder/optionsmanager": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-babel": "^4.0.0-alpha.0",
     "chai": "^4.2.0",
     "jsdom": "^13.1.0",
     "mocha": "^5.2.0",
-    "@mrbuilder/optionsmanager": "^3.3.1",
-    "@mrbuilder/plugin-babel": "^3.3.1",
     "raf": "^3.4.0"
   },
   "main": "src",

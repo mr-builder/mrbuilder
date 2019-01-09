@@ -1,21 +1,21 @@
 {
   "name": "@mrbuilder/preset-app",
-  "version": "3.3.1",
+  "version": "4.0.0-alpha.0",
   "dependencies": {
-    "@mrbuilder/plugin-babel": "^3.3.1",
-    "@mrbuilder/plugin-browserslist": "^3.3.1",
-    "@mrbuilder/plugin-chunk": "^3.3.1",
-    "@mrbuilder/plugin-css": "^3.3.1",
-    "@mrbuilder/plugin-env": "^3.3.1",
-    "@mrbuilder/plugin-filetypes": "^3.3.1",
-    "@mrbuilder/plugin-fonts": "^3.3.1",
-    "@mrbuilder/plugin-hot": "^3.3.1",
-    "@mrbuilder/plugin-html": "^3.3.1",
-    "@mrbuilder/plugin-less": "^3.3.1",
-    "@mrbuilder/plugin-react": "^3.3.1",
-    "@mrbuilder/plugin-uglify": "^3.3.1",
-    "@mrbuilder/plugin-webpack": "^3.3.1",
-    "@mrbuilder/plugin-webpack-dev-server": "^3.3.1"
+    "@mrbuilder/plugin-babel": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-chunk": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-env": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-filetypes": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-fonts": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-hot": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-html": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-less": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-react": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-uglify": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-webpack-dev-server": "^4.0.0-alpha.0"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "3.x"
