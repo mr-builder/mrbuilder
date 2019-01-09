@@ -1,11 +1,28 @@
 #!/usr/bin/env node
-const fs          = require('fs');
-const JSON5       = require('json5');
+const fs     = require('fs');
+const JSON5  = require('json5');
+const {argv} = process;
+if (argv.includes('--help') || argv.includes('-h')) {
+    help();
+}
 const write       = process.argv.includes('--write');
 const rename      = process.argv.includes('--rename');
-const version     = (idx => (idx && process.argv[idx]))(process.argv.indexOf('--version') + 1);
+const version     = (idx => (idx ? require('../package.json').version : process.argv[idx]))(process.argv.indexOf('--version') + 1);
 const MRBIULDERRC = `${process.env.PWD}/.mrbuilderrc`;
 const PACKAGE     = `${process.env.PWD}/package.json`;
+
+function help() {
+    console.warn(`${process.argv[1]}
+    Run the script in the directory of the project(s) you want to upgrade mrbuilder.   
+    --write   - Write the changed files to filesystem.  Warning this could be destructive make sure you have a backup.
+    --version - The version of mrbuilder to upgrade to.  Defaults to the latest ^4.0.0
+    --help - This helpful message
+    
+     To upgrade a lerna repository
+    $ ./node_modules/.bin/lerna exec "mrbuilder-upgrade --write" 
+`);
+    process.exit(1);
+}
 
 function fixName(name, prefix = '@mrbuilder/') {
     return name.replace(/^(mrbuilder[-.]?)(.*)/, (_, f, postfix) => prefix + (postfix || 'cli'));
@@ -35,6 +52,16 @@ function fixPlugins(arr) {
         return fixName(v);
     })
 }
+
+function fixScripts(obj) {
+    if (!obj) {
+        return obj;
+    }
+    return Object.keys(obj).reduce((ret, key) => {
+        ret[key] = typeof obj[key] === 'string' ? obj[key].replace(/\s--mrbuilder-((?:plugin|preset)-(?:[^=\s]*))/g, (_, name) => ` --@mrbuilder/${name}`) : obj[key];
+        return ret;
+    });
+};
 
 function fixMrbuilder(config) {
     const mrbuilder = Object.assign({}, config);
@@ -82,7 +109,9 @@ function fixPackage(pkgFile = PACKAGE) {
             pkg.version = version.replace(/^[^~]/, '');
         }
     }
-
+    if (pkg.scripts) {
+        pkg.scripts = fixScripts(pkg.scripts);
+    }
     if (pkg.mrbuilder) {
         pkg.mrbuilder = fixMrbuilder(pkg.mrbuilder);
     }
