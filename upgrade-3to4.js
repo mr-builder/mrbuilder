@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-const fs     = require('fs');
-const JSON5  = require('json5');
-const write  = process.argv.includes('--write');
-const rename = process.argv.includes('--rename');
-const version = ((idx)=>(idx === -1 ? '^4.0.0' : process.argv[idx+1]))(process.argv.indexOf('--version'));
+const fs          = require('fs');
+const JSON5       = require('json5');
+const write       = process.argv.includes('--write');
+const rename      = process.argv.includes('--rename');
+const version     = (idx => (idx && process.argv[idx]))(process.argv.indexOf('--version') + 1);
 const MRBIULDERRC = `${process.env.PWD}/.mrbuilderrc`;
 const PACKAGE     = `${process.env.PWD}/package.json`;
 
@@ -16,7 +16,7 @@ function fixDep(obj) {
     return Object.keys(obj).reduce(function (ret, key) {
         const fixed = fixName(key);
         if (fixed !== key) {
-            ret[fixName(key)] = version;
+            ret[fixName(key)] = version || obj[key];
         } else {
             ret[key] = obj[key];
         }
@@ -78,7 +78,9 @@ function fixPackage(pkgFile = PACKAGE) {
 
     if (rename) {
         pkg.name = fixName(pkg.name);
-        pkg.version = version.replace(/^[^~]/, '');
+        if (version) {
+            pkg.version = version.replace(/^[^~]/, '');
+        }
     }
 
     if (pkg.mrbuilder) {
