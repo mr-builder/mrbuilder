@@ -75,15 +75,17 @@ function info() {
     }
 }
 
+
 function set(obj, key, value) {
-    const keys = key.split('.');
-    const last = keys.pop();
-    let cobj   = obj || {};
+    obj = obj || {};
+    const keys = key.split('.').filter(Boolean);
+    const last = camelCased(keys.pop());
+    let cobj   = obj;
     while (keys.length) {
-        const c = keys.shift();
+        const c = camelCased(keys.shift(), false);
         cobj    = cobj[c] || (cobj[c] = {});
     }
-    obj[last] = value;
+    cobj[last] = value;
     return obj;
 }
 
