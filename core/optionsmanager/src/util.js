@@ -35,7 +35,7 @@ const mergePlugins = module.exports.mergePlugins = (...mplugins) => {
     if (!mplugins.length) {
         return mplugins;
     }
-    const m = mplugins.reduce((ret, plugin) => {
+    return mplugins.reduce((ret, plugin) => {
         plugin      = asArray(plugin);
         const found = ret.findIndex(v => v[0] === plugin[0]);
         if (found === -1) {
@@ -43,13 +43,10 @@ const mergePlugins = module.exports.mergePlugins = (...mplugins) => {
         }
         return ret;
     }, []);
-    return m;
 };
 
-const camel = module.exports.camel =
-    (v = '', idx) => !v ? v : `${idx > 0 ? v[0].toUpperCase()
-        : v[0].toLowerCase()}${v.substring(1)
-        .toLowerCase()}`;
+const camel = module.exports.camel = (v = '', idx) => !v ? v : `${idx > 0 ? v[0].toUpperCase()
+    : v[0].toLowerCase()}${v.substring(1).toLowerCase()}`;
 
 const parse = module.exports.parse = (value, name) => {
     try {
@@ -60,32 +57,20 @@ const parse = module.exports.parse = (value, name) => {
     }
 };
 
-const envify = module.exports.envify =
-    (str) => str.toUpperCase().replace(/[-.]/g, '_');
 
 const mergeEnv = module.exports.mergeEnv = (plugin, env = process.env) => {
-    let ret = {};
-
-    const upperPlugin = envify(plugin);
-    const keys        = Object.keys(env);
-    for (let i = 0, l = keys.length; i < l; i++) {
-        const key = keys[i];
-        if (key === upperPlugin) {
-            const value = configOrBool(env[key]);
-            if (value === false) {
-                return false;
-            } else {
-                ret = parse(value, plugin);
-            }
+    const upperPlugin = fixName(plugin, '_').toUpperCase();
+    if (upperPlugin in env) {
+        const value = configOrBool(env[upperPlugin]);
+        if (value === false || value === true) {
+            return value;
         }
-        if (key.startsWith(upperPlugin)) {
-            const keyPart   = key.substring(upperPlugin.length + 1);
-            const camelName = keyPart.split('_').map(camel).join('');
-            set(ret, camelName, parse(env[key], plugin));
-        }
+        return parse(value, plugin);
     }
-    return ret;
+    return {};
 };
+
+const fixName = (name, sep = '-') => name.replace(/^@/, '').replace(/[^\w]{1,}/g, sep);
 
 const mergeArgs     = module.exports.mergeArgs = (plugin, argv = process.argv) => {
 
@@ -96,23 +81,40 @@ const mergeArgs     = module.exports.mergeArgs = (plugin, argv = process.argv) =
 
         if (arg.startsWith('--')) {
             const argPart = arg.substring(2);
-            if (argPart.startsWith(plugin)) {
-                const parts = argPart.substring(plugin.length + 1)
-                    .split('=', 2);
-                const key   = parts.shift().split('-').map(camel).join('');
-                if (parts.length) {
-                    set(ret, key,
-                        parts.length ? parse(parts[0], argPart) : true);
+            let offset    = -1;
+            if (argPart === plugin || argPart.startsWith(plugin + '.') || argPart.startsWith(plugin + '=')) {
+                offset = plugin.length;
+            } else {
+                //allow for non scoped command line arguments to continue working.
+                //--mrbuilder-plugin-stuff and --@mrbuilder/plugin-stuff are equivalent
+                const normalizePlugin = fixName(plugin);
+                //can be exact or '.' or '=' but can't be anything else
+                if (argPart === normalizePlugin || argPart.startsWith(normalizePlugin + '.') || argPart.startsWith(normalizePlugin + '=')) {
+                    offset = normalizePlugin.length;
+                }
+            }
+
+            if (offset !== -1) {
+                const remainingArgKey = argPart.substring(offset);
+                if (remainingArgKey.includes('=')) {
+                    const parts = remainingArgKey.split('=', 2).filter(Boolean);
+
+                    if (parts.length === 1) {
+                        return parse(parts[0])
+                    }
+                    set(ret, parts[0], parts.length ? parse(parts[1], argPart) : true);
                 } else {
 
                     const collect = [];
-                    for (let j = i + 1; j < l && !argv[j].startsWith('-');
-                         i++, j++) {
+                    for (let j = i + 1; j < l && !argv[j].startsWith('-'); i++, j++) {
                         collect.push(parse(argv[j], arg));
                     }
-                    set(ret, key,
-                        collect.length === 1 ? collect[0] : collect.length === 0
-                            ? true : collect);
+                    const remainingArgKeyRest = remainingArgKey.substring(1);
+                    if (remainingArgKeyRest) {
+                        set(ret, remainingArgKeyRest, collect.length === 1 ? collect[0] : collect.length === 0 ? true : collect);
+                    } else {
+                        return collect.length === 1 ? collect[0] : collect;
+                    }
                 }
 
                 continue;
@@ -148,58 +150,49 @@ const mergeAliasEnv = module.exports.mergeAliasEnv =
         return options;
     };
 
-const mergeAliasArgs = module.exports.mergeAliasArgs =
-    (aliases, options, {argv} = process) => {
-        if (options === false) {
-            options = {};
+const mergeAliasArgs = module.exports.mergeAliasArgs = (aliases, options, {argv} = process) => {
+    if (options === false) {
+        options = {};
+    }
+    const copy = [];
+    for (let i = 2, l = argv.length; i < l; i++) {
+        let arg    = argv[i];
+        let argKey = null;
+        if (arg.length === 2 && arg.startsWith('-')) {
+            argKey = arg.substring(1);
+        } else if (arg.startsWith('--')) {
+            argKey = arg.substring(2)
         }
-        const copy = [];
-        for (let i = 2, l = argv.length; i < l; i++) {
-            let arg    = argv[i];
-            let argKey = null;
-            if (arg.length === 2 && arg.startsWith('-')) {
-                argKey = arg.substring(1);
-            } else if (arg.startsWith('--')) {
-                argKey = arg.substring(2)
-            }
 
-            if (argKey) {
-                const parts = argKey.split('=', 2);
-                const key   = parts.shift().split('-').map(camel).join('');
-                if (aliases.includes(key)) {
-                    if (parts.length) {
-                        set(options, key,
-                            parts.length ? parse(parts[0], arg) : true);
-                    } else {
+        if (argKey) {
+            const parts = argKey.split('=', 2);
+            const key   = parts.shift().split('-').map(camel).join('');
+            if (aliases.includes(key)) {
+                if (parts.length) {
+                    set(options, key, parts.length ? parse(parts[0], arg) : true);
+                } else {
 
-                        const collect = [];
-                        for (let j = i + 1; j < l && !argv[j].startsWith('-');
-                             i++, j++) {
-                            collect.push(parse(argv[j], arg));
-                        }
-                        set(options, key,
-                            collect.length === 1 ? collect[0] : collect.length
-                            === 0
-                                ? true
-                                : collect);
-
+                    const collect = [];
+                    for (let j = i + 1; j < l && !argv[j].startsWith('-'); i++, j++) {
+                        collect.push(parse(argv[j], arg));
                     }
-                    continue;
+                    set(options, key, collect.length === 1 ? collect[0] : collect.length === 0 ? true : collect);
                 }
+                continue;
             }
-            copy.push(arg);
         }
-        argv.splice(2, argv.length, ...copy);
-        return options;
-    };
+        copy.push(arg);
+    }
+    argv.splice(2, argv.length, ...copy);
+    return options;
+};
 
 const mergeAlias = module.exports.mergeAlias = (alias = [],
                                                 aliasObj,
                                                 process) => {
 
     const options = {};
-    const aliases = (Array.isArray(alias) ? alias
-        : Object.keys(alias));
+    const aliases = (Array.isArray(alias) ? alias : Object.keys(alias));
 
     //already got the value;
 
