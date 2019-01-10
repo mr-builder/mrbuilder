@@ -25,4 +25,4 @@ install:
 script:
   - yarn test
 env:
-  - MRBUILDER_PLUGIN_KARMA_BROWSERS='["ChromeHeadless"]'
+  - MRBUILDER_PLUGIN_KARMA_BROWSERS='["Chrome_travis_ci"]'
