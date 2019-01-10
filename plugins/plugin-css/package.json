@@ -4,8 +4,8 @@
   "description": "CSS support for mbuilder",
   "dependencies": {
     "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.0",
-    "autoprefixer": "^9.4.3",
-    "css-loader": "^2.0.1",
+    "autoprefixer": "^9.4.4",
+    "css-loader": "^2.1.0",
     "find-package": "^1.0.0",
     "mini-css-extract-plugin": "^0.5.0",
     "postcss-loader": "^3.0.0",

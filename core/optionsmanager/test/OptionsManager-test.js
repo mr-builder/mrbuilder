@@ -1,7 +1,7 @@
 const OptionsManager = require('../src/OptionsManager');
-const { join }       = require('path');
-const { expect }     = require('chai');
-const { stringify }  = require('@mrbuilder/utils');
+const {join}         = require('path');
+const {expect}       = require('chai');
+const {stringify}    = require('@mrbuilder/utils');
 const {
           existsSync,
           readdirSync,
@@ -99,10 +99,10 @@ describe('@mrbuilder/optionsmanager', function () {
 
     newOptionManagerTest("with-cli", {
         argv: argv(
-            [`--with-cli-alias-1-other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`])
+            [`--with-cli-alias-1.other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`])
     }, om => {
         expect(om.config('with-cli-alias-1.other')).to.eql(
-            { "index": { "title": "Index" }, "other": { "title": "Other" } });
+            {"index": {"title": "Index"}, "other": {"title": "Other"}});
     });
     newOptionManagerTest('boot', om => expect(om).to.exist);
 
@@ -198,7 +198,7 @@ describe('@mrbuilder/optionsmanager', function () {
 
         expect(om.enabled('plugin-plugin')).to.be.true;
         expect(require(om.plugins.get('plugin-plugin').plugin)('a')).to
-                                                                    .eql(['a']);
+            .eql(['a']);
     });
     newOptionManagerTest('with-plugin-plugin-opts', om => {
         expect(om.enabled('plugin-plugin-opts')).to.be.true;
@@ -212,7 +212,7 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest('with-env', {
         env: {
             TESTER_PLUGINS       : 'metest',
-            METEST_STUFF         : "1",
+            METEST               : JSON.stringify({"stuff": 1}),
             TESTER_NO_AUTOINSTALL: 1,
         }
     }, (om) => {
@@ -228,8 +228,8 @@ describe('@mrbuilder/optionsmanager', function () {
 
         },
         argv: argv(
-            '--metest-stuff=3',
-            '--metest-stuff-or="stuff"'
+            '--metest.stuff=3',
+            '--metest.stuff-or="stuff"'
         )
     }, om => {
         expect(om.enabled('metest')).to.be.true;
@@ -272,10 +272,10 @@ describe('@mrbuilder/optionsmanager', function () {
     });
     newOptionManagerTest('with-regex', {
         argv: argv(
-            "--regex-argv=/argv/g",
+            "--regex.argv=/argv/g",
             "--realias=/realias/",
-            "--regex-split", "/split/"),
-        env : { "REGEX_ENV": "/env/i", REGEX_NO_AUTOINSTALL: 1, }
+            "--regex.split", "/split/"),
+        env : {"REGEX": JSON.stringify({"env": "/env/i"})}
     }, (om, config) => {
         expect(om.enabled("regex")).to.be.true;
         re(om.config('regex.argv'), "/argv/g");
@@ -296,8 +296,8 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest('with-merge-alias-override', {
         argv: argv('--alias-2.stuff=whatever'),
         env : {
-            ALIAS_1_MORE         : "stuff",
-            ALIAS_2_YUP          : "true",
+            ALIAS_1              : JSON.stringify({more: "stuff"}),
+            ALIAS_2              : JSON.stringify({yup: true}),
             TESTER_NO_AUTOINSTALL: 1,
         }
     }, function (om) {
@@ -339,7 +339,7 @@ with-alias-2 - [enabled]
         const om = new OptionsManager({
             prefix: 'tester',
             cwd   : cwd('with-presets-and-config'),
-            env   : { TESTER_DEBUG: 12, TESTER_NO_AUTOINSTALL: 1, },
+            env   : {TESTER_DEBUG: 12, TESTER_NO_AUTOINSTALL: 1,},
             info  : capture,
             warn  : capture
         });
@@ -350,8 +350,8 @@ with-alias-2 - [enabled]
     });
 
     newOptionManagerTest("with-disabled-plugin", {
-        "argv":argv("--plugin-disabled.stuff=1")
-    }, om=>{
+        "argv": argv("--plugin-disabled.stuff=1")
+    }, om => {
         expect(om.enabled('plugin-enables')).to.be.true;
         expect(om.enabled('plugin-disabled')).to.be.false;
 

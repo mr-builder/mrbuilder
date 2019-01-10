@@ -59,7 +59,7 @@ const parse = module.exports.parse = (value, name) => {
 
 
 const mergeEnv = module.exports.mergeEnv = (plugin, env = process.env) => {
-    const upperPlugin = fixName(plugin, '_').toUpperCase();
+    const upperPlugin = envify(plugin);
     if (upperPlugin in env) {
         const value = configOrBool(env[upperPlugin]);
         if (value === false || value === true) {
@@ -70,8 +70,8 @@ const mergeEnv = module.exports.mergeEnv = (plugin, env = process.env) => {
     return {};
 };
 
-const fixName = (name, sep = '-') => name.replace(/^@/, '').replace(/[^\w]{1,}/g, sep);
-
+const fixName       = (name, sep = '-') => name.replace(/^@/, '').replace(/[^\w]{1,}/g, sep);
+const envify        = module.exports.envify = name => fixName(name, '_').toUpperCase();
 const mergeArgs     = module.exports.mergeArgs = (plugin, argv = process.argv) => {
 
     const copy = [];

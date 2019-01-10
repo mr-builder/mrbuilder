@@ -7,11 +7,11 @@
   "dependencies": {
     "create-react-class": "^15.6.3",
     "json5": "^2.1.0",
-    "loader-utils": "^1.1.0",
+    "loader-utils": "^1.2.3",
     "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-hot-loader": "^4.6.2"
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-hot-loader": "^4.6.3"
   },
   "keywords": [
     "react",

@@ -1,11 +1,17 @@
 const path                 = require('path');
 const {cwd, resolvePkgDir} = require('@mrbuilder/utils');
-const useBabel = require('@mrbuilder/plugin-babel/use-babel.js');
- let showedWarning = false;
-module.exports    = function reactPlugin({
-                                             compatMode = false,
-                                         }, webpack,
-                                         om) {
+const useBabel             = require('@mrbuilder/plugin-babel/use-babel.js');
+let showedWarning          = false;
+module.exports             = function reactPlugin({
+                                                      compatMode = false,
+                                                  }, webpack,
+                                                  om) {
+
+    const pages     = om.config('@mrbuilder/plugin-html.pages');
+    const exported  = om.config('@mrbuilder/plugin-html.exported', true);
+    const elementId = om.config('@mrbuilder/plugin-html.elementId', 'content');
+    const isHot     = om.enabled('@mrbuilder/plugin-hot');
+
     if (!webpack.resolve) {
         webpack.resolve = {};
     }
@@ -56,9 +62,12 @@ module.exports    = function reactPlugin({
         webpack.resolve.alias['prop-types'] = resolvePkgDir('prop-types');
     }
 
-
-    const isHot       = om.enabled('@mrbuilder/plugin-hot');
-    let entry         = webpack.entry;
+    if (isHot || (pages && Object.values(pages).find(v => v.hot))) {
+        if (!webpack.resolve.alias['react-hot-loader']) {
+            webpack.resolve.alias['react-hot-loader'] = resolvePkgDir('react-hot-loader');
+        }
+    }
+    let entry = webpack.entry;
 
     const preEntry = isHot ? om.config('@mrbuilder/plugin-hot.preEntry', []) : [];
 
@@ -81,9 +90,6 @@ module.exports    = function reactPlugin({
                 entry = webpack.entry = {index};
             }
         }
-        const pages     = om.config('@mrbuilder/plugin-html.pages');
-        const exported  = om.config('@mrbuilder/plugin-html.exported', true);
-        const elementId = om.config('@mrbuilder/plugin-html.elementId', 'content');
 
         this.info('pages', pages);
 
@@ -134,9 +140,11 @@ module.exports    = function reactPlugin({
                     this.info(
                         `not using exported components, you may need to setup hot and dom mounting manually for ${name}
                      Something like  to your entry point:
-                     
+                    \`\`\` 
                      ${(hot ? generateHot : generate)(name, 'content', true)}
+                    \`\`\`
                     
+                    This may break between releases so exported entries are preferred.
                     `);
                 }
 

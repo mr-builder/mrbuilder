@@ -16,7 +16,7 @@
       "hot": "Run with hot configuration"
     },
     "plugins": [
-      "@mrbuilder/plugin-babel-6"
+      "@mrbuilder/plugin-babel-7"
     ]
   },
   "license": "0BSD",

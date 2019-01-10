@@ -77,7 +77,15 @@ function info() {
 
 
 function set(obj, key, value) {
-    obj = obj || {};
+    if (obj === false) {
+        return obj;
+    }
+
+    if (obj === true) {
+        obj = {};
+    }
+
+    obj        = obj || {};
     const keys = key.split('.').filter(Boolean);
     const last = camelCased(keys.pop());
     let cobj   = obj;

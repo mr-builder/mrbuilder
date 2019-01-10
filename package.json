@@ -19,7 +19,7 @@
     "example/*"
   ],
   "dependencies": {
-    "lerna": "^3.6.0"
+    "lerna": "^3.10.2"
   },
   "publishConfig": {
     "registry":"https://registry.npm.orig"
