@@ -27,5 +27,8 @@
     "lerna": "^3.10.2"
   },
   "license": "0BSD",
-  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+  "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",
+  "publishConfig": {
+    "access": "public"
+  }
 }

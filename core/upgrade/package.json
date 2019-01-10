@@ -4,12 +4,15 @@
   "description": "Tool for upgrading mrbuilder",
   "main": "lib",
   "source": "source",
-
   "bin": {
     "mrbuilder-upgrade": "./bin/upgrade.js"
   },
   "keywords": [
     "mrbuilder"
   ],
-  "license": "0BSD"
+  "license": "0BSD",
+  "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",
+  "publishConfig": {
+    "access": "public"
+  }
 }
