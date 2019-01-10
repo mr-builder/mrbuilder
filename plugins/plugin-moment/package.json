@@ -1,0 +1,14 @@
+{
+  "name": "@mrbuilder/plugin-moment",
+  "description": "Mrbuilder plugin for momentjs allows for configuration for specific locals",
+  "version": "4.0.0-alpha.0",
+  "main": "src",
+  "dependencies": {
+    "moment": "^2.22.2"
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@mrbuilder/plugin-filetypes",
+  "version": "4.0.0-alpha.0",
+  "description": "Loading file types via webpack",
+  "dependencies": {
+    "file-loader": "^3.0.1",
+    "url-loader": "^1.1.2"
+  },
+  "source": "src",
+  "main": "src",
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

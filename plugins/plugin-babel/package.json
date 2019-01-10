@@ -1,0 +1,27 @@
+{
+  "name": "@mrbuilder/plugin-babel",
+  "version": "4.0.0-alpha.0",
+  "description": "Tools for developing babel with mrbuilder",
+  "scripts": {
+    "clean": "mrbuilder-clean"
+  },
+  "bin": {
+    "mrbuilder-babel-cli": "bin/cli.js"
+  },
+  "source": "src",
+  "main": "src",
+  "mrbuilder": {
+    "alias": {
+      "coverage": "Run with code coverage, not for production",
+      "hot": "Run with hot configuration"
+    },
+    "plugins": [
+      "@mrbuilder/plugin-babel-7"
+    ]
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

@@ -1,12 +1,12 @@
 {
-  "name": "example-multi-app",
+  "name": "@mrbuilder/example-multi-app",
   "description": "Shows how you can have multiple entry points",
-  "version": "3.3.1",
+  "version": "4.0.0-alpha.0",
   "private": true,
   "devDependencies": {
-    "mrbuilder": "^3.3.1",
-    "mrbuilder-plugin-sass": "^3.3.1",
-    "mrbuilder-preset-app": "^3.3.1"
+    "@mrbuilder/cli": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-sass": "^4.0.0-alpha.0",
+    "@mrbuilder/preset-app": "^4.0.0-alpha.0"
   },
   "scripts": {
     "start": "mrbuilder",
@@ -14,42 +14,42 @@
   },
   "mrbuilder": {
     "presets": [
-      "mrbuilder",
-      "mrbuilder-preset-app"
+      "@mrbuilder/cli",
+      "@mrbuilder/preset-app"
     ],
     "plugins": [
       [
-        "mrbuilder-plugin-babel",
+        "@mrbuilder/plugin-babel",
         {
           "transform-runtime": false
         }
       ],
       [
-        "mrbuilder-plugin-css",
+        "@mrbuilder/plugin-css",
         {
           "localIdentName": "[package-name]«[hyphen:rel-name]»[local]"
         }
       ],
       [
-        "mrbuilder-plugin-stylus",
+        "@mrbuilder/plugin-stylus",
         {
           "modules": true
         }
       ],
       [
-        "mrbuilder-plugin-less",
+        "@mrbuilder/plugin-less",
         {
           "modules": true
         }
       ],
       [
-        "mrbuilder-plugin-sass",
+        "@mrbuilder/plugin-sass",
         {
           "modules": true
         }
       ],
       [
-        "mrbuilder-plugin-webpack",
+        "@mrbuilder/plugin-webpack",
         {
           "app": "app",
           "entry": {
@@ -59,7 +59,7 @@
         }
       ],
       [
-        "mrbuilder-plugin-html",
+        "@mrbuilder/plugin-html",
         {
           "pages": {
             "index": {
@@ -78,7 +78,7 @@
       "development": {
         "plugins": [
           [
-            "mrbuilder-plugin-webpack-dev-server",
+            "@mrbuilder/plugin-webpack-dev-server",
             {
               "rewrite": {
                 "/frown.:ext": "/smile.{ext}"
@@ -86,7 +86,7 @@
               "socketTimeout": 5000
             }
           ],
-          "mrbuilder-plugin-hot"
+          "@mrbuilder/plugin-hot"
         ]
       }
     }

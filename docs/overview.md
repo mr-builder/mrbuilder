@@ -1,5 +1,5 @@
 ```js
-<img src={require('../mrbuilder.wiki/mrbuilder.svg')}/>
+<img src={require('@mrbuilder/wiki/mrbuilder.svg')}/>
 ```
 
 Mr Builder is a "**M**ono **R**epo" build tool.  Its designed to be declarative way

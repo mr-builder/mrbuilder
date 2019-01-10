@@ -1,5 +1,5 @@
 import React from 'react';
-import Example from 'example-lib-webpack';
+import Example from '@mrbuilder/example-lib-webpack';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 

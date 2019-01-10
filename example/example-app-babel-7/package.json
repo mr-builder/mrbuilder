@@ -1,19 +1,19 @@
 {
-  "name": "example-app-babel-7",
+  "name": "@mrbuilder/example-app-babel-7",
   "description": "Sample application using mrbuilder components and babel 7",
-  "version": "3.3.1",
+  "version": "4.0.0-alpha.0",
   "private": true,
   "dependencies": {
-    "example-lib": "^3.3.1",
-    "example-lib-everything": "^3.3.1",
-    "example-lib-webpack": "^3.3.1"
+    "@mrbuilder/example-lib": "^4.0.0-alpha.0",
+    "@mrbuilder/example-lib-everything": "^4.0.0-alpha.0",
+    "@mrbuilder/example-lib-webpack": "^4.0.0-alpha.0"
   },
   "devDependencies": {
-    "mrbuilder": "^3.3.1",
-    "mrbuilder-plugin-version": "^3.3.1",
-    "mrbuilder-preset-app": "^3.3.1",
-    "mrbuilder-preset-babel-7": "^3.3.1",
-    "mrbuilder-preset-dev": "^3.3.1"
+    "@mrbuilder/cli": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-version": "^4.0.0-alpha.0",
+    "@mrbuilder/preset-app": "^4.0.0-alpha.0",
+    "@mrbuilder/preset-babel-7": "^4.0.0-alpha.0",
+    "@mrbuilder/preset-dev": "^4.0.0-alpha.0"
   },
   "scripts": {
     "prepublish": "mrbuilder",
@@ -24,12 +24,12 @@
   },
   "mrbuilder": {
     "plugins": [
-      "mrbuilder-plugin-version"
+      "@mrbuilder/plugin-version"
     ],
     "presets": [
-      "mrbuilder-preset-babel-7",
-      "mrbuilder-preset-app",
-      "example-lib-everything"
+      "@mrbuilder/preset-babel-7",
+      "@mrbuilder/preset-app",
+      "@mrbuilder/example-lib-everything"
     ]
   },
   "license": "0BSD"

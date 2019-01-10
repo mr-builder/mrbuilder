@@ -1,0 +1,87 @@
+{
+  "plugins": [
+    "@mrbuilder/plugin-babel"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "@mrbuilder/preset-test",
+        "@mrbuilder/preset-app"
+      ]
+    },
+    "karma": {
+      "presets": [
+        "@mrbuilder/preset-test",
+        "@mrbuilder/preset-app"
+      ]
+    },
+    "app": {
+      "presets": [
+        "@mrbuilder/preset-app"
+      ]
+    },
+    "mocha": {
+      "plugins": [
+        "@mrbuilder/plugin-mocha",
+        "@mrbuilder/plugin-enzyme"
+      ]
+    },
+    "babel": {
+      "plugins": [
+        "@mrbuilder/plugin-babel"
+      ]
+    },
+    "demo": {
+      "presets": [
+        [
+          "@mrbuilder/preset-app",
+          {
+            "demo": "demo"
+          }
+        ]
+      ]
+    },
+    "lib": {
+      "presets": [
+        "@mrbuilder/preset-lib"
+      ]
+    },
+    "analyze": {
+      "plugins": [
+        "@mrbuilder/plugin-analyze"
+      ]
+    },
+    "start": {
+      "plugins": [
+        "@mrbuilder/plugin-webpack-dev-server"
+      ],
+      "presets": [
+        "@mrbuilder/preset-dev"
+      ]
+    },
+    "development": {
+      "presets": [
+        "@mrbuilder/preset-app"
+      ]
+    },
+    "styleguide": {
+      "plugins": [
+        [
+          "@mrbuilder/plugin-html",
+          false
+        ],
+        "@mrbuilder/plugin-doc-prop-types",
+        [
+          "@mrbuilder/plugin-webpack",
+          {
+            "demo": "./styleguide"
+          }
+        ],
+        [
+          "@mrbuilder/plugin-react-styleguidist",
+          null
+        ]
+      ]
+    }
+  }
+}

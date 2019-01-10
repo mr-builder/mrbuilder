@@ -1,0 +1,48 @@
+{
+  "name": "@mrbuilder/preset-dev",
+  "version": "4.0.0-alpha.0",
+  "dependencies": {
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-eslint": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-hot": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-react": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-webpack-dev-server": "^4.0.0-alpha.0",
+    "@mrbuilder/preset-app": "^4.0.0-alpha.0"
+  },
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "mrbuilder": {
+    "presets": [
+      "@mrbuilder/preset-app"
+    ],
+    "plugins": [
+      "@mrbuilder/plugin-react",
+      "@mrbuilder/plugin-eslint",
+      [
+        "@mrbuilder/plugin-html",
+        {
+          "exported": true
+        }
+      ],
+      "@mrbuilder/plugin-hot",
+      [
+        "@mrbuilder/plugin-css",
+        {
+          "useNameHash": "[name].css",
+          "useStyleLoader": true
+        }
+      ],
+      [
+        "@mrbuilder/plugin-webpack",
+        {
+          "useExternals": false,
+          "externalizePeers": false
+        }
+      ],
+      "@mrbuilder/plugin-webpack-dev-server"
+    ]
+  },
+  "license": "0BSD",
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

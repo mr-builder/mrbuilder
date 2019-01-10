@@ -1,0 +1,43 @@
+{
+  "name": "@mrbuilder/plugin-react-styleguidist",
+  "version": "4.0.0-alpha.0",
+  "description": "Mrbuilder Plugin for styleguidist",
+  "main": "src",
+  "dependencies": {
+    "@mrbuilder/plugin-doc-prop-types": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.0",
+    "react-styleguidist": "^8.0.6"
+  },
+  "mrbuilder": {
+    "plugins": [
+      [
+        "@mrbuilder/plugin-hot",
+        false
+      ],
+      "@mrbuilder/plugin-doc-prop-types"
+    ],
+    "env": {
+      "styleguide": {
+        "plugins": [
+          [
+            "@mrbuilder/plugin-html",
+            false
+          ],
+          "@mrbuilder/plugin-doc-prop-types",
+          [
+            "@mrbuilder/plugin-webpack",
+            {
+              "demo": "./styleguide"
+            }
+          ],
+          "@mrbuilder/plugin-react-styleguidist"
+        ]
+      }
+    }
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@mrbuilder/plugin-sass",
+  "version": "4.0.0-alpha.0",
+  "description": "Sass plugin for mrbuilder",
+  "main": "./src/index",
+  "author": "Justin Spears <speajus@gmail.com>",
+  "dependencies": {
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.0",
+    "@mrbuilder/utils": "^4.0.0-alpha.0",
+    "loader-utils": "^1.2.3",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0"
+  },
+  "keywords": [
+    "subschema",
+    "sass",
+    "mrbuilder"
+  ],
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

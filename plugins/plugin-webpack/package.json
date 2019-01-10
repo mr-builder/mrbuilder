@@ -1,0 +1,44 @@
+{
+  "name": "@mrbuilder/plugin-webpack",
+  "version": "4.0.0-alpha.0",
+  "description": "Tools for developing with mrbuilder and webpack",
+  "scripts": {
+    "clean": "mrbuilder-clean"
+  },
+  "bin": {
+    "mrbuilder-webpack-cli": "./bin/cli.js"
+  },
+  "main": "src",
+  "source": "src",
+  "dependencies": {
+    "@mrbuilder/optionsmanager": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.0",
+    "@mrbuilder/utils": "^4.0.0-alpha.0",
+    "raw-loader": "^1.0.0",
+    "val-loader": "^1.1.1",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
+  },
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "mrbuilder": {
+    "alias": {
+      "app": "compile as a top level app ",
+      "demo": "compile as a demo <outputdir>",
+      "useNameHash": "Use hash in the name of output files",
+      "useScopeHoist": "Use ModuleConcatenationPlugin",
+      "library": "Library name for output",
+      "libraryTarget": "Output type of library",
+      "public": "public path resource",
+      "entry": "Entry point",
+      "useExternals": "An array or boolean of dependencies to externalize [default:true]",
+      "useTarget": "Type of build, web, node, electron,etc.",
+      "useMainFields": "What main fields to use usually [browser, main]",
+      "useExtension": "What extensions to use",
+      "externalizePeers": "Externalize peer dependencies [default:true]"
+    }
+  },
+  "license": "0BSD",
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

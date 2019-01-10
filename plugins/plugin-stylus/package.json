@@ -1,0 +1,29 @@
+{
+  "name": "@mrbuilder/plugin-stylus",
+  "version": "4.0.0-alpha.0",
+  "description": "Stylus plugin for mrbuilder",
+  "main": "./src/index",
+  "author": "Justin Spears <speajus@gmail.com>",
+  "dependencies": {
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.0",
+    "loader-utils": "^1.2.3",
+    "nib": "^1.1.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2"
+  },
+  "keywords": [
+    "subschema",
+    "stylus",
+    "mrbuilder"
+  ],
+  "mrbuilder": {
+    "plugins": [
+      "@mrbuilder/plugin-css"
+    ]
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

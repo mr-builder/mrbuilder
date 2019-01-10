@@ -1,0 +1,37 @@
+{
+  "name": "@mrbuilder/plugin-webpack-dev-server",
+  "version": "4.0.0-alpha.0",
+  "description": "webpack dev server for mrbuilder",
+  "dependencies": {
+    "@mrbuilder/optionsmanager": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.0",
+    "@mrbuilder/utils": "^4.0.0-alpha.0",
+    "hard-source-webpack-plugin": "^0.13.1",
+    "loglevel": "^1.6.1",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "source": "src",
+  "main": "src",
+  "bin": {
+    "mrbuilder-webpack-server-cli": "./bin/cli.js"
+  },
+  "mrbuilder": {
+    "alias": {
+      "hot": "Run with HMR",
+      "noHot": "Disable HMR",
+      "public": "Webpack dev server public path",
+      "useExternals": "Externalize a list of dependencies for use with libraries",
+      "entry": "Entry point or points",
+      "port": "port to listen to defaults 8082"
+    },
+    "plugins": [
+      "@mrbuilder/plugin-webpack",
+      "@mrbuilder/plugin-html"
+    ]
+  },
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@mrbuilder/plugin-less",
+  "version": "4.0.0-alpha.0",
+  "description": "less support for mrbuilder",
+  "dependencies": {
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.0",
+    "less": "^3.8.0",
+    "less-loader": "^4.1.0"
+  },
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "scripts": {
+    "test": "mrbuilder-mocha"
+  },
+  "source": "src",
+  "main": "src",
+  "mrbuilder": {
+    "plugins": [
+      "@mrbuilder/plugin-css"
+    ]
+  },
+  "license": "0BSD",
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

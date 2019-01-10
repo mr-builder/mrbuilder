@@ -1,0 +1,52 @@
+{
+  "name": "@mrbuilder/preset-test",
+  "version": "4.0.0-alpha.0",
+  "dependencies": {
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-enzyme": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-karma": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-mocha": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-react": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.0"
+  },
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "mrbuilder": {
+    "plugins": [
+      "@mrbuilder/plugin-react",
+      [
+        "@mrbuilder/plugin-webpack",
+        {
+          "useExternals": false,
+          "externalizePeers": false
+        }
+      ],
+      [
+        "@mrbuilder/plugin-html",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-css",
+        {
+          "useNameHash": "[id].[name].css",
+          "useStyleLoader": true
+        }
+      ],
+      [
+        "@mrbuilder/plugin-html",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-hot",
+        false
+      ],
+      "@mrbuilder/plugin-enzyme",
+      "@mrbuilder/plugin-mocha",
+      "@mrbuilder/plugin-webpack",
+      "@mrbuilder/plugin-karma"
+    ]
+  },
+  "license": "0BSD",
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

@@ -1,0 +1,72 @@
+{
+  "name": "@mrbuilder/preset-lib",
+  "version": "4.0.0-alpha.0",
+  "dependencies": {
+    "@mrbuilder/plugin-babel": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-env": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-enzyme": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-eslint": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-filetypes": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-fonts": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-html": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-less": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-react": "^4.0.0-alpha.0",
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.0"
+  },
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "mrbuilder": {
+    "plugins": [
+      "@mrbuilder/plugin-babel",
+      "@mrbuilder/plugin-react",
+      "@mrbuilder/plugin-browserslist",
+      "@mrbuilder/plugin-env",
+      "@mrbuilder/plugin-fonts",
+      "@mrbuilder/plugin-filetypes",
+      [
+        "@mrbuilder/plugin-css",
+        {
+          "useNameHash": false,
+          "useStyleLoader": false
+        }
+      ],
+      "@mrbuilder/plugin-less",
+      [
+        "@mrbuilder/plugin-uglify",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-chunk",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-webpack",
+        {
+          "externalizePeers": true,
+          "libraryTarget": "umd",
+          "useExternals": true,
+          "devtool": "source-map",
+          "mode": "none",
+          "globalObject": "this"
+        }
+      ]
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          "@mrbuilder/preset-test"
+        ]
+      },
+      "development": {
+        "presets": [
+          "@mrbuilder/preset-dev"
+        ]
+      }
+    }
+  },
+  "license": "0BSD",
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

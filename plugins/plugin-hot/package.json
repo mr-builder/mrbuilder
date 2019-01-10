@@ -1,0 +1,12 @@
+{
+  "name": "@mrbuilder/plugin-hot",
+  "version": "4.0.0-alpha.0",
+  "description": "hmr for mrbuilder",
+  "source": "src",
+  "main": "src",
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}

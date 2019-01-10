@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import App from 'example-app';
+import App from '@mrbuilder/example-app';
 import {expect} from 'chai';
 
 describe('example-app', function () {

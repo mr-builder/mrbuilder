@@ -1,0 +1,32 @@
+{
+  "name": "@mrbuilder/plugin-markdown",
+  "description": "Provides markdown to react components",
+  "version": "4.0.0-alpha.0",
+  "scripts": {
+    "test": " mrbuilder-karma",
+    "karma": "mrbuilder-karma",
+    "start": "MRBUILDER_ENV=development node $NODE_DEBUG_OPTION  ./node_modules/.bin/mrbuilder-webpack-dev-server"
+  },
+  "dependencies": {
+    "@mrbuilder/plugin-babel": "^4.0.0-alpha.0",
+    "@mrbuilder/utils": "^4.0.0-alpha.0",
+    "markdown-it": "^8.4.2",
+    "markdown-it-checkbox": "^1.1.0",
+    "react-syntax-highlighter": "^10.1.2"
+  },
+  "devDependencies": {
+    "@mrbuilder/plugin-karma": "^4.0.0-alpha.0"
+  },
+  "peerDependencies": {
+    "@mrbuilder/cli": "3.x"
+  },
+  "source": "src",
+  "main": "src",
+  "mrbuilder": {
+    "plugins": [
+      "@mrbuilder/plugin-markdown"
+    ]
+  },
+  "license": "0BSD",
+  "gitHead": "dcf4a516478af2e154c52e935f1be6ae1518938a"
+}
