@@ -32,7 +32,7 @@ module.exports = function (config) {
             chromeDataDir,
         },
         Chrome_travis_ci     : {
-            base : 'Chrome',
+            base : 'ChromeHeadless',
             flags: ['--no-sandbox'],
         },
         SimpleHeadlessChrome : {
