@@ -238,7 +238,7 @@ module.exports = class OptionsManager {
             }
             //We don't handle alias options here because we may have to install the package to handle the alias.
             // but if the resolvedOptions where false by now the alias would not matter.
-            const resolvedOptions = mergeOptions([mergeEnv(pluginName, env), mergeArgs(pluginName, argv), override, pluginOpt]);
+            const resolvedOptions = mergeOptions([mergeArgs(pluginName, argv), mergeEnv(pluginName, env), override, pluginOpt]);
             if (resolvedOptions === false) {
                 //nothing more to do.
                 this.plugins.set(pluginName, false);

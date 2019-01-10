@@ -1,4 +1,4 @@
-Mrbuilder 4.0 uses changes to using scoped modules.
+Mrbuilder 4.0 is using scoped modules under the @mrbuilder scope. 
 
 Upgrading
 ===

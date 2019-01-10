@@ -62,8 +62,7 @@ describe('@mrbuilder/optionsmanager', function () {
             assert = config;
             config = null;
         }
-        fn(`should configure "${name}"${config ? ` and env ${stringify(
-            config)}` : ''}`, function () {
+        fn(`should configure "${name}"${config ? ` and env ${stringify(config)}` : ''}`, function () {
 
             const env = Object.assign({
                 TESTER_NO_AUTOINSTALL: 1,
@@ -104,6 +103,22 @@ describe('@mrbuilder/optionsmanager', function () {
         expect(om.config('with-cli-alias-1.other')).to.eql(
             {"index": {"title": "Index"}, "other": {"title": "Other"}});
     });
+
+    newOptionManagerTest("with-cli", {
+        argv: argv([`--with-cli-alias-1=false`])
+    }, om => {
+        expect(om.enabled('with-cli-alias-1')).to.eql(false);
+    });
+
+    newOptionManagerTest("with-cli", {
+        env : {
+            "WITH_CLI_ALIAS_1": JSON.stringify({"stuff": 1})
+        },
+        argv: argv([`--with-cli-alias-1=false`])
+    }, om => {
+        expect(om.enabled('with-cli-alias-1')).to.eql(false);
+    });
+
     newOptionManagerTest('boot', om => expect(om).to.exist);
 
     newOptionManagerTest('with-presets-env', {
