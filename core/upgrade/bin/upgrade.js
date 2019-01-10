@@ -1,21 +1,23 @@
 #!/usr/bin/env node
-const fs     = require('fs');
-const JSON5  = require('json5');
-const {argv} = process;
+const {argv, cwd} = process;
 if (argv.includes('--help') || argv.includes('-h')) {
     help();
 }
-const write       = process.argv.includes('--write');
-const rename      = process.argv.includes('--rename');
-const version     = (idx => (idx ? require('../package.json').version : process.argv[idx]))(process.argv.indexOf('--version') + 1);
-const MRBIULDERRC = `${process.env.PWD}/.mrbuilderrc`;
-const PACKAGE     = `${process.env.PWD}/package.json`;
+const path        = require('path');
+const fs          = require('fs');
+const JSON5       = require('json5');
+const write       = argv.includes('--write');
+const rename      = argv.includes('--rename');
+const version     = (idx => (idx ? require('../package.json').version : argv[idx]))(argv.indexOf('--version') + 1);
+const MRBIULDERRC = path.resolve(cwd(), '.mrbuilderrc');
+const PACKAGE     = path.resolve(cwd(), 'package.json');
 
 function help() {
-    console.warn(`${process.argv[1]}
-    Run the script in the directory of the project(s) you want to upgrade mrbuilder.   
+    console.warn(`${argv[1]}
+    Run the script in the directory of the project(s) you want to upgrade mrbuilder.   Then run yarn install to 
+    install new dependencies.
     --write   - Write the changed files to filesystem.  Warning this could be destructive make sure you have a backup.
-    --version - The version of mrbuilder to upgrade to.  Defaults to the latest ^4.0.0
+    --version - The version of mrbuilder to upgrade to.  Defaults to the latest ${version}
     --help - This helpful message
     
      To upgrade a lerna repository
@@ -57,11 +59,13 @@ function fixScripts(obj) {
     if (!obj) {
         return obj;
     }
+    const replace = (_, name) => ` --@mrbuilder/${name}`;
+
     return Object.keys(obj).reduce((ret, key) => {
-        ret[key] = typeof obj[key] === 'string' ? obj[key].replace(/\s--mrbuilder-((?:plugin|preset)-(?:[^=\s]*))/g, (_, name) => ` --@mrbuilder/${name}`) : obj[key];
+        ret[key] = typeof obj[key] === 'string' ? obj[key].replace(/\s--mrbuilder-((?:plugin|preset)-[^=\s])/g, replace) : obj[key];
         return ret;
     });
-};
+}
 
 function fixMrbuilder(config) {
     const mrbuilder = Object.assign({}, config);
@@ -74,16 +78,13 @@ function fixMrbuilder(config) {
     }
     if (config.env) {
         mrbuilder.env = Object.keys(config.env).reduce(function (ret, key) {
+            if (!ret[key]) {
+                ret[key] = {};
+            }
             if (config.env[key].plugins) {
-                if (!ret[key]) {
-                    ret[key] = {};
-                }
                 ret[key].plugins = fixPlugins(config.env[key].plugins)
             }
             if (config.env[key].presets) {
-                if (!ret[key]) {
-                    ret[key] = {};
-                }
                 ret[key].presets = fixPlugins(config.env[key].presets)
             }
             return ret;
