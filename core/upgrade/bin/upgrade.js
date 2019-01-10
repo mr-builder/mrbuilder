@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 const {argv, cwd} = process;
-if (argv.includes('--help') || argv.includes('-h')) {
-    help();
-}
+
 const path        = require('path');
 const fs          = require('fs');
 const JSON5       = require('json5');
 const write       = argv.includes('--write');
 const rename      = argv.includes('--rename');
-const version     = (idx => (idx ? require('../package.json').version : argv[idx]))(argv.indexOf('--version') + 1);
+const version     = (idx => (idx === 0 ?  `^${require('../package.json').version}` : argv[idx]))(argv.indexOf('--version') + 1) ;
 const MRBIULDERRC = path.resolve(cwd(), '.mrbuilderrc');
 const PACKAGE     = path.resolve(cwd(), 'package.json');
-
+if (argv.includes('--help') || argv.includes('-h')) {
+    help();
+}
 function help() {
     console.warn(`${argv[1]}
     Run the script in the directory of the project(s) you want to upgrade mrbuilder.   Then run yarn install to 
