@@ -81,11 +81,15 @@
                 "content": "../docs/monorepo.md"
               },
               {
-                "name": "Upgrading to 3.0",
+                "name": "Upgrading to 4.x",
+                "content": "../docs/upgrade-3-4.md"
+              },
+              {
+                "name": "Upgrading to 3.x",
                 "content": "../docs/upgrade-2-3.md"
               },
               {
-                "name": "Upgrading to 2.0",
+                "name": "Upgrading to 2.x",
                 "content": "../docs/upgrade-1-2.md"
               },
               {
