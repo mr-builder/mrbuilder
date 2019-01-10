@@ -18,7 +18,7 @@
     "@mrbuilder/plugin-karma": "^4.0.0-alpha.1"
   },
   "peerDependencies": {
-    "@mrbuilder/cli": "3.x"
+    "@mrbuilder/cli": "^4.0.0"
   },
   "source": "src",
   "main": "src",
