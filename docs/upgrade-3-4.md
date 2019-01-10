@@ -7,6 +7,7 @@ information.
 
 Changes
 ===
+* mrbuilder-component-editor has been removed. It was half baked, and not sure anyone is using it.
 * ENV variables are now processed before command line arguments.
 * ENV variables can not be extended with _  for instance MRBUILDER_PLUGIN_BABEL_STUFF=1 is now 
   MRBUILDER_PLUGIN_BABEL={stuff:1}
