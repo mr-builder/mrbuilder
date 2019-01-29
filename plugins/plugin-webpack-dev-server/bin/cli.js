@@ -27,7 +27,10 @@ optionsManager.debug(devServer, process.argv.slice(2));
 
 try {
     require(devServer);
-}catch(e){
-    console.warn(`wrong version of webpack trying to locate correct version`, devServer);
-    require('@mrbuilder/plugin-webpack-dev-server/node_modules/webpack-dev-server/bin/webpack-dev-server')
+} catch (e) {
+    if (e.code === 'MODULE_NOT_FOUND') {
+        console.warn(`wrong version of webpack trying to locate correct version`, devServer);
+        return require('@mrbuilder/plugin-webpack-dev-server/node_modules/webpack-dev-server/bin/webpack-dev-server')
+    }
+    throw e
 }

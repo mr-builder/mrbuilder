@@ -14,7 +14,7 @@
     "core/*",
     "presets/*",
     "plugins/*",
-    "create-app",
+    "create-mrbuilder-app",
     "wiki",
     "example/*"
   ],
