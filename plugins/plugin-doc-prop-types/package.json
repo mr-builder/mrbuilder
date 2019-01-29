@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-doc-prop-types",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-alpha.2",
   "description": "Allow for auto documentation of propTypes",
   "main": "src",
   "dependencies": {

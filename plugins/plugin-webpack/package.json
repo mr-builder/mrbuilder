@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-webpack",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-alpha.2",
   "description": "Tools for developing with mrbuilder and webpack",
   "scripts": {
     "clean": "mrbuilder-clean"
@@ -12,7 +12,7 @@
   "source": "src",
   "dependencies": {
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.1",
-    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.1",
+    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.2",
     "@mrbuilder/utils": "^4.0.0-alpha.1",
     "raw-loader": "^1.0.0",
     "val-loader": "^1.1.1",
