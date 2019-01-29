@@ -1,5 +1,5 @@
 {
-  "name": "@mrbuilder/create-app",
+  "name": "@mrbuilder/create-mrbuilder-app",
   "description": "Support for yarn create app",
   "version": "4.0.0-alpha.1",
   "bin": {

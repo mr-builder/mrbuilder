@@ -20,7 +20,7 @@
     "webpack-cli": "^3.2.1"
   },
   "peerDependencies": {
-    "@mrbuilder/cli": "3.x"
+    "@mrbuilder/cli": "^4.0.0"
   },
   "mrbuilder": {
     "alias": {

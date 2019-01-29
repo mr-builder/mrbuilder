@@ -6,7 +6,7 @@
   "main": "src",
   "license": "0BSD",
   "peerDependencies": {
-    "@mrbuilder/cli": "3.x"
+    "@mrbuilder/cli": "^4.0.0"
   },
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",
   "publishConfig": {
