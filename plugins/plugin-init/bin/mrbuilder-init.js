@@ -9,7 +9,7 @@ const {
           mkdirSync
       }                = require('fs');
 const root             = require(join(__dirname, '..', 'package.json'));
-const mrbuilderVersion = root.dependencies['mrbuilder'];
+const mrbuilderVersion = root.dependencies['@mrbuilder/cli'];
 
 const PRESETS = ["@mrbuilder/preset-app", "@mrbuilder/preset-lib", "@mrbuilder/preset-dev"];
 const generateGitIgnore = ()=>{
@@ -51,7 +51,7 @@ const generatePackage = ({
         },
         scripts        : {
             demo      : "mrbuilder --app demo",
-            start     : "mrbuilder",
+            start     : "mrbuilder --port 0 --open",
             prepublish: "mrbuilder",
             test      : "mrbuilder",
             karma     : "mrbuilder"
