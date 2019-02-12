@@ -55,7 +55,7 @@ module.exports = function (options = {}, webpack, om) {
             } : component[1] != null ? component[1] : {});
 
 
-        const makeComponent = (name = '**/*.{js,jsx,ts,tsx}') => {
+        const makeComponent = (name = '**/[A-Z]*') => {
 
 
             const key = join(relative(cwd(), join(_pkg._location, 'src')), name);
