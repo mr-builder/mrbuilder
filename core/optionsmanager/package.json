@@ -2,7 +2,8 @@
   "name": "@mrbuilder/optionsmanager",
   "version": "4.0.0-alpha.1",
   "scripts": {
-    "test": "mocha test/**"
+    "test": "mocha -r ts-node/register test/**",
+    "prepare": "tsc"
   },
   "bin": {
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"
@@ -14,7 +15,8 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.4.1"
   },
   "source": "src",
   "main": "src",

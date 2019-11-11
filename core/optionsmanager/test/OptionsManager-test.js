@@ -1,4 +1,4 @@
-const OptionsManager = require('../src/OptionsManager');
+const OptionsManager = require('../src/OptionsManager').default;
 const {join}         = require('path');
 const {expect}       = require('chai');
 const {stringify}    = require('@mrbuilder/utils');
@@ -38,15 +38,20 @@ describe('@mrbuilder/optionsmanager', function () {
         if (isDirectory(sourceNodeDir)) {
             readdirSync(sourceNodeDir).forEach(dir => {
                 const sourceDir = join(sourceNodeDir, dir);
-                if (isDirectory(sourceDir)) {
-                    const dest = join(__dirname, '..', 'node_modules', dir);
-                    if (existsSync(dest)) {
-                        unlinkSync(dest);
+                try {
+                    if (isDirectory(sourceDir)) {
+                        const dest = join(__dirname, '..', 'node_modules', dir);
+                        if (existsSync(dest)) {
+
+                            unlinkSync(dest);
+                        }
+                        afters.push(() => {
+                            existsSync(dest) && unlinkSync(dest)
+                        });
+                        symlinkSync(sourceDir, dest);
                     }
-                    afters.push(() => {
-                        existsSync(dest) && unlinkSync(dest)
-                    });
-                    symlinkSync(sourceDir, dest);
+                }catch(e){
+                    console.warn(`error ${sourceDir}`, e);
                 }
             });
         }
@@ -64,21 +69,21 @@ describe('@mrbuilder/optionsmanager', function () {
         }
         fn(`should configure "${name}"${config ? ` and env ${stringify(config)}` : ''}`, function () {
 
-            const env = Object.assign({
-                TESTER_NO_AUTOINSTALL: 1,
-            }, config && config.env);
+            assert(new OptionsManager({
 
-
-            assert(new OptionsManager(Object.assign({
                 prefix  : 'tester',
                 cwd     : cwd(name.split(' ')[0]),
-                env,
                 _require: require,
                 handleNotFound(e, pkg) {
                     console.log(e, pkg);
                     throw e;
+                },
+                ...config,
+                env:{
+                    TESTER_NO_AUTOINSTALL: 1,
+                    ...(config && config.env)
                 }
-            }, config)), config);
+            }), config);
         });
 
         newOptionManagerTest.only =

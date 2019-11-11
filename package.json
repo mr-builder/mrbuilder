@@ -21,8 +21,11 @@
   "dependencies": {
     "lerna": "^3.10.2"
   },
+  "devDependencies": {
+    "typescript": "^3.7.2"
+  },
   "publishConfig": {
-    "registry":"https://registry.npm.orig"
+    "registry": "https://registry.npm.orig"
   },
   "scripts": {
     "test": "lerna run test",
