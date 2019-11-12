@@ -1,5 +1,5 @@
 const {cwd, enhancedResolve} = require('@mrbuilder/utils');
-
+const {DefinePlugin} = require('webpack');
 module.exports = function ({
                                variable,
                                version,
@@ -36,6 +36,11 @@ module.exports = function ({
         }
         conf[NODE_ENV] = 1;
     }
-    (this.info || console.log)(conf);
-    this.useDefine = Object.assign({}, this.useDefine, conf);
+    const out = Object.entries(conf).reduce((ret, [key, value]) => {
+        ret[key] = JSON.stringify(value);
+        return ret;
+    }, {});
+    this.debug(JSON.stringify(out));
+    webpack.plugins.unshift(new DefinePlugin(out));
+    return webpack;
 };

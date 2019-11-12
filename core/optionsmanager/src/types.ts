@@ -69,16 +69,16 @@ export type RequireFn = AnyFn & {
 
 export type NotFoundFn = (e: Error, pkg: string, isDev?: boolean) => void;
 export type CwdFn = (...args: string[]) => string;
-export type OptionsManagerConfig = Partial<Logger> & {
-    prefix?: string,
-    envPrefix?: string,
-    confPrefix?: string,
-    rcFile?: string,
-    env?: { [key: string]: any },
-    argv?: string[],
-    cwd?: CwdFn,
-    _require?: RequireFn,
+export type OptionsManagerConfig = Partial<Logger> & Partial<{
+    prefix: string,
+    envPrefix: string,
+    confPrefix: string,
+    rcFile: string,
+    env: { [key: string]: any },
+    argv: string[],
+    cwd: CwdFn,
+    _require: RequireFn,
     aliasObj: {},
-    topPackage?: string,
-    handleNotFound?: NotFoundFn,
-}
+    topPackage: string,
+    handleNotFound: NotFoundFn,
+}>

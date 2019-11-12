@@ -10,7 +10,10 @@ import {
 } from './parse';
 //JSON5 allows for a lot more convienent syntax.
 
-export const cwd = process.cwd.bind(process);
+export const cwd = (...args: string[]): string => {
+    return path.join(process.cwd(), ...args);
+};
+
 export const project = cwd;
 
 export const parseJSON = (filename: string): {} => {

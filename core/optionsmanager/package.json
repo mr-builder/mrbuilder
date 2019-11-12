@@ -19,7 +19,8 @@
     "ts-node": "^8.4.1"
   },
   "source": "src",
-  "main": "src",
+  "types": "lib",
+  "main": "index.js",
   "license": "0BSD",
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",
   "publishConfig": {

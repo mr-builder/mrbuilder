@@ -1,11 +1,11 @@
 const {
-          camelCased, cwd, stringify,
-          enhancedResolve, regexOrFuncApply
-      }                   = require('@mrbuilder/utils');
-const processAlias        = require('./processAlias');
+    camelCased, cwd, stringify,
+    enhancedResolve, regexOrFuncApply
+} = require('@mrbuilder/utils');
+const processAlias = require('./processAlias');
 const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
-const SOURCE_MAIN_FIELDS  = ['source', 'browser', 'main'];
-const returnMode          = (val = process.env.NODE_ENV) => {
+const SOURCE_MAIN_FIELDS = ['source', 'browser', 'main'];
+const returnMode = (val = process.env.NODE_ENV) => {
     switch (val) {
         case "development":
         case "test":
@@ -80,7 +80,8 @@ const mod = function ({
     }
     const info = this.info || console.log;
 
-    const pkg = require(cwd('package.json'));
+    const pkgPath = cwd('package.json');
+    const pkg = require(pkgPath);
 
     processAlias(webpack, alias);
 
@@ -97,11 +98,10 @@ const mod = function ({
     demo = demo || app;
 
     if (this.isLibrary) {
-        output.library       =
-            typeof library === 'string' ? library : camelCased(pkg.name);
+        output.library = typeof library === 'string' ? library : camelCased(pkg.name);
         output.libraryTarget = libraryTarget;
         //Don't hash when its a library
-        output.filename      = filename.replace('[hash].', '');
+        output.filename = filename.replace('[hash].', '');
 
         info(`building as library with name "${output.library}"`)
 
@@ -135,7 +135,7 @@ const mod = function ({
         if (externalizePeers && pkg.peerDependencies) {
             externals = externals.concat(Object.keys(pkg.peerDependencies));
         }
-        const wexternals  = webpack.externals || (webpack.externals = []);
+        const wexternals = webpack.externals || (webpack.externals = []);
         webpack.externals =
             wexternals.concat(Object.keys(externals.reduce((ret, key) => {
                 ret[key] = key;

@@ -1,4 +1,4 @@
-const {parseValue, camelToHyphen, set} = require('../src/index');
+const {parseValue, camelToHyphen, set} = require('../lib/index');
 const {expect}                         = require('chai');
 describe('@mrbuilder/utils', function () {
     describe('parseValue', function () {

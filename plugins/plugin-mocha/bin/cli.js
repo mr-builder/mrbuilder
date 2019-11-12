@@ -13,7 +13,7 @@ const om     = global._MRBUILDER_OPTIONS_MANAGER;
 const {cwd}  = require('@mrbuilder/utils');
 const path   = require('path');
 const {argv} = process;
-const {info} = om.plugins.get('@mrbuilder/plugin-mocha');
+const {info} = om.logger('@mrbuilder/plugin-mocha');
 
 const coverageDir    = om.config('@mrbuilder/plugin-mocha.coverageDir');
 const coverageGLobal = om.config('@mrbuilder/plugin-mocha.coverageGLobal');

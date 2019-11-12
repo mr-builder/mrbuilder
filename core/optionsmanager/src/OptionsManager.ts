@@ -423,23 +423,25 @@ class Option implements OptionType {
                 public parent?: Package,
                 public alias?: AliasObj) {
     }
-    get(key:string, def?:any):any {
-        if (key){
+
+    get(key: string, def?: any): any {
+        if (key) {
             return get(this.config, key, def);
         }
         return this.config;
     }
-    debug(...args: any[]): void {
+
+    debug = (...args: any[]): void => {
         this.optionsManager.log('DEBUG', this.name, ...args);
-    }
+    };
 
-    warn(...args: any[]): void {
+    warn = (...args: any[]): void => {
         this.optionsManager.log('WARN', this.name, ...args);
-    }
+    };
 
-    info(...args: any[]): void {
+    info = (...args: any[]): void => {
         this.optionsManager.log('INFO', this.name, ...args);
-    }
+    };
 
     toJSON() {
         return {
