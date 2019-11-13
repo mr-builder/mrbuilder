@@ -188,7 +188,7 @@ switch (profile) {
 }
 
 if (!global._MRBUILDER_OPTIONS_MANAGER) {
-    global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager'))({
+    global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager').OptionsManager)({
         prefix: 'mrbuilder', _require: require
     })
 }

@@ -9,6 +9,7 @@
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
+    "module": "commonjs",
     "allowSyntheticDefaultImports": true,
     "lib": [
       "dom",
