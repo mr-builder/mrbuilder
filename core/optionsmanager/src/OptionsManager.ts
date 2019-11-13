@@ -370,6 +370,11 @@ export default class OptionsManager implements OptionsManagerType {
 
     }
 
+    /**
+     * Returns a logger for a plugin.  This object has warn,info,debug
+     *
+     * @param plugin
+     */
     logger(plugin: string): Logger {
         const {warn, info, debug} = this.plugins.get(plugin) || this;
         return {
@@ -379,7 +384,12 @@ export default class OptionsManager implements OptionsManagerType {
         }
     }
 
-
+    /**
+     * Iterates over each option, passing the value, the name and other foreach style args.
+     *
+     * @param fn
+     * @param scope
+     */
     forEach(fn: ForEachFn<Option>, scope = {}) {
         this.plugins.forEach((value, key, ...args) => {
             if (value) {

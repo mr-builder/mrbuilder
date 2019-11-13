@@ -70,15 +70,48 @@ export type RequireFn = AnyFn & {
 export type NotFoundFn = (e: Error, pkg: string, isDev?: boolean) => void;
 export type CwdFn = (...args: string[]) => string;
 export type OptionsManagerConfig = Partial<Logger> & Partial<{
+    /**
+     * The prefix to use in package.json and .<prefix>rc files to identify configuration
+     */
     prefix: string,
+    /**
+     * Same as prefix except for the ENV defaults to uppercase prefix
+     */
     envPrefix: string,
+    /**
+     * prefix in the package.json for configuration.
+     */
     confPrefix: string,
+    /**
+     * Configuration file name
+     */
     rcFile: string,
+    /**
+     * Usually process.env, but here for easy testing.
+     */
     env: { [key: string]: any },
+    /**
+     * Usually process.argv, but here for easy testing.
+     */
     argv: string[],
+    /**
+     * Usually process.cwd() but here for easier testing.
+     */
     cwd: CwdFn,
+    /**
+     * Useually require
+     */
     _require: RequireFn,
+    /**
+     * Alias object for aliasing commands to plugins, if so desired.
+     */
     aliasObj: {},
+    /**
+     * The name of the topPackage, usually the caller.  Usually don't need to pass.
+     */
     topPackage: string,
+    /**
+     * Function to call when plugin is defined but not found.
+     */
     handleNotFound: NotFoundFn,
 }>

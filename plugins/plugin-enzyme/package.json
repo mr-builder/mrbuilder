@@ -4,8 +4,8 @@
   "version": "4.0.0-alpha.2",
   "dependencies": {
     "@mrbuilder/plugin-lodash": "^4.0.0-alpha.2",
-    "enzyme": "^3.2.0",
-    "enzyme-adapter-react-16": "^1.1.0"
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1"
   },
   "main": "src",
   "mrbuilder": {

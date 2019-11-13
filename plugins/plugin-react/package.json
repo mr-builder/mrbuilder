@@ -6,12 +6,12 @@
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
     "create-react-class": "^15.6.3",
-    "json5": "^2.1.0",
+    "json5": "^2.1.1",
     "loader-utils": "^1.2.3",
-    "prop-types": "^15.6.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-hot-loader": "^4.6.3"
+    "prop-types": "^15.7.2",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-hot-loader": "^4.12.17"
   },
   "keywords": [
     "react",

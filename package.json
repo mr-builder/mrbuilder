@@ -19,7 +19,7 @@
     "example/*"
   ],
   "dependencies": {
-    "lerna": "^3.10.2"
+    "lerna": "^3.18.4"
   },
   "devDependencies": {
     "typescript": "^3.7.2"

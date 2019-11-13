@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 if (process.argv.length === 2) {
     process.argv.push('./lib');
 }
@@ -10,8 +10,7 @@ if (!global._MRBUILDER_OPTIONS_MANAGER) {
 if (global._MRBUILDER_OPTIONS_MANAGER.enabled('@mrbuilder/plugin-clean')) {
 
 
-    const conf = global._MRBUILDER_OPTIONS_MANAGER.config(
-        "@mrbuilder/plugin-clean");
+    const conf = global._MRBUILDER_OPTIONS_MANAGER.config("@mrbuilder/plugin-clean");
     console.log('conf', conf);
     if (conf) {
         /**
@@ -25,8 +24,8 @@ if (global._MRBUILDER_OPTIONS_MANAGER.enabled('@mrbuilder/plugin-clean')) {
          | exclude       | [string]   |              | Paths to exclude                 |
          * @type {string[]}
          */
-        const cleanOptions = Object.assign({root:process.cwd()}, conf);
-        const clean = new CleanWebpackPlugin(cleanOptions.paths, cleanOptions);
-        clean.apply();
+        const cleanOptions = Object.assign({root: process.cwd(), dangerouslyAllowCleanPatternsOutsideProject:conf.allowExternal, dry:conf.dry, }, conf);
+        const clean = new CleanWebpackPlugin(cleanOptions);
+        clean.removeFiles(process.argv.slice(2));
     }
 }

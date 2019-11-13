@@ -10,9 +10,9 @@
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.0.0-alpha.2",
     "@mrbuilder/utils": "^4.0.0-alpha.1",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^10.0.0",
     "markdown-it-checkbox": "^1.1.0",
-    "react-syntax-highlighter": "^10.1.2"
+    "react-syntax-highlighter": "^11.0.2"
   },
   "devDependencies": {
     "@mrbuilder/plugin-karma": "^4.0.0-alpha.2"

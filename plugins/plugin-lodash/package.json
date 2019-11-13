@@ -3,7 +3,7 @@
   "description": "Provides lodash alias's for all of lodash",
   "version": "4.0.0-alpha.2",
   "dependencies": {
-    "lodash-es": "^4.17.10"
+    "lodash-es": "^4.17.15"
   },
   "main": "src",
   "source": "src",

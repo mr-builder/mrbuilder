@@ -3,24 +3,24 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 if (!global._MRBUILDER_OPTIONS_MANAGER) {
     process.env.MRBUILDER_INTERNAL_PLUGINS =
         `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-enzyme,@mrbuilder/plugin-mocha`;
-    global._MRBUILDER_OPTIONS_MANAGER      = new (require('@mrbuilder/optionsmanager').default)({
-        prefix  : 'mrbuilder',
+    global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager').OptionsManager)({
+        prefix: 'mrbuilder',
         _require: require
     });
 }
 
-const om     = global._MRBUILDER_OPTIONS_MANAGER;
-const {cwd}  = require('@mrbuilder/utils');
-const path   = require('path');
+const om = global._MRBUILDER_OPTIONS_MANAGER;
+const {cwd} = require('@mrbuilder/utils');
+const path = require('path');
 const {argv} = process;
 const {info} = om.logger('@mrbuilder/plugin-mocha');
 
-const coverageDir    = om.config('@mrbuilder/plugin-mocha.coverageDir');
-const coverageGLobal = om.config('@mrbuilder/plugin-mocha.coverageGLobal');
-const testDir        = om.config('@mrbuilder/plugin-mocha.testDir', cwd('test'));
-const filePattern    = om.config('@mrbuilder/plugin-mocha.filePattern', '**/*-test.js');
-const timeout        = om.config('@mrbuilder/plugin-mocha.timeout', 20000);
-const useBabel       = om.config('@mrbuilder/plugin-mocha.useBabel', om.enabled('@mrbuilder/plugin-babel'));
+const coverageDir = om.config('@mrbuilder/plugin-mocha.coverageDir');
+const coverageGLobal = om.config('@mrbuilder/plugin-mocha.coverageGlobal');
+const testDir = om.config('@mrbuilder/plugin-mocha.testDir', cwd('test'));
+const filePattern = om.config('@mrbuilder/plugin-mocha.filePattern', '**/*-test.js');
+const timeout = om.config('@mrbuilder/plugin-mocha.timeout', 20000);
+const useBabel = om.config('@mrbuilder/plugin-mocha.useBabel', om.enabled('@mrbuilder/plugin-babel'));
 info(`running tests '${testDir}/${filePattern}'`);
 
 let mocha;
@@ -45,7 +45,8 @@ if (coverageDir || coverageGLobal) {
 }
 
 if (timeout) {
-    argv.push('--timeout', timeout);
+    //argv is all strings
+    argv.push('--timeout', '' + timeout);
 }
 
 if (useBabel) {

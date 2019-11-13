@@ -3,7 +3,7 @@
   "version": "4.0.0-alpha.1",
   "main": "src",
   "dependencies": {
-    "webpack-dashboard": "^2.0.0"
+    "webpack-dashboard": "^3.2.0"
   },
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",
   "publishConfig": {
