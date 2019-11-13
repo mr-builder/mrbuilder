@@ -6,7 +6,7 @@
   "source": "source",
   "scripts": {
     "test": "mrbuilder-mocha",
-    "prepublish": "mrbuilder-babel"
+    "prepare": "mrbuilder-babel"
   },
   "bin": {
     "mr-muck": "./lib/muck.js"

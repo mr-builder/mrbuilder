@@ -3,11 +3,11 @@ const {DefinePlugin} = require('webpack');
 module.exports = function ({
                                variable,
                                version,
-                               module = cwd('package.json'),
+                               module,
                                NODE_ENV = true
                            }, webpack) {
     if (!variable || !version) {
-        const pkg = require(enhancedResolve(module));
+        const pkg = require(enhancedResolve(module || cwd('package.json')));
 
         if (!version) {
             version = pkg.version;
@@ -35,6 +35,7 @@ module.exports = function ({
             }
         }
         conf[NODE_ENV] = 1;
+        conf['process.env.NODE_ENV'] = NODE_ENV.toLowerCase();
     }
     const out = Object.entries(conf).reduce((ret, [key, value]) => {
         ret[key] = JSON.stringify(value);

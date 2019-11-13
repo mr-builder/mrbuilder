@@ -1,3 +1,4 @@
+const manageTsConfig = require('./manageTsConfig');
 module.exports = function ({
                                test = /[.]tsx?$/,
                                baseUrl = process.cwd(),
@@ -8,6 +9,8 @@ module.exports = function ({
                                configFile
                            },
                            webpack, om) {
+    manageTsConfig(om);
+
     if (extensions) {
         if (!webpack.resolve.extensions) {
             webpack.resolve.extensions = [];

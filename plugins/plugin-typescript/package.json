@@ -4,6 +4,9 @@
   "description": "Typescript plugin for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
+  "bin": {
+    "mrbuilder-typescript": "./bin/cli.js"
+  },
   "dependencies": {
     "@babel/preset-typescript": "^7.7.2",
     "@types/lodash": "^4.14.145",

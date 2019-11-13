@@ -5,13 +5,9 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "outDir": "./lib",
-    "sourceRoot": "src",
+    "sourceRoot": "./src",
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "json5",
-      "node"
-    ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "lib": [

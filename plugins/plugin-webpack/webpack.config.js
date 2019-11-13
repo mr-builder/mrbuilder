@@ -136,11 +136,10 @@ module.exports = resolveWebpack(webpack).then(webpack => {
     }
     if (opts.useDefine) {
         webpack.plugins.unshift(
-            new DefinePlugin(
-                Object.keys(opts.useDefine).reduce(function (ret, key) {
-                    ret[key] = JSON.stringify(opts.useDefine[key]);
-                    return ret;
-                }, {})));
+            new DefinePlugin(Object.keys(opts.useDefine).reduce(function (ret, key) {
+                ret[key] = JSON.stringify(opts.useDefine[key]);
+                return ret;
+            }, {})));
     }
 
 

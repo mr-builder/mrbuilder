@@ -5,7 +5,7 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "outDir": "./lib",
-    "sourceRoot": "src",
+    "sourceRoot": "./src",
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,

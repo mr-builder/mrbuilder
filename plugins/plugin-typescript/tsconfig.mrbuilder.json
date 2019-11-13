@@ -4,18 +4,21 @@
     "baseUrl": "./",
     "suppressExcessPropertyErrors": true,
     "declaration": true,
-    "outDir": "@types",
-    "target": "es5",
+    "outDir": "lib",
+    "sourceRoot": "src",
+    "target": "es6",
     "strictNullChecks": false,
     "sourceMap": true,
     "skipLibCheck": true,
     "jsx": "react",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "lib": [
       "dom",
-      "es2015"
+      "scripthost",
+      "webworker",
+      "es2018"
     ]
-  },
-  "include": [
-    "./src/**/*"
-  ]
+  }
 }
