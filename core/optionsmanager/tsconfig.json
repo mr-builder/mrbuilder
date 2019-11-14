@@ -4,8 +4,8 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "outDir": "./lib",
-    "sourceRoot": "./src",
+    "outDir": "lib",
+    "sourceRoot": "src",
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
@@ -16,12 +16,5 @@
       "scripthost",
       "es2018"
     ]
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+  }
 }

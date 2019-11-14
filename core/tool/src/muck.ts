@@ -1,30 +1,30 @@
 #!/usr/bin/env node
-import set                     from 'lodash/set';
-import unset                   from 'lodash/unset';
-import has                     from 'lodash/has';
-import get                     from 'lodash/get';
-import fs                      from 'fs';
-import path                    from 'path';
-import inquirer                from 'inquirer';
+import set from 'lodash/set';
+import unset from 'lodash/unset';
+import has from 'lodash/has';
+import get from 'lodash/get';
+import fs from 'fs';
+import path from 'path';
+import inquirer, {Message} from 'inquirer';
 import {lernaFilteredPackages} from '@mrbuilder/utils';
 
 export const settings = {
-    exit : process.exit,
+    exit: process.exit,
     error: console.error,
-    warn : console.warn,
-    log  : console.log,
+    warn: console.warn,
+    log: console.log,
     trace: console.trace,
 };
 
-const write = (filename, json) => new Promise(
+const write = (filename: string, json: any) => new Promise(
     (resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2),
-        'utf8', (e, o) => e ? reject(e) : resolve(o)));
+        'utf8', (e: any, o?: any) => e ? reject(e) : resolve(o)));
 
-const read = filename => new Promise(
+const read = (filename: string): {} => new Promise(
     (resolve, reject) => fs.readFile(filename, 'utf8',
         (e, o) => e ? reject(e) : resolve(JSON.parse(o))));
 
-function parse(value) {
+function parse(value: string): any {
     value = value.trim();
     if (value === 'true' || value === 'false') {
         return JSON.parse(value);
@@ -45,18 +45,28 @@ function parse(value) {
     return JSON.parse(`"${value}"`)
 }
 
+type ConfirmOpts = {
+    confirm?: boolean
+}
 
-async function confirm(message, {confirm = false}) {
+async function confirm(message: string, {confirm = false}: ConfirmOpts): Promise<boolean> {
     if (confirm) {
-        const answer = await inquirer.prompt(
-            [{message, type: 'confirm', name: 'confirm'}]);
+        const answer = await inquirer.prompt([{message, type: 'confirm', name: 'confirm'}]);
         return answer.confirm;
     }
     return true;
 }
 
 
-async function _set(json, [key, value], filename, options) {
+type Option = ConfirmOpts & {
+    skipIfExists?: boolean,
+    onlyIfExists?: boolean,
+    createIfNotExists?: boolean,
+
+}
+type KeyValue = [string, string];
+
+async function _set(json: {}, [key, value]: KeyValue, filename: string, options?: Option) {
     const current = get(json, key);
     if (current === value) {
         return false;
@@ -81,11 +91,11 @@ async function _set(json, [key, value], filename, options) {
     return false;
 }
 
-function __get(key) {
+function __get(key: string) {
     return JSON.stringify(get(this, key));
 }
 
-async function _move(json, keys, filename, opts) {
+async function _move(json: {}, keys: KeyValue, filename: string, opts: ConfirmOpts) {
     const [from, to] = keys;
     if (!from || !to) {
         settings.warn(`move requires an argument`, from, to);
@@ -111,7 +121,7 @@ async function _move(json, keys, filename, opts) {
     return false;
 }
 
-function _get(json, keys, filename, opts = {}) {
+function _get(json: any, keys: KeyValue, filename: string, opts: Option = {}) {
     const str = keys.map(__get, json).join(',');
     if (str) {
         if (opts.skipIfExists) {
@@ -127,7 +137,7 @@ function _get(json, keys, filename, opts = {}) {
 }
 
 // noinspection JSUnusedLocalSymbols
-async function _delete(json, keys, filename, opts) {
+async function _delete(json: any, keys: KeyValue, filename: string, opts?: ConfirmOpts): Promise<boolean> {
     let ret = false;
     for (const key of keys) {
         if (has(json, key)) {
@@ -137,18 +147,19 @@ async function _delete(json, keys, filename, opts) {
             }
         }
         unset(json, key);
+        //@ts-ignore
         ret |= true;
     }
     return ret;
 }
 
-async function _prompt(json, args, filename, options) {
+async function _prompt(json: any, args: KeyValue, filename: string, options: Option): Promise<boolean> {
     const [key,
-              vmessage = 'Do you want to change the property'
-          ]            = args,
-          self         = this,
-          _default     = get(json, key),
-          message      = `${vmessage} '${key}' in '${this.name}/${filename}'?`;
+            vmessage = 'Do you want to change the property'
+        ] = args,
+        self = this,
+        _default = get(json, key),
+        message = `${vmessage} '${key}' in '${this.name}/${filename}'?`;
 
     if (options.skipIfExists && _default != null) {
         return false;
@@ -165,8 +176,8 @@ async function _prompt(json, args, filename, options) {
     }
     if (await confirm(message, {confirm: true})) {
         const answer = await inquirer.prompt([{
-            type   : 'input',
-            name   : 'value',
+            type: 'input',
+            name: 'value',
             message: has(json, key) ? `OK what would like to change it to?`
                 : vmessage
         }]);
@@ -183,9 +194,13 @@ async function _prompt(json, args, filename, options) {
     }
 }
 
+type Package = {
+    location: string,
+}
+type Command = (pkg: Package, json: any, cmd: string, file: string, opts: Option) => Promise<boolean>;
 
-export async function muckFile(pkg, file, opts) {
-    let saveMuck   = false;
+export async function muckFile(pkg: Package, file: string, opts: Option & { commands: Command }) {
+    let saveMuck = false;
     const fullname = path.resolve(pkg.location, file);
     let json;
     try {
@@ -206,7 +221,7 @@ export async function muckFile(pkg, file, opts) {
 
     if (saveMuck && json) {
         const backup = fullname + opts.extension;
-        let newfile  = fullname;
+        let newfile = fullname;
         if (opts.preview) {
             settings.log(JSON.stringify(json, null, 2));
             if (!await confirm(`Does above look correct for ${fullname}`,
@@ -270,16 +285,16 @@ export function makeOptions(name, args,) {
         settings.exit(1);
     }
 
-    const opts     = {
+    const opts = {
         extension: '.bck',
-        files    : [],
-        commands : [],
-        options  : {}
+        files: [],
+        commands: [],
+        options: {}
     };
     const commands = opts.commands;
-    const options  = opts.options;
+    const options = opts.options;
     //need this to suck up files at the end.
-    let i          = 0;
+    let i = 0;
     ARGS: for (let l = args.length; i < l; i++) {
         let [arg, val] = args[i].split('=', 2);
         switch (arg) {

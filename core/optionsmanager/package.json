@@ -3,7 +3,7 @@
   "version": "4.0.0-alpha.1",
   "scripts": {
     "test": "mocha -r ts-node/register test/**",
-    "prepare": "tsc"
+    "prepare": "echo 'runnininin' && tsc -b"
   },
   "bin": {
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"

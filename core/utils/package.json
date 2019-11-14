@@ -9,13 +9,12 @@
     "json5": "^2.1.1"
   },
   "devDependencies": {
-    "@types/node": "^12.12.7",
     "chai": "^4.1.2",
     "mocha": "^6.2.2"
   },
   "scripts": {
     "test": "mocha ./test/**/*-test.js",
-    "prepare": "tsc"
+    "prepare": "tsc -b"
   },
   "license": "0BSD",
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",

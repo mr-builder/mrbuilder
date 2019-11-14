@@ -196,6 +196,6 @@ const {
     MRBUILDER_SCRIPT: endScript = require.resolve(`${script}/bin/cli`)
 } = env;
 
-console.log(`running '${endScript}' MRBUILDER_ENV: '${env.MRBUILDER_ENV}' ${profile}`);
+global._MRBUILDER_OPTIONS_MANAGER.info(`running '${endScript}' MRBUILDER_ENV: '${env.MRBUILDER_ENV}' ${profile}`);
 
 require(endScript);
