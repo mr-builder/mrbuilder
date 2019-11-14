@@ -15,6 +15,7 @@ export const settings = {
     log: console.log,
     trace: console.trace,
 };
+type CommandFn = (json: any, args: KeyValue, filename: string, options: Option) => Promise<boolean>;
 
 const write = (filename: string, json: any) => new Promise(
     (resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2),
@@ -59,6 +60,9 @@ async function confirm(message: string, {confirm = false}: ConfirmOpts): Promise
 
 
 type Option = ConfirmOpts & {
+    ignore?: boolean,
+    noLerna?: boolean,
+    preview?: boolean,
     skipIfExists?: boolean,
     onlyIfExists?: boolean,
     createIfNotExists?: boolean,
@@ -66,7 +70,7 @@ type Option = ConfirmOpts & {
 }
 type KeyValue = [string, string];
 
-async function _set(json: {}, [key, value]: KeyValue, filename: string, options?: Option) {
+const _set: CommandFn = async function (json: {}, [key, value]: KeyValue, filename: string, options?: Option) {
     const current = get(json, key);
     if (current === value) {
         return false;
@@ -121,7 +125,7 @@ async function _move(json: {}, keys: KeyValue, filename: string, opts: ConfirmOp
     return false;
 }
 
-function _get(json: any, keys: KeyValue, filename: string, opts: Option = {}) {
+const _get: CommandFn = async function (json: any, keys: KeyValue, filename: string, opts: Option = {}) {
     const str = keys.map(__get, json).join(',');
     if (str) {
         if (opts.skipIfExists) {
@@ -137,7 +141,7 @@ function _get(json: any, keys: KeyValue, filename: string, opts: Option = {}) {
 }
 
 // noinspection JSUnusedLocalSymbols
-async function _delete(json: any, keys: KeyValue, filename: string, opts?: ConfirmOpts): Promise<boolean> {
+const _delete: CommandFn = async function (json: any, keys: KeyValue, filename: string, opts?: ConfirmOpts): Promise<boolean> {
     let ret = false;
     for (const key of keys) {
         if (has(json, key)) {
@@ -153,10 +157,9 @@ async function _delete(json: any, keys: KeyValue, filename: string, opts?: Confi
     return ret;
 }
 
-async function _prompt(json: any, args: KeyValue, filename: string, options: Option): Promise<boolean> {
-    const [key,
-            vmessage = 'Do you want to change the property'
-        ] = args,
+
+const _prompt: CommandFn = async function (json: any, args: KeyValue, filename: string, options: Option): Promise<boolean> {
+    const [key, vmessage = 'Do you want to change the property'] = args,
         self = this,
         _default = get(json, key),
         message = `${vmessage} '${key}' in '${this.name}/${filename}'?`;
@@ -195,14 +198,23 @@ async function _prompt(json: any, args: KeyValue, filename: string, options: Opt
 }
 
 type Package = {
+    name: string,
     location: string,
 }
-type Command = (pkg: Package, json: any, cmd: string, file: string, opts: Option) => Promise<boolean>;
 
-export async function muckFile(pkg: Package, file: string, opts: Option & { commands: Command }) {
+type InternalOption = Option & {
+    options?: Option,
+    cwd?: string,
+    ignore?: boolean,
+    scope?: string[],
+    filteredPackages?: Package[],
+    files?: string[], extension?: string, preview?: boolean, noExtension?: boolean, commands: [CommandFn, any][]
+};
+
+export async function muckFile(pkg: Package, file: string, opts: InternalOption) {
     let saveMuck = false;
     const fullname = path.resolve(pkg.location, file);
-    let json;
+    let json: any;
     try {
         json = await read(fullname);
     } catch (e) {
@@ -258,8 +270,8 @@ export async function muckFile(pkg: Package, file: string, opts: Option & { comm
 
 }
 
-export function makeOptions(name, args,) {
-    function help(msg) {
+export async function makeOptions(name: string, args: string[],): Promise<InternalOption | void> {
+    function help(msg?: string): void {
         if (msg) {
             settings.error(msg);
         }
@@ -285,11 +297,13 @@ export function makeOptions(name, args,) {
         settings.exit(1);
     }
 
-    const opts = {
+    const opts: InternalOption = {
         extension: '.bck',
         files: [],
         commands: [],
-        options: {}
+        options: {},
+
+
     };
     const commands = opts.commands;
     const options = opts.options;
@@ -343,12 +357,11 @@ export function makeOptions(name, args,) {
                 break;
             case '-i':
             case '--ignore':
-                options['ignore'] = args[++i];
+                options.ignore = args[++i] ? true : false;
                 break;
             case '-f':
             case '--file':
-                opts.files =
-                    opts.files.concat((val || args[++i]).split(/,\s*/));
+                opts.files = opts.files.concat((val || args[++i]).split(/,\s*/));
                 break;
             case '-C':
             case '--create-file':
@@ -379,8 +392,7 @@ export function makeOptions(name, args,) {
                 break;
             case '--scope':
             case '-S':
-                opts.scope =
-                    opts.files.concat((val || args[++i]).split(/,\s*/));
+                opts.scope = opts.files.concat((val || args[++i]).split(/,\s*/));
                 break;
             case '-h':
             case '--help':
@@ -402,10 +414,13 @@ export function makeOptions(name, args,) {
 }
 
 
-export async function muck(opts) {
+export async function muck(opts: InternalOption | void) {
+    if (!opts) {
+        return;
+    }
     if (!opts.noLerna) {
 
-        const options = {};
+        const options: InternalOption = {commands: []};
         if (opts.cwd) {
             options.cwd = opts.cwd;
         }
@@ -430,11 +445,10 @@ export async function muck(opts) {
 }
 
 if (require.main === module) {
-    muck(makeOptions(process.argv[1], process.argv.slice(2)))
-        .then(function (res) {
-            settings.exit(res);
-        }, function (e) {
-            settings.trace(e);
-            process.exit(1);
-        });
+    makeOptions(process.argv[1], process.argv.slice(2)).then(muck).then(() => {
+        settings.exit(0);
+    }, (e) => {
+        settings.trace(e);
+        process.exit(1);
+    });
 }

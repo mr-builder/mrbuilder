@@ -1,10 +1,6 @@
 {
   "name": "@mrbuilder/optionsmanager",
   "version": "4.0.0-alpha.1",
-  "scripts": {
-    "test": "mocha -r ts-node/register test/**",
-    "prepare": "echo 'runnininin' && tsc -b"
-  },
   "bin": {
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"
   },
@@ -25,5 +21,9 @@
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "test": "mocha -r ts-node/register test/**",
+    "prepare": "tsc"
   }
 }

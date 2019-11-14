@@ -28,9 +28,10 @@
     "registry": "https://registry.npm.orig"
   },
   "scripts": {
-    "test": "lerna run prepare && lerna run test",
+    "lerna": "lerna",
+    "test": "lerna run prepare --no-private && lerna run test",
     "clean": "lerna clean",
-    "prepublish:all": "lerna run prepublish",
+    "prepublish:all": "lerna run prepare",
     "publish:all": "lerna publish --registry http://registry.npm.org --force-publish=*"
   }
 }
