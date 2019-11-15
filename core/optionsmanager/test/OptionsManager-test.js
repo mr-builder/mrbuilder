@@ -1,14 +1,15 @@
 const OptionsManager = require('../src/OptionsManager').default;
-const {join}         = require('path');
-const {expect}       = require('chai');
-const {stringify}    = require('@mrbuilder/utils');
+const {join, parse} = require('path');
+const {expect} = require('chai');
+const {stringify} = require('@mrbuilder/utils');
 const {
-          existsSync,
-          readdirSync,
-          statSync,
-          symlinkSync,
-          unlinkSync
-      }              = require('fs');
+    existsSync,
+    readdirSync,
+    statSync,
+    symlinkSync,
+    unlinkSync,
+    mkdirSync,
+} = require('fs');
 
 const isDirectory = sourceDir => {
     try {
@@ -18,22 +19,41 @@ const isDirectory = sourceDir => {
         return false;
     }
 };
+const mkdirs = (dirs) => {
+    const parts = dirs.split('/');
+    for (let i = 1, l = parts.length; i < l; i++) {
+        if (parts[i]) {
+            const dirPath = join(...parts.slice(0, i));
+            if (!isDirectory(dirPath)) {
+                mkdirSync(dirPath);
+            }
+        }
+    }
+    return dirs;
+};
+const symlinkSyncDir = (sourceDir, destDir) => {
+    const parts = parse(destDir);
+    if (!isDirectory(parts.dir)) {
+        mkdirs(parts.dir);
+    }
+    symlinkSync(sourceDir, destDir);
+};
 
 const odir = __dirname;
 describe('@mrbuilder/optionsmanager', function () {
 
     process.env.TESTER_NO_AUTOINSTALL = 1;
 
-    const argv   = (...argv) => ['fake-interpreter', 'fake-script'].concat(
+    const argv = (...argv) => ['fake-interpreter', 'fake-script'].concat(
         ...argv);
     const afters = [];
-    const re     = (obj, assert) => {
+    const re = (obj, assert) => {
         expect(obj).to.be.instanceof(RegExp);
         expect(obj + '').to.eql(assert);
     };
 
     const cwd = (name) => {
-        const ret           = join(__dirname, 'fixtures', name);
+        const ret = join(__dirname, 'fixtures', name);
         const sourceNodeDir = join(ret, 'node_modules');
         if (isDirectory(sourceNodeDir)) {
             readdirSync(sourceNodeDir).forEach(dir => {
@@ -48,9 +68,9 @@ describe('@mrbuilder/optionsmanager', function () {
                         afters.push(() => {
                             existsSync(dest) && unlinkSync(dest)
                         });
-                        symlinkSync(sourceDir, dest);
+                        symlinkSyncDir(sourceDir, dest);
                     }
-                }catch(e){
+                } catch (e) {
                     console.warn(`error ${sourceDir}`, e);
                 }
             });
@@ -71,15 +91,15 @@ describe('@mrbuilder/optionsmanager', function () {
 
             assert(new OptionsManager({
 
-                prefix  : 'tester',
-                cwd     : cwd(name.split(' ')[0]),
+                prefix: 'tester',
+                cwd: cwd(name.split(' ')[0]),
                 _require: require,
                 handleNotFound(e, pkg) {
                     console.log(e, pkg);
                     throw e;
                 },
                 ...config,
-                env:{
+                env: {
                     TESTER_NO_AUTOINSTALL: 1,
                     ...(config && config.env)
                 }
@@ -116,7 +136,7 @@ describe('@mrbuilder/optionsmanager', function () {
     });
 
     newOptionManagerTest("with-cli", {
-        env : {
+        env: {
             "WITH_CLI_ALIAS_1": JSON.stringify({"stuff": 1})
         },
         argv: argv([`--with-cli-alias-1=false`])
@@ -151,7 +171,7 @@ describe('@mrbuilder/optionsmanager', function () {
     });
     newOptionManagerTest("with-multi-env test:other", {
         env: {
-            TESTER_ENV           : 'test:other',
+            TESTER_ENV: 'test:other',
             TESTER_NO_AUTOINSTALL: 1,
         }
     }, om => {
@@ -162,7 +182,7 @@ describe('@mrbuilder/optionsmanager', function () {
 
     newOptionManagerTest("with-multi-env other", {
         env: {
-            TESTER_ENV           : 'other',
+            TESTER_ENV: 'other',
             TESTER_NO_AUTOINSTALL: 1,
         }
     }, om => {
@@ -172,7 +192,7 @@ describe('@mrbuilder/optionsmanager', function () {
     });
     newOptionManagerTest("with-multi-env other without test", {
         env: {
-            TESTER_ENV           : 'other:nosuch',
+            TESTER_ENV: 'other:nosuch',
             TESTER_NO_AUTOINSTALL: 1,
         }
     }, om => {
@@ -182,7 +202,7 @@ describe('@mrbuilder/optionsmanager', function () {
     });
     newOptionManagerTest('with-merged-plugins', {
         env: {
-            TESTER_ENV           : 'test',
+            TESTER_ENV: 'test',
             TESTER_NO_AUTOINSTALL: 1,
         }
     }, om => {
@@ -196,8 +216,8 @@ describe('@mrbuilder/optionsmanager', function () {
     });
     newOptionManagerTest('with-alias-camel', {
         argv: argv('--camel-arg', 'yes'),
-        env : {
-            CAMEL_ENV           : 'uh-huh',
+        env: {
+            CAMEL_ENV: 'uh-huh',
             CAMEL_NO_AUTOINSTALL: 1,
         }
     }, om => {
@@ -231,8 +251,8 @@ describe('@mrbuilder/optionsmanager', function () {
 
     newOptionManagerTest('with-env', {
         env: {
-            TESTER_PLUGINS       : 'metest',
-            METEST               : JSON.stringify({"stuff": 1}),
+            TESTER_PLUGINS: 'metest',
+            METEST: JSON.stringify({"stuff": 1}),
             TESTER_NO_AUTOINSTALL: 1,
         }
     }, (om) => {
@@ -242,8 +262,8 @@ describe('@mrbuilder/optionsmanager', function () {
 
 
     newOptionManagerTest('with-env', {
-        env : {
-            TESTER_PLUGINS       : 'metest',
+        env: {
+            TESTER_PLUGINS: 'metest',
             TESTER_NO_AUTOINSTALL: 1,
 
         },
@@ -287,7 +307,7 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest('with-self-plugin', om => {
         expect(om.enabled('with-self-plugin')).to.be.eql(true);
         const plugin = om.plugins.get('with-self-plugin').plugin;
-        const ret    = require(plugin);
+        const ret = require(plugin);
         expect(ret()).to.be.eql('Hi, whatever');
     });
     newOptionManagerTest('with-regex', {
@@ -295,7 +315,7 @@ describe('@mrbuilder/optionsmanager', function () {
             "--regex.argv=/argv/g",
             "--realias=/realias/",
             "--regex.split", "/split/"),
-        env : {"REGEX": JSON.stringify({"env": "/env/i"})}
+        env: {"REGEX": JSON.stringify({"env": "/env/i"})}
     }, (om, config) => {
         expect(om.enabled("regex")).to.be.true;
         re(om.config('regex.argv'), "/argv/g");
@@ -315,9 +335,9 @@ describe('@mrbuilder/optionsmanager', function () {
     });
     newOptionManagerTest('with-merge-alias-override', {
         argv: argv('--alias-2.stuff=whatever'),
-        env : {
-            ALIAS_1              : JSON.stringify({more: "stuff"}),
-            ALIAS_2              : JSON.stringify({yup: true}),
+        env: {
+            ALIAS_1: JSON.stringify({more: "stuff"}),
+            ALIAS_2: JSON.stringify({yup: true}),
             TESTER_NO_AUTOINSTALL: 1,
         }
     }, function (om) {
@@ -353,15 +373,15 @@ with-alias-2 - [enabled]
 
     });
     it('should log from option', function () {
-        const calls   = [];
+        const calls = [];
         const capture = (...args) => calls.push(args);
 
         const om = new OptionsManager({
             prefix: 'tester',
-            cwd   : cwd('with-presets-and-config'),
-            env   : {TESTER_DEBUG: 12, TESTER_NO_AUTOINSTALL: 1,},
-            info  : capture,
-            warn  : capture
+            cwd: cwd('with-presets-and-config'),
+            env: {TESTER_DEBUG: 12, TESTER_NO_AUTOINSTALL: 1,},
+            info: capture,
+            warn: capture
         });
         om.plugins.get('p1').info('test');
         om.plugins.get('p1').warn('test');

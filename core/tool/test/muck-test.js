@@ -1,4 +1,4 @@
-import { makeOptions, settings } from '../src/muck';
+import { makeOptions, settings } from '../lib/muck';
 import { expect } from 'chai';
 
 const { ...osettings } = settings;

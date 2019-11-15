@@ -16,7 +16,6 @@
     "esModuleInterop": true,
     "lib": [
       "dom",
-      "scripthost",
       "webworker",
       "es2018"
     ]

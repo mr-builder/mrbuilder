@@ -5,7 +5,7 @@
   "main": "lib",
   "source": "src",
   "scripts": {
-    "test": "MRBUILDER_PLUGINS=@mrbuilder/plugin-typescript mrbuilder-mocha",
+    "test": "mrbuilder-mocha",
     "prepare": "tsc"
   },
   "bin": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "@mrbuilder/cli": "^4.0.0-alpha.1",
     "@mrbuilder/utils": "^4.0.0-alpha.1",
+    "@types/lodash": "^4.14.147",
     "@types/node": "^12.12.7"
   },
   "peerDependencies": {

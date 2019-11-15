@@ -13,9 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "lib": [
       "dom",
-      "scripthost",
       "es2018"
-    ],
-    "typeRoots": ["src/@types", "../../node_modules"]
+    ]
   }
 }
