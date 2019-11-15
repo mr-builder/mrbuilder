@@ -22,7 +22,7 @@ ${description}
 ### Installation
 ${quote('sh', `
 $ git clone git@github.com:mr-builder/mrbuilder.git
-$ cd example/${pkg.name}
+$ cd examples/${pkg.name}
 $ yarn install
 `)}
            

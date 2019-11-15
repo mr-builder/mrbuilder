@@ -1,30 +1,31 @@
 #!/usr/bin/env node
-import set                     from 'lodash/set';
-import unset                   from 'lodash/unset';
-import has                     from 'lodash/has';
-import get                     from 'lodash/get';
-import fs                      from 'fs';
-import path                    from 'path';
-import inquirer                from 'inquirer';
+import set from 'lodash/set';
+import unset from 'lodash/unset';
+import has from 'lodash/has';
+import get from 'lodash/get';
+import fs from 'fs';
+import path from 'path';
+import inquirer, {Message} from 'inquirer';
 import {lernaFilteredPackages} from '@mrbuilder/utils';
 
 export const settings = {
-    exit : process.exit,
+    exit: process.exit,
     error: console.error,
-    warn : console.warn,
-    log  : console.log,
+    warn: console.warn,
+    log: console.log,
     trace: console.trace,
 };
+type CommandFn = (json: any, args: KeyValue, filename: string, options: Option) => Promise<boolean>;
 
-const write = (filename, json) => new Promise(
+const write = (filename: string, json: any) => new Promise(
     (resolve, reject) => fs.writeFile(filename, JSON.stringify(json, null, 2),
-        'utf8', (e, o) => e ? reject(e) : resolve(o)));
+        'utf8', (e: any, o?: any) => e ? reject(e) : resolve(o)));
 
-const read = filename => new Promise(
+const read = (filename: string): {} => new Promise(
     (resolve, reject) => fs.readFile(filename, 'utf8',
         (e, o) => e ? reject(e) : resolve(JSON.parse(o))));
 
-function parse(value) {
+function parse(value: string): any {
     value = value.trim();
     if (value === 'true' || value === 'false') {
         return JSON.parse(value);
@@ -45,18 +46,31 @@ function parse(value) {
     return JSON.parse(`"${value}"`)
 }
 
+type ConfirmOpts = {
+    confirm?: boolean
+}
 
-async function confirm(message, {confirm = false}) {
+async function confirm(message: string, {confirm = false}: ConfirmOpts): Promise<boolean> {
     if (confirm) {
-        const answer = await inquirer.prompt(
-            [{message, type: 'confirm', name: 'confirm'}]);
+        const answer = await inquirer.prompt([{message, type: 'confirm', name: 'confirm'}]);
         return answer.confirm;
     }
     return true;
 }
 
 
-async function _set(json, [key, value], filename, options) {
+type Option = ConfirmOpts & {
+    ignore?: boolean,
+    noLerna?: boolean,
+    preview?: boolean,
+    skipIfExists?: boolean,
+    onlyIfExists?: boolean,
+    createIfNotExists?: boolean,
+
+}
+type KeyValue = [string, string];
+
+const _set: CommandFn = async function (json: {}, [key, value]: KeyValue, filename: string, options?: Option) {
     const current = get(json, key);
     if (current === value) {
         return false;
@@ -81,11 +95,11 @@ async function _set(json, [key, value], filename, options) {
     return false;
 }
 
-function __get(key) {
+function __get(key: string) {
     return JSON.stringify(get(this, key));
 }
 
-async function _move(json, keys, filename, opts) {
+async function _move(json: {}, keys: KeyValue, filename: string, opts: ConfirmOpts) {
     const [from, to] = keys;
     if (!from || !to) {
         settings.warn(`move requires an argument`, from, to);
@@ -111,7 +125,7 @@ async function _move(json, keys, filename, opts) {
     return false;
 }
 
-function _get(json, keys, filename, opts = {}) {
+const _get: CommandFn = async function (json: any, keys: KeyValue, filename: string, opts: Option = {}) {
     const str = keys.map(__get, json).join(',');
     if (str) {
         if (opts.skipIfExists) {
@@ -127,7 +141,7 @@ function _get(json, keys, filename, opts = {}) {
 }
 
 // noinspection JSUnusedLocalSymbols
-async function _delete(json, keys, filename, opts) {
+const _delete: CommandFn = async function (json: any, keys: KeyValue, filename: string, opts?: ConfirmOpts): Promise<boolean> {
     let ret = false;
     for (const key of keys) {
         if (has(json, key)) {
@@ -137,18 +151,18 @@ async function _delete(json, keys, filename, opts) {
             }
         }
         unset(json, key);
+        //@ts-ignore
         ret |= true;
     }
     return ret;
 }
 
-async function _prompt(json, args, filename, options) {
-    const [key,
-              vmessage = 'Do you want to change the property'
-          ]            = args,
-          self         = this,
-          _default     = get(json, key),
-          message      = `${vmessage} '${key}' in '${this.name}/${filename}'?`;
+
+const _prompt: CommandFn = async function (json: any, args: KeyValue, filename: string, options: Option): Promise<boolean> {
+    const [key, vmessage = 'Do you want to change the property'] = args,
+        self = this,
+        _default = get(json, key),
+        message = `${vmessage} '${key}' in '${this.name}/${filename}'?`;
 
     if (options.skipIfExists && _default != null) {
         return false;
@@ -165,8 +179,8 @@ async function _prompt(json, args, filename, options) {
     }
     if (await confirm(message, {confirm: true})) {
         const answer = await inquirer.prompt([{
-            type   : 'input',
-            name   : 'value',
+            type: 'input',
+            name: 'value',
             message: has(json, key) ? `OK what would like to change it to?`
                 : vmessage
         }]);
@@ -183,11 +197,24 @@ async function _prompt(json, args, filename, options) {
     }
 }
 
+type Package = {
+    name: string,
+    location: string,
+}
 
-export async function muckFile(pkg, file, opts) {
-    let saveMuck   = false;
+type InternalOption = Option & {
+    options?: Option,
+    cwd?: string,
+    ignore?: boolean,
+    scope?: string[],
+    filteredPackages?: Package[],
+    files?: string[], extension?: string, preview?: boolean, noExtension?: boolean, commands: [CommandFn, any][]
+};
+
+export async function muckFile(pkg: Package, file: string, opts: InternalOption) {
+    let saveMuck = false;
     const fullname = path.resolve(pkg.location, file);
-    let json;
+    let json: any;
     try {
         json = await read(fullname);
     } catch (e) {
@@ -206,7 +233,7 @@ export async function muckFile(pkg, file, opts) {
 
     if (saveMuck && json) {
         const backup = fullname + opts.extension;
-        let newfile  = fullname;
+        let newfile = fullname;
         if (opts.preview) {
             settings.log(JSON.stringify(json, null, 2));
             if (!await confirm(`Does above look correct for ${fullname}`,
@@ -243,8 +270,8 @@ export async function muckFile(pkg, file, opts) {
 
 }
 
-export function makeOptions(name, args,) {
-    function help(msg) {
+export  function makeOptions(name: string, args: string[],): InternalOption | void {
+    function help(msg?: string): void {
         if (msg) {
             settings.error(msg);
         }
@@ -270,16 +297,18 @@ export function makeOptions(name, args,) {
         settings.exit(1);
     }
 
-    const opts     = {
+    const opts: InternalOption = {
         extension: '.bck',
-        files    : [],
-        commands : [],
-        options  : {}
+        files: [],
+        commands: [],
+        options: {},
+
+
     };
     const commands = opts.commands;
-    const options  = opts.options;
+    const options = opts.options;
     //need this to suck up files at the end.
-    let i          = 0;
+    let i = 0;
     ARGS: for (let l = args.length; i < l; i++) {
         let [arg, val] = args[i].split('=', 2);
         switch (arg) {
@@ -328,12 +357,11 @@ export function makeOptions(name, args,) {
                 break;
             case '-i':
             case '--ignore':
-                options['ignore'] = args[++i];
+                options.ignore = args[++i] ? true : false;
                 break;
             case '-f':
             case '--file':
-                opts.files =
-                    opts.files.concat((val || args[++i]).split(/,\s*/));
+                opts.files = opts.files.concat((val || args[++i]).split(/,\s*/));
                 break;
             case '-C':
             case '--create-file':
@@ -364,8 +392,7 @@ export function makeOptions(name, args,) {
                 break;
             case '--scope':
             case '-S':
-                opts.scope =
-                    opts.files.concat((val || args[++i]).split(/,\s*/));
+                opts.scope = opts.files.concat((val || args[++i]).split(/,\s*/));
                 break;
             case '-h':
             case '--help':
@@ -387,10 +414,13 @@ export function makeOptions(name, args,) {
 }
 
 
-export async function muck(opts) {
+export async function muck(opts: InternalOption | void) {
+    if (!opts) {
+        return;
+    }
     if (!opts.noLerna) {
 
-        const options = {};
+        const options: InternalOption = {commands: []};
         if (opts.cwd) {
             options.cwd = opts.cwd;
         }
@@ -415,11 +445,10 @@ export async function muck(opts) {
 }
 
 if (require.main === module) {
-    muck(makeOptions(process.argv[1], process.argv.slice(2)))
-        .then(function (res) {
-            settings.exit(res);
-        }, function (e) {
-            settings.trace(e);
-            process.exit(1);
-        });
+    muck(makeOptions(process.argv[1], process.argv.slice(2))).then(() => {
+        settings.exit(0);
+    }, (e) => {
+        settings.trace(e);
+        process.exit(1);
+    });
 }

@@ -3,10 +3,10 @@
   "version": "4.0.0-alpha.1",
   "description": "Tool for changing package files",
   "main": "lib",
-  "source": "source",
+  "source": "src",
   "scripts": {
     "test": "mrbuilder-mocha",
-    "prepublish": "mrbuilder-babel"
+    "prepare": "tsc"
   },
   "bin": {
     "mr-muck": "./lib/muck.js"
@@ -17,14 +17,16 @@
     "mrbuilder"
   ],
   "dependencies": {
-    "@mrbuilder/utils": "^4.0.0-alpha.1"
+    "@mrbuilder/cli": "^4.0.0-alpha.1",
+    "@mrbuilder/utils": "^4.0.0-alpha.1",
+    "@types/lodash": "^4.14.147",
+    "@types/node": "^12.12.7"
   },
   "peerDependencies": {
     "lerna": "3.x || 2.x"
   },
   "devDependencies": {
-    "@mrbuilder/cli": "^4.0.0-alpha.1",
-    "lerna": "^3.10.2"
+    "lerna": "^3.18.4"
   },
   "license": "0BSD",
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",

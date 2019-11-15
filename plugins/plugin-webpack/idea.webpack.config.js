@@ -5,7 +5,7 @@
  */
 const {enhancedResolve} = require('@mrbuilder/utils');
 const path              = require('path');
-const OptionsManager    = require('@mrbuilder/optionsmanager');
+const OptionsManager    = require('@mrbuilder/optionsmanager').default;
 const mrbuilder         = global._MRBUILDER_OPTIONS_MANAGER || (global._MRBUILDER_OPTIONS_MANAGER = new OptionsManager({
     prefix  : 'mrbuilder',
     _require: require,

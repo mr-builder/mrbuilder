@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/cli",
   "version": "4.0.0-alpha.1",
-  "description": "Tools for developing with mrbuilder and webpack",
+  "description": "Tools for developing with mrbuilder",
   "dependencies": {
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.1",
     "in-publish": "^2.0.0"

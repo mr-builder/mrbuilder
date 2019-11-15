@@ -1,6 +1,9 @@
-const {configOrBool, parseValue, set} = require('@mrbuilder/utils');
+import {configOrBool, parseValue, set} from '@mrbuilder/utils';
+import {AliasObj, EnvConfig, NameOrPluginNameConfig, OptionsConfig, PluginNameConfig, PresetsPlugins} from "./types";
 
-const select = module.exports.select = (...args) => {
+type FalseOrObject = false | { [key: string]: any }
+
+export const select = (...args: any[]): any => {
     for (let i = 0, l = args.length; i < l; i++) {
         if (args[i] !== void (0)) {
             return args[i];
@@ -8,35 +11,32 @@ const select = module.exports.select = (...args) => {
     }
 };
 
-const split = module.exports.split = (v = []) => (Array.isArray(v) ? v : v.split(/,\s*/)).filter(Boolean);
+export const split = (v: string | string[] = []): string[] => (Array.isArray(v) ? v : v.split(/,\s*/)).filter(Boolean);
 
-const nameConfig = module.exports.nameConfig = (value) => Array.isArray(value) ? value : value == null ? [] : [value];
 
 /**
  * Merges options. If an option if false, than we return false.
  *
  * @type {function(*): *}
  */
-const mergeOptions = module.exports.mergeOptions = (options) => {
-    let ret;
+export const mergeOptions = (options: FalseOrObject[]): FalseOrObject => {
+    let ret = {};
     for (let i = options.length - 1; i >= 0; i--) {
         const opt = options[i];
         if (opt === false) {
             return false;
         }
-        ret = Object.assign(ret && ret !== true ? ret : {}, opt);
+        Object.assign(ret, opt);
     }
     return ret;
 };
 
-const asArray = module.exports.asArray = v => Array.isArray(v) ? v : v == null ? [] : [v];
-
-const mergePlugins = module.exports.mergePlugins = (...mplugins) => {
-    if (!mplugins.length) {
-        return mplugins;
+export const mergePlugins = (...mergedPlugins: (string | PluginNameConfig)[]): PluginNameConfig[] => {
+    if (!mergedPlugins.length) {
+        return [];
     }
-    return mplugins.reduce((ret, plugin) => {
-        plugin      = asArray(plugin);
+    return mergedPlugins.reduce((ret: PluginNameConfig[], v: string | PluginNameConfig) => {
+        const plugin: PluginNameConfig = typeof v === 'string' ? [v] : v;
         const found = ret.findIndex(v => v[0] === plugin[0]);
         if (found === -1) {
             ret.push(plugin);
@@ -45,10 +45,10 @@ const mergePlugins = module.exports.mergePlugins = (...mplugins) => {
     }, []);
 };
 
-const camel = module.exports.camel = (v = '', idx) => !v ? v : `${idx > 0 ? v[0].toUpperCase()
+export const camel = (v = '', idx?: number): string => !v ? v : `${idx > 0 ? v[0].toUpperCase()
     : v[0].toLowerCase()}${v.substring(1).toLowerCase()}`;
 
-const parse = module.exports.parse = (value, name) => {
+const parse = (value: string, name: string) => {
     try {
         return parseValue(value);
     } catch (e) {
@@ -58,7 +58,7 @@ const parse = module.exports.parse = (value, name) => {
 };
 
 
-const mergeEnv = module.exports.mergeEnv = (plugin, env = process.env) => {
+export const mergeEnv = (plugin: string, env = process.env): FalseOrObject => {
     const upperPlugin = envify(plugin);
     if (upperPlugin in env) {
         const value = configOrBool(env[upperPlugin]);
@@ -70,18 +70,49 @@ const mergeEnv = module.exports.mergeEnv = (plugin, env = process.env) => {
     return {};
 };
 
-const fixName       = (name, sep = '-') => name.replace(/^@/, '').replace(/[^\w]{1,}/g, sep);
-const envify        = module.exports.envify = name => fixName(name, '_').toUpperCase();
-const mergeArgs     = module.exports.mergeArgs = (plugin, argv = process.argv) => {
+export const fixName = (name: string, sep = '-'): string => name.replace(/^@/, '').replace(/[^\w]{1,}/g, sep);
+
+export const envify = (name: string): string => fixName(name, '_').toUpperCase();
+
+type ArgObj = { [key: string]: any }
+export const parseArgs = (args: string[] = process.argv): ArgObj => {
+        const ret: ArgObj = {};
+        for (let i = 2, l = args.length; i < l; i++) {
+            const arg = args[i];
+            if (arg.startsWith('-')) {
+                let [key, value] = arg.replace(/^--?/, '').split('=', 2);
+                if (value) {
+                    ret[key] = parseValue(value);
+                } else {
+                    if (arg[i + 1].startsWith('-')) {
+                        ret[key] = true;
+                    } else {
+                        let v: any = [];
+                        for (let j = i + 1; j < l; j++) {
+                            if (!args[j].startsWith('-')) {
+                                v.push(parseValue(args[j]))
+                            }
+                        }
+                        ret[key] = v;
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
+;
+
+export const mergeArgs = (plugin: string, argv = process.argv): FalseOrObject => {
 
     const copy = [];
-    let ret    = {};
+    let ret = {};
     for (let i = 2, l = argv.length; i < l; i++) {
         let arg = argv[i];
 
         if (arg.startsWith('--')) {
             const argPart = arg.substring(2);
-            let offset    = -1;
+            let offset = -1;
             if (argPart === plugin || argPart.startsWith(plugin + '.') || argPart.startsWith(plugin + '=')) {
                 offset = plugin.length;
             } else {
@@ -100,7 +131,7 @@ const mergeArgs     = module.exports.mergeArgs = (plugin, argv = process.argv) =
                     const parts = remainingArgKey.split('=', 2).filter(Boolean);
 
                     if (parts.length === 1) {
-                        return parse(parts[0])
+                        return parse(parts[0], arg);
                     }
                     set(ret, parts[0], parts.length ? parse(parts[1], argPart) : true);
                 } else {
@@ -125,38 +156,42 @@ const mergeArgs     = module.exports.mergeArgs = (plugin, argv = process.argv) =
     argv.splice(2, argv.length, ...copy);
     return ret;
 };
-const mergeAliasEnv = module.exports.mergeAliasEnv =
-    (aliases, options, {env} = process) => {
-        aliases = Array.isArray(aliases) ? aliases : Object.keys(aliases);
-        if (options === false) {
-            options = {};
-        }
-        const keys = Object.keys(env);
-        for (let i = 0, l = keys.length; i < l; i++) {
-            const ukey = keys[i];
-            const key  = ukey.split('_').map(camel).join('');
 
-            if (aliases.includes(key)) {
-                if ((ukey in env)) {
-                    if (env[ukey] == null) {
-                        options[key] = true;
-                    } else {
-                        options[key] = parse(env[keys[i]], key);
-                    }
+export type OptionsObj = {
+    [key: string]: any
+}
+
+export const mergeAliasEnv = (aliases: string[] | { [key: string]: any }, options: OptionsObj | false, {env}: Process = process): OptionsObj => {
+    aliases = Array.isArray(aliases) ? aliases : Object.keys(aliases);
+    if (options === false) {
+        options = {};
+    }
+    const keys = Object.keys(env);
+    for (let i = 0, l = keys.length; i < l; i++) {
+        const ukey = keys[i];
+        const key = ukey.split('_').map(camel).join('');
+
+        if (aliases.includes(key)) {
+            if ((ukey in env)) {
+                if (env[ukey] == null) {
+                    options[key] = true;
+                } else {
+                    options[key] = parse(env[keys[i]], key);
                 }
             }
-
         }
-        return options;
-    };
 
-const mergeAliasArgs = module.exports.mergeAliasArgs = (aliases, options, {argv} = process) => {
+    }
+    return options;
+};
+
+export const mergeAliasArgs = (aliases: string[], options: OptionsObj | false, {argv}: Process = process) => {
     if (options === false) {
         options = {};
     }
     const copy = [];
     for (let i = 2, l = argv.length; i < l; i++) {
-        let arg    = argv[i];
+        let arg = argv[i];
         let argKey = null;
         if (arg.length === 2 && arg.startsWith('-')) {
             argKey = arg.substring(1);
@@ -166,7 +201,7 @@ const mergeAliasArgs = module.exports.mergeAliasArgs = (aliases, options, {argv}
 
         if (argKey) {
             const parts = argKey.split('=', 2);
-            const key   = parts.shift().split('-').map(camel).join('');
+            const key = parts.shift().split('-').map(camel).join('');
             if (aliases.includes(key)) {
                 if (parts.length) {
                     set(options, key, parts.length ? parse(parts[0], arg) : true);
@@ -187,11 +222,15 @@ const mergeAliasArgs = module.exports.mergeAliasArgs = (aliases, options, {argv}
     return options;
 };
 
-const mergeAlias = module.exports.mergeAlias = (alias = [],
-                                                aliasObj,
-                                                process) => {
+type Process = {
+    env: { [key: string]: any }, argv: string[]
+}
 
-    const options = {};
+export const mergeAlias = (alias: string[] | AliasObj = [],
+                           aliasObj: OptionsObj,
+                           process: Process): OptionsObj => {
+
+    const options: OptionsObj = {};
     const aliases = (Array.isArray(alias) ? alias : Object.keys(alias));
 
     //already got the value;
@@ -207,20 +246,22 @@ const mergeAlias = module.exports.mergeAlias = (alias = [],
 };
 
 
-const unique$reduce = (ret, v) => {
+const unique$reduce = <T>(ret: T[], v: T): T[] => {
     if (!(v == null || ret.includes(v))) {
         ret.push(v);
     }
     return ret;
 };
 
-const unique = module.exports.unique = arr => arr.reduce(unique$reduce, []);
+export const unique = <T>(arr: T[]): T[] => arr.reduce(unique$reduce, []);
 
-const resolveEnv = module.exports.resolveEnv = (envName, type, config = {}) => {
-    const ret = [];
+
+export const resolveEnv = (envName: string, type: 'presets' | 'plugins', config: OptionsConfig): NameOrPluginNameConfig[] => {
+
+    const ret: NameOrPluginNameConfig[] = [];
 
     if (envName && config.env) {
-        const envs = unique([envName, ...envName.split(':')]);
+        const envs: string[] = unique([envName, ...envName.split(':')].filter(Boolean));
         for (let i = 0, l = envs.length; i < l; i++) {
             const e = config.env[envs[i]];
             if (e && e[type]) {
@@ -232,4 +273,5 @@ const resolveEnv = module.exports.resolveEnv = (envName, type, config = {}) => {
         ret.push(...config[type]);
     }
     return ret;
+
 };

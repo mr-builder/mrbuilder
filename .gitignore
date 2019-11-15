@@ -10,3 +10,4 @@ lib
 **/lib
 demo
 app
+example/example-*/tsconfig.json

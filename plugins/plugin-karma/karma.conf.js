@@ -3,7 +3,7 @@ const path             = require('path');
 const {cwd, stringify} = require('@mrbuilder/utils');
 process.env.NODE_ENV   = process.env.NODE_ENV || 'test';
 //we allow for running this script directly so can be run in IDE's.
-const optionsManager   = global._MRBUILDER_OPTIONS_MANAGER || (global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager'))({
+const optionsManager   = global._MRBUILDER_OPTIONS_MANAGER || (global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager').default)({
     prefix: 'mrbuilder', _require: require,
 }));
 const logger           = optionsManager.logger('@mrbuilder/plugin-karma');

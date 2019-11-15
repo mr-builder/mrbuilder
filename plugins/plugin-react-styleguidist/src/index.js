@@ -1,20 +1,19 @@
-const getConfig = require('react-styleguidist/scripts/config');
-const sylist    = require(
-    'react-styleguidist/scripts/make-webpack-config');
+const getConfig = require('react-styleguidist/lib/scripts/config');
+const sylist = require('react-styleguidist/lib/scripts/make-webpack-config');
 const {
-          join,
-          resolve,
-          relative
-      }         = require('path');
+    join,
+    resolve,
+    relative
+} = require('path');
 const {
-          cwd,
-          enhancedResolve,
-          lernaFilteredPackages
-      }         = require('@mrbuilder/utils');
+    cwd,
+    enhancedResolve,
+    lernaFilteredPackages
+} = require('@mrbuilder/utils');
 
 const normalizeLerna = (pkg) => {
     if (pkg && pkg.toJSON) {
-        const ret     = pkg.toJSON();
+        const ret = pkg.toJSON();
         ret._location = pkg.location;
         return ret;
     }
@@ -23,7 +22,7 @@ const normalizeLerna = (pkg) => {
     }
     return pkg;
 };
-const handleLerna    = opts => lernaFilteredPackages(opts).then(v => v.map(normalizeLerna));
+const handleLerna = opts => lernaFilteredPackages(opts).then(v => v.map(normalizeLerna));
 
 module.exports = function (options = {}, webpack, om) {
 
@@ -43,10 +42,10 @@ module.exports = function (options = {}, webpack, om) {
 
     const confFromPackage = (_pkg, component) => {
         const obj = Object.assign({
-                name       : _pkg.name,
+                name: _pkg.name,
                 description: description(_pkg),
-                content    : join(_pkg._location, 'Readme.md'),
-                sections   : [],
+                content: join(_pkg._location, 'Readme.md'),
+                sections: [],
             },
             typeof component[1] === 'string' ? {
                 components: [component[1]]
@@ -83,7 +82,7 @@ module.exports = function (options = {}, webpack, om) {
 
 
         const components = opts.components;
-        const lerna      = opts.lerna;
+        const lerna = opts.lerna;
         delete opts.components;
         delete opts.lerna;
 
@@ -105,9 +104,9 @@ module.exports = function (options = {}, webpack, om) {
                               return handleLerna(component[0].lerna);
                           }
           */
-                const _pkgDir  = resolvePkgDir(component[0]);
-                const pDir     = resolve(_pkgDir, 'package.json');
-                const _pkg     = require(pDir);
+                const _pkgDir = resolvePkgDir(component[0]);
+                const pDir = resolve(_pkgDir, 'package.json');
+                const _pkg = require(pDir);
                 _pkg._location = _pkgDir;
 
                 return confFromPackage(_pkg, component);
@@ -160,7 +159,7 @@ module.exports = function (options = {}, webpack, om) {
             conf.getComponentPathLine = (componentPath) => {
 
                 const [all, name, comp] = /.*\/(.+?)\/src\/(?:.*\/)?(.+?)\.(js|ts|tsx|jsx)$/i.exec(componentPath) || [];
-                let ret                 = componentPath;
+                let ret = componentPath;
                 if (comp && name) {
                     ret = `import {${comp}} from '${name}'`;
                 }

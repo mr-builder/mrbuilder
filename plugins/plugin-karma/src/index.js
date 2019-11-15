@@ -1,28 +1,29 @@
 const {pkg, cwd, enhancedResolve} = require('@mrbuilder/utils');
-const {ContextReplacementPlugin}  = require('webpack');
-const processAlias                = require('@mrbuilder/plugin-webpack/src/processAlias');
-const use                         = require('@mrbuilder/plugin-babel/use-babel');
-module.exports                    = function ({
-                                                  testDir = cwd('test'),
-                                                  pattern = /.*-test\.jsx?$/,
-                                                  useCoverage = false,
-                                                  pathinfo = true,
-                                                  node = {
-                                                      fs     : 'empty',
-                                                      net    : 'empty',
-                                                      console: false,
-                                                      util   : true,
-                                                  },
-                                                  alias = {},
-                                                  mainFields = ['source', 'browser', 'main'],
-                                                  include = [cwd('src'), cwd('public')],
+const {DefinePlugin,ContextReplacementPlugin} = require('webpack');
+const processAlias = require('@mrbuilder/plugin-webpack/src/processAlias');
+const use = require('@mrbuilder/plugin-babel/use-babel');
 
-                                              }, webpack, om) {
+module.exports = function ({
+                               testDir = cwd('test'),
+                               pattern = /.*-test\.jsx?$/,
+                               useCoverage = false,
+                               pathinfo = true,
+                               node = {
+                                   fs: 'empty',
+                                   net: 'empty',
+                                   console: false,
+                                   util: true,
+                               },
+                               alias = {},
+                               mainFields = ['source', 'browser', 'main'],
+                               include = [cwd('src'), cwd('public')],
+
+                           }, webpack, om) {
 
     const info = (this.info || console.log);
-    testDir    = enhancedResolve(testDir);
+    testDir = enhancedResolve(testDir);
     include.push(testDir);
-    const packageJson                       = pkg();
+    const packageJson = pkg();
     webpack.resolve.alias[packageJson.name] = cwd(packageJson.source || packageJson.main || 'src');
 
     processAlias(webpack, alias);
@@ -31,7 +32,7 @@ module.exports                    = function ({
         webpack.module.rules.unshift({
             test: /\.[jte]sx?$/,
             include,
-            use : use(om),
+            use: use(om),
         });
     }
 
@@ -39,11 +40,11 @@ module.exports                    = function ({
         info(`enabling code coverage for karma`);
         webpack.module.rules.unshift(
             {
-                test   : /\.[jet]sx?$/,
+                test: /\.[jet]sx?$/,
                 // instrument only testing sources with Istanbul
                 include,
-                use    : {
-                    loader : 'istanbul-instrumenter-loader',
+                use: {
+                    loader: 'istanbul-instrumenter-loader',
                     options: {
                         esModules: true,
                     },
@@ -60,15 +61,14 @@ module.exports                    = function ({
     info('running tests in ', testDir);
 
     webpack.devtool = 'inline-source-map';
-    webpack.target  = 'web';
-    webpack.node    = webpack.node || {};
+    webpack.target = 'web';
+    webpack.node = webpack.node || {};
     Object.assign(webpack.node, node);
-    webpack.output          = {};
+    webpack.output = {};
     webpack.output.pathinfo = pathinfo;
     //webpack.entry           = { test: testIndex };
-    this.useDefine          = Object.assign({}, this.useDefine, {
-        MRBUILDER_TEST_MODULE: testDir,
-    });
+    webpack.plugins.push(new DefinePlugin({MRBUILDER_TEST_MODULE: JSON.stringify(testDir)}));
+
     (this.info || console.log)('using test dir ', testDir);
     if (mainFields) {
         webpack.resolve.mainFields = mainFields;

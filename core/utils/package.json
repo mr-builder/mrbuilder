@@ -3,16 +3,19 @@
   "version": "4.0.0-alpha.1",
   "description": "Dev utils for mrbuilder dev tools",
   "source": "src",
-  "main": "src",
+  "main": "lib",
+  "types": "src",
   "dependencies": {
-    "json5": "^2.1.0"
+    "@types/json5": "^0.0.30",
+    "json5": "^2.1.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.2.0"
+    "mocha": "^6.2.2"
   },
   "scripts": {
-    "test": "mocha ./test/**/*-test.js"
+    "test": "mocha ./test/**/*-test.js",
+    "prepare": "tsc"
   },
   "license": "0BSD",
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",

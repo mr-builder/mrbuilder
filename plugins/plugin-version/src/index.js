@@ -1,13 +1,13 @@
 const {cwd, enhancedResolve} = require('@mrbuilder/utils');
-
+const {DefinePlugin} = require('webpack');
 module.exports = function ({
                                variable,
                                version,
-                               module = cwd('package.json'),
+                               module,
                                NODE_ENV = true
                            }, webpack) {
     if (!variable || !version) {
-        const pkg = require(enhancedResolve(module));
+        const pkg = require(enhancedResolve(module || cwd('package.json')));
 
         if (!version) {
             version = pkg.version;
@@ -35,7 +35,13 @@ module.exports = function ({
             }
         }
         conf[NODE_ENV] = 1;
+        conf['process.env.NODE_ENV'] = NODE_ENV.toLowerCase();
     }
-    (this.info || console.log)(conf);
-    this.useDefine = Object.assign({}, this.useDefine, conf);
+    const out = Object.entries(conf).reduce((ret, [key, value]) => {
+        ret[key] = JSON.stringify(value);
+        return ret;
+    }, {});
+    this.debug(JSON.stringify(out));
+    webpack.plugins.unshift(new DefinePlugin(out));
+    return webpack;
 };

@@ -1,5 +1,5 @@
-const {spawnSync} = require('child_process');
-const path        = require('path');
+import {spawnSync} from 'child_process';
+import path from 'path';
 
 function findExecPath() {
     return process.env['$npm_execpath'] || require('which')
@@ -8,15 +8,15 @@ function findExecPath() {
 
 }
 
-const yarnRe   = /.*[/]?yarn([.]js)?$/;
-    /**
+const yarnRe = /.*[/]?yarn([.]js)?$/;
+/**
  * Tries to install a package as dev dependency.
  * @param e
  * @param pkg
  * @param isDev - set to false if it is not a dev dependency.
  */
-let first      = true;
-module.exports = function handleNotFoundTryInstall(e, pkg, isDev = true) {
+let first = true;
+export default function handleNotFoundTryInstall(e: Error, pkg: string, isDev = true) {
     const warn = this.warn || console.warn;
     const info = this.info || console.log;
     if (!pkg || pkg === 'undefined') {
@@ -27,7 +27,7 @@ module.exports = function handleNotFoundTryInstall(e, pkg, isDev = true) {
     const npmPath = findExecPath();
     if (npmPath) {
         const installPkg = `${pkg}@latest`;
-        const isYarn     = yarnRe.test(npmPath);
+        const isYarn = yarnRe.test(npmPath);
         if (first) {
             first = false;
             info(
@@ -55,8 +55,8 @@ module.exports = function handleNotFoundTryInstall(e, pkg, isDev = true) {
 
         const res = spawnSync(npmPath, args, {
             stdio: ['inherit', 'inherit', 'inherit'],
-            env  : Object.assign({}, process.env, {
-                NODE_ENV                 : 'development',
+            env: Object.assign({}, process.env, {
+                NODE_ENV: 'development',
                 MRBUILDER_AUTO_INSTALLING: 1,
             })
         });

@@ -1,33 +1,33 @@
 require('@mrbuilder/plugin-browserslist');
-const path                              = require('path');
-const optionsManager                    = global._MRBUILDER_OPTIONS_MANAGER;
+const path = require('path');
+const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
 const {stringify, pkg, cwd, parseEntry} = require('@mrbuilder/utils');
 const {
-          DefinePlugin,
-          optimize: {
-              ModuleConcatenationPlugin
-          }
-      }                                 = require('webpack');
+    DefinePlugin,
+    optimize: {
+        ModuleConcatenationPlugin
+    }
+} = require('webpack');
 
 const {
-          warn  = console.warn,
-          debug = console.warn,
-          info  = console.log,
-      } = optionsManager.logger('@mrbuilder/plugin-webpack');
+    warn = console.warn,
+    debug = console.warn,
+    info = console.log,
+} = optionsManager.logger('@mrbuilder/plugin-webpack');
 
-const countSlash  = (v) => {
-          if (!v) {
-              return 0;
-          }
-          let count = 0;
-          for (let i = 0, l = v.length; i < l; i++) {
-              if (v[i] === path.sep) {
-                  count++;
-              }
-          }
-          return count;
-      },
-      sortByDepth = (b, a) => countSlash(a) - countSlash(b);
+const countSlash = (v) => {
+        if (!v) {
+            return 0;
+        }
+        let count = 0;
+        for (let i = 0, l = v.length; i < l; i++) {
+            if (v[i] === path.sep) {
+                count++;
+            }
+        }
+        return count;
+    },
+    sortByDepth = (b, a) => countSlash(a) - countSlash(b);
 
 let publicPath = optionsManager.config('@mrbuilder/plugin-webpack.public', '');
 //So if you defined publicPath to /public/ it will parse as a regex.
@@ -38,10 +38,10 @@ if (publicPath instanceof RegExp) {
 const opts = {
     ...require('@mrbuilder/cli/src/info'),
     publicPath,
-    outputPath    : optionsManager.config('@mrbuilder/plugin-webpack.outputPath', cwd('lib')),
+    outputPath: optionsManager.config('@mrbuilder/plugin-webpack.outputPath', cwd('lib')),
     outputFilename: optionsManager.config('@mrbuilder/plugin-webpack.outputFilename', '[name].js'),
-    useScopeHoist : optionsManager.config('@mrbuilder/plugin-webpack.useScopeHoist', true),
-    useTarget     : optionsManager.config('@mrbuilder/plugin-webpack.target', 'web')
+    useScopeHoist: optionsManager.config('@mrbuilder/plugin-webpack.useScopeHoist', true),
+    useTarget: optionsManager.config('@mrbuilder/plugin-webpack.target', 'web')
 };
 
 let webpack = {
@@ -55,15 +55,15 @@ let webpack = {
             cwd('node_modules'),
             path.resolve(__dirname, 'node_modules'),
         ],
-        alias  : {}
+        alias: {}
     },
-    output       : {
-        path    : opts.outputPath,
+    output: {
+        path: opts.outputPath,
         filename: opts.outputFilename,
         publicPath,
     },
-    plugins      : [],
-    module       : {
+    plugins: [],
+    module: {
         rules: []
     }
 };
@@ -95,11 +95,12 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
 
             if (typeof plugin === 'function') {
                 p = p.then(_webpack => {
-                    opts.warn  = option.warn;
-                    opts.info  = option.info;
-                    opts.debug = option.debug;
-
-                    return plugin.call(opts, option.config || {}, _webpack, optionsManager)
+                    try {
+                        return plugin.call(option, option.config || {}, _webpack, optionsManager)
+                    } catch (e) {
+                        console.error(`Error in '${option.name}'`, e);
+                        throw e;
+                    }
                 }).then(tmpWebpack => {
                     option.info(option.name, 'loaded.');
                     if (tmpWebpack) {
@@ -119,8 +120,8 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
     });
     return p.then(w => {
         opts.debug = debug;
-        opts.info  = info;
-        opts.warn  = warn;
+        opts.info = info;
+        opts.warn = warn;
         return w;
     }).then(res, rej);
 });
@@ -129,17 +130,16 @@ module.exports = resolveWebpack(webpack).then(webpack => {
 
 //only define entry if it doesn't exist already.
     if (!webpack.entry) {
-        const _pkg    = pkg();
+        const _pkg = pkg();
         webpack.entry = {index: cwd(_pkg.source || 'src/index')};
         info('using default entry', webpack.entry.index)
     }
     if (opts.useDefine) {
-        webpack.plugins.push(
-            new DefinePlugin(
-                Object.keys(opts.useDefine).reduce(function (ret, key) {
-                    ret[key] = JSON.stringify(opts.useDefine[key]);
-                    return ret;
-                }, {})));
+        webpack.plugins.unshift(
+            new DefinePlugin(Object.keys(opts.useDefine).reduce(function (ret, key) {
+                ret[key] = JSON.stringify(opts.useDefine[key]);
+                return ret;
+            }, {})));
     }
 
 
@@ -166,4 +166,9 @@ module.exports = resolveWebpack(webpack).then(webpack => {
     info('output filename', webpack.output.filename);
 
     return webpack;
+}, (err) => {
+    warn('optionsManager', stringify(optionsManager));
+    warn('webpack configuration', stringify(webpack));
+    throw err;
 });
+

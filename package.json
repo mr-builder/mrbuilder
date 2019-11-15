@@ -16,18 +16,22 @@
     "plugins/*",
     "create-mrbuilder-app",
     "wiki",
-    "example/*"
+    "examples/*"
   ],
   "dependencies": {
-    "lerna": "^3.10.2"
+    "lerna": "^3.18.4"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.2"
   },
   "publishConfig": {
-    "registry":"https://registry.npm.orig"
+    "registry": "https://registry.npm.orig"
   },
   "scripts": {
-    "test": "lerna run test",
+    "lerna": "lerna",
+    "test": "lerna run prepare --no-private && lerna run test",
     "clean": "lerna clean",
-    "prepublish:all": "lerna run prepublish",
+    "prepublish:all": "lerna run prepare",
     "publish:all": "lerna publish --registry http://registry.npm.org --force-publish=*"
   }
 }

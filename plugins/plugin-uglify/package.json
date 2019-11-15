@@ -3,7 +3,7 @@
   "version": "4.0.0-alpha.2",
   "description": "uglify support for mrbuilder",
   "dependencies": {
-    "terser-webpack-plugin": "^1.2.1"
+    "terser-webpack-plugin": "^2.2.1"
   },
   "devDependencies": {
     "@mrbuilder/plugin-mocha": "^4.0.0-alpha.2"
