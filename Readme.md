@@ -1,4 +1,4 @@
-![alt mr-builder](./mrbuilder.wiki/mrbuilder.svg)
+![alt mr-builder](./wiki/mrbuilder.svg)
 
 mrbuilder - Mono Repo Builder
 ===
