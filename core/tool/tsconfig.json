@@ -15,9 +15,7 @@
       "dom",
       "scripthost",
       "es2018"
-    ]
-  },
-  "include": [
-    "src/**/*"
-  ]
+    ],
+    "typeRoots": ["src/@types", "../../node_modules"]
+  }
 }

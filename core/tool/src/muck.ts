@@ -270,7 +270,7 @@ export async function muckFile(pkg: Package, file: string, opts: InternalOption)
 
 }
 
-export async function makeOptions(name: string, args: string[],): Promise<InternalOption | void> {
+export  function makeOptions(name: string, args: string[],): InternalOption | void {
     function help(msg?: string): void {
         if (msg) {
             settings.error(msg);
@@ -445,7 +445,7 @@ export async function muck(opts: InternalOption | void) {
 }
 
 if (require.main === module) {
-    makeOptions(process.argv[1], process.argv.slice(2)).then(muck).then(() => {
+    muck(makeOptions(process.argv[1], process.argv.slice(2))).then(() => {
         settings.exit(0);
     }, (e) => {
         settings.trace(e);

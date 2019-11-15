@@ -1,5 +1,5 @@
 import {configOrBool, parseValue, set} from '@mrbuilder/utils';
-import {AliasObj, EnvConfig, NameOrPluginNameConfig, OptionsConfig, PluginNameConfig} from "./types";
+import {AliasObj, EnvConfig, NameOrPluginNameConfig, OptionsConfig, PluginNameConfig, PresetsPlugins} from "./types";
 
 type FalseOrObject = false | { [key: string]: any }
 
@@ -73,6 +73,35 @@ export const mergeEnv = (plugin: string, env = process.env): FalseOrObject => {
 export const fixName = (name: string, sep = '-'): string => name.replace(/^@/, '').replace(/[^\w]{1,}/g, sep);
 
 export const envify = (name: string): string => fixName(name, '_').toUpperCase();
+
+type ArgObj = { [key: string]: any }
+export const parseArgs = (args: string[] = process.argv): ArgObj => {
+        const ret: ArgObj = {};
+        for (let i = 2, l = args.length; i < l; i++) {
+            const arg = args[i];
+            if (arg.startsWith('-')) {
+                let [key, value] = arg.replace(/^--?/, '').split('=', 2);
+                if (value) {
+                    ret[key] = parseValue(value);
+                } else {
+                    if (arg[i + 1].startsWith('-')) {
+                        ret[key] = true;
+                    } else {
+                        let v: any = [];
+                        for (let j = i + 1; j < l; j++) {
+                            if (!args[j].startsWith('-')) {
+                                v.push(parseValue(args[j]))
+                            }
+                        }
+                        ret[key] = v;
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
+;
 
 export const mergeArgs = (plugin: string, argv = process.argv): FalseOrObject => {
 

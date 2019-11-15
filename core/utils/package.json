@@ -4,6 +4,7 @@
   "description": "Dev utils for mrbuilder dev tools",
   "source": "src",
   "main": "lib",
+  "types": "src",
   "dependencies": {
     "@types/json5": "^0.0.30",
     "json5": "^2.1.1"

@@ -342,11 +342,14 @@ export default class OptionsManager implements OptionsManagerType {
             const presetsName = `${envPrefix}_${prefix}PRESETS`;
             const plugins = split(this.env(pluginsName, ''));
             const presets = split(this.env(presetsName, ''));
+
             if ((plugins.length || presets.length)) {
                 this.debug('process from env', pluginsName, plugins, presetsName, presets);
                 processOpts(`${envPrefix}_${prefix}ENV`, {plugins, presets}, void (0), this.topPackage, void (0));
             }
         };
+
+
         const scan = (ignoreRc: boolean, parent: Package, name: string, options?: {}, override?: boolean) => {
             this.debug('scanning', name);
 

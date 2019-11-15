@@ -43,6 +43,9 @@ if (coverageDir || coverageGLobal) {
         argv.push('--require', require.resolve('@mrbuilder/plugin-babel/babel-polyfill'));
     }
 }
+if (om.enabled("@mrbuilder/plugin-typescript")){
+    argv.push('-r', 'ts-node/register');
+}
 
 if (timeout) {
     //argv is all strings
