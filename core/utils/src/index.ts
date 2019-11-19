@@ -104,7 +104,7 @@ export function configOrBool(value: string | boolean, defaultValue?: boolean): a
     }
 }
 
-const camelCased = function (str: string, first?: boolean): string {
+export const camelCased = function (str: string, first?: boolean): string {
     str = str.replace(/[.-]([a-z])/g, function (g) {
         return g[1] && g[1].toUpperCase();
     });

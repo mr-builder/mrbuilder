@@ -14,6 +14,8 @@
     "mocha": "mrbuilder",
     "start": "mrbuilder",
     "demo": "mrbuilder",
+    "jest": "mrbuilder-jest",
+
     "babel": "mrbuilder",
     "prepublish": "mrbuilder-babel",
     "babel-7": "MRBUILDER_INTERNAL_PRESETS=@mrbuilder/preset-babel-7 mrbuilder-babel",
