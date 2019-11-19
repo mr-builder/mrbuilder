@@ -1,5 +1,5 @@
 import React from 'react';
-import App from '../index';
+import App, {Smile} from '../index';
 import renderer from 'react-test-renderer';
 
 test('Should render lib', () => {
@@ -7,3 +7,7 @@ test('Should render lib', () => {
     expect(app.toJSON()).toMatchSnapshot();
 
 });
+test('Should render smile', () => {
+    const smile = renderer.create(<Smile/>);
+    expect(smile).toMatchSnapshot();
+})

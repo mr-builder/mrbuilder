@@ -1,5 +1,6 @@
+import TYPES from './fileTypes';
 module.exports = ({
-                      test = /\.(png|je?pg|gif?f|bmp|ppm|bpg|mpe?g)$/,
+                      test = TYPES,
                       loader = 'file-loader',
                       options = {}
                   }, webpack) => {

@@ -10,3 +10,9 @@ exports[`Should render lib 1`] = `
    from webpack example.
 </div>
 `;
+
+exports[`Should render smile 1`] = `
+<img
+  src="smile.png"
+/>
+`;

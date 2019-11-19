@@ -21,6 +21,12 @@ const jestConfig = {
 if (!jestConfig.transform) {
     jestConfig.transform = {};
 }
+
+if (om.enabled('@mrbuilder/plugin-filetypes')) {
+    const types = om.config('@mrbuilder/plugin-filetypes.test', require('@mrbuilder/plugin-filetypes/src/fileTypes'));
+    jestConfig.transform[types.source ? types.source : types] = `@mrbuilder/plugin-jest/src/mediaFileTransformer.js`;
+}
+
 if (om.enabled('@mrbuilder/plugin-babel')) {
     if (!fs.existsSync(om.cwd('babel.config.js'))) {
         jestConfig.transform ['\.[jt]sx?'] = om.require.resolve('@mrbuilder/plugin-jest/src/transform');
@@ -40,9 +46,9 @@ if (om.enabled('@mrbuilder/plugin-graphql')) {
 }
 
 const assignIdentity = (plugin, def) => {
-    const cssm = om.config(`${plugin}.test`, def);
-    if (cssm) {
-        jestConfig.moduleNameMapper[cssm instanceof RegExp ? cssm.source : cssm] = 'identity-obj-proxy';
+    const cssModule = om.config(`${plugin}.test`, def);
+    if (cssModule) {
+        jestConfig.moduleNameMapper[cssModule instanceof RegExp ? cssModule.source : cssModule] = 'identity-obj-proxy';
     }
 };
 

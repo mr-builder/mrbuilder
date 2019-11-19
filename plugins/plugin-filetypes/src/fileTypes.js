@@ -1,0 +1,1 @@
+module.exports = /\.(png|je?pg|gif?f|bmp|ppm|bpg|mpe?g)$/;
