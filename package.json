@@ -19,7 +19,8 @@
     "examples/*"
   ],
   "dependencies": {
-    "lerna": "^3.18.4"
+    "lerna": "^3.18.4",
+    "rimraf": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^3.7.2"
@@ -30,7 +31,7 @@
   "scripts": {
     "lerna": "lerna",
     "test": "lerna run prepare --no-private && ./node_modules/.bin/lerna run prepare --scope @mrbuilder/example-* && lerna run test",
-    "clean": "lerna clean",
+    "clean": "lerna clean && rimraf core/*/lib plugins/*/lib examples/*/lib",
     "prepublish:all": "lerna run prepare",
     "publish:all": "lerna publish --registry http://registry.npm.org --force-publish=*"
   }
