@@ -16,9 +16,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "@mrbuilder": {
+  "mrbuilder": {
     "options": {
-      "test": "/\\.(png|je?pg|gif?f|bmp|ppm|bpg|mpe?g)$/"
+      "test": "/\\.(png|je?pg|gif?f|bmp|ppm|bpg|mpe?g)$/",
+      "loader": "file-loader"
     }
   }
 }

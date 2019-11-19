@@ -1,7 +1,6 @@
-import TYPES from './fileTypes';
 module.exports = ({
-                      test = TYPES,
-                      loader = 'file-loader',
+                      test,
+                      loader,
                       options = {}
                   }, webpack) => {
 

@@ -10,4 +10,4 @@ test('Should render lib', () => {
 test('Should render smile', () => {
     const smile = renderer.create(<Smile/>);
     expect(smile).toMatchSnapshot();
-})
+});

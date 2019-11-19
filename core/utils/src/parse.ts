@@ -15,6 +15,35 @@ export function parseRe(key: string, value: any): any {
     return value;
 }
 
+export function objToConf(obj: any): any {
+    if (obj == null) {
+        return obj;
+    }
+    switch (typeof obj) {
+        case 'string':
+            return parseRe('', obj);
+        case 'number':
+        case "bigint":
+        case "boolean":
+        case "symbol":
+        case "undefined":
+            return obj;
+        case "object":
+            if (obj instanceof RegExp) {
+                return obj;
+            }
+            if (Array.isArray(obj)) {
+                return obj.map(objToConf);
+            }
+    }
+
+    return Object.entries(obj).reduce((r: { [key: string]: any }, [k, v]): {} => {
+        r[k] = objToConf(v);
+        return r;
+    }, {});
+
+}
+
 export function parseValue(value: string): any {
     if (/^".*"$/.test(value)) {
         return JSON5.parse(value, parseRe)

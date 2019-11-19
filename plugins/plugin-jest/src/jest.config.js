@@ -23,8 +23,10 @@ if (!jestConfig.transform) {
 }
 
 if (om.enabled('@mrbuilder/plugin-filetypes')) {
-    const types = om.config('@mrbuilder/plugin-filetypes.test', require('@mrbuilder/plugin-filetypes/src/fileTypes'));
-    jestConfig.transform[types.source ? types.source : types] = `@mrbuilder/plugin-jest/src/mediaFileTransformer.js`;
+    const types = om.config('@mrbuilder/plugin-filetypes.test');
+    if (types) {
+        jestConfig.transform[types.source ? types.source : types] = `@mrbuilder/plugin-jest/src/mediaFileTransformer.js`;
+    }
 }
 
 if (om.enabled('@mrbuilder/plugin-babel')) {

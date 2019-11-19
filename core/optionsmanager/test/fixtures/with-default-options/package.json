@@ -1,0 +1,16 @@
+{
+  "name": "with-default-options",
+  "version": "1",
+  "tester": {
+    "plugins": [
+      "with-option-1",
+      [
+        "with-option-2",
+        {
+          "merged": 1,
+          "opt2": 3
+        }
+      ]
+    ]
+  }
+}
