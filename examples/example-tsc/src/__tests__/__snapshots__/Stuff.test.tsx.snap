@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render lib 1`] = `
+<span>
+  stuff
+</span>
+`;

@@ -29,7 +29,7 @@
   },
   "scripts": {
     "lerna": "lerna",
-    "test": "lerna run prepare --no-private && lerna run test",
+    "test": "lerna run prepare --no-private && ./node_modules/.bin/lerna run prepare --scope @mrbuilder/example-* && lerna run test",
     "clean": "lerna clean",
     "prepublish:all": "lerna run prepare",
     "publish:all": "lerna publish --registry http://registry.npm.org --force-publish=*"

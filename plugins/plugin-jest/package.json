@@ -1,0 +1,25 @@
+{
+  "name": "@mrbuilder/plugin-jest",
+  "version": "4.0.0-alpha.1",
+  "bin": {
+    "mrbuilder-jest": "./bin/cli.js"
+  },
+  "description": "Provides mrbuilder wrapper for jest",
+  "dependencies": {
+    "jest": "^24.9.0",
+    "@types/jest": "^24.0.23",
+    "@types/react-test-renderer": "^16.9.1",
+    "babel-jest": "^24.9.0",
+    "react-test-renderer": "^16.12.0",
+    "@mrbuilder/optionsmanager": "^4.0.0-alpha.1",
+    "identity-obj-proxy": "^3.0.0"
+  },
+  "mrbuilder": {
+    "plugins": [
+      [
+        "@mrbuilder/plugin-karma",
+        false
+      ]
+    ]
+  }
+}

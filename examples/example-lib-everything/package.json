@@ -4,9 +4,7 @@
   "version": "4.0.0-alpha.2",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.0.0-alpha.1"
-  },
-  "dependencies": {
+    "@mrbuilder/cli": "^4.0.0-alpha.1",
     "@mrbuilder/plugin-env": "^4.0.0-alpha.2",
     "@mrbuilder/plugin-graphql": "^4.0.0-alpha.2",
     "@mrbuilder/plugin-lodash": "^4.0.0-alpha.2",

@@ -1,6 +1,8 @@
 /node_modules
 /*/node_modules
 /*/*/node_modules
+/wiki/tsconfig.json
+/examples/*/tsconfig.json
 test-out
 .idea
 dist
@@ -10,4 +12,4 @@ lib
 **/lib
 demo
 app
-example/example-*/tsconfig.json
+built
