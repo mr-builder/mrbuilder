@@ -12,7 +12,9 @@
     "@mrbuilder/cli": "^4.0.0-alpha.1",
     "@mrbuilder/plugin-version": "^4.0.0-alpha.2",
     "@mrbuilder/preset-app": "^4.0.0-alpha.2",
-    "@mrbuilder/preset-dev": "^4.0.0-alpha.2"
+    "@mrbuilder/preset-dev": "^4.0.0-alpha.2",
+    "@mrbuilder/plugin-jest": "^4.0.0-alpha.1"
+
   },
   "scripts": {
     "prepublish": "mrbuilder",

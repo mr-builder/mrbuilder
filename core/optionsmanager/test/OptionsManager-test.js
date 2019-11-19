@@ -21,9 +21,9 @@ const isDirectory = sourceDir => {
 };
 const mkdirs = (dirs) => {
     const parts = dirs.split('/');
-    for (let i = 1, l = parts.length; i < l; i++) {
+    for (let i = 0, l = parts.length; i < l; i++) {
         if (parts[i]) {
-            const dirPath = join(...parts.slice(0, i));
+            const dirPath = join(...parts.slice(0, i + 1));
             if (!isDirectory(dirPath)) {
                 mkdirSync(dirPath);
             }

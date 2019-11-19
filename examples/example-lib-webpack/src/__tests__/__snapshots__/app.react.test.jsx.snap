@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render lib 1`] = `
+<div>
+  <span
+    className="container"
+  >
+    Hello
+  </span>
+   from webpack example.
+</div>
+`;

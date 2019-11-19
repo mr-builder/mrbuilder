@@ -7,14 +7,9 @@
     "@mrbuilder/cli": "^4.0.0-alpha.1"
   },
   "scripts": {
-    "prepublish": "mrbuilder",
+    "prepare": "mrbuilder",
     "start": "mrbuilder",
-    "test": "mrbuilder",
-    "karma": "mrbuilder"
-  },
-  "peerDependencies": {
-    "react": "16.x",
-    "react-dom": "16.x"
+    "test": "mrbuilder-jest"
   },
   "source": "src",
   "main": "lib",
