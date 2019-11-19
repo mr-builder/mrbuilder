@@ -1,0 +1,11 @@
+{
+  "name": "@mrbuilder/plugin-prettier",
+  "version": "4.0.0-alpha.1",
+  "description": "Provides prettier cli wrapper",
+  "dependencies": {
+    "prettier": "^1.19.1"
+  },
+  "bin": {
+    "mrbuilder-prettier": "./bin/cli.js"
+  }
+}
