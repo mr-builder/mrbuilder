@@ -8,7 +8,7 @@ const {
         ModuleConcatenationPlugin
     }
 } = require('webpack');
-
+const scope = require('@mrbuilder/cli/src/info');
 const {
     warn = console.warn,
     debug = console.warn,
@@ -96,7 +96,7 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
             if (typeof plugin === 'function') {
                 p = p.then(_webpack => {
                     try {
-                        return plugin.call(option, option.config || {}, _webpack, optionsManager)
+                        return plugin.call(scope, option.config || {}, _webpack, optionsManager)
                     } catch (e) {
                         console.error(`Error in '${option.name}'`, e);
                         throw e;
