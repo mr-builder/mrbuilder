@@ -106,19 +106,23 @@ describe('@mrbuilder/optionsmanager', function () {
             }), config);
         });
 
-        newOptionManagerTest.only =
-            (_name, _config, _assert) => newOptionManagerTest(_name, _config,
-                _assert, it.only);
-
-        newOptionManagerTest.skip =
-            (_name, _config, _assert) => newOptionManagerTest(_name, _config,
-                _assert, it.skip);
 
         return newOptionManagerTest;
-    };
+    }
+
+    newOptionManagerTest.only = (_name, _config, _assert) => newOptionManagerTest(_name, _config, _assert, it.only);
+
+    newOptionManagerTest.skip = (_name, _config, _assert) => newOptionManagerTest(_name, _config, _assert, it.skip);
+
     afterEach(() => {
         afters.forEach(c => c());
         process.chdir(odir)
+    });
+
+    newOptionManagerTest("with-default-options", {}, om => {
+        expect(om.config('with-option-1.opt1')).to.eql(1);
+        expect(om.config('with-option-2.opt2')).to.eql(3);
+        expect(om.config('with-option-2.merged')).to.eql(1);
     });
 
     newOptionManagerTest("with-cli", {

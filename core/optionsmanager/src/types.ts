@@ -1,3 +1,5 @@
+import OptionsManager from "./OptionsManager";
+
 export type PluginConfig = {} | false;
 export type PluginNameConfig = [string, PluginConfig?];
 export type LoggerFn = (...args: any[]) => void;
@@ -52,14 +54,17 @@ export type PluginValue = string | PluginFn | { name: string };
 export type AliasObj = {
     [key: string]: string
 }
-export type OptionType = {
+
+export interface OptionType extends Logger {
+
     name: string,
     plugin?: PluginValue,
     config?: {},
     parent?: Package,
     alias?: AliasObj,
+
     get(key: string, def?: any): any,
-} & Logger;
+}
 
 type AnyFn = (id: string) => any;
 
@@ -114,4 +119,5 @@ export type OptionsManagerConfig = Partial<Logger> & Partial<{
      * Function to call when plugin is defined but not found.
      */
     handleNotFound: NotFoundFn,
+
 }>

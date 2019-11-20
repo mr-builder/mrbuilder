@@ -9,9 +9,25 @@
   "scripts": {
     "prepare": "mrbuilder",
     "start": "mrbuilder",
+    "karma": "mrbuilder",
     "test": "mrbuilder-jest"
   },
   "source": "src",
   "main": "lib",
-  "license": "0BSD"
+  "license": "0BSD",
+  "mrbuilder": {
+    "presets": [
+      "@mrbuilder/preset-lib"
+    ],
+    "plugins": [
+      [
+        "@mrbuilder/plugin-lodash",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-karma",
+        false
+      ]
+    ]
+  }
 }

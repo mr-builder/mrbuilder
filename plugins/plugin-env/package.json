@@ -6,6 +6,11 @@
   "mrbuilder": {
     "alias": {
       "p": "Sets the build to production mode"
+    },
+    "options": {
+      "environment": [
+        "NODE_ENV"
+      ]
     }
   },
   "license": "0BSD",

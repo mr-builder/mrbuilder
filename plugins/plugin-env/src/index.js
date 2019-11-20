@@ -1,7 +1,7 @@
 const { env }               = process;
 const { EnvironmentPlugin } = require('webpack');
 
-module.exports = function ({ p = false, environment = ['NODE_ENV'] }, webpack) {
+module.exports = function ({ p = false, environment }, webpack) {
     if (p) {
         if (env.NODE_ENV && env.NODE_ENV !== 'production') {
             this.info(

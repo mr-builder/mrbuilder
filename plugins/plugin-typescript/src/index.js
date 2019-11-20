@@ -17,7 +17,8 @@ module.exports = function ({
         }
         webpack.resolve.extensions.push(...extensions)
     }
-    if (useBabel) {
+
+    if (useBabel || om.enabled('@mrbuilder/plugin-jest')) {
         if (require('@mrbuilder/plugin-babel/version') > 6) {
             return webpack;
         } else {

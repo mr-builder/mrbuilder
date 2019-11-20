@@ -17,5 +17,11 @@ if (!(fs.existsSync(om.cwd('jest.config.js')) || require(om.cwd('package.json'))
         argv.splice(2, 0, '--config', om.require.resolve('@mrbuilder/plugin-jest/src/jest.config.js'));
     }
 }
-
-return require('jest/bin/jest');
+if (om.enabled('@mrbuilder/plugin-webpack')){
+   require('@mrbuilder/plugin-webpack/webpack.config').then(conf=>{
+       global._MRBUILDER_WEBPACK = conf;
+       return require('jest/bin/jest');
+   })
+}else{
+    return require('jest/bin/jest');
+}

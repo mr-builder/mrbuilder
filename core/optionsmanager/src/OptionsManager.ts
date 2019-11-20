@@ -1,6 +1,6 @@
 import cp from 'child_process';
 import {basename, join, resolve} from 'path';
-import {get, parseJSON, parseValue} from '@mrbuilder/utils';
+import {get, objToConf, parseJSON, parseValue, stringify} from '@mrbuilder/utils';
 import {
     envify,
     mergeAlias,
@@ -77,7 +77,7 @@ export default class OptionsManager implements OptionsManagerType {
                     //Object of collected aliases, may be modified
                     aliasObj = {},
                     topPackage,
-                    handleNotFound = handleNotFoundTryInstall
+                    handleNotFound = handleNotFoundTryInstall,
                 }: OptionsManagerConfig = {
         env: process.env,
         argv: process.argv,
@@ -125,7 +125,10 @@ export default class OptionsManager implements OptionsManagerType {
             const message = `${level} [${prefix.toLowerCase()}${plugin ? `:${plugin}` : ''}]`;
             switch (level) {
                 case 'DEBUG':
-                    return debug(message, ...args);
+                    if (this.env('DEBUG')) {
+                        return debug(message, ...args);
+                    }
+                    break;
                 case 'INFO':
                     return info(message, ...args);
                 case 'WARN':
@@ -210,10 +213,9 @@ export default class OptionsManager implements OptionsManagerType {
         const resolveConfig = (id: string | Package): OptionsPackage => {
             const pkg: Package = typeof id === 'string' ? resolvePkgJson(id) : id;
 
-            const pluginConfig = pkg[confPrefix] ? parseValue(JSON.stringify(pkg[confPrefix]))
-                : parseJSON(resolveFromPkgDir(pkg.name, rcFile)) || {};
+            const pluginConfig = pkg[confPrefix] ? objToConf(pkg[confPrefix]) : parseJSON(resolveFromPkgDir(pkg.name, rcFile)) || {};
 
-            const envOverride = pluginConfig.env && pluginConfig.env[ENV] || {};
+            const envOverride = pluginConfig.env && pluginConfig.env[ENV] ? objToConf(pluginConfig.env[ENV]) : {};
             return {
                 presets: mergePlugins(...resolveEnv(ENV, 'presets', pluginConfig)),
                 plugins: mergePlugins(...resolveEnv(ENV, 'plugins', pluginConfig)),
@@ -265,6 +267,7 @@ export default class OptionsManager implements OptionsManagerType {
             } else {
                 //warning this could trigger a plugin install.
                 const pConfig = resolveConfig(pluginName);
+                options.push(pConfig.options);
                 if (pConfig) {
                     if (pConfig.plugin) {
                         let [pluginPath, prPluginOpts] = nameConfig(pConfig.plugin);
@@ -281,6 +284,7 @@ export default class OptionsManager implements OptionsManagerType {
                             }
                         }
                     }
+
                     alias = pConfig.alias;
                 }
             }
@@ -300,6 +304,7 @@ export default class OptionsManager implements OptionsManagerType {
             this.plugins.set(pluginName, newOption(pluginName, pluginSrc, mergeOptions(options), parent, alias));
             return ret;
         };
+
         const processOpts = (name: string, {
             presets,
             plugins,

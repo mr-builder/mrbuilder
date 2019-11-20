@@ -14,10 +14,16 @@
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.1",
     "identity-obj-proxy": "^3.0.0"
   },
+  "source": "src",
+  "main": "src",
   "mrbuilder": {
     "plugins": [
       [
         "@mrbuilder/plugin-karma",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-hot",
         false
       ]
     ]
