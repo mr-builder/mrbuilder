@@ -125,7 +125,10 @@ export default class OptionsManager implements OptionsManagerType {
             const message = `${level} [${prefix.toLowerCase()}${plugin ? `:${plugin}` : ''}]`;
             switch (level) {
                 case 'DEBUG':
-                    return debug(message, ...args);
+                    if (this.env('DEBUG')) {
+                        return debug(message, ...args);
+                    }
+                    break;
                 case 'INFO':
                     return info(message, ...args);
                 case 'WARN':

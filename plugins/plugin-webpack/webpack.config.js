@@ -89,8 +89,10 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
             try {
                 plugin = optionsManager.require(option.plugin);
             } catch (e) {
-                warn(`error loading plugin '${key}' from '${option && option.plugin}'`, e);
-                throw e;
+                warn(`not loading plugin '${key}' from '${option && option.plugin}'`);
+                if (e.code !== 'MODULE_NOT_FOUND'){
+                    throw e;
+                }
             }
 
             if (typeof plugin === 'function') {

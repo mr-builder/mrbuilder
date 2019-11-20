@@ -1,3 +1,4 @@
+
 module.exports = {
     process(src, filename) {
 
@@ -7,32 +8,39 @@ module.exports = {
         }
 
         return `if (typeof require.context === 'undefined') {
+        require.context = (base = '.', scanSubDirectories = false, regularExpression) => {
         const fs = require('fs')
         const path = require('path')
-        require.context = (base = '.', scanSubDirectories = false, regularExpression = /\.js$/) => {
         const files = {}
-    
+        const relativeTo = path.parse(${JSON.stringify(filename)}).dir;
         function readDirectory (directory) {
-            fs.readdirSync(directory).forEach((file) => {
-            const fullPath = path.resolve(directory, file)
-    
-            if (fs.statSync(fullPath).isDirectory()) {
-              if (scanSubDirectories) readDirectory(fullPath)
-              return
-            }
-    
-            if (!regularExpression.test(fullPath)) return
-              files[\`./\${file}\`] = true
+            const dirPath = path.resolve(relativeTo,directory);
+            debugger;
+            fs.readdirSync(dirPath).forEach((file) => {
+                const relPath = path.join(directory, file);
+                const fullPath = path.resolve(relativeTo, relPath)
+                if (fs.statSync(fullPath).isDirectory()) {
+                  if (scanSubDirectories){
+                    readDirectory(relPath)
+                  }
+                  return
+                }
+            
+                if (regularExpression && !regularExpression.test(relPath)){ 
+                    return
+                }
+                
+                files[base+'/'+relPath] = true
             })
         }
     
-        readDirectory(path.resolve(__dirname, base))
+        readDirectory(base);
     
         function Module (file) {
-            return require(path.resolve(__dirname, base, file))
+            return require(path.resolve(relativeTo, base, file))
         }
     
-        Module.keys = () => Object.keys(files)
+        Module.keys = Object.keys.bind(Object, files);
     
         return Module
         }

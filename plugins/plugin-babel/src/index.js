@@ -18,9 +18,9 @@ module.exports = ({
     if (!test) {
 
         test = /\.(es\d*?|jsx?)$/;
-        if (om.config('@mrbuilder/plugin-typescript.useBabel')) {
+        if (om.config('@mrbuilder/plugin-typescript.useBabel') || om.enabled('@mrbuilder/plugin-jest')) {
             if (version > 6){
-                test = /\.(tsx?|es\d*|jsx?)$/
+                test = /\.[jet]sx?$/
             }else{
                 (this.warn || console.warn)('useBabel only works with babel 7 or higher')
             }

@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Should import require 1`] = `
+Object {
+  "./a.js": "file-a.js",
+  "./b.js": "file-b.js",
+  "./c.js": "file-c.js",
+  "./deep/d.js": "file-d.js",
+  "./index.js": Object {},
+}
+`;
+
 exports[`Should render lib 1`] = `
 <div>
   <span
