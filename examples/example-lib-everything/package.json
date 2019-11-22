@@ -11,6 +11,7 @@
     "@mrbuilder/plugin-markdown": "^4.0.0-alpha.2",
     "@mrbuilder/plugin-moment": "^4.0.0-alpha.2",
     "@mrbuilder/plugin-stylus": "^4.0.0-alpha.2",
+    "@mrbuilder/plugin-typescript": "^4.0.0-alpha.2",
     "@mrbuilder/plugin-worker": "^4.0.0-alpha.2",
     "@mrbuilder/plugin-yaml": "^4.0.0-alpha.2"
   },

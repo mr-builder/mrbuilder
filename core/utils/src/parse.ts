@@ -1,5 +1,25 @@
 import JSON5 from 'json5';
 
+export function parseIfBool(str: string | boolean): any {
+    if (str == null) {
+        return false;
+    }
+    if (typeof str === 'boolean') {
+        return str;
+    }
+    switch (str + '') {
+        case '':
+        case '0':
+        case 'FALSE':
+        case 'false':
+            return false;
+        case 'TRUE':
+        case 'true':
+            return true;
+    }
+    return str;
+}
+
 export function parseRe(key: string, value: any): any {
     if (typeof value === 'string' && /^\\?\/.*\/[gimsuy]*$/.test(value)) {
         const parts = /^(\\)?\/(.*)\/([gimsuy]*)$/.exec(value);

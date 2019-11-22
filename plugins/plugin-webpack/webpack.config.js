@@ -1,4 +1,3 @@
-require('@mrbuilder/plugin-browserslist');
 const path = require('path');
 const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
 const {stringify, pkg, cwd, parseEntry} = require('@mrbuilder/utils');
@@ -90,7 +89,7 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
                 plugin = optionsManager.require(option.plugin);
             } catch (e) {
                 warn(`not loading plugin '${key}' from '${option && option.plugin}'`);
-                if (e.code !== 'MODULE_NOT_FOUND'){
+                if (e.code !== 'MODULE_NOT_FOUND') {
                     throw e;
                 }
             }
@@ -133,15 +132,14 @@ module.exports = resolveWebpack(webpack).then(webpack => {
 //only define entry if it doesn't exist already.
     if (!webpack.entry) {
         const _pkg = pkg();
-        webpack.entry = {index: cwd(_pkg.source || 'src/index')};
+        webpack.entry = {index: optionsManager.cwd(_pkg.source || 'src/index')};
         info('using default entry', webpack.entry.index)
     }
     if (opts.useDefine) {
-        webpack.plugins.unshift(
-            new DefinePlugin(Object.keys(opts.useDefine).reduce(function (ret, key) {
-                ret[key] = JSON.stringify(opts.useDefine[key]);
-                return ret;
-            }, {})));
+        webpack.plugins.unshift(new DefinePlugin(Object.keys(opts.useDefine).reduce(function (ret, key) {
+            ret[key] = JSON.stringify(opts.useDefine[key]);
+            return ret;
+        }, {})));
     }
 
 

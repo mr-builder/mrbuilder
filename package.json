@@ -31,8 +31,10 @@
   "scripts": {
     "lerna": "lerna",
     "prepare": "lerna run prepare --no-private",
+    "reset": "$npm_execpath run clean && $npm_execpath install",
+    "reset:test": "$npm_execpath run reset && $npm_execpath test",
     "test": "$npm_execpath run prepare && ./node_modules/.bin/lerna run prepare --scope @mrbuilder/example-* && lerna run test",
-    "clean": "lerna clean && rimraf core/*/lib plugins/*/lib examples/*/lib",
+    "clean": "lerna clean --yes && rimraf core/*/lib plugins/*/lib examples/*/lib",
     "prepublish:all": "lerna run prepare",
     "publish:all": "lerna publish --registry http://registry.npm.org --force-publish=*"
   }

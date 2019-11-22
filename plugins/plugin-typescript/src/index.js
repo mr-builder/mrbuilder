@@ -2,13 +2,12 @@ const manageTsConfig = require('./manageTsConfig');
 module.exports = function ({
                                test = /[.]tsx?$/,
                                baseUrl = process.cwd(),
-                               extensions = [".ts", ".tsx"],
+                               extensions,
                                useBabel = false,
                                allowTsInNodeModules = false,
                                context,
                                configFile
-                           },
-                           webpack, om) {
+                           }, webpack, om) {
     manageTsConfig(om);
 
     if (extensions) {
