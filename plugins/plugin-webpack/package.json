@@ -3,12 +3,14 @@
   "version": "4.0.0-alpha.2",
   "description": "Tools for developing with mrbuilder and webpack",
   "scripts": {
-    "clean": "mrbuilder-clean"
+    "clean": "mrbuilder-clean",
+    "prepare": "mrbuilder-typescript"
   },
   "bin": {
     "mrbuilder-webpack-cli": "./bin/cli.js"
   },
-  "main": "src",
+  "main": "lib",
+  "types": "src",
   "source": "src",
   "dependencies": {
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.1",
@@ -19,10 +21,47 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
+  "devDependencies": {
+    "@types/webpack-sources": "^0.1.5",
+    "@types/webpack": "^4.41.0",
+    "@mrbuilder/plugin-typescript": "^4.0.0-alpha.2"
+  },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
   "mrbuilder": {
+    "options": {
+      "library": true,
+      "libraryTarget": "umd",
+      "extensions": [
+        ".js",
+        ".jsx",
+        ".json"
+      ],
+      "mainFields": true,
+      "outputPath": "./lib",
+      "externalizePeers": true,
+      "devtool": "source-map",
+      "filename": "[name].js"
+    },
+    "env": {
+      "app": {
+        "library": false,
+        "mainFields": true,
+        "outputPath": "./app",
+        "externalizePeers": false,
+        "devtool": "source-map",
+        "filename": "[name].[hash].js"
+      },
+      "demo": {
+        "library": false,
+        "mainFields": true,
+        "outputPath": "./demo",
+        "externalizePeers": false,
+        "devtool": "source-map",
+        "filename": "[name].[hash].js"
+      }
+    },
     "alias": {
       "app": "compile as a top level app ",
       "demo": "compile as a demo <outputdir>",

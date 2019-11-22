@@ -1,8 +1,13 @@
-const {
+import {OptionsManager} from "@mrbuilder/optionsmanager";
+import {OutputOptions, WebpackOptions} from "webpack/declarations/WebpackOptions";
+import {MrBuilderWebpackPluginOptions, StringObject} from './types';
+export { default as processAlias } from './processAlias';
+import {
     camelCased, cwd, stringify,
     enhancedResolve, regexOrFuncApply
-} = require('@mrbuilder/utils');
-const processAlias = require('./processAlias');
+} from '@mrbuilder/utils';
+import processAlias from "./processAlias";
+
 const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS = ['source', 'browser', 'main'];
 const returnMode = (val = process.env.NODE_ENV) => {
@@ -40,7 +45,7 @@ const mod = function ({
                           noParse,
                           target,
                           ...rest
-                      }, webpack, om) {
+                      }: MrBuilderWebpackPluginOptions, webpack: WebpackOptions, om: OptionsManager) {
 
     webpack.mode = returnMode(mode);
     (this.info || console.log)('webpack mode ', webpack.mode);
@@ -72,8 +77,7 @@ const mod = function ({
         if (!webpack.module) {
             webpack.module = {noParse};
         } else {
-            webpack.module.noParse =
-                regexOrFuncApply(noParse, webpack.module.noParse);
+            webpack.module.noParse = noParse;
         }
 
 
@@ -85,7 +89,7 @@ const mod = function ({
 
     processAlias(webpack, alias);
 
-    const output = webpack.output || (webpack.output = {});
+    const output: OutputOptions = webpack.output || (webpack.output = {});
     if (globalObject) {
         output.globalObject = globalObject;
     }
@@ -125,22 +129,23 @@ const mod = function ({
 
     if (this.isLibrary && (useExternals !== false)) {
 
-        let externals = [];
+        let externals: string[] = [];
         if (Array.isArray(useExternals)) {
             externals = useExternals;
         } else if (typeof useExternals === 'string') {
-            externals = useExternals.split(/,\s*/);
+            externals = (useExternals.split(/,\s*/) as string[]);
         }
 
         if (externalizePeers && pkg.peerDependencies) {
             externals = externals.concat(Object.keys(pkg.peerDependencies));
         }
         const wexternals = webpack.externals || (webpack.externals = []);
-        webpack.externals =
-            wexternals.concat(Object.keys(externals.reduce((ret, key) => {
+        if (Array.isArray(wexternals)) {
+            webpack.externals = wexternals.concat(Object.keys(externals.reduce((ret: StringObject, key) => {
                 ret[key] = key;
                 return ret;
             }, {})));
+        }
 
         info('packaging as externalize', webpack.externals);
     }

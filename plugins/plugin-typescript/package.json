@@ -2,7 +2,7 @@
   "name": "@mrbuilder/plugin-typescript",
   "version": "4.0.0-alpha.2",
   "description": "Typescript plugin for mrbuilder",
-  "main": "./src/index",
+  "main": "./src",
   "author": "Justin Spears <speajus@gmail.com>",
   "bin": {
     "mrbuilder-typescript": "./bin/cli.js"
@@ -32,5 +32,13 @@
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",
   "publishConfig": {
     "access": "public"
+  },
+  "mrbuilder": {
+    "options": {
+      "extensions": [
+        ".ts",
+        ".tsx"
+      ]
+    }
   }
 }

@@ -1,6 +1,6 @@
-const {cwd}    = require('@mrbuilder/utils');
+const {cwd} = require('@mrbuilder/utils');
 const useBabel = require('../use-babel');
-const version  = require('../version');
+const version = require('../version');
 module.exports = ({
                       test,
                       include = [
@@ -19,9 +19,13 @@ module.exports = ({
 
         test = /\.(es\d*?|jsx?)$/;
         if (om.config('@mrbuilder/plugin-typescript.useBabel') || om.enabled('@mrbuilder/plugin-jest')) {
-            if (version > 6){
+            if (!webpack.resolve.extensions) {
+                webpack.resolve.extensions = [];
+            }
+            webpack.resolve.extensions.push(...om.config('@mrbuilder/plugin-typescript.extensions', ['.ts', '.tsx']));
+            if (version > 6) {
                 test = /\.[jet]sx?$/
-            }else{
+            } else {
                 (this.warn || console.warn)('useBabel only works with babel 7 or higher')
             }
         }

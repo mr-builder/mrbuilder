@@ -6,4 +6,11 @@ const optionsManager = global._MRBUILDER_OPTIONS_MANAGER ||
     }));
 
 require('@mrbuilder/plugin-typescript/src/manageTsConfig')(optionsManager);
+if (!process.argv.includes('--outDir')) {
+    process.argv.splice(2, 0, '--outDir', 'lib');
+}
+if (!process.argv.includes('--sourceRoot')) {
+    process.argv.push('--sourceRoot', 'src')
+}
+
 require('typescript/bin/tsc');

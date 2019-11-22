@@ -1,6 +1,6 @@
 const {pkg, cwd, enhancedResolve} = require('@mrbuilder/utils');
-const {DefinePlugin,ContextReplacementPlugin} = require('webpack');
-const processAlias = require('@mrbuilder/plugin-webpack/src/processAlias');
+const {DefinePlugin, ContextReplacementPlugin} = require('webpack');
+const processAlias = require('@mrbuilder/plugin-webpack/lib/processAlias').default;
 const use = require('@mrbuilder/plugin-babel/use-babel');
 
 module.exports = function ({

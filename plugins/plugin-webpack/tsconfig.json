@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outDir": "./lib",
+    "sourceRoot": "src",
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "module": "commonjs",
+    "lib": [
+      "dom",
+      "es2019",
+      "scripthost",
+      "es2015.promise"
+    ],
+    "allowJs": true,
+    "checkJs": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "esModuleInterop": true,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

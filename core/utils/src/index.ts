@@ -184,7 +184,7 @@ export const enhancedResolve = (p: string, _require = require): string => {
     }
     return p;
 };
-type RegExOrFn = ((str: string) => boolean) | RegExp;
+type RegExOrFn = | RegExp | string | ((str: string) => boolean) ;
 
 export const regexOrFuncApply = (first?: RegExOrFn, second?: RegExOrFn): RegExOrFn => {
     if (!first) {
@@ -193,18 +193,30 @@ export const regexOrFuncApply = (first?: RegExOrFn, second?: RegExOrFn): RegExOr
     if (!second) {
         return first;
     }
-    return (test: string) => {
+    if (typeof first === 'string') {
+        first = new RegExp(first);
+    }
+    if (typeof second === 'string') {
+        second = new RegExp(second);
+    }
+
+    return (test: string): boolean => {
         if (first instanceof RegExp) {
             if (first.test(test)) {
                 return true;
             }
-        } else {
+        } else if (typeof first === 'function') {
             if (first(test)) {
                 return true;
             }
+        } else {
+            throw `Not a valid type ${second}`;
         }
         if (second instanceof RegExp) {
             return second.test(test);
+        }
+        if (typeof second !== 'function') {
+            throw `Not a valid type ${second}`;
         }
         return second(test);
     }

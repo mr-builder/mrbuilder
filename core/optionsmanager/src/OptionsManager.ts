@@ -1,6 +1,6 @@
 import cp from 'child_process';
 import {basename, join, resolve} from 'path';
-import {get, objToConf, parseJSON, parseValue, stringify} from '@mrbuilder/utils';
+import {get, objToConf, parseIfBool, parseJSON, parseValue, stringify} from '@mrbuilder/utils';
 import {
     envify,
     mergeAlias,
@@ -103,13 +103,14 @@ export default class OptionsManager implements OptionsManagerType {
         this.require = _require;
 
         this.env = (key: string, def: any): any => {
-            const ret = env[key.toUpperCase()];
-            if (ret === null || ret === void (0)) {
+            const ret = env[`${envPrefix}_${key.toUpperCase()}`];
+            if (ret == null) {
                 return def;
             }
-            return ret;
+            return parseIfBool(ret);
         };
-        if (!handleNotFound || this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
+
+        if (!handleNotFound || this.env(`NO_AUTOINSTALL`)) {
             handleNotFound = handleNotFoundFail.bind(this);
         } else {
             handleNotFound = handleNotFoundTryInstall.bind(this);
@@ -119,13 +120,13 @@ export default class OptionsManager implements OptionsManagerType {
         this.topPackage = topPackage || _require(this.cwd('package.json'));
 
         this.log = (level: LogLevel, plugin: string, ...args: any[]) => {
-            if (this.env('QUIET') && level !== 'WARN') {
+            if (this.env(`QUIET`) && level !== 'WARN') {
                 return;
             }
             const message = `${level} [${prefix.toLowerCase()}${plugin ? `:${plugin}` : ''}]`;
             switch (level) {
                 case 'DEBUG':
-                    if (this.env('DEBUG')) {
+                    if (this.env(`DEBUG`)) {
                         return debug(message, ...args);
                     }
                     break;
@@ -143,11 +144,10 @@ export default class OptionsManager implements OptionsManagerType {
         if (_require === require) {
             this.warn('require is not set, using default require');
         }
-        const ENV_VAR = `${envPrefix}_ENV`;
 
-        const ENV = this.env(ENV_VAR) || env.NODE_ENV;
+        const ENV = this.env('ENV', env.NODE_ENV);
 
-        this.info(ENV_VAR, 'is', ENV || 'not set');
+        this.info('ENV is', ENV || 'not set');
         this.debug('topPackage is', this.topPackage.name);
 
         const resolveFromPkgDir = (pkg: string, file: string, ...relto: string[]) => {
@@ -173,7 +173,7 @@ export default class OptionsManager implements OptionsManagerType {
             const pkgPath = join(packageName, 'package.json');
 
             try {
-                if (!this.env(`${envPrefix}_NO_AUTOINSTALL`)) {
+                if (!this.env(`NO_AUTOINSTALL`)) {
                     if (retry) {
                         //so node has a stat cache that is pretty much
                         // impossible to clear so we are going to try this
@@ -305,16 +305,12 @@ export default class OptionsManager implements OptionsManagerType {
             return ret;
         };
 
-        const processOpts = (name: string, {
-            presets,
-            plugins,
-            ignoreRc
-        }: OptionsConfig = {}, options: {}, pkg: Package, parent: Package, override?: boolean) => {
+        const processOpts = (name: string, config: OptionsConfig = {}, options: {}, pkg: Package, parent: Package, override?: boolean) => {
 
             //install first but don't load first.
-            if (presets) {
+            if (config.presets) {
 
-                presets.forEach(p => {
+                config.presets.forEach(p => {
                     const [presetName] = nameConfig(p);
                     //just do the check, the add happens later.
                     if (!seenPresets.has(presetName)) {
@@ -323,28 +319,30 @@ export default class OptionsManager implements OptionsManagerType {
                 });
             }
 
-            if (plugins) {
-                plugins.map(
-                    plugin => processPlugin(pkg.name, plugin, options, parent))
-                    .forEach((eachPluginName) => typeof eachPluginName === 'string' && scan(ignoreRc, pkg, eachPluginName, void (0), override))
+            if (config.plugins) {
+                config.plugins.map(plugin => processPlugin(pkg.name, plugin, options, parent))
+                    .forEach((eachPluginName) => {
+                        typeof eachPluginName === 'string' && scan(config.ignoreRc, pkg, eachPluginName, void (0), override)
+                    });
             }
 
-            if (presets) {
+            if (config.presets) {
                 //presets all get the same configuration.
-                presets.forEach(preset => {
-                    const [presetName, config] = nameConfig(preset);
+                config.presets.forEach(preset => {
+                    const [presetName, presetConfig] = nameConfig(preset);
                     if (!seenPresets.has(presetName)) {
                         seenPresets.add(presetName);
-                        if (config !== false) {
-                            scan(ignoreRc, pkg, presetName, config, override);
+                        if (presetConfig !== false) {
+                            scan(config.ignoreRc, pkg, presetName, presetConfig, override);
                         }
                     }
                 });
             }
         };
+
         const processEnv = (prefix = '') => {
-            const pluginsName = `${envPrefix}_${prefix}PLUGINS`;
-            const presetsName = `${envPrefix}_${prefix}PRESETS`;
+            const pluginsName = `${prefix}PLUGINS`;
+            const presetsName = `${prefix}PRESETS`;
             const plugins = split(this.env(pluginsName, ''));
             const presets = split(this.env(presetsName, ''));
 
