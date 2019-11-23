@@ -1,17 +1,18 @@
-const path                 = require('path');
+const path = require('path');
 const {cwd, resolvePkgDir} = require('@mrbuilder/utils');
-const useBabel             = require('@mrbuilder/plugin-babel/use-babel.js');
-let showedWarning          = false;
-module.exports             = function reactPlugin({
-                                                      compatMode = false,
-                                                  }, webpack,
-                                                  om) {
+const useBabel = require('@mrbuilder/plugin-babel/use-babel.js');
+let showedWarning = false;
 
-    const pages     = om.config('@mrbuilder/plugin-html.pages');
-    const exported  = om.config('@mrbuilder/plugin-html.exported', true);
+module.exports = function reactPlugin({
+                                          compatMode = false,
+                                      }, webpack,
+                                      om) {
+
+    const pages = om.config('@mrbuilder/plugin-html.pages');
+    const exported = om.config('@mrbuilder/plugin-html.exported', true);
     const elementId = om.config('@mrbuilder/plugin-html.elementId', 'content');
-    const isHot     = om.enabled('@mrbuilder/plugin-hot');
-
+    const isHot = om.enabled('@mrbuilder/plugin-hot');
+    const logger = om.logger('@mrbuilder/plugin-react');
     if (!webpack.resolve) {
         webpack.resolve = {};
     }
@@ -86,12 +87,12 @@ module.exports             = function reactPlugin({
 
                 const index = require.resolve(
                     cwd(pkg.source || pkg.main || './src'));
-                this.info(`no entry using "${index}"`);
+                logger.info(`no entry using "${index}"`);
                 entry = webpack.entry = {index};
             }
         }
 
-        this.info('pages', pages);
+        logger.info('pages', pages);
 
         const {generateHot, generate} = require('./loader');
 
@@ -99,15 +100,14 @@ module.exports             = function reactPlugin({
 
         keys.forEach(name => {
             const page = pages && pages[name] || {};
-            const hot  = ('hot' in page) ? page.hot : isHot;
+            const hot = ('hot' in page) ? page.hot : isHot;
 
 
             if (('exported' in page) ? page.exported : exported) {
 
-                this.info('expecting a react component to be exported from ',
-                    name);
-                const val          = webpack.entry[name];
-                const current      = Array.isArray(val) ? val[val.length - 1]
+                logger.info('expecting a react component to be exported from ', name);
+                const val = webpack.entry[name];
+                const current = Array.isArray(val) ? val[val.length - 1]
                     : val;
                 const currentAlias = `@mrbuilder/plugin-react-${name}`;
 
@@ -121,10 +121,10 @@ module.exports             = function reactPlugin({
                             ...preEntry,
                             `babel-loader?${JSON.stringify(useBabel(om).options)}!@mrbuilder/plugin-react/src/loader?${JSON.stringify(
                                 {
-                                    name     : currentAlias,
+                                    name: currentAlias,
                                     hot,
                                     elementId: page.elementId || elementId,
-                                    exported : page.exported || exported
+                                    exported: page.exported || exported
 
                                 })}!${current}?exported`
                         ]
@@ -137,7 +137,7 @@ module.exports             = function reactPlugin({
                 webpack.entry[name] = preEntry.concat(webpack.entry[name]);
                 if (!showedWarning) {
                     showedWarning = true;
-                    this.info(
+                    logger.info(
                         `not using exported components, you may need to setup hot and dom mounting manually for ${name}
                      Something like  to your entry point:
                     \`\`\` 

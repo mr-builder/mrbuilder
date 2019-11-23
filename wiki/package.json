@@ -8,8 +8,8 @@
     "@mrbuilder/plugin-react-styleguidist": "^4.0.0-alpha.2"
   },
   "scripts": {
-    "prepublish": "MRBUILDER_INTERNAL_PRESETS=@mrbuilder/preset-babel-7 NODE_ENV=production mrbuilder-webpack --app ../../mr-builder.github.io",
-    "start": "MRBUILDER_INTERNAL_PRESETS=@mrbuilder/preset-babel-7 mrbuilder-webpack-dev-server",
+    "prepare": "mrbuilder --app ./lib",
+    "start": "mrbuilder",
     "test": "NODE_ENV=production MRBUILDER_ENV=production mrbuilder-webpack --app ./lib"
   },
   "source": "src",
