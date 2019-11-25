@@ -1,4 +1,4 @@
-const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
+const optionsManager = require('@mrbuilder/cli').default;
 require('@mrbuilder/plugin-browserslist');
 
 

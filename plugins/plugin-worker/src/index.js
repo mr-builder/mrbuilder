@@ -1,4 +1,4 @@
-const { isLibrary } = require('@mrbuilder/cli/src/info');
+const { info } = require('@mrbuilder/cli');
 module.exports      = ({
                            test = /\.worker\.jsx?$/,
                            loader = 'worker-loader',
@@ -8,7 +8,7 @@ module.exports      = ({
                            fallback = false,
                        }, webpack, om) => {
     let name = filename;
-    if (isLibrary) {
+    if (info.isLibrary) {
         if (!om.config('@mrbuilder/plugin-worker.filename')) {
             name = '[name].js';
         }

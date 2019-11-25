@@ -1,5 +1,5 @@
 const path = require('path');
-const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
+const optionsManager = require('@mrbuilder/cli').default;
 const {stringify, pkg, cwd, parseEntry} = require('@mrbuilder/utils');
 const {
     DefinePlugin,
@@ -7,7 +7,7 @@ const {
         ModuleConcatenationPlugin
     }
 } = require('webpack');
-const scope = require('@mrbuilder/cli/src/info');
+const scope = require('@mrbuilder/cli').info;
 const {
     warn = console.warn,
     debug = console.warn,
@@ -35,7 +35,7 @@ if (publicPath instanceof RegExp) {
     publicPath = '' + publicPath;
 }
 const opts = {
-    ...require('@mrbuilder/cli/src/info'),
+    ...require('@mrbuilder/cli').info,
     publicPath,
     outputPath: optionsManager.config('@mrbuilder/plugin-webpack.outputPath', cwd('lib')),
     outputFilename: optionsManager.config('@mrbuilder/plugin-webpack.outputFilename', '[name].js'),

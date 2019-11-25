@@ -8,6 +8,7 @@
     "mrbuilder-typescript": "./bin/cli.js"
   },
   "dependencies": {
+    "@mrbuilder/cli": "^4.0.0-alpha.1",
     "@babel/preset-typescript": "^7.7.2",
     "@types/lodash": "^4.14.146",
     "@types/node": "^12.12.7",

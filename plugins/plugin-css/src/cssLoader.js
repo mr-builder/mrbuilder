@@ -1,7 +1,3 @@
-if (!global._MRBUILDER_OPTIONS_MANAGER) {
-    throw new Error('_MRBUILDER_OPTIONS_MANAGER not set');
-}
-
 const useStyle = require('./styleLoader');
 const getLocalIdent = require('./getLocalIdent');
 

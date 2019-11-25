@@ -1,19 +1,14 @@
-if (!global._MRBUILDER_OPTIONS_MANAGER) {
-    throw new Error('_MRBUILDER_OPTIONS_MANAGER not set');
-}
 require('@mrbuilder/plugin-browserslist');
-const types = require('@mrbuilder/cli/src/info');
+const om = require('@mrbuilder/cli').default;
+const types = require('@mrbuilder/cli').info;
 
-const om                 = global._MRBUILDER_OPTIONS_MANAGER;
-const { info }           = om.plugins.get('@mrbuilder/plugin-css');
-const mrb                = (v) => om.config('@mrbuilder/plugin-css' + (v
-                                                                      ? `.${v}`
-                                                                      : ''));
-let useNameHash          = mrb('useNameHash');
-let filename             = mrb('filename');
+const {info} = om.logger('@mrbuilder/plugin-css');
+const mrb = (v) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''));
+let useNameHash = mrb('useNameHash');
+let filename = mrb('filename');
 let useStyleLoaderLoader = mrb('useStyleLoader');
-let publicPath           = mrb('public');
-let chunkFilename        = mrb('chunkFilename', `[name].style.css`);
+let publicPath = mrb('public');
+let chunkFilename = mrb('chunkFilename', `[name].style.css`);
 if (useNameHash == null || useNameHash === true) {
     if (types.isLibrary) {
         useNameHash = 'style.css';
@@ -43,7 +38,7 @@ if (!useStyleLoaderLoader) {
     const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
     module.exports = function useStyleExtractText(webpack, ...args) {
-        const use      = [MiniCssExtractPlugin.loader, ...args];
+        const use = [MiniCssExtractPlugin.loader, ...args];
         const miniOpts = {
             filename,
             chunkFilename

@@ -1,15 +1,9 @@
 #!/usr/bin/env node
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-if (!global._MRBUILDER_OPTIONS_MANAGER) {
-    process.env.MRBUILDER_INTERNAL_PLUGINS =
-        `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-enzyme,@mrbuilder/plugin-mocha`;
-    global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager').default)({
-        prefix: 'mrbuilder',
-        _require: require
-    });
-}
+process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-enzyme,@mrbuilder/plugin-mocha`;
 
-const om = global._MRBUILDER_OPTIONS_MANAGER;
+
+const om = require('@mrbuilder/cli').default;
 const {cwd} = require('@mrbuilder/utils');
 const path = require('path');
 const {argv} = process;
@@ -43,7 +37,7 @@ if (coverageDir || coverageGLobal) {
         argv.push('--require', require.resolve('@mrbuilder/plugin-babel/babel-polyfill'));
     }
 }
-if (om.enabled("@mrbuilder/plugin-typescript")){
+if (om.enabled("@mrbuilder/plugin-typescript")) {
     argv.push('-r', 'ts-node/register');
 }
 

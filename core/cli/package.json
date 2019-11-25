@@ -6,6 +6,10 @@
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.1",
     "in-publish": "^2.0.0"
   },
+  "main": "lib",
+  "scripts": {
+    "prepare": "tsc"
+  },
   "bin": {
     "mrbuilder": "./bin/mrbuilder.js",
     "mrbuilder-babel": "./bin/mrbuilder.js",
