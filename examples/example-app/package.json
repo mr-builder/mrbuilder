@@ -19,7 +19,7 @@
   "scripts": {
     "prepublish": "mrbuilder",
     "start": "mrbuilder",
-    "test": "mrbuilder",
+    "test": "mrbuilder-karma",
     "karma": "mrbuilder",
     "analyze": "mrbuilder"
   },

@@ -1,13 +1,7 @@
 #!/usr/bin/env node
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-let om = global._MRBUILDER_OPTIONS_MANAGER;
-if (!global._MRBUILDER_OPTIONS_MANAGER) {
-    process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
-    om = global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager').default)({
-        prefix: 'mrbuilder',
-        _require: require
-    });
-}
+process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
+const om = require('@mrbuilder/cli').default;
 const {defaults} = require('jest-config');
 const fs = require('fs');
 const logger = om.logger('@mrbuilder/plugin-jest');
@@ -95,7 +89,7 @@ if (om.enabled('@mrbuilder/plugin-webpack')) {
     }
 } else if (om.enabled('@mrbuilder/plugin-babel') || om.enabled('@mrbuilder/plugin-typescript')) {
     if (!fs.existsSync(om.cwd('babel.config.js'))) {
-        jestConfig.transform ['\.[jt]sx?'] = om.require.resolve('@mrbuilder/plugin-jest/src/transform');
+        jestConfig.transform ['\.[jet]sx?'] = om.require.resolve('@mrbuilder/plugin-jest/src/transform');
     }
 }
 

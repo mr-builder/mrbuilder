@@ -1,6 +1,6 @@
 const { ContextReplacementPlugin } = require('webpack');
 
-function momentPlugin({ languages = ['en'], alias = true }, webpack) {
+function momentPlugin({ languages = ['en'], alias = true }, webpack, om) {
     languages = Array.isArray(languages) ? languages : [languages];
     if (alias) {
         if (alias === true) {
@@ -10,7 +10,7 @@ function momentPlugin({ languages = ['en'], alias = true }, webpack) {
         }
     }
     const langs = languages instanceof RegExp ? languages : new RegExp(languages.join('|'));
-    (this.info || console.log)('using ', langs+'');
+    om.logger('@mrbuilder/plugin-moment').info('using ', langs+'');
     webpack.plugins.push(
         new ContextReplacementPlugin( /moment\/locale$/,
             langs));

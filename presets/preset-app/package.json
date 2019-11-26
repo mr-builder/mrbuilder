@@ -53,6 +53,26 @@
           "@mrbuilder/preset-dev"
         ]
       },
+      "demo": {
+        "plugins": [
+          [
+            "@mrbuilder/plugin-webpack",
+            {
+              "app": "./demo"
+            }
+          ]
+        ]
+      },
+      "app": {
+        "plugins": [
+          [
+            "@mrbuilder/plugin-webpack",
+            {
+              "app": "./app"
+            }
+          ]
+        ]
+      },
       "production": {
         "plugins": [
           [

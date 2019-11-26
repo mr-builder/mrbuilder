@@ -1,4 +1,4 @@
-const { get } = require('@mrbuilder/utils');
+const {get} = require('@mrbuilder/utils');
 /**
  * Mock Options manager allows you to relatively easily
  * get the behaviour for testing components, without all the initialization.
@@ -8,7 +8,7 @@ const { get } = require('@mrbuilder/utils');
  */
 module.exports = function (configure = []) {
     configure = configure.map(v => Array.isArray(v) ? v : [v, {}]);
-    const om  = {
+    const om = {
         logger(plugin) {
             return {
                 info(...args) {
@@ -25,13 +25,13 @@ module.exports = function (configure = []) {
 
         config(name, def) {
             const parts = name.split('.', 2);
-            const key   = parts.shift();
+            const key = parts.shift();
             if (!this.enabled(key)) {
                 //if not enabled no default.
                 return;
             }
             const config = this.plugins.get(key).config;
-            const ret    = parts.length ? get(config, parts) : config;
+            const ret = parts.length ? get(config, parts) : config;
             return ret == null ? def : ret;
         },
         enabled(name) {
@@ -44,9 +44,13 @@ module.exports = function (configure = []) {
                     return;
                 }
                 return Object.assign({}, om.logger(plugin),
-                    { config: config[1] });
+                    {config: config[1]});
             }
         },
+
+        cwd(...value) {
+            return ['..', ...value].join('/');
+        }
 
     };
     return om;

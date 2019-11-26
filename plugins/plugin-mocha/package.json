@@ -26,7 +26,7 @@
       "timeout": "Time allowed to run test"
     },
     "plugins": [
-      "@mrbuilder/plugin-mocha"
+      "@mrbuilder/plugin-babel"
     ]
   },
   "license": "0BSD",

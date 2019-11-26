@@ -20,15 +20,7 @@
       "@mrbuilder/preset-lib"
     ],
     "plugins": [
-      "@mrbuilder/plugin-typescript",
-      [
-        "@mrbuilder/plugin-lodash",
-        false
-      ],
-      [
-        "@mrbuilder/plugin-karma",
-        false
-      ]
+      "@mrbuilder/plugin-typescript"
     ]
   }
 }

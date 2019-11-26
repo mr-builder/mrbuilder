@@ -3,7 +3,7 @@
   "description": "Provides markdown to react components",
   "version": "4.0.0-alpha.2",
   "scripts": {
-    "test": " mrbuilder-karma",
+    "test": "mrbuilder-karma",
     "karma": "mrbuilder-karma",
     "start": "MRBUILDER_ENV=development node $NODE_DEBUG_OPTION  ./node_modules/.bin/mrbuilder-webpack-dev-server"
   },

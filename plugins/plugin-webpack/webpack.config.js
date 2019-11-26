@@ -99,11 +99,11 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
                     try {
                         return plugin.call(scope, option.config || {}, _webpack, optionsManager)
                     } catch (e) {
-                        console.error(`Error in '${option.name}'`, e);
+                        warn(`Error in '${option.name}'`, e);
                         throw e;
                     }
                 }).then(tmpWebpack => {
-                    option.info(option.name, 'loaded.');
+                    info(option.name, 'loaded.');
                     if (tmpWebpack) {
                         return tmpWebpack
                     }
@@ -111,12 +111,12 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
                 });
 
             } else if (plugin) {
-                option.info('not loaded');
+                info('not loaded');
                 //TODO - better merge.
                 //  webpack = Object.assign({}, webpack, option.plugin);
             }
         } else {
-            option.info('disabled loading webpack plugin', key);
+            info('disabled loading webpack plugin', key);
         }
     });
     return p.then(w => {

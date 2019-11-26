@@ -17,7 +17,6 @@
     "plugins": [
       "@mrbuilder/plugin-typescript",
       "@mrbuilder/plugin-filetypes"
-
     ]
   },
   "license": "0BSD"

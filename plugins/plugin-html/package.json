@@ -6,7 +6,8 @@
     "@mrbuilder/plugin-babel": "^4.0.0-alpha.2",
     "@mrbuilder/utils": "^4.0.0-alpha.1",
     "html-webpack-plugin": "^3.2.0",
-    "html-webpack-template": "^6.2.0"
+    "html-webpack-template": "^6.2.0",
+    "glob": "^7.1.6"
   },
   "scripts": {
     "test": "mrbuilder-mocha"
@@ -20,5 +21,14 @@
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",
   "publishConfig": {
     "access": "public"
+  },
+  "mrbuilder": {
+    "options": {
+      "publicPath": "./public",
+      "filename": "[name].html",
+      "elementId": "content",
+      "exported": true,
+      "inlineManifest": true
+    }
   }
 }

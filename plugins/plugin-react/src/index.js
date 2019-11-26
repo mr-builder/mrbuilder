@@ -22,7 +22,7 @@ module.exports = function reactPlugin({
     const reactDir = resolvePkgDir('react');
     if (compatMode) {
         if (this.isLibrary) {
-            (this.warn || console.warn)(
+            logger.warn(
                 'compatMode should not be used for libraries results will be unpredictable')
         }
         if (!webpack.resolve.alias['react-internal']) {
@@ -85,8 +85,7 @@ module.exports = function reactPlugin({
                 require.resolve(entry.index);
             } catch (e) {
 
-                const index = require.resolve(
-                    cwd(pkg.source || pkg.main || './src'));
+                const index = cwd(pkg.source || pkg.main || './src');
                 logger.info(`no entry using "${index}"`);
                 entry = webpack.entry = {index};
             }

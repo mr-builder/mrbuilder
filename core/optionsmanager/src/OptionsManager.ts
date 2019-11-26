@@ -78,6 +78,8 @@ export default class OptionsManager implements OptionsManagerType {
                     aliasObj = {},
                     topPackage,
                     handleNotFound = handleNotFoundTryInstall,
+                    plugins = [],
+                    presets = [],
                 }: OptionsManagerConfig = {
         env: process.env,
         argv: process.argv,
@@ -88,7 +90,9 @@ export default class OptionsManager implements OptionsManagerType {
         _require: require,
         //Object of collected aliases, may be modified
         aliasObj: {},
-        handleNotFound: handleNotFoundTryInstall
+        handleNotFound: handleNotFoundTryInstall,
+        plugins: [],
+        presets: [],
     }) {
         const seenPresets = new Set();
         this.help = _help(this);
@@ -343,12 +347,15 @@ export default class OptionsManager implements OptionsManagerType {
         const processEnv = (prefix = '') => {
             const pluginsName = `${prefix}PLUGINS`;
             const presetsName = `${prefix}PRESETS`;
-            const plugins = split(this.env(pluginsName, ''));
-            const presets = split(this.env(presetsName, ''));
+            const envPlugins = plugins.concat(split(this.env(pluginsName, '')));
+            const envPresets = presets.concat(split(this.env(presetsName, '')));
 
-            if ((plugins.length || presets.length)) {
-                this.debug('process from env', pluginsName, plugins, presetsName, presets);
-                processOpts(`${envPrefix}_${prefix}ENV`, {plugins, presets}, void (0), this.topPackage, void (0));
+            if ((envPlugins.length || envPresets.length)) {
+                this.debug('process from env', pluginsName, envPlugins, presetsName, envPresets);
+                processOpts(`${envPrefix}_${prefix}ENV`, {
+                    plugins: envPlugins,
+                    presets: envPresets
+                }, void (0), this.topPackage, void (0));
             }
         };
 

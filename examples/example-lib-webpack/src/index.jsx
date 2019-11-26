@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import {container} from './style.less';
-import src from './smile.png';
+import Smile from './Smile';
+export {default as Smile} from './Smile';
 
-export default class WebpackExample extends React.Component {
+export default class WebpackExample extends Component {
 
     render() {
-        return (<div><span className={container}>Hello</span> from webpack example.</div>);
+        return (<div><span className={container}>Hello</span> from webpack example. <Smile/></div>);
     }
 }
 
-export function Smile(props) {
-    return <img src={src} {...props}/>
-}

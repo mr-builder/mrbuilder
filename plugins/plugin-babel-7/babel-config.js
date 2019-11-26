@@ -55,7 +55,7 @@ if (useModules) {
 //Jest uses babel typescript plugin, so we detect that typescript and jest is in use, and we use it. All open to better
 //ideas.
 if (optionsManager.enabled('@mrbuilder/plugin-typescript')) {
-    if (optionsManager.config('@mrbuilder/plugin-typescript.useBabel') || optionsManager.enabled('@mrbuilder/plugin-jest')) {
+    if (optionsManager.config('@mrbuilder/plugin-typescript.useBabel') || optionsManager.enabled('@mrbuilder/plugin-jest') || optionsManager.enabled('@mrbuilder/plugin-mocha')) {
         if (conf.presets.findIndex(v => /@babel\/(preset-?)typescript$/.test(v)) === -1) {
             conf.presets.push(['@babel/preset-typescript', {isTSX: true, allExtensions: true}]);
         }

@@ -29,6 +29,26 @@
     "alias": {
       "mainFields": "Sets main fields for easier debugging"
     },
+    "options": {
+      "test": "/-test\\.[jet]sx?/",
+      "pathinfo": true,
+      "node": {
+        "fs": "empty",
+        "net": "empty",
+        "console": false,
+        "util": true
+      },
+      "mainFields": [
+        "source",
+        "browser",
+        "main"
+      ],
+      "testDir": "./test",
+      "include": [
+        "./src",
+        "./public"
+      ]
+    },
     "plugins": [
       "@mrbuilder/plugin-browserslist",
       "@mrbuilder/plugin-webpack",

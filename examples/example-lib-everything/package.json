@@ -19,7 +19,7 @@
     "analyze": "mrbuilder",
     "prepare": "mrbuilder",
     "start": "mrbuilder",
-    "test": "mrbuilder",
+    "test": "mrbuilder-karma",
     "karma": "mrbuilder"
   },
   "peerDependencies": {

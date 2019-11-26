@@ -119,5 +119,7 @@ export type OptionsManagerConfig = Partial<Logger> & Partial<{
      * Function to call when plugin is defined but not found.
      */
     handleNotFound: NotFoundFn,
+    plugins?: NameOrPluginNameConfig[],
+    presets?: NameOrPluginNameConfig[],
 
 }>

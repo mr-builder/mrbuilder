@@ -3,10 +3,6 @@ const env = process.env;
 if (!env.NODE_ENV) {
     env.NODE_ENV = 'development';
 }
-env.MRBUILDER_INTERNAL_PLUGINS =
-    `${env.MRBUILDER_INTERNAL_PLUGINS},@mrbuilder/webpack,@mrbuilder/webpack-dev-server`;
-
-
 const optionsManager = require('@mrbuilder/cli').default;
 
 const devServer = require.resolve('webpack-dev-server/bin/webpack-dev-server');

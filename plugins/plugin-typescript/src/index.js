@@ -9,7 +9,7 @@ module.exports = function ({
                                configFile
                            }, webpack, om) {
     manageTsConfig(om);
-
+    const logger = om.logger('@mrbuilder/plugin-webpack');
     if (extensions) {
         if (!webpack.resolve.extensions) {
             webpack.resolve.extensions = [];
@@ -21,7 +21,7 @@ module.exports = function ({
         if (require('@mrbuilder/plugin-babel/version') > 6) {
             return webpack;
         } else {
-            (this.warn || console.warn)(`Sorry we can only support typescript babel plugin with @mrbuilder/plugin-babel-7  
+            logger.info(`Sorry we can only support typescript babel plugin with @mrbuilder/plugin-babel-7  
             and this option has no effect with the babel 6 loader.
             `);
         }
@@ -31,14 +31,14 @@ module.exports = function ({
     };
 
     if (context) {
-        (this.info || console.log)('using context', context);
+        logger.info('using context', context);
         options.context = context;
     }
 
     if (configFile) {
         options.configFile = configFile;
     } else {
-        (this.info || console.log)('You are probable better off putting a tsconfig.json in your project'
+        logger.info('You are probable better off putting a tsconfig.json in your project'
             + 'directory, as tsc really really wants to find files see the Readme')
     }
     const use = [

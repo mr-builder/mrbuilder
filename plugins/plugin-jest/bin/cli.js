@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-process.env.MRBUILDER_INTERNAL_PRESETS = `${process.env.MRBUILDER_INTERNAL_PRESETS || ''},@mrbuilder/preset-lib,@mrbuilder/preset-test`;
-process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
+process.env.MRBUILDER_ENV = 'jest';
+process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/cli`;
 
 const om = require('@mrbuilder/cli').default;
 

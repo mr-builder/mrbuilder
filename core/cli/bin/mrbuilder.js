@@ -21,11 +21,9 @@ const profile = env.MRBUILDER_PROFILE || ((idx) => {
         : env['npm_lifecycle_event'])(
         argv[1]);
 
-
-if (!env.MRBUILDER_INTERNAL_PRESETS) {
-    env.MRBUILDER_INTERNAL_PRESETS = '@mrbuilder/cli';
+if (!env.MRBUILDER_INTERNAL_PLUGINS) {
+    env.MRBUILDER_INTERNAL_PLUGINS = '@mrbuilder/cli';
 }
-let script = '@mrbuilder/plugin-webpack';
 
 function help(message) {
     console.warn(`
@@ -79,124 +77,65 @@ function help(message) {
 
 
 if (!profile) {
-    help(`Please either run from a scripts in package.json or set the
-    MRBUILDER_PROFILE variable`);
+    help(`Please either run from a scripts in package.json or set the MRBUILDER_PROFILE variable`);
 }
 
-switch (profile) {
-    case "help":
-        help('This helpful message');
-        break;
+const envArray = [];
 
-    case "webpack":
-    case "build":
-    case "prepublishOnly":
-    case "prepublish":
-    case "prepare":
-    case "production":
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = 'production';
+const isApp = (argv.slice(2).find(v => /--(app|demo)(=.*)?$/.test(v)));
+
+profile.split(':').forEach(p => {
+    switch (p) {
+        case 'server':
+        case 'webpack-dev-server':
+        case 'dev-server':
+        case 'start': {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'development';
+            }
+            envArray.push('start');
+            break;
         }
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = 'production';
-
-            if (argv.slice(2).find(v => /--(app|demo)(=.*)?$/.test(v))) {
-                env.MRBUILDER_ENV = `${env.MRBUILDER_ENV}:app`;
+        case 'build':
+        case 'production':
+        case 'prepublish':
+        case 'prepublishOnly':case 'prepare':
+            if (isApp) {
+                envArray.push('app');
             } else {
-                env.MRBUILDER_ENV = `${env.MRBUILDER_ENV}:lib`;
+                envArray.push('lib');
             }
+            break;
+        case 'test':
+        case 'mocha':
+        case 'jest':
+        case 'karma': {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'test';
+            }
+            envArray.push(p);
+            break;
         }
-        break;
-    case "server":
-    case "start":
-    case "dev-server":
-    case "webpack-dev-server":
-    case "development": {
-        if (!env.NODE_ENV) {
-            env.NODE_ENV = 'development';
-        }
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = `${env.NODE_ENV}:start:app`;
-        }
-        script = '@mrbuilder/plugin-webpack-dev-server';
-        break;
-    }
-    //just for documentation.
-    case "lib":
-    case "demo":
-    case "app":
-    case "mocha":
-    case "karma":
-    case "test":
-    case "babel":
-    case "analyze":
-
-    default: {
-        const includes = Array.prototype.includes.bind(profile.split(':'));
-        switch (true) {
-            case includes('build'): {
-                if (!env.NODE_ENV) {
-                    env.NODE_ENV = 'production';
-                }
-                script = '@mrbuilder/plugin-webpack';
-                break;
+        case 'tsc':
+            p = 'typescript';
+        case 'analyze':
+        case 'typescript':
+        case 'babel-6':
+        case 'babel-7':
+        case 'babel':
+        case 'clean':
+        default: {
+            if (!env.NODE_ENV) {
+                env.NODE_ENV = 'production';
             }
-            case includes('start'): {
-                if (!env.NODE_ENV) {
-                    env.NODE_ENV = 'development';
-                }
-                script = '@mrbuilder/plugin-webpack-dev-server';
-                break;
-            }
-            case includes('mocha'): {
-                if (!env.NODE_ENV) {
-                    env.NODE_ENV = 'test';
-                }
-                script = '@mrbuilder/plugin-mocha';
-                break;
-            }
-            case includes('test'):
-            case includes('karma'): {
-                if (!env.NODE_ENV) {
-                    env.NODE_ENV = 'test';
-                }
-                env.MRBUILDER_INTERNAL_PRESET = `${env.MRBUILDER_INTERNAL_PRESET || ''}, @mrbuilder/preset-test`;
-                env.MRBUILDER_ENV = 'test';
-                script = '@mrbuilder/plugin-karma';
-                break;
-            }
-            case includes('babel'): {
-                if (!env.NODE_ENV) {
-                    env.NODE_ENV = 'production';
-                }
-                script = '@mrbuilder/plugin-babel';
-                break;
-
-            }
-            case includes('clean'): {
-                script = '@mrbuilder/plugin-clean';
-                break;
-            }
-
-        }
-
-
-        if (!env.MRBUILDER_ENV) {
-            env.MRBUILDER_ENV = profile;
+            envArray.push(p);
+            break;
         }
     }
-}
+});
 
-if (!global._MRBUILDER_OPTIONS_MANAGER) {
-    global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager').OptionsManager)({
-        prefix: 'mrbuilder', _require: require
-    })
-}
-const {
-    MRBUILDER_SCRIPT: endScript = require.resolve(`${script}/bin/cli`)
-} = env;
-
+env.MRBUILDER_ENV = [...new Set(envArray)].join(':');
 const om = require('@mrbuilder/cli').default;
-
-om.info(`running '${endScript}' MRBUILDER_ENV: '${env.MRBUILDER_ENV}' ${profile}`);
-require(endScript);
+const script = om.config('@mrbuilder/cli.bin') || '@mrbuilder/plugin-webpack/bin/cli';
+om.info(`running '${script}' MRBUILDER_ENV: '${env.MRBUILDER_ENV}' ${profile}`);
+require(script);

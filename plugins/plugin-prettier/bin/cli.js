@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-prettier`;
 
 const om = require('@mrbuilder/cli').default;

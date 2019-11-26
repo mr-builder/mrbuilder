@@ -4,24 +4,20 @@ const processAlias = require('@mrbuilder/plugin-webpack/lib/processAlias').defau
 const use = require('@mrbuilder/plugin-babel/use-babel');
 
 module.exports = function ({
-                               testDir = cwd('test'),
-                               pattern = /.*-test\.jsx?$/,
+                               testDir,
+                               pattern,
                                useCoverage = false,
                                pathinfo = true,
-                               node = {
-                                   fs: 'empty',
-                                   net: 'empty',
-                                   console: false,
-                                   util: true,
-                               },
+                               node,
                                alias = {},
-                               mainFields = ['source', 'browser', 'main'],
-                               include = [cwd('src'), cwd('public')],
-
+                               mainFields,
+                               include,
+                               test
                            }, webpack, om) {
 
-    const info = (this.info || console.log);
+    const info = om.logger('@mrbuilder/plugin-karma').info;
     testDir = enhancedResolve(testDir);
+    include = include.map(v => enhancedResolve(v));
     include.push(testDir);
     const packageJson = pkg();
     webpack.resolve.alias[packageJson.name] = cwd(packageJson.source || packageJson.main || 'src');
@@ -30,7 +26,7 @@ module.exports = function ({
 
     if (om.enabled('@mrbuilder/plugin-babel')) {
         webpack.module.rules.unshift({
-            test: /\.[jte]sx?$/,
+            test,
             include,
             use: use(om),
         });
@@ -40,7 +36,7 @@ module.exports = function ({
         info(`enabling code coverage for karma`);
         webpack.module.rules.unshift(
             {
-                test: /\.[jet]sx?$/,
+                test,
                 // instrument only testing sources with Istanbul
                 include,
                 use: {
@@ -69,7 +65,7 @@ module.exports = function ({
     //webpack.entry           = { test: testIndex };
     webpack.plugins.push(new DefinePlugin({MRBUILDER_TEST_MODULE: JSON.stringify(testDir)}));
 
-    (this.info || console.log)('using test dir ', testDir);
+    info('using test dir ', testDir);
     if (mainFields) {
         webpack.resolve.mainFields = mainFields;
     }
