@@ -12,7 +12,9 @@
     "chai": "^4.1.2",
     "mocha": "^6.2.2",
     "rimraf": "^3.0.0",
-    "ts-node": "^8.5.0"
+    "ts-node": "^8.5.0",
+    "@types/chai": "^4.2.5",
+    "@types/mocha": "^5.2.7"
   },
   "source": "src",
   "types": "src",

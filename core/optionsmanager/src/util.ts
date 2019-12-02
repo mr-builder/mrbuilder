@@ -1,5 +1,13 @@
 import {configOrBool, parseValue, set} from '@mrbuilder/utils';
-import {AliasObj, EnvConfig, NameOrPluginNameConfig, OptionsConfig, PluginNameConfig, PresetsPlugins} from "./types";
+import {
+    AliasObj,
+    EnvConfig,
+    NameOrPluginNameConfig,
+    OptionsConfig,
+    OptionValueObj,
+    PluginNameConfig,
+    PresetsPlugins
+} from "./types";
 
 type FalseOrObject = false | { [key: string]: any }
 
@@ -21,28 +29,34 @@ export const split = (v: string | string[] = []): string[] => (Array.isArray(v) 
  */
 export const mergeOptions = (options: FalseOrObject[]): FalseOrObject => {
     let ret = {};
-    for (let i = options.length - 1; i >= 0; i--) {
+    for (let i = options.length - 1; i > -1; i--) {
         const opt = options[i];
         if (opt === false) {
             return false;
         }
-        Object.assign(ret, opt);
+        if (opt != null) {
+            ret = Object.assign(ret, opt);
+        }
     }
     return ret;
 };
 
-export const mergePlugins = (...mergedPlugins: (string | PluginNameConfig)[]): PluginNameConfig[] => {
+export const mergePlugins = (...mergedPlugins: NameOrPluginNameConfig[][]): PluginNameConfig[] => {
+    const c: PluginNameConfig[] = [];
     if (!mergedPlugins.length) {
-        return [];
+        return c;
     }
-    return mergedPlugins.reduce((ret: PluginNameConfig[], v: string | PluginNameConfig) => {
-        const plugin: PluginNameConfig = typeof v === 'string' ? [v] : v;
-        const found = ret.findIndex(v => v[0] === plugin[0]);
-        if (found === -1) {
-            ret.push(plugin);
-        }
+
+    return mergedPlugins.reduce<PluginNameConfig[]>((ret, plugins: NameOrPluginNameConfig[]) => {
+        plugins.forEach(c => {
+            const plugin: PluginNameConfig = typeof c === 'string' ? [c] : c;
+            const pluginName = plugin[0];
+            if (!ret.find(b => b[0] === pluginName)) {
+                ret.push(plugin);
+            }
+        });
         return ret;
-    }, []);
+    }, c);
 };
 
 export const camel = (v = '', idx?: number): string => !v ? v : `${idx > 0 ? v[0].toUpperCase()
@@ -256,22 +270,28 @@ const unique$reduce = <T>(ret: T[], v: T): T[] => {
 export const unique = <T>(arr: T[]): T[] => arr.reduce(unique$reduce, []);
 
 
-export const resolveEnv = (envName: string, type: 'presets' | 'plugins', config: OptionsConfig): NameOrPluginNameConfig[] => {
+export const resolveEnv = <K extends keyof PresetsPlugins>(envName: string, key: K, config: OptionsConfig): PresetsPlugins[K][] => {
+    const ret: PresetsPlugins[K][] = [];
+    if (!config) {
+        return ret;
+    }
 
-    const ret: NameOrPluginNameConfig[] = [];
 
     if (envName && config.env) {
-        const envs: string[] = unique([envName, ...envName.split(':')].filter(Boolean));
+        const envs: string[] = unique([...envName.split(':'), envName].filter(Boolean));
         for (let i = 0, l = envs.length; i < l; i++) {
-            const e = config.env[envs[i]];
-            if (e && e[type]) {
-                ret.push(...e[type]);
+            const envName = envs[i];
+            const e: PresetsPlugins = config.env[envName];
+            if (e && e[key]) {
+                ret.push(e[key]);
             }
         }
     }
-    if (config[type]) {
-        ret.push(...config[type]);
+
+    if (config[key]) {
+        ret.push(config[key]);
     }
+
     return ret;
 
 };

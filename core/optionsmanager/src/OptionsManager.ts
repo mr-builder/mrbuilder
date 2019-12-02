@@ -1,6 +1,6 @@
 import cp from 'child_process';
 import {basename, join, resolve} from 'path';
-import {get, objToConf, parseIfBool, parseJSON, parseValue, stringify} from '@mrbuilder/utils';
+import {get, objToConf, parseIfBool, parseJSON,} from '@mrbuilder/utils';
 import {
     envify,
     mergeAlias,
@@ -21,7 +21,7 @@ import {
     LoggerFn, NameOrPluginNameConfig, OptionsConfig,
     OptionsManagerConfig,
     OptionsManagerType,
-    OptionType,
+    OptionType, OptionValueObj,
     Package, PluginNameConfig, PluginValue,
     RequireFn
 } from "./types";
@@ -37,7 +37,7 @@ const handleNotFoundFail = function (e: Error, pkg: string) {
 type OptionsPackage = Partial<{
     presets: PluginNameConfig[],
     plugins: PluginNameConfig[],
-    options: {},
+    options: OptionValueObj[],
     ignoreRc: boolean,
     plugin: string
     alias: AliasObj
@@ -52,7 +52,7 @@ type ResolvedOption = false | OptionType;
 export default class OptionsManager implements OptionsManagerType {
 
     readonly plugins = new Map<string, ResolvedOption>();
-    private readonly require: RequireFn;
+    readonly require: RequireFn;
     readonly env: EnvFn;
     public topPackage: Package;
     help: () => void;
@@ -149,7 +149,7 @@ export default class OptionsManager implements OptionsManagerType {
             this.warn('require is not set, using default require');
         }
 
-        const ENV = this.env('ENV', env.NODE_ENV);
+        const ENV: string = this.env('ENV', env.NODE_ENV);
 
         this.info('ENV is', ENV || 'not set');
         this.debug('topPackage is', this.topPackage.name);
@@ -217,18 +217,20 @@ export default class OptionsManager implements OptionsManagerType {
         const resolveConfig = (id: string | Package): OptionsPackage => {
             const pkg: Package = typeof id === 'string' ? resolvePkgJson(id) : id;
 
-            const pluginConfig = pkg[confPrefix] ? objToConf(pkg[confPrefix]) : parseJSON(resolveFromPkgDir(pkg.name, rcFile)) || {};
+            const pluginConfig: OptionsConfig = pkg[confPrefix] ? objToConf(pkg[confPrefix]) : parseJSON(resolveFromPkgDir(pkg.name, rcFile)) || {};
 
-            const envOverride = pluginConfig.env && pluginConfig.env[ENV] ? objToConf(pluginConfig.env[ENV]) : {};
-            return {
+            const envOverride: OptionsConfig = pluginConfig.env && pluginConfig.env[ENV] ? objToConf(pluginConfig.env[ENV]) as OptionsConfig : null;
+
+            const config = {
                 presets: mergePlugins(...resolveEnv(ENV, 'presets', pluginConfig)),
                 plugins: mergePlugins(...resolveEnv(ENV, 'plugins', pluginConfig)),
-                options: select(envOverride.options, pluginConfig.options),
-                ignoreRc: select(envOverride.ignoreRc, pluginConfig.ignoreRc),
-                plugin: select(envOverride.plugin, pluginConfig.plugin),
+                options: resolveEnv(ENV, 'options', pluginConfig),
+                ignoreRc: select(envOverride?.ignoreRc, pluginConfig.ignoreRc),
+                plugin: select(envOverride?.plugin, pluginConfig.plugin),
                 alias: pluginConfig.alias
 
             };
+            return config;
         };
 
 
@@ -250,17 +252,16 @@ export default class OptionsManager implements OptionsManagerType {
             }
             //We don't handle alias options here because we may have to install the package to handle the alias.
             // but if the resolvedOptions where false by now the alias would not matter.
-            const resolvedOptions = mergeOptions([mergeArgs(pluginName, argv), mergeEnv(pluginName, env), override, pluginOpt]);
-            if (resolvedOptions === false) {
+            const options = [mergeArgs(pluginName, argv), mergeEnv(pluginName, env), override, pluginOpt];
+            if (options.includes(false)) {
                 //nothing more to do.
                 this.plugins.set(pluginName, false);
                 return false;
             }
-            const options = [resolvedOptions];
             let pluginSrc = pluginName;
             let ret: string | false = pluginName;
             let alias: AliasObj | undefined;
-
+            //I wish I knew what this startsWith is for -- if someone finds out can they add a comment or something.
             if (pluginName.startsWith('.')) {
                 if (includedFrom === this.topPackage.name) {
                     pluginSrc = this.cwd(pluginName);
@@ -271,14 +272,13 @@ export default class OptionsManager implements OptionsManagerType {
             } else {
                 //warning this could trigger a plugin install.
                 const pConfig = resolveConfig(pluginName);
-                options.push(pConfig.options);
                 if (pConfig) {
                     if (pConfig.plugin) {
                         let [pluginPath, prPluginOpts] = nameConfig(pConfig.plugin);
                         //this bugger - i think its probably not right but...  That a plugin can define its own defaults.
                         // but I guess so...
                         if (prPluginOpts != false) {
-                            options.unshift(prPluginOpts);
+                            options.push(prPluginOpts);
                         }
                         if (pluginPath) {
                             if (pluginName === this.topPackage.name) {
@@ -288,6 +288,7 @@ export default class OptionsManager implements OptionsManagerType {
                             }
                         }
                     }
+                    options.push(...pConfig.options);
 
                     alias = pConfig.alias;
                 }

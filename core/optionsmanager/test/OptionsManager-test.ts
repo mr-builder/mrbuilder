@@ -1,17 +1,20 @@
-const OptionsManager = require('../src/OptionsManager').default;
-const {join, parse} = require('path');
-const {expect} = require('chai');
-const {stringify} = require('@mrbuilder/utils');
-const {
+import {OptionsManager} from '../src';
+import {join, parse} from 'path';
+import {expect} from 'chai';
+import {stringify} from "@mrbuilder/utils";
+import 'mocha';
+
+import {
     existsSync,
     readdirSync,
     statSync,
     symlinkSync,
     unlinkSync,
     mkdirSync,
-} = require('fs');
+} from 'fs';
+import {CwdFn, OptionsManagerConfig} from "../src/types";
 
-const isDirectory = sourceDir => {
+const isDirectory = (sourceDir: string): boolean => {
     try {
         const s = statSync(sourceDir);
         return s.isDirectory();
@@ -19,7 +22,7 @@ const isDirectory = sourceDir => {
         return false;
     }
 };
-const mkdirs = (dirs) => {
+const mkdirs = (dirs: string): string => {
     const parts = dirs.split('/');
     for (let i = 0, l = parts.length; i < l; i++) {
         if (parts[i]) {
@@ -31,7 +34,7 @@ const mkdirs = (dirs) => {
     }
     return dirs;
 };
-const symlinkSyncDir = (sourceDir, destDir) => {
+const symlinkSyncDir = (sourceDir: string, destDir: string): void => {
     const parts = parse(destDir);
     if (!isDirectory(parts.dir)) {
         mkdirs(parts.dir);
@@ -40,19 +43,29 @@ const symlinkSyncDir = (sourceDir, destDir) => {
 };
 
 const odir = __dirname;
+
+
+type ValidateFn = () => void;
+
+type Config = Partial<{
+    cwd: CwdFn,
+    env: { [key: string]: any },
+    argv: string[],
+} & OptionsManagerConfig>;
+type AssertOptionManagerFn = (o: OptionsManager, obj?: { [key: string]: any }) => void;
+type TestFn = (name: string, config: Config | AssertOptionManagerFn, assert?: AssertOptionManagerFn, fn?: Mocha.ExclusiveTestFunction) => void;
+
 describe('@mrbuilder/optionsmanager', function () {
 
-    process.env.TESTER_NO_AUTOINSTALL = 1;
-
-    const argv = (...argv) => ['fake-interpreter', 'fake-script'].concat(
-        ...argv);
-    const afters = [];
-    const re = (obj, assert) => {
+    process.env.TESTER_NO_AUTOINSTALL = 'true';
+    const argv = (...argv: string[] | string[][]) => ['fake-interpreter', 'fake-script'].concat(...argv);
+    const afters: ValidateFn[] = [];
+    const re = (obj: any, assert: any) => {
         expect(obj).to.be.instanceof(RegExp);
         expect(obj + '').to.eql(assert);
     };
 
-    const cwd = (name) => {
+    const cwd = (name: string): CwdFn => {
         const ret = join(__dirname, 'fixtures', name);
         const sourceNodeDir = join(ret, 'node_modules');
         if (isDirectory(sourceNodeDir)) {
@@ -79,13 +92,16 @@ describe('@mrbuilder/optionsmanager', function () {
         return () => ret;
     };
 
-    function newOptionManagerTest(name, config, assert, fn = it) {
+    const newOptionManagerTest: TestFn & {
+        only: TestFn,
+        skip: TestFn,
+    } = Object.assign((name: string, config: Config | AssertOptionManagerFn, assert?: AssertOptionManagerFn, fn: Mocha.TestFunction = it): void => {
         if (name == null) {
             throw 'name can not be null';
         }
-        if (!assert) {
+        if (!assert && typeof config === 'function') {
             assert = config;
-            config = null;
+            config = {};
         }
         fn(`should configure "${name}"${config ? ` and env ${stringify(config)}` : ''}`, function () {
 
@@ -100,19 +116,16 @@ describe('@mrbuilder/optionsmanager', function () {
                 },
                 ...config,
                 env: {
-                    TESTER_NO_AUTOINSTALL: 1,
-                    ...(config && config.env)
+                    TESTER_NO_AUTOINSTALL: '1',
+                    //@ts-ignore
+                    ...config?.env,
                 }
             }), config);
         });
-
-
-        return newOptionManagerTest;
-    }
-
-    newOptionManagerTest.only = (_name, _config, _assert) => newOptionManagerTest(_name, _config, _assert, it.only);
-
-    newOptionManagerTest.skip = (_name, _config, _assert) => newOptionManagerTest(_name, _config, _assert, it.skip);
+    }, {
+        only: (_name: string, _config?: Config | AssertOptionManagerFn, _assert?: AssertOptionManagerFn) => newOptionManagerTest(_name, _config, _assert, it.only),
+        skip: (_name: string, _config?: Config | AssertOptionManagerFn, _assert?: AssertOptionManagerFn) => newOptionManagerTest(_name, _config, _assert, it.skip),
+    });
 
     afterEach(() => {
         afters.forEach(c => c());
@@ -124,17 +137,29 @@ describe('@mrbuilder/optionsmanager', function () {
         expect(om.config('with-option-2.opt2')).to.eql(3);
         expect(om.config('with-option-2.merged')).to.eql(1);
     });
+    newOptionManagerTest("with-default-env-options", {
+        'env': {TESTER_ENV: 'env1'}
+    }, om => {
+        expect(om.config('with-option-env-1.opt1')).to.eql('env1');
+        expect(om.config('with-option-env-2.opt2')).to.eql(3);
+    });
+    newOptionManagerTest("with-default-env-options", {
+        'env': {TESTER_ENV: 'env1:env2'}
+    }, om => {
+        expect(om.config('with-option-env-1.opt1')).to.eql('env1');
+        expect(om.config('with-option-env-2.opt2')).to.eql(3);
+        expect(om.config('with-option-env-2.expect')).to.eql('env2');
+    });
 
     newOptionManagerTest("with-cli", {
-        argv: argv(
-            [`--with-cli-alias-1.other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`])
+        argv: argv(`--with-cli-alias-1.other={\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}`)
     }, om => {
         expect(om.config('with-cli-alias-1.other')).to.eql(
             {"index": {"title": "Index"}, "other": {"title": "Other"}});
     });
 
     newOptionManagerTest("with-cli", {
-        argv: argv([`--with-cli-alias-1=false`])
+        argv: argv(`--with-cli-alias-1=false`)
     }, om => {
         expect(om.enabled('with-cli-alias-1')).to.eql(false);
     });
@@ -143,7 +168,7 @@ describe('@mrbuilder/optionsmanager', function () {
         env: {
             "WITH_CLI_ALIAS_1": JSON.stringify({"stuff": 1})
         },
-        argv: argv([`--with-cli-alias-1=false`])
+        argv: argv(`--with-cli-alias-1=false`)
     }, om => {
         expect(om.enabled('with-cli-alias-1')).to.eql(false);
     });
@@ -169,14 +194,18 @@ describe('@mrbuilder/optionsmanager', function () {
 
     newOptionManagerTest('with-named-plugin', om => {
         expect(om.enabled('named-plugin')).to.eql(true);
-        expect(om.require(om.plugins.get('named-plugin').plugin)()).to.eql(
-            'named plugin');
+        const val = om.plugins.get('named-plugin');
+        if (typeof val === 'boolean' || typeof val === 'function') {
+            expect(val).to.not.be.false;
+            throw Error(`named-plugin not found`);
+        }
+        expect(om.require(val.plugin + '')()).to.eql('named plugin');
 
     });
     newOptionManagerTest("with-multi-env test:other", {
         env: {
             TESTER_ENV: 'test:other',
-            TESTER_NO_AUTOINSTALL: 1,
+            TESTER_NO_AUTOINSTALL: 'true',
         }
     }, om => {
         expect(om.enabled('with-multi-env-p1')).to.be.true;
@@ -187,7 +216,7 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest("with-multi-env other", {
         env: {
             TESTER_ENV: 'other',
-            TESTER_NO_AUTOINSTALL: 1,
+            TESTER_NO_AUTOINSTALL: 'true',
         }
     }, om => {
         expect(om.enabled('with-multi-env-p1')).to.be.true;
@@ -197,7 +226,6 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest("with-multi-env other without test", {
         env: {
             TESTER_ENV: 'other:nosuch',
-            TESTER_NO_AUTOINSTALL: 1,
         }
     }, om => {
         expect(om.enabled('with-multi-env-p1')).to.be.true;
@@ -207,7 +235,6 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest('with-merged-plugins', {
         env: {
             TESTER_ENV: 'test',
-            TESTER_NO_AUTOINSTALL: 1,
         }
     }, om => {
         expect(om.enabled('merge-0')).to.be.false;
@@ -222,7 +249,7 @@ describe('@mrbuilder/optionsmanager', function () {
         argv: argv('--camel-arg', 'yes'),
         env: {
             CAMEL_ENV: 'uh-huh',
-            CAMEL_NO_AUTOINSTALL: 1,
+            CAMEL_NO_AUTOINSTALL: 'true',
         }
     }, om => {
         expect(om.config('camel-alias-1.camelArg')).to.eql('yes');
@@ -241,8 +268,12 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest('with-plugin-plugin', om => {
 
         expect(om.enabled('plugin-plugin')).to.be.true;
-        expect(require(om.plugins.get('plugin-plugin').plugin)('a')).to
-            .eql(['a']);
+        const val = om.plugins.get('plugin-plugin');
+        if (typeof val === 'object' || typeof val == 'function') {
+            expect(require(val.plugin + '')('a')).to.eql(['a']);
+        } else {
+            expect.fail(false, true, 'not correct type');
+        }
     });
     newOptionManagerTest('with-plugin-plugin-opts', om => {
         expect(om.enabled('plugin-plugin-opts')).to.be.true;
@@ -256,8 +287,7 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest('with-env', {
         env: {
             TESTER_PLUGINS: 'metest',
-            METEST: JSON.stringify({"stuff": 1}),
-            TESTER_NO_AUTOINSTALL: 1,
+            METEST: JSON.stringify({"stuff": 1})
         }
     }, (om) => {
         expect(om.enabled('metest')).to.be.true;
@@ -267,8 +297,7 @@ describe('@mrbuilder/optionsmanager', function () {
 
     newOptionManagerTest('with-env', {
         env: {
-            TESTER_PLUGINS: 'metest',
-            TESTER_NO_AUTOINSTALL: 1,
+            TESTER_PLUGINS: 'metest'
 
         },
         argv: argv(
@@ -310,9 +339,14 @@ describe('@mrbuilder/optionsmanager', function () {
     });
     newOptionManagerTest('with-self-plugin', om => {
         expect(om.enabled('with-self-plugin')).to.be.eql(true);
-        const plugin = om.plugins.get('with-self-plugin').plugin;
-        const ret = require(plugin);
-        expect(ret()).to.be.eql('Hi, whatever');
+        const v = om.plugins.get('with-self-plugin');
+        if (typeof v === 'function' || typeof v === 'object') {
+            const plugin = v.plugin;
+            const ret = require(plugin + '');
+            expect(ret()).to.be.eql('Hi, whatever');
+        } else {
+            expect.fail(v, {}, 'plugin should have been an object');
+        }
     });
     newOptionManagerTest('with-regex', {
         argv: argv(
@@ -342,7 +376,6 @@ describe('@mrbuilder/optionsmanager', function () {
         env: {
             ALIAS_1: JSON.stringify({more: "stuff"}),
             ALIAS_2: JSON.stringify({yup: true}),
-            TESTER_NO_AUTOINSTALL: 1,
         }
     }, function (om) {
         expect(om.config('alias-1.stuff')).to.eql('Override');
@@ -377,8 +410,8 @@ with-alias-2 - [enabled]
 
     });
     it('should log from option', function () {
-        const calls = [];
-        const capture = (...args) => calls.push(args);
+        const calls: string[][] = [];
+        const capture = (...args: string[]) => calls.push(args);
 
         const om = new OptionsManager({
             prefix: 'tester',
@@ -387,8 +420,9 @@ with-alias-2 - [enabled]
             info: capture,
             warn: capture
         });
-        om.plugins.get('p1').info('test');
-        om.plugins.get('p1').warn('test');
+
+        om.logger('p1').info('test');
+        om.logger('p1').warn('test');
         expect(calls.pop().join(' ')).to.eql('WARN [tester:p1] test');
         expect(calls.pop().join(' ')).to.eql('INFO [tester:p1] test');
     });

@@ -1,4 +1,3 @@
-import OptionsManager from "./OptionsManager";
 
 export type PluginConfig = {} | false;
 export type PluginNameConfig = [string, PluginConfig?];
@@ -20,21 +19,26 @@ export type PluginAliasObj = {
 };
 export type NameOrPluginNameConfig = string | PluginNameConfig;
 
-export type PresetsPlugins = {
-    presets: NameOrPluginNameConfig[],
-    plugins: NameOrPluginNameConfig[],
+export interface PresetsPlugins  {
+    presets?: NameOrPluginNameConfig[],
+    plugins?: NameOrPluginNameConfig[],
+    options?: OptionValueObj
 }
 
-export type OptionsConfig = Partial<PresetsPlugins> & Partial<{
-    ignoreRc: boolean,
-    env: EnvConfig,
-    alias: AliasObj,
-    plugin?: string,
-}>
-
+export type OptionValueObj = {
+    [key: string]: any
+}
 export type EnvConfig = {
     [key: string]: PresetsPlugins
 }
+
+export type OptionsConfig = PresetsPlugins & {
+    ignoreRc?: boolean,
+    env?: EnvConfig,
+    alias?: AliasObj,
+    plugin?: string,
+};
+
 
 export type OptionsManagerType = {
 

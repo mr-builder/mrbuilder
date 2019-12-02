@@ -1,7 +1,8 @@
-const {mergeArgs, mergeEnv} = require('../src/util');
-const {expect}              = require('chai');
+import {mergeArgs, mergeEnv} from '../src/util';
+import {expect} from 'chai';
+import 'mocha';
 
-const argv = (...args) => [null, null, ...args];
+const argv = (...args: string[]): string[] => [null, null, ...args];
 
 describe('@mrbuilder/optionsmanager/util', function () {
     describe('mergeArgs', function () {
@@ -41,15 +42,15 @@ describe('@mrbuilder/optionsmanager/util', function () {
     describe('mergeEnv', function () {
 
         it('should parse env', () => {
-            expect(mergeEnv('@tester/my-plugin', {TESTER_MY_PLUGIN_STUFF: 1})).to.eql({});
+            expect(mergeEnv('@tester/my-plugin', {TESTER_MY_PLUGIN_STUFF: '1'})).to.eql({});
         });
 
         it('should parse env with true', () => {
-            expect(mergeEnv('@tester/my-plugin', {TESTER_MY_PLUGIN: 1})).to.eql(true);
+            expect(mergeEnv('@tester/my-plugin', {TESTER_MY_PLUGIN: '1'})).to.eql(true);
         });
 
         it('should parse env with false', () => {
-            expect(mergeEnv('@tester/my-plugin', {TESTER_MY_PLUGIN: 0})).to.eql(false);
+            expect(mergeEnv('@tester/my-plugin', {TESTER_MY_PLUGIN: '0'})).to.eql(false);
         });
 
         it('should parse env with "false"', () => {
