@@ -10,10 +10,10 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "lib": [
       "dom",
       "es2019",
-      "scripthost",
       "es2015.promise"
     ]
   },
