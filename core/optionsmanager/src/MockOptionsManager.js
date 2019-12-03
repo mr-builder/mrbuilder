@@ -9,6 +9,7 @@ const {get} = require('@mrbuilder/utils');
 module.exports = function (configure = []) {
     configure = configure.map(v => Array.isArray(v) ? v : [v, {}]);
     const om = {
+        topPackage: require(process.cwd() + '/package.json'),
         logger(plugin) {
             return {
                 info(...args) {

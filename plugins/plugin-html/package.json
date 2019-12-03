@@ -9,9 +9,7 @@
     "html-webpack-template": "^6.2.0",
     "glob": "^7.1.6"
   },
-  "scripts": {
-    "test": "mrbuilder-mocha"
-  },
+
   "source": "src",
   "main": "src",
   "license": "0BSD",
@@ -24,7 +22,7 @@
   },
   "mrbuilder": {
     "options": {
-      "publicPath": "./public",
+      "publicPath": "public",
       "filename": "[name].html",
       "elementId": "content",
       "exported": true,

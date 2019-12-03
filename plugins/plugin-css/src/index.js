@@ -1,11 +1,10 @@
 const cssLoader = require('./cssLoader');
-module.exports  = function ({
-                                isUseStyleLoader,
-                                useNameHash,
-                                publicPath = '/public',
-                                css = true,
-                                modules,
-                            }, webpack, om) {
+module.exports = function ({
+                               isUseStyleLoader,
+                               useNameHash,
+                               css,
+                               modules,
+                           }, webpack, om) {
 
     if (css) {
         cssLoader(webpack, css === true ? /\.css$/ : css, false, om);
@@ -15,3 +14,4 @@ module.exports  = function ({
     }
     return webpack;
 };
+module.exports.cssLoader = cssLoader;

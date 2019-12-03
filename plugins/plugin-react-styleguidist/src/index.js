@@ -42,7 +42,7 @@ module.exports = function (options = {}, webpack, om) {
 
     const confFromPackage = (_pkg, component) => {
         const obj = Object.assign({
-                name: _pkg.name.startsWith('@') ? _pkg.name.split('/',2)[1] : _pkg.name,
+                name: _pkg.name,
                 description: description(_pkg),
                 content: join(_pkg._location, 'Readme.md'),
                 sections: [],
@@ -57,7 +57,7 @@ module.exports = function (options = {}, webpack, om) {
         const makeComponent = (name = '**/*.{js,jsx,ts,tsx}') => {
 
 
-            const key = join(relative(cwd(), join(_pkg._location, 'src')), name);
+            const key = join(relative(cwd(), join(_pkg._location, om.config('@mrbuilder/cli.sourceDir', 'src'))), name);
 
             return {components: `${key}.{js,jsx,ts,tsx}`};
         };

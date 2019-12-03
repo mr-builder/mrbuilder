@@ -3,7 +3,7 @@ const om = require('@mrbuilder/cli').default;
 const types = require('@mrbuilder/cli').info;
 
 const {info} = om.logger('@mrbuilder/plugin-css');
-const mrb = (v) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''));
+const mrb = (v, def) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''), def);
 let useNameHash = mrb('useNameHash');
 let filename = mrb('filename');
 let useStyleLoaderLoader = mrb('useStyleLoader');

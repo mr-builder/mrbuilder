@@ -3,10 +3,7 @@ const {cwd, resolvePkgDir} = require('@mrbuilder/utils');
 const useBabel = require('@mrbuilder/plugin-babel/use-babel.js');
 let showedWarning = false;
 
-module.exports = function reactPlugin({
-                                          compatMode = false,
-                                      }, webpack,
-                                      om) {
+module.exports = function reactPlugin({compatMode,}, webpack, om) {
 
     const pages = om.config('@mrbuilder/plugin-html.pages');
     const exported = om.config('@mrbuilder/plugin-html.exported', true);
@@ -68,33 +65,14 @@ module.exports = function reactPlugin({
             webpack.resolve.alias['react-hot-loader'] = resolvePkgDir('react-hot-loader');
         }
     }
-    let entry = webpack.entry;
 
     const preEntry = isHot ? om.config('@mrbuilder/plugin-hot.preEntry', []) : [];
 
     if (om.enabled('@mrbuilder/plugin-html')) {
-
-        const pkg = require(cwd('package.json'));
-
-        const publicPath = om.config('@mrbuilder/plugin-html.publicPath', cwd('public'));
-
-        if (!entry) {
-
-            entry = webpack.entry = {index: path.join(publicPath, 'index')};
-            try {
-                require.resolve(entry.index);
-            } catch (e) {
-
-                const index = cwd(pkg.source || pkg.main || './src');
-                logger.info(`no entry using "${index}"`);
-                entry = webpack.entry = {index};
-            }
-        }
-
+        const {findEntry} = require('@mrbuilder/plugin-html');
+        const entry = webpack.entry = findEntry(om);
         logger.info('pages', pages);
-
         const {generateHot, generate} = require('./loader');
-
         const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
         keys.forEach(name => {

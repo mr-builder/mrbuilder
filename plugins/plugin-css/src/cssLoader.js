@@ -13,7 +13,7 @@ module.exports = function (webpack, test, modules = false, om, ...conf) {
             modules: modules ? {
                 ...(typeof modules  === 'object' ? modules : {}),
                 localIdentName: mrb('localIdentName', '[hash]_[package-name]_[hyphen:base-name]_[local]'),
-                context: mrb('context', 'src'),
+                context: mrb('context', om.config('@mbuilder/cli.sourceDir', 'src')),
                 getLocalIdent,
             } : false
         } : {
@@ -21,7 +21,7 @@ module.exports = function (webpack, test, modules = false, om, ...conf) {
             localsConvention,
             modules: modules ? {
                 ...(typeof modules  === 'object' ? modules : {}),
-                context: mrb('context', 'src'),
+                context: mrb('context', om.config('@mbuilder/cli.sourceDir', 'src')),
             } : false,
         }
     }];

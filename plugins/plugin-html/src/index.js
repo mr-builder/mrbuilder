@@ -1,8 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const {parseEntry, enhancedResolve} = require('@mrbuilder/utils');
-const Glob = require('glob');
-const fs = require('fs');
+const {enhancedResolve} = require('@mrbuilder/utils');
+const findEntry = require('./findEntry');
 /**
  *   title     : (deps.description ? deps.description : deps.name),
  hash      : opts.useNameHash,
@@ -37,7 +36,6 @@ module.exports = function ({
                                pages,
                                title,
 
-                               entry,
                                publicPath,
                                template,
                                filename,
@@ -64,52 +62,7 @@ module.exports = function ({
         publicPath = 'public';
     }
 
-    entry = entry ? parseEntry(entry) : webpack.entry;
-
-    if (!entry) {
-        indexSearch = indexSearch != null ? Array.isArray(indexSearch) ? indexSearch : [indexSearch] : [publicPath, pkg.source || 'src', pkg.main || 'lib'];
-        if (!indexSearch.find(v => {
-                if (!v) {
-                    return false;
-                }
-                try {
-                    let index = om.cwd(v);
-                    const stat = fs.lstatSync(index);
-                    if (stat.isDirectory()) {
-                        const globIndex = Glob.sync('index.*', {cwd: index})[0];
-                        if (globIndex) {
-                            entry = webpack.entry = {index:path.join(index, globIndex)};
-                            logger.info(` using "${entry.index}"`);
-                            return true;
-                        }
-                        logger.warn(`looking for index in ${v}`);
-                        return false;
-
-                    }
-                    entry = webpack.entry = {index: v};
-                    return true;
-                } catch (e) {
-                    return false;
-                }
-            }
-        )) {
-            throw new Error(
-                `Sorry but we could not find an entry in '${indexSearch}'
-                
-                 Possible solutions:
-                 1) create a file at 
-                 '${path.join(publicPath || (pkg.source || 'src') || (pkg.main || 'main'), 'index.js')}'
-                 
-                 2) define an entry in package.json
-                 "mrbuilder":{
-                  "plugins":[ "@mrbuilder/plugin-webpack", { "index":"./path/to/index"}]
-                 }
-                 3) pass an entry argument to mrbuilder
-                    $ mrbuilder --entry index=./path/to/index.
-                
-                `)
-        }
-    }
+    const entry = webpack.entry = findEntry(om);
 
     const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
@@ -146,3 +99,4 @@ module.exports = function ({
 
     return webpack;
 };
+module.exports.findEntry = findEntry;
