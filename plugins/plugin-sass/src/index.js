@@ -10,7 +10,7 @@ module.exports = function ({
 
     if (options == null) {
         options = {
-            sourceMaps: true,
+            sourceMap: true,
         }
     }
 

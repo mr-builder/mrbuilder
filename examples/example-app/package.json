@@ -17,7 +17,7 @@
 
   },
   "scripts": {
-    "prepublish": "mrbuilder",
+    "prepare": "mrbuilder",
     "start": "mrbuilder",
     "test": "mrbuilder-karma",
     "karma": "mrbuilder",

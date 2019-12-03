@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "mrbuilder",
-    "prepublish": "NODE_ENV=production mrbuilder"
+    "prepare": "NODE_ENV=production mrbuilder"
   },
   "mrbuilder": {
     "presets": [

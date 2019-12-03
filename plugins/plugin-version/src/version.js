@@ -27,10 +27,12 @@ module.exports = function ({
             } else {
                 if (this && this.mode) {
                     NODE_ENV = this.mode.toUpperCase();
+                }else{
+                    NODE_ENV = 'production';
                 }
             }
         }
-        conf[NODE_ENV] = 1;
+        conf[NODE_ENV] = true;
         conf['process.env.NODE_ENV'] = NODE_ENV.toLowerCase();
     }
     return Object.entries(conf).reduce((ret, [key, value]) => {

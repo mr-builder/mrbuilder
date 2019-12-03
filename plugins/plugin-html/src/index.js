@@ -73,12 +73,13 @@ module.exports = function ({
                     return false;
                 }
                 try {
-                    const stat = fs.lstatSync(om.cwd(v));
+                    let index = om.cwd(v);
+                    const stat = fs.lstatSync(index);
                     if (stat.isDirectory()) {
-                        const index = Glob.sync('index.*', {cwd: v})[0];
-                        if (index) {
-                            entry = webpack.entry = {index};
-                            logger.info(`no entry using "${index}"`);
+                        const globIndex = Glob.sync('index.*', {cwd: index})[0];
+                        if (globIndex) {
+                            entry = webpack.entry = {index:path.join(index, globIndex)};
+                            logger.info(` using "${entry.index}"`);
                             return true;
                         }
                         logger.warn(`looking for index in ${v}`);

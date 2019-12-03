@@ -1,4 +1,9 @@
 {
+  "options": {
+    "sourceDir": "src",
+    "outputDir": "lib",
+    "testDir": "test"
+  },
   "env": {
     "clean": {
       "options": {
@@ -118,7 +123,7 @@
         "@mrbuilder/plugin-webpack-dev-server"
       ],
       "presets": [
-        "@mrbuilder/preset-dev"
+        "@mrbuilder/preset-app"
       ]
     },
     "prettier": {

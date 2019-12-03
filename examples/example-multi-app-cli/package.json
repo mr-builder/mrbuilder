@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "mrbuilder-clean app",
     "start": "mrbuilder-webpack-dev-server --entry index=./public/index.js other=./public/other --@mrbuilder/plugin-html-pages='{\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}'",
-    "prepublish": "mrbuilder-webpack --app app --entry index=./public/index.js other=./public/other --@mrbuilder/plugin-html-pages='{\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}'"
+    "prepare": "mrbuilder-webpack --app app --entry index=./public/index.js other=./public/other --@mrbuilder/plugin-html-pages='{\"index\":{\"title\":\"Index\"},\"other\":{\"title\":\"Other\"}}'"
   },
   "mrbuilder": {
     "presets": [
