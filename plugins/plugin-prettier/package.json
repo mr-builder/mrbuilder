@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-prettier",
-  "version": "4.0.0-alpha.4",
+  "version": "4.0.0-alpha.5",
   "description": "Provides prettier cli wrapper",
   "dependencies": {
     "prettier": "^1.19.1"
