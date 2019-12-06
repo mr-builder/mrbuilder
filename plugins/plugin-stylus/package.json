@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/plugin-stylus",
-  "version": "4.0.0-alpha.3",
+  "version": "4.0.0-alpha.4",
   "description": "Stylus plugin for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
-    "@mrbuilder/plugin-css": "^4.0.0-alpha.3",
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.4",
     "loader-utils": "^1.2.3",
     "nib": "^1.1.2",
     "stylus": "^0.54.7",

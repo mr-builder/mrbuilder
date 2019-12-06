@@ -1,9 +1,9 @@
 {
   "name": "@mrbuilder/plugin-enzyme",
   "description": "Provides enzyme and jsdom support for webpack and mocha",
-  "version": "4.0.0-alpha.3",
+  "version": "4.0.0-alpha.4",
   "dependencies": {
-    "@mrbuilder/plugin-lodash": "^4.0.0-alpha.3",
+    "@mrbuilder/plugin-lodash": "^4.0.0-alpha.4",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1"
   },
