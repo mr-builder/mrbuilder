@@ -26,7 +26,8 @@
     "typescript": "^3.7.2"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.orig"
+    "registry": "https://registry.npm.orig",
+    "access": "public"
   },
   "scripts": {
     "lerna": "lerna",

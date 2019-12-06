@@ -8,5 +8,6 @@
   "license": "BSD0",
   "bin": {
     "mrbuilder-prettier": "./bin/cli.js"
-  }
+  },
+  "gitHead": "1426f5559c53136adbad20e58b5febd6823eedf5"
 }
