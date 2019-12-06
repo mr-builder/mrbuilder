@@ -1,19 +1,19 @@
 {
   "name": "@mrbuilder/preset-lib",
-  "version": "4.0.0-alpha.9",
+  "version": "4.0.0-alpha.10",
   "dependencies": {
-    "@mrbuilder/plugin-babel": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-css": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-env": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-enzyme": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-eslint": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-filetypes": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-fonts": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-html": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-less": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-react": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.9"
+    "@mrbuilder/plugin-babel": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-env": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-enzyme": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-eslint": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-filetypes": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-fonts": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-html": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-less": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-react": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.10"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

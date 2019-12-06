@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/wiki",
   "private": true,
-  "version": "4.0.0-alpha.9",
+  "version": "4.0.0-alpha.10",
   "dependencies": {
-    "@mrbuilder/cli": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-clean": "^4.0.0-alpha.9",
-    "@mrbuilder/plugin-react-styleguidist": "^4.0.0-alpha.9"
+    "@mrbuilder/cli": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-clean": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-react-styleguidist": "^4.0.0-alpha.10"
   },
   "scripts": {
     "prepare": "NODE_ENV=production mrbuilder --app ./lib",
