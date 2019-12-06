@@ -9,7 +9,7 @@ to extract content.
 
 So it can easily include paths like the one below.
 
-![alt logo](../../mrbuilder.wiki/mrbuilder.svg)
+![alt logo](../../wiki/mrbuilder.svg)
 
 and inline _stuff_
 

@@ -19,6 +19,7 @@
   "scripts": {
     "prepare": "mrbuilder",
     "start": "mrbuilder",
+    "start:open": "mrbuilder",
     "test": "mrbuilder-karma",
     "karma": "mrbuilder",
     "analyze": "mrbuilder"

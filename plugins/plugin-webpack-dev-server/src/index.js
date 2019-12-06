@@ -1,11 +1,4 @@
-const {cwd, parseEntry} = require('@mrbuilder/utils');
-const DEV_SERVER        = {
-    filename          : 'index.js',
-    historyApiFallback: true,
-    inline            : true,
-    contentBase       : cwd('public'),
-    port              : 8082
-};
+const {parseEntry} = require('@mrbuilder/utils');
 
 module.exports = function (opts, webpack) {
     const {socketTimeout, entry, rewrite, useBuildCache} = opts;
@@ -17,7 +10,8 @@ module.exports = function (opts, webpack) {
     delete opts.rewrite;
     delete opts.useBuildCache;
 
-    const devServer = Object.assign({}, webpack.devServer, DEV_SERVER, opts);
+
+    const devServer = Object.assign({}, webpack.devServer, opts);
     if (entry) {
         webpack.entry = parseEntry(entry);
     }
@@ -37,7 +31,7 @@ module.exports = function (opts, webpack) {
 
     //yeah, prolly should do this, but more is better?
     if (socketTimeout) {
-        const {before}           = webpack.devServer;
+        const {before} = webpack.devServer;
         webpack.devServer.before = (app) => {
             before && before(app);
             app.use((req, res, next) => {
@@ -49,8 +43,8 @@ module.exports = function (opts, webpack) {
     //rewrite urls a little different than proxy.
 
     if (rewrite) {
-        const {before}           = webpack.devServer;
-        const debug              = this.debug || console.log;
+        const {before} = webpack.devServer;
+        const debug = this.debug || console.log;
         webpack.devServer.before = (app) => {
             before && before.call(this, app);
             const addPath = ([key, val]) => {
@@ -80,12 +74,12 @@ module.exports = function (opts, webpack) {
         }
     }
     if (useBuildCache) {
-        webpack.optimization          = {
+        webpack.optimization = {
             removeAvailableModules: false,
-            removeEmptyChunks     : false,
-            splitChunks           : false,
+            removeEmptyChunks: false,
+            splitChunks: false,
         };
-        webpack.output.pathinfo       = false;
+        webpack.output.pathinfo = false;
         const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
         webpack.plugins.push(new HardSourceWebpackPlugin);
 

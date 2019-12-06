@@ -71,7 +71,6 @@ module.exports = function reactPlugin({compatMode,}, webpack, om) {
     if (om.enabled('@mrbuilder/plugin-html')) {
         const {findEntry} = require('@mrbuilder/plugin-html');
         const entry = webpack.entry = findEntry(om);
-        logger.info('pages', pages);
         const {generateHot, generate} = require('./loader');
         const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
@@ -84,8 +83,7 @@ module.exports = function reactPlugin({compatMode,}, webpack, om) {
 
                 logger.info('expecting a react component to be exported from ', name);
                 const val = webpack.entry[name];
-                const current = Array.isArray(val) ? val[val.length - 1]
-                    : val;
+                const current = Array.isArray(val) ? val[val.length - 1] : val;
                 const currentAlias = `@mrbuilder/plugin-react-${name}`;
 
                 webpack.resolve.alias[currentAlias] = current;
@@ -112,6 +110,8 @@ module.exports = function reactPlugin({compatMode,}, webpack, om) {
 
             } else {
                 webpack.entry[name] = preEntry.concat(webpack.entry[name]);
+                //don't show warning if the setting is set.
+                showedWarning = showedWarning || exported === false || page.exported === false;
                 if (!showedWarning) {
                     showedWarning = true;
                     logger.info(

@@ -99,7 +99,9 @@ profile.split(':').forEach(p => {
         case 'build':
         case 'production':
         case 'prepublish':
-        case 'prepublishOnly':case 'prepare':
+        case 'prepublishOnly':
+        case 'webpack':
+        case 'prepare':
             if (isApp) {
                 envArray.push('app');
             } else {
@@ -118,6 +120,7 @@ profile.split(':').forEach(p => {
         }
         case 'tsc':
             p = 'typescript';
+        //fallthrough
         case 'analyze':
         case 'typescript':
         case 'babel-6':
@@ -136,6 +139,15 @@ profile.split(':').forEach(p => {
 
 env.MRBUILDER_ENV = [...new Set(envArray)].join(':');
 const om = require('@mrbuilder/cli').default;
-const script = om.config('@mrbuilder/cli.bin') || '@mrbuilder/plugin-webpack/bin/cli';
+const script = om.config('@mrbuilder/cli.bin');
+
 om.info(`running '${script}' MRBUILDER_ENV: '${env.MRBUILDER_ENV}' ${profile}`);
-require(script);
+om.debug(`configuration: \n` + JSON.stringify(Array.from(om.plugins.entries()).map(([name, value]) => ([name, typeof value === 'boolean' ? value : value.config])), null, 2));
+
+if (script) {
+    require(script);
+} else {
+    throw `
+    Uh,oh  no '@mrbuilder/cli' did not have a configuration for 'bin' for the current MRBUILDER_ENV '${env.MRBUILDER_ENV}'   
+    `
+}

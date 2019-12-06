@@ -70,8 +70,7 @@
         "@mrbuilder/plugin-karma"
       ],
       "presets": [
-        "@mrbuilder/preset-test",
-        "@mrbuilder/preset-app"
+        "@mrbuilder/preset-test"
       ]
     },
     "mocha": {
@@ -81,6 +80,22 @@
       "plugins": [
         "@mrbuilder/plugin-mocha",
         "@mrbuilder/plugin-enzyme"
+      ]
+    },
+    "webpack-dev-server": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-webpack-dev-server"
+      ]
+    },
+    "webpack": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-webpack"
       ]
     },
     "app": {
@@ -132,6 +147,17 @@
       },
       "plugins": [
         "@mrbuilder/plugin-prettier"
+      ]
+    },
+    "open": {
+      "plugins": [
+        [
+          "@mrbuilder/plugin-webpack-dev-server",
+          {
+            "open": true,
+            "port": 0
+          }
+        ]
       ]
     },
     "styleguide": {

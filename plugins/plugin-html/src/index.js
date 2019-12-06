@@ -62,7 +62,7 @@ module.exports = function ({
         publicPath = 'public';
     }
 
-    const entry = webpack.entry = findEntry(om);
+    const entry = webpack.entry = webpack.entry || findEntry(om);
 
     const keys = pages ? Object.keys(pages) : Object.keys(entry);
 

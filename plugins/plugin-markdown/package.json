@@ -3,9 +3,9 @@
   "description": "Provides markdown to react components",
   "version": "4.0.0-alpha.2",
   "scripts": {
-    "test": "mrbuilder-karma",
-    "karma": "mrbuilder-karma",
-    "start": "MRBUILDER_ENV=development node $NODE_DEBUG_OPTION  ./node_modules/.bin/mrbuilder-webpack-dev-server"
+    "test": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma",
+    "karma": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma --@mrbuilder/plugin-mocha.filePattern=*-mocha.js",
+    "start": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder"
   },
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.0.0-alpha.2",
@@ -23,9 +23,25 @@
   "source": "src",
   "main": "src",
   "mrbuilder": {
-    "plugins": [
-      "@mrbuilder/plugin-markdown"
-    ]
+    "plugin": "./src/index",
+    "options": {
+      "test": "/\\.mdx?$/",
+      "extensions": {
+        "sh": "shell",
+        "js": "javascript",
+        "es6": "javascript",
+        "jsx": "javascript",
+        "css": "stylesheets",
+        "less": "less",
+        "styl": "stylus"
+      },
+      "highlighter": "hljs",
+      "theme": "atom-one-light",
+      "html": true,
+      "markdownPlugins": [
+        "markdown-it-checkbox"
+      ]
+    }
   },
   "license": "0BSD",
   "gitHead": "771c5d4ad70156a7c7e8730c68369ed872e2cfec",

@@ -39,11 +39,11 @@ module.exports = function (config) {
         },
     });
     //otherwise bad things happen, some kind file not found exception.
-    webpack.entry = null;
 
     webpack.devtool = mrb('devtool', 'inline-source-map');
     const testIndex = mrb('testIndex', path.resolve(__dirname, 'test-index.js'));
     const files = mrb('files', [testIndex]);
+    webpack.entry = testIndex;
 
     logger.info('files:' + files + ' browsers:' + browsers);
 
@@ -150,5 +150,5 @@ module.exports = function (config) {
     if (fs.existsSync(mrb('karmaConf', cwd('karma.conf.js')))) {
         require(cwd('karma.conf.js')(config));
     }
-    logger.debug('karma configuration', stringify(config));
+    logger.debug('karma configuration', stringify(config), 'karma configuration end');
 };
