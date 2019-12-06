@@ -9,6 +9,8 @@
   "bin": {
     "mrbuilder-prettier": "./bin/cli.js"
   },
-  "private": false,
-  "gitHead": "93276b36ad711e2ba5e41427bba92caaad192de6"
+  "gitHead": "ce34e8410ade5caa3374986d9298fcb97c197295",
+  "publishConfig": {
+    "access": "public"
+  }
 }
