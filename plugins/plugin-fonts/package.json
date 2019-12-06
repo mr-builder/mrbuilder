@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-fonts",
-  "version": "4.0.0-alpha.4",
+  "version": "4.0.0-alpha.9",
   "description": "Loadin fonts types via webpack",
   "scripts": {
     "test": "mrbuilder-mocha"
@@ -10,7 +10,7 @@
     "url-loader": "^2.2.0"
   },
   "devDependencies": {
-    "@mrbuilder/plugin-mocha": "^4.0.0-alpha.4"
+    "@mrbuilder/plugin-mocha": "^4.0.0-alpha.9"
   },
   "source": "src",
   "main": "src",

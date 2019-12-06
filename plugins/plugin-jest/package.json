@@ -1,12 +1,12 @@
 {
   "name": "@mrbuilder/plugin-jest",
-  "version": "4.0.0-alpha.4",
+  "version": "4.0.0-alpha.9",
   "bin": {
     "mrbuilder-jest-cli": "./bin/cli.js"
   },
   "description": "Provides mrbuilder wrapper for jest",
   "dependencies": {
-    "@mrbuilder/optionsmanager": "^4.0.0-alpha.4",
+    "@mrbuilder/optionsmanager": "^4.0.0-alpha.9",
     "@types/jest": "^24.0.23",
     "@types/react-test-renderer": "^16.9.1",
     "babel-jest": "^24.9.0",
