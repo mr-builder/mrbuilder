@@ -5,6 +5,7 @@
   "dependencies": {
     "prettier": "^1.19.1"
   },
+  "license": "BSD0",
   "bin": {
     "mrbuilder-prettier": "./bin/cli.js"
   }
