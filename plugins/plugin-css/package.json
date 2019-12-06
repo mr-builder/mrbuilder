@@ -30,7 +30,7 @@
   },
   "mrbuilder": {
     "options": {
-      "css": true,
+      "css": "/\\.css$/",
       "publicPath": "/public"
     }
   }

@@ -27,7 +27,14 @@
     "plugins": [
       "@mrbuilder/plugin-webpack",
       "@mrbuilder/plugin-html"
-    ]
+    ],
+    "options": {
+      "historyApiFallback": true,
+      "inline": true,
+      "contentBase": "public",
+      "port": 8082,
+      "filename": "index.js"
+    }
   },
   "license": "0BSD",
   "peerDependencies": {

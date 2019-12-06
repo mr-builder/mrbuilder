@@ -2,7 +2,7 @@
   "name": "@mrbuilder/plugin-jest",
   "version": "4.0.0-alpha.1",
   "bin": {
-    "mrbuilder-jest": "./bin/cli.js"
+    "mrbuilder-jest-cli": "./bin/cli.js"
   },
   "description": "Provides mrbuilder wrapper for jest",
   "dependencies": {
@@ -18,6 +18,7 @@
   "main": "src",
   "mrbuilder": {
     "plugins": [
+      "@mrbuilder/plugin-babel-7",
       [
         "@mrbuilder/plugin-karma",
         false

@@ -1,6 +1,7 @@
-const HtmlWebpackPlugin                  = require('html-webpack-plugin');
-const path                               = require('path');
-const {parseEntry, cwd, enhancedResolve} = require('@mrbuilder/utils');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const {enhancedResolve} = require('@mrbuilder/utils');
+const findEntry = require('./findEntry');
 /**
  *   title     : (deps.description ? deps.description : deps.name),
  hash      : opts.useNameHash,
@@ -11,7 +12,7 @@ const {parseEntry, cwd, enhancedResolve} = require('@mrbuilder/utils');
  * @param config
  * @param webpack
  */
-const ogenerateAssetTags                 = HtmlWebpackPlugin.prototype.generateAssetTags;
+const ogenerateAssetTags = HtmlWebpackPlugin.prototype.generateAssetTags;
 
 function charset(ele) {
     if (!ele.attributes) {
@@ -35,20 +36,19 @@ module.exports = function ({
                                pages,
                                title,
 
-                               entry,
-                               publicPath = path.join(process.cwd(), 'public'),
+                               publicPath,
                                template,
-                               filename = '[name].html',
-                               elementId = 'content',
-                               exported = true,
+                               filename,
+                               elementId,
+                               exported,
                                analytics,
-                               inlineManifest = true,
+                               inlineManifests,
                                hot,
-                               indexSeach
+                               indexSearch,
                            },
                            webpack, om) {
-    const info = this.info || console.log;
-    const pkg  = require(path.join(process.cwd(), 'package.json'));
+    const logger = om.logger('@mrbuilder/plugin-html');
+    const pkg = require(om.cwd('package.json'));
 
     if (!title) {
         title = `${pkg.name}: ${pkg.description || ''}`
@@ -59,46 +59,14 @@ module.exports = function ({
     }
 
     if (!publicPath) {
-        publicPath = path.resolve(__dirname, '..', 'public');
+        publicPath = 'public';
     }
-    entry = entry ? parseEntry(entry) : webpack.entry;
 
-    if (!entry) {
-        indexSeach = indexSeach || [publicPath, pkg.source || 'src', pkg.main || 'lib'];
-        if (!indexSeach.find(v => {
-            if (!v) {
-                return false;
-            }
-            try {
-                const index = require.resolve(cwd(v));
-                entry       = webpack.entry = {index};
-                this.info(`no entry using "${index}"`);
-                return true;
-            } catch (e) {
-                (this.debug || console.warn)(`looking for ${v}`, e);
-            }
-        })) {
-            throw new Error(
-                `Sorry but we could not find an entry in '${indexSeach}'
-                
-                 Possible solutions:
-                 1) create a file at 
-                 '${path.join(publicPath || (pkg.source || 'src') || (pkg.main || 'main'), 'index.js')}'
-                 
-                 2) define an entry in package.json
-                 "mrbuilder":{
-                  "plugins":[ "@mrbuilder/plugin-webpack", { "index":"./path/to/index"}]
-                 }
-                 3) pass an entry argument to mrbuilder
-                    $ mrbuilder --entry index=./path/to/index.
-                
-                `)
-        }
-    }
+    const entry = webpack.entry = webpack.entry || findEntry(om);
 
     const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
-    info('creating pages', keys, pages);
+    logger.info('creating pages', keys, pages || '', 'entry', JSON.stringify(entry, null, 2));
 
 
     keys.forEach(name => {
@@ -112,7 +80,7 @@ module.exports = function ({
             if (manifest) {
                 chunks.unshift(manifest);
             }
-            info('using chunks', chunks);
+            logger.info('using chunks', chunks);
         }
 
 
@@ -131,3 +99,4 @@ module.exports = function ({
 
     return webpack;
 };
+module.exports.findEntry = findEntry;

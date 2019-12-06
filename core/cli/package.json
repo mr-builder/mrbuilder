@@ -6,17 +6,24 @@
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.1",
     "in-publish": "^2.0.0"
   },
+  "main": "lib",
+  "scripts": {
+    "prepare": "tsc"
+  },
   "bin": {
     "mrbuilder": "./bin/mrbuilder.js",
+    "mrbuilder-analyze": "./bin/mrbuilder.js",
     "mrbuilder-babel": "./bin/mrbuilder.js",
     "mrbuilder-clean": "./bin/mrbuilder.js",
+    "mrbuilder-dashboard": "./bin/mrbuilder.js",
+    "mrbuilder-demo": "./bin/mrbuilder.js",
+    "mrbuilder-jest": "./bin/mrbuilder.js",
     "mrbuilder-karma": "./bin/mrbuilder.js",
     "mrbuilder-mocha": "./bin/mrbuilder.js",
+    "mrbuilder-prettier": "./bin/mrbuilder.js",
+    "mrbuilder-tsc": "./bin/mrbuilder.js",
     "mrbuilder-webpack": "./bin/mrbuilder.js",
-    "mrbuilder-demo": "./bin/mrbuilder.js",
-    "mrbuilder-analyze": "./bin/mrbuilder.js",
-    "mrbuilder-webpack-dev-server": "./bin/mrbuilder.js",
-    "mrbuilder-dashboard": "./bin/mrbuilder.js"
+    "mrbuilder-webpack-dev-server": "./bin/mrbuilder.js"
   },
   "license": "0BSD",
   "engines": {

@@ -17,7 +17,10 @@ exports[`Should render lib 1`] = `
   >
     Hello
   </span>
-   from webpack example.
+   from webpack example. 
+  <img
+    src="smile.png"
+  />
 </div>
 `;
 

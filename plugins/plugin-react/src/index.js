@@ -1,17 +1,15 @@
-const path                 = require('path');
+const path = require('path');
 const {cwd, resolvePkgDir} = require('@mrbuilder/utils');
-const useBabel             = require('@mrbuilder/plugin-babel/use-babel.js');
-let showedWarning          = false;
-module.exports             = function reactPlugin({
-                                                      compatMode = false,
-                                                  }, webpack,
-                                                  om) {
+const useBabel = require('@mrbuilder/plugin-babel/use-babel.js');
+let showedWarning = false;
 
-    const pages     = om.config('@mrbuilder/plugin-html.pages');
-    const exported  = om.config('@mrbuilder/plugin-html.exported', true);
+module.exports = function reactPlugin({compatMode,}, webpack, om) {
+
+    const pages = om.config('@mrbuilder/plugin-html.pages');
+    const exported = om.config('@mrbuilder/plugin-html.exported', true);
     const elementId = om.config('@mrbuilder/plugin-html.elementId', 'content');
-    const isHot     = om.enabled('@mrbuilder/plugin-hot');
-
+    const isHot = om.enabled('@mrbuilder/plugin-hot');
+    const logger = om.logger('@mrbuilder/plugin-react');
     if (!webpack.resolve) {
         webpack.resolve = {};
     }
@@ -21,7 +19,7 @@ module.exports             = function reactPlugin({
     const reactDir = resolvePkgDir('react');
     if (compatMode) {
         if (this.isLibrary) {
-            (this.warn || console.warn)(
+            logger.warn(
                 'compatMode should not be used for libraries results will be unpredictable')
         }
         if (!webpack.resolve.alias['react-internal']) {
@@ -67,48 +65,25 @@ module.exports             = function reactPlugin({
             webpack.resolve.alias['react-hot-loader'] = resolvePkgDir('react-hot-loader');
         }
     }
-    let entry = webpack.entry;
 
     const preEntry = isHot ? om.config('@mrbuilder/plugin-hot.preEntry', []) : [];
 
     if (om.enabled('@mrbuilder/plugin-html')) {
-
-        const pkg = require(cwd('package.json'));
-
-        const publicPath = om.config('@mrbuilder/plugin-html.publicPath', cwd('public'));
-
-        if (!entry) {
-
-            entry = webpack.entry = {index: path.join(publicPath, 'index')};
-            try {
-                require.resolve(entry.index);
-            } catch (e) {
-
-                const index = require.resolve(
-                    cwd(pkg.source || pkg.main || './src'));
-                this.info(`no entry using "${index}"`);
-                entry = webpack.entry = {index};
-            }
-        }
-
-        this.info('pages', pages);
-
+        const {findEntry} = require('@mrbuilder/plugin-html');
+        const entry = webpack.entry = findEntry(om);
         const {generateHot, generate} = require('./loader');
-
         const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
         keys.forEach(name => {
             const page = pages && pages[name] || {};
-            const hot  = ('hot' in page) ? page.hot : isHot;
+            const hot = ('hot' in page) ? page.hot : isHot;
 
 
             if (('exported' in page) ? page.exported : exported) {
 
-                this.info('expecting a react component to be exported from ',
-                    name);
-                const val          = webpack.entry[name];
-                const current      = Array.isArray(val) ? val[val.length - 1]
-                    : val;
+                logger.info('expecting a react component to be exported from ', name);
+                const val = webpack.entry[name];
+                const current = Array.isArray(val) ? val[val.length - 1] : val;
                 const currentAlias = `@mrbuilder/plugin-react-${name}`;
 
                 webpack.resolve.alias[currentAlias] = current;
@@ -121,10 +96,10 @@ module.exports             = function reactPlugin({
                             ...preEntry,
                             `babel-loader?${JSON.stringify(useBabel(om).options)}!@mrbuilder/plugin-react/src/loader?${JSON.stringify(
                                 {
-                                    name     : currentAlias,
+                                    name: currentAlias,
                                     hot,
                                     elementId: page.elementId || elementId,
-                                    exported : page.exported || exported
+                                    exported: page.exported || exported
 
                                 })}!${current}?exported`
                         ]
@@ -135,9 +110,11 @@ module.exports             = function reactPlugin({
 
             } else {
                 webpack.entry[name] = preEntry.concat(webpack.entry[name]);
+                //don't show warning if the setting is set.
+                showedWarning = showedWarning || exported === false || page.exported === false;
                 if (!showedWarning) {
                     showedWarning = true;
-                    this.info(
+                    logger.info(
                         `not using exported components, you may need to setup hot and dom mounting manually for ${name}
                      Something like  to your entry point:
                     \`\`\` 

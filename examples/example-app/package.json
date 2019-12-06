@@ -17,9 +17,10 @@
 
   },
   "scripts": {
-    "prepublish": "mrbuilder",
+    "prepare": "mrbuilder",
     "start": "mrbuilder",
-    "test": "mrbuilder",
+    "start:open": "mrbuilder",
+    "test": "mrbuilder-karma",
     "karma": "mrbuilder",
     "analyze": "mrbuilder"
   },

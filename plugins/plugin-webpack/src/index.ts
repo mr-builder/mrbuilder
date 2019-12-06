@@ -1,7 +1,8 @@
 import {OptionsManager} from "@mrbuilder/optionsmanager";
 import {OutputOptions, WebpackOptions} from "webpack/declarations/WebpackOptions";
 import {MrBuilderWebpackPluginOptions, StringObject} from './types';
-export { default as processAlias } from './processAlias';
+
+export {default as processAlias} from './processAlias';
 import {
     camelCased, cwd, stringify,
     enhancedResolve, regexOrFuncApply
@@ -48,12 +49,13 @@ const mod = function ({
                       }: MrBuilderWebpackPluginOptions, webpack: WebpackOptions, om: OptionsManager) {
 
     webpack.mode = returnMode(mode);
-    (this.info || console.log)('webpack mode ', webpack.mode);
+    const logger = om.logger('@mrbuilder/plugin-webpack');
+    logger.info('webpack mode ', webpack.mode);
     //ugh - just do it.
     delete rest.public;
     //If its not in
     if (Object.keys(rest).length > 0) {
-        (this.info || console.log)(`Using a not explicitly supported webpack feature, 
+        logger.info(`Using a not explicitly supported webpack feature, 
         this will make your configuration bound to whatever version of webpack you are using. 
         mrbuilder will not be able to manage the version differences for you.
         
@@ -82,7 +84,6 @@ const mod = function ({
 
 
     }
-    const info = this.info || console.log;
 
     const pkgPath = cwd('package.json');
     const pkg = require(pkgPath);
@@ -107,7 +108,7 @@ const mod = function ({
         //Don't hash when its a library
         output.filename = filename.replace('[hash].', '');
 
-        info(`building as library with name "${output.library}"`)
+        logger.info(`building as library with name "${output.library}"`)
 
     } else if (this.isDevServer) {
         //Don't hash when its running in devServer
@@ -147,7 +148,7 @@ const mod = function ({
             }, {})));
         }
 
-        info('packaging as externalize', webpack.externals);
+        logger.info('packaging as externalize', webpack.externals);
     }
 
     if (mainFields) {
@@ -157,11 +158,11 @@ const mod = function ({
             : DEFAULT_MAIN_FIELDS;
 
         webpack.resolve.mainFields = mainFields;
-        info(`using mainFields`, mainFields);
+        logger.info(`using mainFields`, mainFields);
     }
     if (node) {
         webpack.node = Object.assign({}, webpack.node, node);
-        info('using node config', stringify(webpack.node));
+        logger.info('using node config', stringify(webpack.node));
     }
 
     webpack.devtool = devtool;

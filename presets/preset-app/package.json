@@ -53,7 +53,17 @@
           "@mrbuilder/preset-dev"
         ]
       },
-      "production": {
+      "demo": {
+        "plugins": [
+          [
+            "@mrbuilder/plugin-webpack",
+            {
+              "app": "./demo"
+            }
+          ]
+        ]
+      },
+      "app": {
         "plugins": [
           [
             "@mrbuilder/plugin-hot",
@@ -69,10 +79,6 @@
             "@mrbuilder/plugin-webpack",
             {
               "app": "app",
-              "entry": [
-                "src/index",
-                "examples/src/index"
-              ],
               "filename": "js/[name].[hash].js",
               "externalizePeers": false,
               "useExternals": false

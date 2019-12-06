@@ -1,5 +1,5 @@
 const path = require('path');
-const optionsManager = global._MRBUILDER_OPTIONS_MANAGER;
+const optionsManager = require('@mrbuilder/cli').default;
 const {stringify, pkg, cwd, parseEntry} = require('@mrbuilder/utils');
 const {
     DefinePlugin,
@@ -7,7 +7,7 @@ const {
         ModuleConcatenationPlugin
     }
 } = require('webpack');
-const scope = require('@mrbuilder/cli/src/info');
+const scope = require('@mrbuilder/cli').info;
 const {
     warn = console.warn,
     debug = console.warn,
@@ -35,7 +35,7 @@ if (publicPath instanceof RegExp) {
     publicPath = '' + publicPath;
 }
 const opts = {
-    ...require('@mrbuilder/cli/src/info'),
+    ...require('@mrbuilder/cli').info,
     publicPath,
     outputPath: optionsManager.config('@mrbuilder/plugin-webpack.outputPath', cwd('lib')),
     outputFilename: optionsManager.config('@mrbuilder/plugin-webpack.outputFilename', '[name].js'),
@@ -99,11 +99,11 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
                     try {
                         return plugin.call(scope, option.config || {}, _webpack, optionsManager)
                     } catch (e) {
-                        console.error(`Error in '${option.name}'`, e);
+                        warn(`Error in '${option.name}'`, e);
                         throw e;
                     }
                 }).then(tmpWebpack => {
-                    option.info(option.name, 'loaded.');
+                    info(option.name, 'loaded.');
                     if (tmpWebpack) {
                         return tmpWebpack
                     }
@@ -111,12 +111,12 @@ const resolveWebpack = (__webpack) => new Promise((res, rej) => {
                 });
 
             } else if (plugin) {
-                option.info('not loaded');
+                info('not loaded');
                 //TODO - better merge.
                 //  webpack = Object.assign({}, webpack, option.plugin);
             }
         } else {
-            option.info('disabled loading webpack plugin', key);
+            info('disabled loading webpack plugin', key);
         }
     });
     return p.then(w => {

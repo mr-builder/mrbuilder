@@ -1,13 +1,9 @@
 #!/usr/bin/env node
-const tmp     = require('tmp');
-const fs      = require('fs');
+const tmp = require('tmp');
+const fs = require('fs');
 
-let om = global._MRBUILDER_OPTIONS_MANAGER;
-if (!om) {
-    process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-babel,@mrbuilder/plugin-babel-7`;
-
-    om = global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager').default)
-}
+process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-babel-7`;
+const om = require('@mrbuilder/cli').default;
 
 const {argv} = process;
 

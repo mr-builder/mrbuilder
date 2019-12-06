@@ -1,0 +1,16 @@
+{
+  "name": "with-default-env-options",
+  "version": "1",
+  "tester": {
+    "plugins": [
+      "with-option-env-1",
+      [
+        "with-option-env-2",
+        {
+          "merged": 1,
+          "opt2": 3
+        }
+      ]
+    ]
+  }
+}

@@ -11,9 +11,13 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "lib": [
       "dom",
       "es2018"
     ]
-  }
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

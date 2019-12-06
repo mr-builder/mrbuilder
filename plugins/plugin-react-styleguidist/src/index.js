@@ -57,7 +57,7 @@ module.exports = function (options = {}, webpack, om) {
         const makeComponent = (name = '**/*.{js,jsx,ts,tsx}') => {
 
 
-            const key = join(relative(cwd(), join(_pkg._location, 'src')), name);
+            const key = join(relative(cwd(), join(_pkg._location, om.config('@mrbuilder/cli.sourceDir', 'src'))), name);
 
             return {components: `${key}.{js,jsx,ts,tsx}`};
         };

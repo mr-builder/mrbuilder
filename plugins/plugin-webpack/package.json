@@ -13,6 +13,7 @@
   "types": "src",
   "source": "src",
   "dependencies": {
+    "@mrbuilder/cli": "^4.0.0-alpha.1",
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.1",
     "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.2",
     "@mrbuilder/utils": "^4.0.0-alpha.1",

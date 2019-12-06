@@ -1,86 +1,179 @@
 {
-  "plugins": [
-    "@mrbuilder/plugin-babel"
-  ],
+  "options": {
+    "sourceDir": "src",
+    "outputDir": "lib",
+    "testDir": "test"
+  },
   "env": {
+    "clean": {
+      "options": {
+        "bin": "@mrbuilder/plugin-clean/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-clean"
+      ]
+    },
+    "babel": {
+      "options": {
+        "bin": "@mrbuilder/plugin-babel/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-babel"
+      ]
+    },
+    "babel-6": {
+      "options": {
+        "bin": "@mrbuilder/plugin-babel-6/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-babel-6"
+      ]
+    },
+    "babel-7": {
+      "options": {
+        "bin": "@mrbuilder/plugin-babel/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-babel-7"
+      ]
+    },
+    "typescript": {
+      "options": {
+        "bin": "@mrbuilder/plugin-typescript/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-typescript"
+      ]
+    },
+    "tsc": {
+      "options": {
+        "bin": "@mrbuilder/plugin-typescript/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-typescript"
+      ]
+    },
     "test": {
+      "options": {
+        "bin": "@mrbuilder/plugin-mocha/bin/cli"
+      },
       "presets": [
         "@mrbuilder/preset-test",
-        "@mrbuilder/preset-app"
+        "@mrbuilder/preset-lib"
+      ]
+    },
+    "jest": {
+      "options": {
+        "bin": "@mrbuilder/plugin-jest/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-jest"
       ]
     },
     "karma": {
+      "options": {
+        "bin": "@mrbuilder/plugin-karma/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-karma"
+      ],
       "presets": [
-        "@mrbuilder/preset-test",
-        "@mrbuilder/preset-app"
-      ]
-    },
-    "app": {
-      "presets": [
-        "@mrbuilder/preset-app"
+        "@mrbuilder/preset-test"
       ]
     },
     "mocha": {
+      "options": {
+        "bin": "@mrbuilder/plugin-mocha/bin/cli"
+      },
       "plugins": [
         "@mrbuilder/plugin-mocha",
         "@mrbuilder/plugin-enzyme"
       ]
     },
-    "babel": {
+    "webpack-dev-server": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli"
+      },
       "plugins": [
-        "@mrbuilder/plugin-babel"
+        "@mrbuilder/plugin-webpack-dev-server"
+      ]
+    },
+    "webpack": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-webpack"
+      ]
+    },
+    "app": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+      },
+      "presets": [
+        "@mrbuilder/preset-app"
       ]
     },
     "demo": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+      },
       "presets": [
-        [
-          "@mrbuilder/preset-app",
-          {
-            "demo": "demo"
-          }
-        ]
+        "@mrbuilder/preset-app"
       ]
     },
     "lib": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+      },
       "presets": [
         "@mrbuilder/preset-lib"
       ]
     },
     "analyze": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+      },
       "plugins": [
         "@mrbuilder/plugin-analyze"
       ]
     },
     "start": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli"
+      },
       "plugins": [
         "@mrbuilder/plugin-webpack-dev-server"
       ],
       "presets": [
-        "@mrbuilder/preset-dev"
-      ]
-    },
-    "development": {
-      "presets": [
         "@mrbuilder/preset-app"
       ]
     },
-    "styleguide": {
+    "prettier": {
+      "options": {
+        "bin": "@mrbuilder/plugin-prettier/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-prettier"
+      ]
+    },
+    "open": {
       "plugins": [
         [
-          "@mrbuilder/plugin-html",
-          false
-        ],
-        "@mrbuilder/plugin-doc-prop-types",
-        [
-          "@mrbuilder/plugin-webpack",
+          "@mrbuilder/plugin-webpack-dev-server",
           {
-            "demo": "./styleguide"
+            "open": true,
+            "port": 0
           }
-        ],
-        [
-          "@mrbuilder/plugin-react-styleguidist",
-          null
         ]
+      ]
+    },
+    "styleguide": {
+      "options": {
+        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-react-styleguidist"
       ]
     }
   }

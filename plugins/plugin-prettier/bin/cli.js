@@ -1,13 +1,7 @@
 #!/usr/bin/env node
-process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-let om;
-if (!global._MRBUILDER_OPTIONS_MANAGER) {
-    process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-prettier`;
-    om = global._MRBUILDER_OPTIONS_MANAGER = new (require('@mrbuilder/optionsmanager').default)({
-        prefix: 'mrbuilder',
-        _require: require
-    });
-}
+process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-prettier`;
+
+const om = require('@mrbuilder/cli').default;
 const fs = require('fs');
 
 const exists = (...files) => {

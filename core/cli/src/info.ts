@@ -1,22 +1,22 @@
-const om = global._MRBUILDER_OPTIONS_MANAGER;
+import om from './instance';
+
 const {
     env: {
-        MRBUILDER_DEBUG,
         NODE_ENV
     }
 } = process;
 
-const mode = om.config('@mrbuilder/plugin-webpack.mode');
+export const mode = om.config('@mrbuilder/plugin-webpack.mode');
 
 
-const isKarma = om.enabled('@mrbuilder/plugin-karma'),
+export const isKarma = om.enabled('@mrbuilder/plugin-karma'),
     isDevServer = om.enabled('@mrbuilder/plugin-webpack-dev-server'),
     isApp = !!om.config('@mrbuilder/plugin-webpack.app'),
     isDemo = !!om.config('@mrbuilder/plugin-webpack.demo'),
     isHtml = om.enabled('@mrbuilder/plugin-html'),
     isHot = om.enabled('@mrbuilder/plugin-hot'),
     isTypescript = om.enabled('@mrbuilder/plugin-typescript'),
-    isDebug = MRBUILDER_DEBUG != null,
+    isDebug = om.env('DEBUG', false),
     isProduction = mode == null ? NODE_ENV === 'production' : mode
         === 'production',
 
@@ -29,7 +29,7 @@ const isKarma = om.enabled('@mrbuilder/plugin-karma'),
      */
 
     isLibrary = !(isKarma || isDevServer || isApp || isDemo);
-module.exports = {
+export default ({
     isKarma,
     isDebug,
     isProduction,
@@ -39,5 +39,5 @@ module.exports = {
     isHtml,
     isHot,
     isLibrary
-};
+});
 

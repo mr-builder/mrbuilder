@@ -1,14 +1,11 @@
-const cssLoader = require('@mrbuilder/plugin-css/src/cssLoader');
-module.exports  = function ({
-                                test = /\.less$/,
-                                options = {
-                                    strictMath: true,
-                                    noIeCompat: true
-                                },
-                                modules = true,
-                            }, webpack, om) {
+const {cssLoader} = require('@mrbuilder/plugin-css');
+module.exports = function ({
+                               test,
+                               options,
+                               modules,
+                           }, webpack, om) {
 
-    cssLoader(webpack, /\.less$/, true, om, {
+    cssLoader(webpack, /\.less$/, modules, om, {
         loader: 'less-loader',
         options
     });
