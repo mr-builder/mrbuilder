@@ -45,6 +45,14 @@
         "@mrbuilder/plugin-typescript"
       ]
     },
+    "tsc": {
+      "options": {
+        "bin": "@mrbuilder/plugin-typescript/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-typescript"
+      ]
+    },
     "test": {
       "options": {
         "bin": "@mrbuilder/plugin-mocha/bin/cli"

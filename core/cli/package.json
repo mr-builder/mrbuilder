@@ -21,6 +21,7 @@
     "mrbuilder-karma": "./bin/mrbuilder.js",
     "mrbuilder-mocha": "./bin/mrbuilder.js",
     "mrbuilder-prettier": "./bin/mrbuilder.js",
+    "mrbuilder-tsc": "./bin/mrbuilder.js",
     "mrbuilder-webpack": "./bin/mrbuilder.js",
     "mrbuilder-webpack-dev-server": "./bin/mrbuilder.js"
   },

@@ -10,11 +10,14 @@ module.exports = (optionsManager) => {
     const configFile = optionsManager.config('@mrbuilder/plugin-typescript.configFile', enhancedResolve('@mrbuilder/plugin-typescript/tsconfig.mrbuilder.json'));
     const tsConfig = optionsManager.config('@mrbuilder/plugin-typescript.tsconfig') || optionsManager.require(configFile);
     if (!tsConfig.include) {
-        tsConfig.include = [
+        const include = [
             optionsManager.config('@mrbuilder/cli.sourceDir', './src'),
             optionsManager.config('@mrbuilder/cli.testDir', './test'),
             optionsManager.config('@mrbuilder/cli.publicDir', './public'),
-        ];
+        ].filter(Boolean);
+        if (include.length){
+            tsConfig.include = include;
+        }
     }
     const tsPath = optionsManager.cwd('tsconfig.json');
 
