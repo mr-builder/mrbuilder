@@ -77,6 +77,8 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "@storybook/addon-docs": "^5.2.8"
+    "@storybook/addon-docs": "^5.2.8",
+    "@storybook/addon-knobs": "^5.2.8",
+    "@storybook/addon-options": "^5.2.8"
   }
 }

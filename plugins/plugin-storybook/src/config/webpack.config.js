@@ -22,5 +22,25 @@ module.exports = async ({config}) => {
             webpack.module.rules.splice(idx, 1);
         }
     }
+
+    webpack.module.rules.unshift({
+        test: require.resolve('../parameters.js'),
+        use: [{
+            loader: 'val-loader',
+            options: om.config('@mrbuilder/plugin-storybook.parameters', {})
+        }]
+    });
+    //
+    // const addons = om.config('@mrbuilder/plugin-storybook.addons', []);
+    // webpack.module.rules.unshift({
+    //     test: require.resolve('./addons.js'),
+    //     use: [
+    //         {
+    //             loader: 'val-loader',
+    //             options: {addons}
+    //         }
+    //     ]
+    // });
+
     return webpack;
 }
