@@ -27,7 +27,7 @@ export class Hello extends React.Component<HelloProps, HelloState> {
         return (
             <div className="hello">
                 <div className="greeting">
-                    Hello {name + getExclamationMarks(this.state.value)} from
+                    Hello {this.props.name + getExclamationMarks(this.state.value)} from
                     TypeScript
                 </div>
                 <div>

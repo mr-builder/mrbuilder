@@ -48,7 +48,7 @@ const mod = function ({
                           ...rest
                       }: MrBuilderWebpackPluginOptions, webpack: WebpackOptions, om: OptionsManager) {
 
-    webpack.mode = returnMode(mode);
+    webpack.mode = webpack.mode || returnMode(mode);
     const logger = om.logger('@mrbuilder/plugin-webpack');
     logger.info('webpack mode ', webpack.mode);
     //ugh - just do it.

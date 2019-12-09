@@ -140,6 +140,7 @@
     },
     "start": {
       "options": {
+        "isDevServer": true,
         "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli"
       },
       "plugins": [
@@ -174,6 +175,14 @@
       },
       "plugins": [
         "@mrbuilder/plugin-react-styleguidist"
+      ]
+    },
+    "storybook": {
+      "options": {
+        "bin": "@mrbuilder/plugin-storybook/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-storybook"
       ]
     }
   }

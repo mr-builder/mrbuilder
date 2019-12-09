@@ -86,6 +86,14 @@ const isApp = (argv.slice(2).find(v => /--(app|demo)(=.*)?$/.test(v)));
 
 profile.split(':').forEach(p => {
     switch (p) {
+        case 'production':
+        case 'development':{
+            if (!env.NODE_ENV){
+                env.NODE_ENV = p;
+            }
+            envArray.push(p);
+            break;
+        }
         case 'server':
         case 'webpack-dev-server':
         case 'dev-server':
@@ -96,8 +104,12 @@ profile.split(':').forEach(p => {
             envArray.push('start');
             break;
         }
+        case 'lib':
+        case 'app':
+            envArray.push(p);
+            break;
         case 'build':
-        case 'production':
+
         case 'prepublish':
         case 'prepublishOnly':
         case 'webpack':
