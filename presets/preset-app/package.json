@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/preset-app",
-  "version": "4.0.0-alpha.10",
+  "version": "4.0.0-alpha.11",
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.0.0-alpha.10",
     "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.10",
@@ -12,10 +12,10 @@
     "@mrbuilder/plugin-hot": "^4.0.0-alpha.10",
     "@mrbuilder/plugin-html": "^4.0.0-alpha.10",
     "@mrbuilder/plugin-less": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-react": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-react": "^4.0.0-alpha.11",
     "@mrbuilder/plugin-uglify": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-webpack-dev-server": "^4.0.0-alpha.10"
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.11",
+    "@mrbuilder/plugin-webpack-dev-server": "^4.0.0-alpha.11"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

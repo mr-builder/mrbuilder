@@ -1,12 +1,12 @@
 {
   "name": "@mrbuilder/plugin-storybook",
-  "version": "4.0.0-alpha.10",
+  "version": "4.0.0-alpha.11",
   "description": "Provides mrbuilder wrapper for storybook",
   "dependencies": {
-    "@storybook/react": "^5.2.8",
     "@storybook/addon-docs": "^5.2.8",
     "@storybook/addon-knobs": "^5.2.8",
-    "@storybook/addon-options": "^5.2.8"
+    "@storybook/addon-options": "^5.2.8",
+    "@storybook/react": "^5.2.8"
   },
   "source": "src",
   "main": "src",

@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-babel-7",
-  "version": "4.0.0-alpha.10",
+  "version": "4.0.0-alpha.11",
   "description": "Tools for developing babel 7 with mrbuilder",
   "scripts": {
     "clean": "mrbuilder-clean"
