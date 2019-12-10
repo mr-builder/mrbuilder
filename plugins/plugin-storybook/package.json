@@ -1,0 +1,77 @@
+{
+  "name": "@mrbuilder/plugin-storybook",
+  "version": "4.0.0-alpha.10",
+  "description": "Provides mrbuilder wrapper for storybook",
+  "dependencies": {
+    "@storybook/react": "^5.2.8",
+    "@storybook/addon-docs": "^5.2.8",
+    "@storybook/addon-knobs": "^5.2.8",
+    "@storybook/addon-options": "^5.2.8"
+  },
+  "source": "src",
+  "main": "src",
+  "license": "BSD0",
+  "bin": {
+    "mrbuilder-storybook-cli": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "cd ../../examples/example-lib-everything && yarn run storybook"
+  },
+  "mrbuilder": {
+    "options": {
+      "parameters": {
+        "goFullScreen": false,
+        "showLeftPanel": true,
+        "showDownPanel": true,
+        "showSearchBox": false,
+        "downPanelInRight": true,
+        "sortStoriesByKind": true,
+        "hierarchySeparator": null,
+        "sidebarAnimations": true,
+        "selectedAddonPanel": null
+      },
+      "addons": [
+        "@storybook/addon-knobs/register",
+        "@storybook/addon-options/register"
+      ]
+    },
+    "env": {
+      "start": {
+        "options": {
+          "isDevServer": true
+        }
+      }
+    },
+    "plugins": [
+      "@mrbuilder/plugin-react",
+      [
+        "@mrbuilder/plugin-html",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-hot",
+        false
+      ],
+      "@mrbuilder/plugin-babel-7",
+      [
+        "@mrbuilder/plugin-karma",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-hot",
+        false
+      ],
+      [
+        "@mrbuilder/plugin-webpack-dev-server",
+        false
+      ]
+    ],
+    "presets": [
+      "@mrbuilder/preset-app"
+    ]
+  },
+  "gitHead": "8932fa60b6c6f6ed18b45918e7873c8e70b8d0be",
+  "publishConfig": {
+    "access": "public"
+  }
+}

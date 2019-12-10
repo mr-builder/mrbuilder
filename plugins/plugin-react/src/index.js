@@ -1,5 +1,4 @@
-const path = require('path');
-const {cwd, resolvePkgDir} = require('@mrbuilder/utils');
+const {resolvePkgDir} = require('@mrbuilder/utils');
 const useBabel = require('@mrbuilder/plugin-babel/use-babel.js');
 let showedWarning = false;
 

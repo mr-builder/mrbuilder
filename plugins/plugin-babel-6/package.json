@@ -34,6 +34,23 @@
       "coverage": "Run with code coverage, not for production",
       "hot": "Run with hot configuration"
     },
+    "options": {
+      "config": {
+        "presets": [
+          "env",
+          "react",
+          "stage-2"
+        ],
+        "plugins": [
+          "@mrbuilder/plugin-babel/react-class-display-name",
+          "transform-function-bind",
+          "transform-class-properties",
+          "transform-async-to-generator",
+          "transform-export-extensions",
+          "transform-runtime"
+        ]
+      }
+    },
     "plugins": [
       "@mrbuilder/plugin-babel"
     ]

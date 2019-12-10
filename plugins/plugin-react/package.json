@@ -11,7 +11,8 @@
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-hot-loader": "^4.12.17"
+    "react-hot-loader": "^4.12.17",
+    "babel-plugin-add-react-displayname": "^0.0.5"
   },
   "keywords": [
     "react",

@@ -20,7 +20,9 @@
     "prepare": "mrbuilder",
     "start": "mrbuilder",
     "test": "mrbuilder-karma",
-    "karma": "mrbuilder"
+    "karma": "mrbuilder",
+    "storybook": "mrbuilder",
+    "storybook:start": "mrbuilder --@mrbuilder/plugin-storybook.parameters.theme=dark"
   },
   "peerDependencies": {
     "react": "16.x",
@@ -73,5 +75,8 @@
       }
     }
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "dependencies": {
+
+  }
 }
