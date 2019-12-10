@@ -7,40 +7,6 @@ to convert your .babelrc.   If your using mrbuilders defaults it should "just wo
 
 The default babel configuration:
 
-```json
-{
-  "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react"
-  ],
-  "plugins": [
-    "mrbuilder-plugin-babel/react-class-display-name",
-    "@babel/plugin-proposal-function-bind",
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-transform-async-to-generator",
-    [
-      "@babel/plugin-proposal-export-default-from",
-      "@babel/plugin-proposal-export-namespace-from"
-    ],
-    "@babel/plugin-transform-runtime",
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-syntax-import-meta",
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-json-strings",
-    [
-      "@babel/plugin-proposal-decorators",
-      {
-        "legacy": true
-      }
-    ],
-    "@babel/plugin-proposal-function-sent",
-    "@babel/plugin-proposal-export-namespace-from",
-    "@babel/plugin-proposal-numeric-separator",
-    "@babel/plugin-proposal-throw-expressions"
-  ]
-}
-
-```
 
 
 | Property      | Type       | Default      | Description                      |
