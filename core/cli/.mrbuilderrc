@@ -140,7 +140,6 @@
     },
     "start": {
       "options": {
-        "isDevServer": true,
         "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli"
       },
       "plugins": [
