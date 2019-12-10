@@ -3,8 +3,9 @@ const om = require('@mrbuilder/cli').default;
 const path = require('path');
 const config = (key, def) => om.config(`@mrbuilder/plugin-storybook.${key}`, def);
 const staticDir = om.config('@mrbuilder/cli.publicDir', om.cwd('public'));
-const options = require(`@storybook/${config('type', 'react')}/dist/server/options`).default;
 
+const options = require(`@storybook/${config('type', 'react')}/dist/server/options`).default;
+process.env.NODE_ENV = 'development';
 server[om.config('@mrbuilder/plugin-storybook.isDevServer') ? 'buildDev' : 'buildStatic']({
     ...options,
     outputDir: config('outputDir'),

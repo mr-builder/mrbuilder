@@ -13,11 +13,12 @@ async function managerBabel(config, options) {
 }
 
 async function webpack(config, options) {
-    const {entry: {...entry}, mode, output: {...output}} = config;
+    const {entry: {...entry}, mode, devServer, output: {...output}} = config;
     const webpack = await resolveWebpack(config, {isLibrary: false}, null);
     webpack.entry = entry;
     webpack.output = output;
     webpack.mode = mode;
+    //webpack.devServer = devServer;
     delete webpack.externals;
 
     //So storybook has its own client side markdown thing.   if we are using mrbuilders, we will
@@ -47,7 +48,7 @@ async function webpack(config, options) {
     if (fs.existsSync(customWebpack)) {
         return require(customWebpack);
     }
-    return config;
+    return webpack;
 }
 
 async function babel(config, options) {
