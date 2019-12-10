@@ -1,8 +1,8 @@
 {
   "options": {
-    "sourceDir": "src",
-    "outputDir": "lib",
-    "testDir": "test"
+    "sourceDir": "./src",
+    "outputDir": "./lib",
+    "testDir": "./test"
   },
   "env": {
     "clean": {

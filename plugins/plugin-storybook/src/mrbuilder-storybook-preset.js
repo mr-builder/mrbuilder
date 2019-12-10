@@ -1,7 +1,18 @@
-const resolveWebpack = require('@mrbuilder/plugin-webpack/src/resolveWebpack');
 const om = require('@mrbuilder/cli').default;
-module.exports = async ({config}) => {
-    console.dir(config, {depth: null});
+const fs = require('fs');
+const resolveWebpack = require('@mrbuilder/plugin-webpack/src/resolveWebpack');
+
+async function managerWebpack(config, options) {
+    // update config here
+    return config;
+}
+
+async function managerBabel(config, options) {
+    // update config here
+    return config;
+}
+
+async function webpack(config, options) {
     const {entry: {...entry}, mode, output: {...output}} = config;
     const webpack = await resolveWebpack(config, {isLibrary: false}, null);
     webpack.entry = entry;
@@ -24,23 +35,32 @@ module.exports = async ({config}) => {
     }
 
     webpack.module.rules.unshift({
-        test: require.resolve('../parameters.js'),
+        test: require.resolve('./parameters.js'),
         use: [{
             loader: 'val-loader',
             options: om.config('@mrbuilder/plugin-storybook.parameters', {})
         }]
     });
-    //
-    // const addons = om.config('@mrbuilder/plugin-storybook.addons', []);
-    // webpack.module.rules.unshift({
-    //     test: require.resolve('./addons.js'),
-    //     use: [
-    //         {
-    //             loader: 'val-loader',
-    //             options: {addons}
-    //         }
-    //     ]
-    // });
 
-    return webpack;
+
+    const customWebpack = om.cwd('.storybook', 'webpack.config.js');
+    if (fs.existsSync(customWebpack)) {
+        return require(customWebpack);
+    }
+    return config;
 }
+
+async function babel(config, options) {
+    return config;
+}
+
+async function addons(entry = []) {
+    const r = entry.concat(om.config('@mrbuilder/plugin-storybook.addons', []).map(v => require.resolve(v)));
+    const customAddons = om.cwd('.storybook', 'addons.js');
+    if (fs.existsSync(customAddons)) {
+        r.push(customAddons);
+    }
+    return r;
+}
+
+module.exports = {managerWebpack, managerBabel, webpack, babel, addons}

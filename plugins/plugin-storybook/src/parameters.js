@@ -1,13 +1,33 @@
-
 module.exports = (parameters) => {
-    const code = `
-    import { addDecorator,addParameters } from '@storybook/react';
+    let imports = `import { addDecorator,addParameters } from '@storybook/react';
     import { withKnobs } from '@storybook/addon-knobs';
-
-    addDecorator(withKnobs);
-    addParameters(${JSON.stringify(parameters, null, 2)})
     `;
+
+
+     if (parameters.themePkg || parameters.theme) {
+         imports += `import {themes as __THEME__} from '${parameters.themePkg || '@storybook/theming'}';
+         `
+     }
+
+    let code = `
+    const parameters = ${JSON.stringify(parameters, null, 2)};
+    `;
+
+    if (parameters.theme) {
+        code += `
+            if (!parameters.options){
+                parameters.options = {};
+            }
+            parameters.options.theme = __THEME__[${JSON.stringify(parameters.theme)}]
+        `
+    }
+
     return {
-        code
+        code: `
+        ${imports}
+        ${code}
+        addDecorator(withKnobs);
+        addParameters(parameters);
+        `
     };
 }
