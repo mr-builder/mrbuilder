@@ -30,14 +30,7 @@
     "presets": [
       "@mrbuilder/preset-app",
       "@mrbuilder/example-lib-everything"
-    ],
-    "env": {
-      "storybook": {
-        "plugins": [
-          "@mrbuilder/plugin-storybook"
-        ]
-      }
-    }
+    ]
   },
   "license": "0BSD"
 }
