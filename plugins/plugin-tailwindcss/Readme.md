@@ -1,0 +1,1 @@
+Provides [tailwindcss](https://tailwindcss.com/) plugin for mrbuilder.
