@@ -38,6 +38,7 @@
     "env": {
       "start": {
         "options": {
+          "outputDir": null,
           "isDevServer": true
         }
       }

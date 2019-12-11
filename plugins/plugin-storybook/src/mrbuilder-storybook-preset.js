@@ -2,15 +2,6 @@ const om = require('@mrbuilder/cli').default;
 const fs = require('fs');
 const resolveWebpack = require('@mrbuilder/plugin-webpack/src/resolveWebpack');
 
-async function managerWebpack(config, options) {
-    // update config here
-    return config;
-}
-
-async function managerBabel(config, options) {
-    // update config here
-    return config;
-}
 
 async function webpack(config, options) {
     const {entry: {...entry}, mode, devServer, output: {...output}} = config;
@@ -43,17 +34,14 @@ async function webpack(config, options) {
         }]
     });
 
-
+    return webpack;
     const customWebpack = om.cwd('.storybook', 'webpack.config.js');
     if (fs.existsSync(customWebpack)) {
         return require(customWebpack);
     }
-    return webpack;
-}
-
-async function babel(config, options) {
     return config;
 }
+
 
 async function addons(entry = []) {
     const r = entry.concat(om.config('@mrbuilder/plugin-storybook.addons', []).map(v => require.resolve(v)));
@@ -64,4 +52,4 @@ async function addons(entry = []) {
     return r;
 }
 
-module.exports = {managerWebpack, managerBabel, webpack, babel, addons}
+module.exports = {webpack, addons};
