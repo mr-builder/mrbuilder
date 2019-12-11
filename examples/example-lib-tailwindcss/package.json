@@ -1,0 +1,42 @@
+{
+  "name": "@mrbuilder/example-lib-tailwindcss",
+  "description": "Example showing a lib build for webpack and tailwindcss",
+  "version": "4.0.0-alpha.11",
+  "private": true,
+  "devDependencies": {
+    "@mrbuilder/cli": "^4.0.0-alpha.11"
+  },
+  "scripts": {
+    "prepare": "mrbuilder",
+    "start": "mrbuilder",
+    "karma": "mrbuilder",
+    "test": "mrbuilder-jest"
+  },
+  "source": "src",
+  "main": "lib",
+  "license": "0BSD",
+  "mrbuilder": {
+    "presets": [
+      "@mrbuilder/preset-lib"
+    ],
+    "plugins": [
+      [
+        "@mrbuilder/plugin-css",
+        false
+      ],
+      "@mrbuilder/plugin-typescript",
+      [
+        "@mrbuilder/plugin-tailwindcss",
+        {
+          "config": {
+            "theme": {
+              "colors": {
+                "zaid": "red"
+              }
+            }
+          }
+        }
+      ]
+    ]
+  }
+}

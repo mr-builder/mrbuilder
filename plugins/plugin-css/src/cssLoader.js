@@ -35,6 +35,7 @@ module.exports = function (webpack, test, modules = false, om, ...conf) {
             }
         });
     }
+
     if (conf) {
         loaders.push(...conf);
     }
