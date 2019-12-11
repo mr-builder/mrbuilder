@@ -183,6 +183,14 @@
       "plugins": [
         "@mrbuilder/plugin-storybook"
       ]
+    },
+    "tailwind": {
+      "options": {
+        "bin": "@mrbuilder/plugin-tailwindcss/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-tailwindcss"
+      ]
     }
   }
 }

@@ -1,29 +1,42 @@
 //const {cssLoader} = require("@mrbuilder/plugin-css");
 const fs = require('fs');
+const useStyle = require('@mrbuilder/plugin-css/src/styleLoader');
 
-module.exports = ({test}, webpack, optionsManager) => {
+module.exports = ({test, autoprefixer = true}, webpack, optionsManager) => {
+    const tailwindConfig = require(fs.existsSync(optionsManager.cwd('tailwind.config.js')) ? optionsManager.cwd('tailwind.config.js') : `${__dirname}/tailwind.config.js`);
+    const plugins = [
+        require('tailwindcss')(tailwindConfig)
+    ];
+    if (autoprefixer) {
+        if (autoprefixer === true) {
+            plugins.push(require('autoprefixer'));
+        } else {
+            plugins.push(require('autoprefixer')(autoprefixer))
+        }
+    }
+    if (/\.css/.test(test.source) && om.enabled('@mrbuilder/plugin-css')) {
+        optionsManager.logger('@mrbuilder/plugin-tailwindcss').warn(`tailwindcss '${test.source}' test overlaps css
+        disable '@mrbuilder/plugin-css' or use a different extension like '.twcss'
+        `);
+    }
+
     webpack.module.rules.push({
         test,
-        use: [
-            {
-                loader: 'style-loader'
-            },
+        use: useStyle(webpack,
+
             {
                 loader: 'css-loader',
                 options: {
                     importLoaders: 1,
-                    'sourceMap': true,
+                    sourceMap: true,
                 }
             },
             {
                 loader: 'postcss-loader',
                 options: {
-                    plugins: [
-                        require('tailwindcss')(require(fs.existsSync(optionsManager.cwd('tailwind.config.js')) ? optionsManager.cwd('tailwind.config.js') : `${__dirname}/tailwind.config.js`)),
-                        require('autoprefixer'),
-                    ]
+                    plugins
                 },
-            }]
+            })
     });
 
     return webpack;

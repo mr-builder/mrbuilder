@@ -18,7 +18,7 @@
   },
   "mrbuilder": {
     "options": {
-      "test": "/\\.css$/",
+      "test": "/\\.twcss$/",
       "publicPath": "/public",
       "config": {
         "theme": {},

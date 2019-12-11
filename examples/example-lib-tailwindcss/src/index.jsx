@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './index.tailwind.css';
+import './tailwind.twcss';
 
 export default class TailwindExample extends Component {
 

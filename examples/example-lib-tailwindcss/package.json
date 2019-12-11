@@ -8,23 +8,13 @@
   },
   "scripts": {
     "prepare": "mrbuilder",
-    "start": "mrbuilder",
-    "karma": "mrbuilder",
-    "test": "mrbuilder-jest"
+    "start": "mrbuilder"
   },
   "source": "src",
   "main": "lib",
   "license": "0BSD",
   "mrbuilder": {
-    "presets": [
-      "@mrbuilder/preset-lib"
-    ],
     "plugins": [
-      [
-        "@mrbuilder/plugin-css",
-        false
-      ],
-      "@mrbuilder/plugin-typescript",
       [
         "@mrbuilder/plugin-tailwindcss",
         {
