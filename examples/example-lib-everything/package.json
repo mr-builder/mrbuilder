@@ -36,6 +36,12 @@
     ],
     "plugins": [
       [
+        "@mrbuilder/plugin-css",
+        {
+          "modules": true
+        }
+      ],
+      [
         "@mrbuilder/plugin-env",
         {
           "environment": [
@@ -52,13 +58,7 @@
       "@mrbuilder/plugin-stylus",
       "@mrbuilder/plugin-worker",
       "@mrbuilder/plugin-typescript",
-      "@mrbuilder/plugin-graphql",
-      [
-        "@mrbuilder/plugin-css",
-        {
-          "modules": true
-        }
-      ]
+      "@mrbuilder/plugin-graphql"
     ],
     "env": {
       "development": {
@@ -74,7 +74,8 @@
           [
             "@mrbuilder/plugin-css",
             {
-              "useStyleLoader": true
+              "useStyleLoader": true,
+              "modules": true
             }
           ]
         ]

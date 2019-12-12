@@ -28,8 +28,8 @@
       "@mrbuilder/plugin-version"
     ],
     "presets": [
-      "@mrbuilder/preset-app",
-      "@mrbuilder/example-lib-everything"
+      "@mrbuilder/example-lib-everything",
+      "@mrbuilder/preset-app"
     ]
   },
   "license": "0BSD"
