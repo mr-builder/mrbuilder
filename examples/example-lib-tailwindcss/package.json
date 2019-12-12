@@ -4,7 +4,12 @@
   "version": "4.0.0-alpha.12",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.0.0-alpha.12"
+    "@mrbuilder/cli": "^4.0.0-alpha.12",
+    "@mrbuilder/plugin-babel-7": "^4.0.0-alpha.11",
+    "@mrbuilder/plugin-tailwindcss": "^4.0.0-alpha.12",
+    "@mrbuilder/plugin-typescript": "^4.0.0-alpha.12",
+    "@mrbuilder/preset-app": "^4.0.0-alpha.12",
+    "@mrbuilder/preset-lib": "^4.0.0-alpha.12"
   },
   "scripts": {
     "prepare": "mrbuilder",
@@ -15,13 +20,16 @@
   "license": "0BSD",
   "mrbuilder": {
     "plugins": [
+      "@mrbuilder/plugin-typescript",
       [
         "@mrbuilder/plugin-tailwindcss",
         {
           "config": {
             "theme": {
-              "colors": {
-                "zaid": "red"
+              "extend": {
+                "colors": {
+                  "custom-red": "#F92D81"
+                }
               }
             }
           }
