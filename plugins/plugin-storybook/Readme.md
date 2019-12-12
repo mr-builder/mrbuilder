@@ -20,7 +20,7 @@ Provides [Storybook](https://storybook.js.org) support for mrbuilder.
 | dll           |    |    |    |
 | ci            |    |    |    |
 | smokeTest     |    |    |    |
-| quiet         |    |    |    ||
+| quiet         |    |    |    |
 | host          |    |    |    |
 | ignorePreview |    |    |    |
 | docs          |    |    |    |
