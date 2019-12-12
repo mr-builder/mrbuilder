@@ -1,5 +1,12 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+/* adding a custom class and applying other classes to use it */
+.btn {
+  @apply border p-2;
+}
+
+.btn-gnarly {
+  @apply border-custom-red bg-indigo-600 text-white;
+}
