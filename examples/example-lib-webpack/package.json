@@ -1,10 +1,10 @@
 {
   "name": "@mrbuilder/example-lib-webpack",
   "description": "Example showing a lib build for webpack",
-  "version": "4.0.0-alpha.11",
+  "version": "4.0.0-alpha.12",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.0.0-alpha.11"
+    "@mrbuilder/cli": "^4.0.0-alpha.12"
   },
   "scripts": {
     "prepare": "mrbuilder",
