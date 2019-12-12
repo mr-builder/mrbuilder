@@ -12,5 +12,17 @@ Provides [Storybook](https://storybook.js.org) support for mrbuilder.
 | test          | Regex      | /.stories.js$/   | pattern to look for stories |
 | themePkg      | string     | @storybook/theming | package to look for theme |
 | theme         | string     | light  | path to theme from themePkg object |
-
- 
+| port          | number     |    | random    |
+| host          | string     |    | Host to bind to   |
+| sslCa         | string     |    | SSL CA     |
+| sslCert       | string     |    | SSL Cert   |
+| sslKey        | string     |    | SSL Key  |
+| dll           |    |    |    |
+| ci            |    |    |    |
+| smokeTest     |    |    |    |
+| quiet         |    |    |    ||
+| host          |    |    |    |
+| ignorePreview |    |    |    |
+| docs          |    |    |    |
+| frameworkPresets |    |    |    |
+| previewUrl    |    |    |    |
