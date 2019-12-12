@@ -170,7 +170,10 @@ export const enhancedResolve = (p: string, _require = require): string => {
     }
     if (p.startsWith('~')) {
         const parts = p.substring(1).split(path.sep);
-        const pkg = parts.shift();
+        let pkg = parts.shift();
+        if (pkg.startsWith('@')) {
+            pkg = `${pkg}/${parts.shift()}`;
+        }
         try {
             const pkgDir = path.resolve(_require.resolve(path.join(pkg, 'package.json')), '..');
 
@@ -179,6 +182,18 @@ export const enhancedResolve = (p: string, _require = require): string => {
             if (e.code === 'MODULE_NOT_FOUND') {
                 console.warn(`Could not resolve ${pkg} from ${p} check spelling and location`);
             }
+            throw e;
+        }
+    }
+    const cwdp = cwd(p);
+    if (existsSync(cwdp)) {
+        return cwdp;
+    }
+
+    try {
+        return _require.resolve(p);
+    } catch (e) {
+        if (e.code !== 'MODULE_NOT_FOUND') {
             throw e;
         }
     }
