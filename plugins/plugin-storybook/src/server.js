@@ -1,4 +1,5 @@
 const om = require('@mrbuilder/cli').default;
+const {enhancedResolve} = require('@mrbuilder/utils');
 const isDevServer = om.config('@mrbuilder/plugin-storybook.isDevServer');
 if (isDevServer) {
     process.env.NODE_ENV = 'development';
@@ -10,9 +11,8 @@ const config = (key, def) => om.config(`@mrbuilder/plugin-storybook.${key}`, def
 const staticDir = om.config('@mrbuilder/cli.publicDir', om.cwd('public'));
 const options = require(`@storybook/${config('type', 'react')}/dist/server/options`).default;
 
-server[isDevServer ? 'buildDev' : 'buildStatic']({
+const serverOptions = {
     ...options,
-    outputDir: config('outputDir'),
     configDir: config('configDir', path.join(__dirname, 'config')),
     staticDir: config('staticDir', Array.isArray(staticDir) ? staticDir : staticDir ? [staticDir] : null),
     ...[
@@ -38,4 +38,8 @@ server[isDevServer ? 'buildDev' : 'buildStatic']({
         }
         return r;
     }, {}),
-});
+};
+if (!isDevServer) {
+    config.outputDir = enhancedResolve(config('outputDir', 'storybook-static'));
+}
+server[isDevServer ? 'buildDev' : 'buildStatic'](serverOptions);
