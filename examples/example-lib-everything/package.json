@@ -52,7 +52,13 @@
       "@mrbuilder/plugin-stylus",
       "@mrbuilder/plugin-worker",
       "@mrbuilder/plugin-typescript",
-      "@mrbuilder/plugin-graphql"
+      "@mrbuilder/plugin-graphql",
+      [
+        "@mrbuilder/plugin-css",
+        {
+          "modules": true
+        }
+      ]
     ],
     "env": {
       "development": {

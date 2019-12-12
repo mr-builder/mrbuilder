@@ -8,6 +8,8 @@ import stylus from './stylus_module.stylm';
 import './stylus.styl';
 import { Hello } from './hello';
 import yaml from './test.yaml';
+import style from './style.cssm';
+
 const USER     = process.env.USER;
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -56,7 +58,7 @@ export default class WebpackExample extends Component {
             <div className={'time'}>Time since button click: {time}</div>
 
             <Hello name={USER}/>
-            <button onClick={this.sendMessage}>Count from web
+            <button className={style.stuff} onClick={this.sendMessage}>Count from web
                 worker: {this.state.count}</button>
         </div>);
     }
