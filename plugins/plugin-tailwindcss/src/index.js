@@ -1,4 +1,3 @@
-//const {cssLoader} = require("@mrbuilder/plugin-css");
 const fs = require('fs');
 const useStyle = require('@mrbuilder/plugin-css/src/styleLoader');
 
