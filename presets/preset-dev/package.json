@@ -1,13 +1,13 @@
 {
   "name": "@mrbuilder/preset-dev",
-  "version": "4.0.0-alpha.12",
+  "version": "4.0.0-alpha.13",
   "dependencies": {
-    "@mrbuilder/plugin-css": "^4.0.0-alpha.12",
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.13",
     "@mrbuilder/plugin-eslint": "^4.0.0-alpha.10",
     "@mrbuilder/plugin-hot": "^4.0.0-alpha.10",
     "@mrbuilder/plugin-react": "^4.0.0-alpha.11",
-    "@mrbuilder/plugin-webpack-dev-server": "^4.0.0-alpha.12",
-    "@mrbuilder/preset-app": "^4.0.0-alpha.12"
+    "@mrbuilder/plugin-webpack-dev-server": "^4.0.0-alpha.13",
+    "@mrbuilder/preset-app": "^4.0.0-alpha.13"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

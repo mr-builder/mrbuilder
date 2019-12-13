@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-karma",
-  "version": "4.0.0-alpha.12",
+  "version": "4.0.0-alpha.13",
   "description": "Tools for developing with mrbuilder and karma",
   "scripts": {
     "test": "mrbuilder-mocha"
@@ -9,10 +9,10 @@
     "mrbuilder-karma-cli": "./bin/cli.js"
   },
   "dependencies": {
-    "@mrbuilder/optionsmanager": "^4.0.0-alpha.10",
+    "@mrbuilder/optionsmanager": "^4.0.0-alpha.13",
     "@mrbuilder/plugin-enzyme": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-mocha": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.12",
+    "@mrbuilder/plugin-mocha": "^4.0.0-alpha.13",
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.13",
     "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "^2.0.0",

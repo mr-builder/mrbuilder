@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/optionsmanager",
-  "version": "4.0.0-alpha.10",
+  "version": "4.0.0-alpha.13",
   "bin": {
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"
   },
   "dependencies": {
-    "@mrbuilder/utils": "^4.0.0-alpha.10",
+    "@mrbuilder/utils": "^4.0.0-alpha.13",
     "which": "^2.0.1"
   },
   "devDependencies": {
