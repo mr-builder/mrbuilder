@@ -13,10 +13,13 @@ if (env.BROWSERSLIST_CONFIG) {
 
     const optionsManager = require('@mrbuilder/cli').default;
     if (optionsManager.config('@mrbuilder/plugin-browserslist.browserslist')) {
-        process.env.BROWSERSLIST = optionsManager.config('@mrbuilder/plugin-browserslist.browserslist');
+        env.BROWSERSLIST = optionsManager.config('@mrbuilder/plugin-browserslist.browserslist');
+        optionsManager.logger('@mrbuilder/plugin-browserslist').info(`using ${env.BROWSERSLIST}`)
     } else if (optionsManager.config('@mrbuilder/plugin-browserslist.file')) {
-        env.BROWSERSLIST_CONFIG = optionsManager.config('@mrbuilder/plugin-browserslist.file')
+        env.BROWSERSLIST_CONFIG = optionsManager.config('@mrbuilder/plugin-browserslist.file');
+        optionsManager.logger('@mrbuilder/plugin-browserslist').info(`using config ${env.BROWSERSLIST_CONFIG}`)
     }
 }
+
 module.exports = () => {
 };
