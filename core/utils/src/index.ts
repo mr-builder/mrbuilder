@@ -165,7 +165,7 @@ export const enhancedResolve = (p: string, _require = require): string => {
     if (p.startsWith(path.sep)) {
         return p;
     }
-    if (p.startsWith('.')) {
+    if (p.startsWith(`.${path.sep}`)) {
         return cwd(p);
     }
     if (p.startsWith('~')) {
@@ -236,24 +236,3 @@ export const regexOrFuncApply = (first?: RegExOrFn, second?: RegExOrFn): RegExOr
         return second(test);
     }
 };
-//
-// module.exports = {
-//     parseValue,
-//     stringify,
-//     get,
-//     set,
-//     camelCased,
-//     project,
-//     pkg,
-//     configOrBool,
-//     applyFuncs,
-//     parseEntry,
-//     enhancedResolve,
-//     debug,
-//     warn,
-//     regexOrFuncApply,
-//     parseJSON,
-//     info,
-//     cwd, sliced, resolveMap, resolvePkgDir, camelToHyphen, lernaFilteredPackages
-//
-// };
