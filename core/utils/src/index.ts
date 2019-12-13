@@ -165,7 +165,7 @@ export const enhancedResolve = (p: string, _require = require): string => {
     if (p.startsWith(path.sep)) {
         return p;
     }
-    if (p.startsWith(`.${path.sep}`)) {
+    if (p.startsWith('./')) {
         return cwd(p);
     }
     if (p.startsWith('~')) {
