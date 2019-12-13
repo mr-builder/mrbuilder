@@ -1,21 +1,21 @@
 {
   "name": "@mrbuilder/preset-app",
-  "version": "4.0.0-alpha.13",
+  "version": "4.0.0-alpha.14",
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.13",
-    "@mrbuilder/plugin-chunk": "^4.0.0-alpha.13",
-    "@mrbuilder/plugin-css": "^4.0.0-alpha.13",
+    "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.14",
+    "@mrbuilder/plugin-chunk": "^4.0.0-alpha.14",
+    "@mrbuilder/plugin-css": "^4.0.0-alpha.14",
     "@mrbuilder/plugin-env": "^4.0.0-alpha.10",
     "@mrbuilder/plugin-filetypes": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-fonts": "^4.0.0-alpha.13",
+    "@mrbuilder/plugin-fonts": "^4.0.0-alpha.14",
     "@mrbuilder/plugin-hot": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-html": "^4.0.0-alpha.13",
-    "@mrbuilder/plugin-less": "^4.0.0-alpha.13",
+    "@mrbuilder/plugin-html": "^4.0.0-alpha.14",
+    "@mrbuilder/plugin-less": "^4.0.0-alpha.14",
     "@mrbuilder/plugin-react": "^4.0.0-alpha.11",
-    "@mrbuilder/plugin-uglify": "^4.0.0-alpha.13",
-    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.13",
-    "@mrbuilder/plugin-webpack-dev-server": "^4.0.0-alpha.13"
+    "@mrbuilder/plugin-uglify": "^4.0.0-alpha.14",
+    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.14",
+    "@mrbuilder/plugin-webpack-dev-server": "^4.0.0-alpha.14"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

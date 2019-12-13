@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/tool",
-  "version": "4.0.0-alpha.13",
+  "version": "4.0.0-alpha.14",
   "description": "Tool for changing package files",
   "main": "lib",
   "source": "src",
@@ -17,8 +17,8 @@
     "mrbuilder"
   ],
   "dependencies": {
-    "@mrbuilder/cli": "^4.0.0-alpha.13",
-    "@mrbuilder/utils": "^4.0.0-alpha.13",
+    "@mrbuilder/cli": "^4.0.0-alpha.14",
+    "@mrbuilder/utils": "^4.0.0-alpha.14",
     "@types/lodash": "^4.14.147",
     "@types/node": "^12.12.7"
   },
