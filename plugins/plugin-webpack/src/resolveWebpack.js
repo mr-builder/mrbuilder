@@ -46,7 +46,7 @@ const WEBPACK_CONFIG = {
         modules: [
             'node_modules',
             cwd('node_modules'),
-            path.resolve(__dirname, 'node_modules'),
+            path.resolve(__dirname, '..', 'node_modules'),
         ],
         alias: {}
     },

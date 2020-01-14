@@ -1,5 +1,5 @@
-const getConfig = require('react-styleguidist/lib/scripts/config');
-const sylist = require('react-styleguidist/lib/scripts/make-webpack-config');
+const getConfig = require('react-styleguidist/lib/scripts/config').default;
+const sylist = require('react-styleguidist/lib/scripts/make-webpack-config').default;
 const {
     join,
     resolve,
