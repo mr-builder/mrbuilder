@@ -24,18 +24,14 @@
   "mrbuilder": {
     "plugins": [
       "@mrbuilder/plugin-babel",
+      "@mrbuilder/plugin-babel-7",
       "@mrbuilder/plugin-browserslist",
       "@mrbuilder/plugin-filetypes",
       "@mrbuilder/plugin-fonts",
       "@mrbuilder/plugin-env",
       "@mrbuilder/plugin-less",
       "@mrbuilder/plugin-react",
-      [
-        "@mrbuilder/plugin-html",
-        {
-          "exported": true
-        }
-      ]
+      "@mrbuilder/plugin-html"
     ],
     "env": {
       "test": {
