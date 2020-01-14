@@ -3,6 +3,7 @@
   "version": "4.0.0-alpha.14",
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.0.0-alpha.10",
+    "@mrbuilder/plugin-babel-7": "^4.0.0-alpha.14",
     "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.14",
     "@mrbuilder/plugin-chunk": "^4.0.0-alpha.14",
     "@mrbuilder/plugin-css": "^4.0.0-alpha.14",
