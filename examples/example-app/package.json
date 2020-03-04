@@ -19,7 +19,7 @@
     "prepare": "mrbuilder",
     "start": "mrbuilder",
     "start:open": "mrbuilder",
-    "test": "mrbuilder-karma",
+    "test": "mrbuilder-karma-test",
     "karma": "mrbuilder",
     "analyze": "mrbuilder"
   },

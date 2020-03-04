@@ -3,7 +3,7 @@
   "description": "Provides markdown to react components",
   "version": "4.0.0-alpha.14",
   "scripts": {
-    "test": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma",
+    "test": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma  --@mrbuilder/plugin-karma.browsers='[SimpleHeadlessChrome]'",
     "karma": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma --@mrbuilder/plugin-mocha.filePattern=*-mocha.js",
     "start": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder"
   },
