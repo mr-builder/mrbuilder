@@ -14,7 +14,8 @@
   "source": "src",
   "license": "0BSD",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "http://registry.npmjs.org"
   },
   "mrbuilder": {
     "options": {
