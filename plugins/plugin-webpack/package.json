@@ -17,10 +17,10 @@
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.14",
     "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.14",
     "@mrbuilder/utils": "^4.0.0-alpha.14",
-    "raw-loader": "^3.1.0",
-    "val-loader": "^1.1.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "raw-loader": "^4.0.0",
+    "val-loader": "^2.1.0",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
     "@mrbuilder/plugin-typescript": "^4.0.0-alpha.14",

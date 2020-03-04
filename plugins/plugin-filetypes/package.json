@@ -3,8 +3,8 @@
   "version": "4.0.0-alpha.10",
   "description": "Loading file types via webpack",
   "dependencies": {
-    "file-loader": "^4.2.0",
-    "url-loader": "^2.2.0"
+    "file-loader": "^5.1.0",
+    "url-loader": "^3.0.0"
   },
   "source": "src",
   "main": "src",

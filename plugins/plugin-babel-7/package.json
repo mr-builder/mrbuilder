@@ -32,7 +32,7 @@
     "@mrbuilder/optionsmanager": "^4.0.0-alpha.14",
     "@mrbuilder/plugin-browserslist": "^4.0.0-alpha.14",
     "babel-loader": "^8.0.6",
-    "babel-plugin-istanbul": "^5.2.0"
+    "babel-plugin-istanbul": "^6.0.0"
   },
   "source": "src",
   "main": "src",

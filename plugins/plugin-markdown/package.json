@@ -12,7 +12,7 @@
     "@mrbuilder/utils": "^4.0.0-alpha.14",
     "markdown-it": "^10.0.0",
     "markdown-it-checkbox": "^1.1.0",
-    "react-syntax-highlighter": "^11.0.2"
+    "react-syntax-highlighter": "^12.2.1"
   },
   "devDependencies": {
     "@mrbuilder/plugin-karma": "^4.0.0-alpha.14"
