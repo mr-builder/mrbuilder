@@ -1,21 +1,9 @@
 {
+  "extends": "../../tsconfig.base",
   "compilerOptions": {
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
+    "rootDir": "./src",
     "outDir": "./lib",
-    "sourceRoot": "./src",
-    "declaration": true,
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "lib": [
-      "dom",
-      "es2018"
-    ]
+    "declaration": true
   },
   "include": [
     "src/**/*"
