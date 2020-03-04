@@ -19,6 +19,7 @@
     "mrbuilder-demo": "./bin/mrbuilder.js",
     "mrbuilder-jest": "./bin/mrbuilder.js",
     "mrbuilder-karma": "./bin/mrbuilder.js",
+    "mrbuilder-karma-test": "./bin/mrbuilder.js",
     "mrbuilder-mocha": "./bin/mrbuilder.js",
     "mrbuilder-prettier": "./bin/mrbuilder.js",
     "mrbuilder-tsc": "./bin/mrbuilder.js",
