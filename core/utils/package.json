@@ -6,12 +6,11 @@
   "main": "lib",
   "types": "src",
   "dependencies": {
-    "@types/json5": "^0.0.30",
     "json5": "^2.1.1"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^6.2.2"
+    "chai": "^4.2.0",
+    "mocha": "^7.1.0"
   },
   "scripts": {
     "test": "mocha ./test/**/*-test.js",

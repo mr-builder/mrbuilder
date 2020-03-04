@@ -17,7 +17,7 @@ const profile = env.MRBUILDER_PROFILE || ((idx) => {
             }
         }
     })(argv.slice(2).findIndex(v => /^--mrbuilder-profile(=.*)?$/.test(v)))
-    || (v => profileRe.test(v) ? v.replace(profileRe, '$1')
+    || (v => profileRe.test(v) ? v.replace(profileRe, '$1').replace(/-/, ':')
         : env['npm_lifecycle_event'])(
         argv[1]);
 

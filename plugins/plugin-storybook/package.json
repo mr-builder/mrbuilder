@@ -3,10 +3,10 @@
   "version": "4.0.0-alpha.13",
   "description": "Provides mrbuilder wrapper for storybook",
   "dependencies": {
-    "@storybook/addon-docs": "^5.2.8",
-    "@storybook/addon-knobs": "^5.2.8",
-    "@storybook/addon-options": "^5.2.8",
-    "@storybook/react": "^5.2.8"
+    "@storybook/addon-docs": "^5.3.14",
+    "@storybook/addon-knobs": "^5.3.14",
+    "@storybook/addon-options": "^5.3.14",
+    "@storybook/react": "^5.3.14"
   },
   "source": "src",
   "main": "src",

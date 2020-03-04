@@ -20,7 +20,7 @@
     "@mrbuilder/cli": "^4.0.0-alpha.14",
     "@mrbuilder/utils": "^4.0.0-alpha.14",
     "@types/lodash": "^4.14.147",
-    "@types/node": "^12.12.7"
+    "@types/node": "^13.7.7"
   },
   "peerDependencies": {
     "lerna": "3.x || 2.x"

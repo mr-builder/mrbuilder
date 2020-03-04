@@ -45,7 +45,12 @@
       "@mrbuilder/plugin-mocha",
       "@mrbuilder/plugin-webpack",
       "@mrbuilder/plugin-karma"
-    ]
+    ],
+    "env": {
+      "test": {
+        "plugins": [["@mrbuilder/plugin-karma", {"browsers": ["SimpleHeadlessChrome"]}]]
+      }
+    }
   },
   "license": "0BSD",
   "gitHead": "8932fa60b6c6f6ed18b45918e7873c8e70b8d0be",

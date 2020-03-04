@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base",
+  "references": [
+    {
+      "path": "./core/utils"
+    },
+    {
+      "path": "./core/optionsmanager"
+    },
+    {
+      "path": "./core/cli"
+    },
+    {
+      "path": "./core/tool"
+    }
+  ]
+}
