@@ -1,13 +1,13 @@
 {
   "name": "@mrbuilder/preset-test",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0",
   "dependencies": {
-    "@mrbuilder/plugin-css": "^4.0.0-alpha.14",
-    "@mrbuilder/plugin-enzyme": "^4.0.0-alpha.10",
-    "@mrbuilder/plugin-karma": "^4.0.0-alpha.14",
-    "@mrbuilder/plugin-mocha": "^4.0.0-alpha.14",
-    "@mrbuilder/plugin-react": "^4.0.0-alpha.11",
-    "@mrbuilder/plugin-webpack": "^4.0.0-alpha.14"
+    "@mrbuilder/plugin-css": "^4.0.0",
+    "@mrbuilder/plugin-enzyme": "^4.0.0",
+    "@mrbuilder/plugin-karma": "^4.0.0",
+    "@mrbuilder/plugin-mocha": "^4.0.0",
+    "@mrbuilder/plugin-react": "^4.0.0",
+    "@mrbuilder/plugin-webpack": "^4.0.0"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
@@ -48,7 +48,16 @@
     ],
     "env": {
       "test": {
-        "plugins": [["@mrbuilder/plugin-karma", {"browsers": ["SimpleHeadlessChrome"]}]]
+        "plugins": [
+          [
+            "@mrbuilder/plugin-karma",
+            {
+              "browsers": [
+                "SimpleHeadlessChrome"
+              ]
+            }
+          ]
+        ]
       }
     }
   },
