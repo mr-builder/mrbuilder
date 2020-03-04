@@ -43,8 +43,9 @@ async function webpack(config, options) {
 }
 
 
-async function addons(entry = []) {
-    const r = entry.concat(om.config('@mrbuilder/plugin-storybook.addons', []).map(v => require.resolve(v)));
+async function managerEntries(entry=[]) {
+    debugger;
+    const r = entry.concat(...om.config('@mrbuilder/plugin-storybook.addons', []).map(v => require.resolve(v)));
     const customAddons = om.cwd('.storybook', 'addons.js');
     if (fs.existsSync(customAddons)) {
         r.push(customAddons);
@@ -52,4 +53,4 @@ async function addons(entry = []) {
     return r;
 }
 
-module.exports = {webpack, addons};
+module.exports = {webpack, managerEntries};
