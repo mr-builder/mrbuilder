@@ -19,7 +19,7 @@
     "analyze": "mrbuilder",
     "prepare": "mrbuilder",
     "start": "mrbuilder",
-    "test": "mrbuilder-karma",
+    "test": "mrbuilder-karma-test",
     "karma": "mrbuilder",
     "storybook": "mrbuilder",
     "storybook:start": "mrbuilder --@mrbuilder/plugin-storybook.parameters.theme=dark"
