@@ -23,7 +23,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "typescript": "^3.7.2"
+    "typescript": "^3.8.3"
   },
   "publishConfig": {
     "registry": "https://registry.npm.orig",
@@ -31,6 +31,7 @@
   },
   "scripts": {
     "lerna": "lerna",
+
     "prepare": "lerna run prepare --no-private",
     "reset": "$npm_execpath run clean && $npm_execpath install",
     "reset:test": "$npm_execpath run reset && $npm_execpath test",
