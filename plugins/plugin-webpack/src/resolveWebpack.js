@@ -121,10 +121,11 @@ module.exports = (conf = WEBPACK_CONFIG, opts = OPTS, onDone = DONE) => {
                 try {
                     plugin = optionsManager.require(Array.isArray(option.plugin) ? option.plugin[0] : option.plugin);
                 } catch (e) {
-                    warn(`not loading plugin '${key}' from '${option && option.plugin}'`);
                     if (e.code !== 'MODULE_NOT_FOUND') {
                         throw e;
                     }
+                    warn(`was not found '${key}' from '${option && option.plugin}'`);
+
                 }
 
                 if (typeof plugin === 'function') {
@@ -132,6 +133,7 @@ module.exports = (conf = WEBPACK_CONFIG, opts = OPTS, onDone = DONE) => {
                         try {
                             return plugin.call(scope, option.config || {}, _webpack, optionsManager)
                         } catch (e) {
+                            console.trace(e);
                             warn(`Error in '${option.name}'`, e);
                             throw e;
                         }
