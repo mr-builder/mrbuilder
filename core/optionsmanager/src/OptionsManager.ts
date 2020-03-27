@@ -439,7 +439,7 @@ export default class OptionsManager implements OptionsManagerType {
 }
 
 
-class Option implements OptionType {
+export class Option implements OptionType {
     constructor(public name: string,
                 public plugin: PluginValue,
                 public config: {},

@@ -1,5 +1,5 @@
 import {ExternalItem, WebpackOptions} from "webpack/declarations/WebpackOptions";
-
+import {Configuration} from 'webpack';
 export type StringObject = {
     [key: string]: string
 }
@@ -24,6 +24,7 @@ export type MrBuilderWebpackPluginOptions = WebpackOptions & {
     externals: ExternalItem | string | boolean,
     externalizePeers?: boolean,
     public?: string,
+    resolve?: Configuration['resolve'],
     libraryTarget?: "var"
         | "assign"
         | "this"
@@ -41,13 +42,13 @@ export type MrBuilderWebpackPluginOptions = WebpackOptions & {
         | "system"
 };
 //For some reason webpack declartions are missing for these....
-declare global {
-    interface RuleSetConditionsRecursive {
-
-    }
-
-    interface RuleSetConditionsAbsoluteRecursive {
-
-    }
-
-}
+// declare global {
+//     interface RuleSetConditionsRecursive {
+//
+//     }
+//
+//     interface RuleSetConditionsAbsoluteRecursive {
+//
+//     }
+//
+// }

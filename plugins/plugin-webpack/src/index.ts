@@ -1,13 +1,10 @@
 import {OptionsManager} from "@mrbuilder/optionsmanager";
+import {camelCased, cwd, stringify, enhancedResolve} from '@mrbuilder/utils';
 import {OutputOptions, WebpackOptions} from "webpack/declarations/WebpackOptions";
+import processAlias from "./processAlias";
 import {MrBuilderWebpackPluginOptions, StringObject} from './types';
 
 export {default as processAlias} from './processAlias';
-import {
-    camelCased, cwd, stringify,
-    enhancedResolve, regexOrFuncApply
-} from '@mrbuilder/utils';
-import processAlias from "./processAlias";
 
 const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS = ['source', 'browser', 'main'];
@@ -45,9 +42,10 @@ const mod = function ({
                           node,
                           noParse,
                           target,
+                          resolve = {},
                           ...rest
                       }: MrBuilderWebpackPluginOptions, webpack: WebpackOptions, om: OptionsManager) {
-
+    webpack.resolve = resolve;
     webpack.mode = webpack.mode || returnMode(mode);
     const logger = om.logger('@mrbuilder/plugin-webpack');
     logger.info('webpack mode ', webpack.mode);

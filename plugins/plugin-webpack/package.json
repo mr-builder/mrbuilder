@@ -25,6 +25,7 @@
   "devDependencies": {
     "@mrbuilder/plugin-typescript": "^4.0.0",
     "@types/webpack": "^4.41.0",
+    "@types/webpack-env": "^1.15.1",
     "@types/webpack-sources": "^0.1.5"
   },
   "peerDependencies": {
