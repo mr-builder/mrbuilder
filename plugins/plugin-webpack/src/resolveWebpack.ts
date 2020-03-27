@@ -104,7 +104,7 @@ const DONE = (webpack: Webpack.Configuration) => {
     WEBPACK_CONFIG.entry = Object.freeze(parseEntry(entryNoParse))
 })(optionsManager.config('@mrbuilder/plugin-webpack.entry'));
 
-export default async (conf = WEBPACK_CONFIG, opts = OPTS, onDone = DONE): Promise<Webpack.Configuration> => {
+export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone = DONE): Promise<Webpack.Configuration> => {
     if (opts.outputPath) {
         conf.output.path = opts.outputPath;
     }

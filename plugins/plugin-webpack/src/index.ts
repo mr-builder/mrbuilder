@@ -4,6 +4,7 @@ import {OutputOptions, WebpackOptions} from "webpack/declarations/WebpackOptions
 import processAlias from "./processAlias";
 import {MrBuilderWebpackPluginOptions, StringObject} from './types';
 
+export * from './resolveWebpack';
 export {default as processAlias} from './processAlias';
 
 const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
