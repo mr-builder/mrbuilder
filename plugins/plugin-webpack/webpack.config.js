@@ -1,1 +1,1 @@
-module.exports = require('./lib/resolveWebpack')();
+module.exports = require('./lib/resolveWebpack').resolveWebpack();
