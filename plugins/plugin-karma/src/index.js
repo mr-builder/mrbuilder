@@ -8,13 +8,15 @@ module.exports = function ({
                                pattern,
                                useCoverage = false,
                                pathinfo = true,
+                               recursive = true,
                                node,
                                alias = {},
                                mainFields,
                                include,
-                               test
+                               test = pattern,
                            }, webpack, om) {
 
+    pattern = pattern || test;
     const info = om.logger('@mrbuilder/plugin-karma').info;
     testDir = enhancedResolve(testDir);
     include = include.map(v => enhancedResolve(v));
@@ -49,7 +51,7 @@ module.exports = function ({
             },
         );
     }
-    webpack.plugins.push(new ContextReplacementPlugin(/^@mrbuilder\/karma-test-context$/, pattern));
+    webpack.plugins.push(new ContextReplacementPlugin(/^@mrbuilder\/karma-test-context$/, testDir, recursive, pattern));
 
     //muck with webpack
     webpack.resolve.alias['@mrbuilder/karma-test-context'] = testDir;

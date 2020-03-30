@@ -9,9 +9,9 @@ const fs = require('fs');
 const babelProcess = require('./babel-process');
 const {camelToHyphen} = require('@mrbuilder/utils');
 //All configurations shoudl first check babel then babel-7.  Idea being that we may get to normalize babel stuff and not require configuration per version.
-const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-babel.${key}`, optionsManager.config(`@mrbuilder/plugin-babel-7.${key}`, def));
+const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-babel-7.${key}`, optionsManager.config(`@mrbuilder/plugin-babel.${key}`, def));
 const babelrc = mrb('babelrc', true) ? optionsManager.cwd('.babelrc') : false;
-let conf = {};
+let conf =mrb('config', {}) ;
 if (babelrc && fs.existsSync(babelrc)) {
     logger.info('using local .babelrc', babelrc);
     conf = JSON.parse(fs.readFileSync(babelrc, 'utf8'));
@@ -21,8 +21,11 @@ if (babelrc && fs.existsSync(babelrc)) {
         logger.debug('loading v7', defConf);
         conf = require(defConf);
     } else {
-        conf = mrb('config');
+        conf = mrb('config', {});
     }
+}
+if (!conf){
+    conf = {};
 }
 
 let _plugins = mrb('plugins');
@@ -40,6 +43,13 @@ if (_presets != null) {
     } else {
         conf.presets = Array.isArray(_presets) ? _presets : [_presets];
     }
+}
+
+if (!conf.plugins){
+    conf.plugins = [];
+}
+if (!conf.presets){
+    conf.presets = [];
 }
 if (optionsManager.config('@mrbuilder/plugin-react.useClassDisplayName', true)) {
     if (!conf.plugins.find(v => Array.isArray(v) ? v[0] === 'babel-plugin-add-react-displayname' : v === 'babel-plugin-add-react-displayname')) {

@@ -1,16 +1,18 @@
-const optionsManager = require('@mrbuilder/cli').default;
-if (optionsManager.enabled('@mrbuilder/plugin-browserslist')) {
-    require('@mrbuilder/plugin-browserslist');
-}
 const path = require('path');
 const fs = require('fs');
+
+const optionsManager = require('@mrbuilder/cli').default;
+require('@mrbuilder/plugin-browserslist');
+
 const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-babel-6.${key}`, optionsManager.config(`@mrbuilder/plugin-babel.${key}`, def));
 
 const babelProcess = require('./babel-process');
 const {camelToHyphen} = require('@mrbuilder/utils');
 const logger = optionsManager.logger('@mrbuilder/plugin-babel-6');
 const babelrc = mrb('babelrc', true) ? path.resolve(process.cwd(), '.babelrc') : false;
-let conf;
+
+let conf = mrb('config');
+
 if (babelrc && fs.existsSync(babelrc)) {
     logger.info('using local .babelrc', babelrc);
     conf = JSON.parse(fs.readFileSync(babelrc, 'utf8'));
@@ -23,6 +25,7 @@ if (babelrc && fs.existsSync(babelrc)) {
         conf = mrb('config');
     }
 }
+conf = conf || {};
 
 let _plugins = mrb('plugins'), _presets = mrb('presets');
 if (_plugins) {
@@ -64,19 +67,21 @@ if (useModules) {
 const applyConfig = (type) => (op) => {
     const preset = camelToHyphen(Array.isArray(op) ? op[0] : op);
     const short = (new RegExp(`/babel-${type}-(${preset})/|^(${preset})$`).exec(preset));
-    const conf = mrb(short[1] || short[2]);
-    if (conf != null) {
-        if (conf === false) {
+    const c = mrb(short[1] || short[2]);
+    if (c != null) {
+        if (c === false) {
             return;
         }
-        return [preset, conf];
+        return [preset, c];
     }
     return op;
 };
 
-conf.presets = conf.presets.map(applyConfig('preset')).filter(Boolean);
-
-conf.plugins = conf.plugins.map(applyConfig('plugin')).filter(Boolean);
-
+if (conf.presets) {
+    conf.presets = conf.presets.map(applyConfig('preset')).filter(Boolean);
+}
+if (conf.plugins) {
+    conf.plugins = conf.plugins.map(applyConfig('plugin')).filter(Boolean);
+}
 
 module.exports = babelProcess(conf, optionsManager.require.resolve, mrb('coverage', false));

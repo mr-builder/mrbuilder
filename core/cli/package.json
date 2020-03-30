@@ -6,6 +6,9 @@
     "@mrbuilder/optionsmanager": "^4.0.0",
     "in-publish": "^2.0.0"
   },
+  "devDependencies": {
+    "@types/webpack": "^4.41.8"
+  },
   "main": "lib",
   "scripts": {
     "prepare": "tsc"

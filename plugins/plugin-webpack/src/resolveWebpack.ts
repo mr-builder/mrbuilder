@@ -139,8 +139,11 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
             }
             info(option.name, 'loaded.');
         } else if (plugin) {
-            info('not loaded');
+            debug(`'${key}' not loaded no webpack plugin was found`);
         }
+    }
+    if (conf?.resolve?.extensions?.length) {
+        conf.resolve.extensions = Array.from(new Set(conf.resolve.extensions));
     }
 
     return onDone(reorderAlias(conf));

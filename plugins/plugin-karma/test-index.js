@@ -7,7 +7,7 @@ describe(
     describe(key, function () {
         tc(key);
     });
-}))(require.context("@mrbuilder/karma-test-context", true));
+}))(require.context("@mrbuilder/karma-test-context"));
 
 describe(`finished '${MRBUILDER_TEST_MODULE}'`, function () {
     it('🙄', () => {

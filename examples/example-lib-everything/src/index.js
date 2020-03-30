@@ -6,12 +6,14 @@ import Readme from '../Readme.md';
 import Timer from './timer.worker';
 import stylus from './stylus_module.stylm';
 import './stylus.styl';
-import { Hello } from './hello';
+import { Hello } from './hello.tsx';
 import yaml from './test.yaml';
 import style from './style.cssm';
 
 const USER     = process.env.USER;
 const NODE_ENV = process.env.NODE_ENV;
+
+
 
 export default class WebpackExample extends Component {
 
