@@ -24,9 +24,9 @@ if (babelrc && fs.existsSync(babelrc)) {
         conf = mrb('config', {});
     }
 }
-if (!conf){
-    conf = {};
-}
+
+conf = conf || require('./package.json').mrbuilder.options.config || {};
+
 
 let _plugins = mrb('plugins');
 if (_plugins) {
