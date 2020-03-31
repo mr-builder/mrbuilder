@@ -120,7 +120,7 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
     for (const [option, key] of options) {
         let plugin: Function;
         try {
-            plugin = optionsManager.require(Array.isArray(option.plugin) ? option.plugin[0] : option.plugin);
+            plugin = optionsManager.require(Array.isArray(option.plugin) ? option.plugin[0] : option.plugin || key);
         } catch (e) {
             if (e.code !== 'MODULE_NOT_FOUND') {
                 throw e;
