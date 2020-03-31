@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "description": "Provides prettier cli wrapper",
   "dependencies": {
-    "prettier": "^1.19.1"
+    "prettier": "^2.0.2"
   },
   "license": "BSD0",
   "bin": {

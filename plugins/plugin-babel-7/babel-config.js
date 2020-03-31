@@ -4,14 +4,25 @@ require('@mrbuilder/plugin-browserslist');
 
 const logger = optionsManager.logger('@mrbuilder/plugin-babel');
 
-const path = require('path');
+
 const fs = require('fs');
 const babelProcess = require('./babel-process');
 const {camelToHyphen} = require('@mrbuilder/utils');
+
+const findPlugin = (name, type = 'plugin') => {
+    const re = new RegExp(`^@babel\/(?:${type}-)?${name}$`);
+    return function (v) {
+        if (Array.isArray(v)) {
+            return v[0] ? re.test(v[0]) : false;
+        }
+        return v ? re.test(v) : false;
+    }
+};
 //All configurations shoudl first check babel then babel-7.  Idea being that we may get to normalize babel stuff and not require configuration per version.
 const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-babel-7.${key}`, optionsManager.config(`@mrbuilder/plugin-babel.${key}`, def));
 const babelrc = mrb('babelrc', true) ? optionsManager.cwd('.babelrc') : false;
-let conf =mrb('config', {}) ;
+let conf = mrb('config', {});
+
 if (babelrc && fs.existsSync(babelrc)) {
     logger.info('using local .babelrc', babelrc);
     conf = JSON.parse(fs.readFileSync(babelrc, 'utf8'));
@@ -45,10 +56,10 @@ if (_presets != null) {
     }
 }
 
-if (!conf.plugins){
+if (!conf.plugins) {
     conf.plugins = [];
 }
-if (!conf.presets){
+if (!conf.presets) {
     conf.presets = [];
 }
 if (optionsManager.config('@mrbuilder/plugin-react.useClassDisplayName', true)) {
@@ -60,8 +71,7 @@ if (optionsManager.config('@mrbuilder/plugin-react.useClassDisplayName', true)) 
 let useModules = mrb('useModules');
 if (useModules) {
     logger.info('allow exporting as ES6 modules');
-    const envRe = /@babel\/(?:preset-)?(?:env|es2015)$/;
-    const idx = conf.presets.findIndex(v => envRe.test(v));
+    const idx = conf.presets.findIndex(findPlugin('(?:env|2015)', 'preset'));
     if (idx > -1) {
         let newMod = conf.presets[idx];
         const [mod, c = {}] = Array.isArray(newMod) ? newMod : [newMod];
@@ -72,16 +82,47 @@ if (useModules) {
     }
 }
 
+
 //Jest uses babel typescript plugin, so we detect that typescript and jest is in use, and we use it. All open to better
 //ideas.
 if (optionsManager.enabled('@mrbuilder/plugin-typescript')) {
-    if (optionsManager.config('@mrbuilder/plugin-typescript.useBabel') || optionsManager.enabled('@mrbuilder/plugin-jest') || optionsManager.enabled('@mrbuilder/plugin-mocha')) {
-        if (conf.presets.findIndex(v => /@babel\/(preset-?)typescript$/.test(v)) === -1) {
+    if (optionsManager.config('@mrbuilder/plugin-typescript.useBabel') ||
+        optionsManager.enabled('@mrbuilder/plugin-jest') ||
+        optionsManager.enabled('@mrbuilder/plugin-mocha')) {
+        if (!conf.presets.some(findPlugin('typescript', 'preset'))) {
             conf.presets.push(['@babel/preset-typescript', {isTSX: true, allExtensions: true}]);
         }
     }
 }
+const useDecorators = mrb('useDecorators', 'legacy');
+if (useDecorators) {
+    let decIndex = conf.plugins.findIndex(findPlugin('proposal-decorators'));
+    let classPropIdx = conf.plugins.findIndex(findPlugin('proposal-class-properties'));
+    if (decIndex < 0) {
+        decIndex = conf.plugins.push('@babel/proposal-decorators');
+    }
+    if (classPropIdx < 0) {
+        classPropIdx = decIndex + 1;
+        conf.plugins.splice(classPropIdx, 0, '@babel/plugin-proposal-class-properties');
+    }
+    if (useDecorators === 'legacy') {
 
+        const dec = conf.plugins[decIndex] = ['@babel/plugin-proposal-decorators', {
+            ...(Array.isArray(conf.plugins[decIndex]) && conf.plugins[decIndex][1]),
+            legacy: true
+        }];
+
+        const props = conf.plugins[classPropIdx] = ['@babel/plugin-proposal-class-properties', {
+            ...(Array.isArray(conf.plugins[classPropIdx]) && conf.plugins[classPropIdx][1]),
+            loose: true
+        }];
+
+        if (classPropIdx < decIndex) {
+            conf.plugins[classPropIdx] = dec;
+            conf.plugins[decIndex] = props;
+        }
+    }
+}
 const applyConfig = (type) => (op) => {
     if (Array.isArray(op) ? op[1] === false : op.startsWith('-')) {
         return;
@@ -104,5 +145,4 @@ if (conf.presets) {
 if (conf.plugins) {
     conf.plugins = conf.plugins.map(applyConfig('plugin')).filter(Boolean);
 }
-
 module.exports = babelProcess(conf, optionsManager.require.resolve, mrb('coverage', false));

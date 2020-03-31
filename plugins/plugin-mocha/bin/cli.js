@@ -32,14 +32,11 @@ if (coverageDir || coverageGLobal) {
         `--reporter=json`, `--instrument=false`, '--all',
         '--include=src/**/*.js', mocha);
     mocha = path.resolve(__dirname, '..', 'node_modules', '.bin', 'nyc');
-} else {
-    if (useBabel) {
-        argv.push('--require', require.resolve('@mrbuilder/plugin-babel/babel-polyfill'));
-    }
 }
-if (om.enabled("@mrbuilder/plugin-typescript")) {
-    argv.push('-r', 'ts-node/register');
-}
+
+// if (om.enabled("@mrbuilder/plugin-typescript")) {
+//     argv.push('-r', 'ts-node/register');
+// }
 
 if (timeout) {
     //argv is all strings
@@ -47,12 +44,12 @@ if (timeout) {
 }
 
 if (useBabel) {
-    argv.push('--require', require.resolve('@mrbuilder/plugin-babel/babel-register'));
+  argv.push('--require', require.resolve('@mrbuilder/plugin-babel/babel-register'));
 }
 
 if (om.enabled('@mrbuilder/plugin-enzyme')) {
     argv.push('--require', path.join(__dirname, '..', 'src', 'cli-helpers'));
-    argv.push('--require', '@mrbuilder/plugin-enzyme/src/enzyme-mocha');
+    argv.push('--require', require.resolve('@mrbuilder/plugin-enzyme/src/enzyme-mocha'));
 }
 
 argv.push(testDir + '/' + filePattern);

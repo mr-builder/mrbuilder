@@ -6,8 +6,7 @@
     "test": "mrbuilder-mocha"
   },
   "dependencies": {
-    "file-loader": "^5.1.0",
-    "url-loader": "^3.0.0"
+    "@mrbuilder/plugin-filetypes": "^4.0.0"
   },
   "devDependencies": {
     "@mrbuilder/plugin-mocha": "^4.0.0"

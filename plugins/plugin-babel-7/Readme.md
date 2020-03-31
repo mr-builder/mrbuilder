@@ -16,5 +16,5 @@ The default babel configuration:
 | includes      | arrayOf: string,regex|./src,./public,./test| Webpack module includes option |
 | use           | object     | {use:{loader:'babel-loader}}| Allows for a different babel-loader |
 | <babel_plugin>| object     |              | configure babel plugins |
-
+| useDecorators | bool or 'legacy'| legacy  | Use decorators. If its legacy class-properties   |
 

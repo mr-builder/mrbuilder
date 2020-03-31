@@ -6,7 +6,7 @@
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
     "@mrbuilder/plugin-css": "^4.0.0",
-    "loader-utils": "^1.2.3",
+    "loader-utils": "^2.0.0",
     "nib": "^1.1.2",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2"
