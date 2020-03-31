@@ -4,8 +4,9 @@
   "description": "Tools for developing with mrbuilder",
   "dependencies": {
     "@mrbuilder/optionsmanager": "^4.0.0",
-    "in-publish": "^2.0.0"
+    "in-publish": "^2.0.1"
   },
+
   "main": "lib",
   "scripts": {
     "prepare": "tsc"

@@ -19,13 +19,14 @@
     "@mrbuilder/utils": "^4.0.0",
     "raw-loader": "^4.0.0",
     "val-loader": "^2.1.0",
-    "webpack": "^4.42.0",
+    "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
     "@mrbuilder/plugin-typescript": "^4.0.0",
-    "@types/webpack": "^4.41.0",
-    "@types/webpack-sources": "^0.1.5"
+    "@types/webpack": "^4.41.10",
+    "@types/webpack-env": "^1.15.1",
+    "@types/webpack-sources": "^0.1.7"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

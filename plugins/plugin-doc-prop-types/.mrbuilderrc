@@ -1,4 +1,5 @@
 {
+  "plugins": ["@mrbuilder/plugin-babel"],
   "env": {
     "development": {
       "plugins": [

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const path             = require('path');
+const path = require('path');
 const {env, argv, cwd} = process;
 
 if (!env.NODE_ENV) {
@@ -7,11 +7,11 @@ if (!env.NODE_ENV) {
 }
 
 const {
-          MRBUILDER_COVERAGE,
-          MRBUILDER_COVERAGE_DIR,
-          MRBUILDER_COVERAGE_USE_GLOBAL,
-          npm_lifecycle_event,
-      } = env;
+    MRBUILDER_COVERAGE,
+    MRBUILDER_COVERAGE_DIR,
+    MRBUILDER_COVERAGE_USE_GLOBAL,
+    npm_lifecycle_event,
+} = env;
 
 
 function indexOfArg() {
@@ -54,10 +54,9 @@ if (argv.includes('--single-run', 2) && !argv.includes('--browser', 2)) {
     argv.push('--browser', 'Firefox');
 }
 
-const webpack = require('@mrbuilder/plugin-webpack/webpack.config');
-Promise.resolve(webpack).then((_webpack) => {
+require('@mrbuilder/plugin-webpack/webpack.config').then((webpack) => {
     //karma does not allow for async configuration.  So we do this. Not proud.
-    global._MRBUILDER_WEBPACK_ = _webpack;
+    global._MRBUILDER_WEBPACK_ = webpack;
     require('karma-cli/bin/karma');
 }, (err) => {
     console.error(err);

@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "description": "analyze support for mrbuilder",
   "dependencies": {
-    "webpack-bundle-analyzer": "^3.6.0"
+    "webpack-bundle-analyzer": "^3.6.1"
   },
   "scripts": {
     "test": "mrbuilder-mocha"

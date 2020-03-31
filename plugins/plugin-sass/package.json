@@ -7,7 +7,7 @@
   "dependencies": {
     "@mrbuilder/plugin-css": "^4.0.0",
     "@mrbuilder/utils": "^4.0.0",
-    "loader-utils": "^1.4.0",
+    "loader-utils": "^2.0.0",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2"
   },

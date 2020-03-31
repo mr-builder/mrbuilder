@@ -3,6 +3,7 @@ const useBabel = require('../use-babel');
 const version = require('../version');
 module.exports = ({
                       test,
+                      extensions,
                       include = [
                           cwd('src'),
                           cwd('public'),
@@ -14,15 +15,18 @@ module.exports = ({
 
     const use = useBabel(om);
 
+    if (!webpack.resolve.extensions) {
+        webpack.resolve.extensions = [];
+    }
+    if (extensions) {
+        webpack.resolve.extensions.push(...extensions);
+    }
 
     if (!test) {
 
         test = /\.(es\d*?|jsx?)$/;
         if (om.config('@mrbuilder/plugin-typescript.useBabel') || om.enabled('@mrbuilder/plugin-jest')) {
-            if (!webpack.resolve.extensions) {
-                webpack.resolve.extensions = [];
-            }
-            webpack.resolve.extensions.push(...om.config('@mrbuilder/plugin-typescript.extensions', ['.ts', '.tsx']));
+
             if (version > 6) {
                 test = /\.[jet]sx?$/
             } else {

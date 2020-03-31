@@ -6,7 +6,7 @@
   "dependencies": {
     "@mrbuilder/plugin-doc-prop-types": "^4.0.0",
     "@mrbuilder/plugin-webpack": "^4.0.0",
-    "react-styleguidist": "^10.6.2"
+    "react-styleguidist": "^11.0.5"
   },
   "mrbuilder": {
     "plugins": [

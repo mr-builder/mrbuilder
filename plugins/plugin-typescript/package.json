@@ -8,14 +8,12 @@
     "mrbuilder-typescript": "./bin/cli.js"
   },
   "dependencies": {
-    "@babel/preset-typescript": "^7.8.3",
+    "@babel/preset-typescript": "^7.9.0",
     "@mrbuilder/cli": "^4.0.0",
-    "@types/lodash": "^4.14.149",
-    "@types/node": "^13.7.7",
-    "@types/promise": "^7.1.30",
-    "@types/react": "^16.9.23",
+    "@types/node": "^13.9.8",
+    "@types/react": "^16.9.27",
     "source-map-loader": "^0.2.4",
-    "ts-loader": "^6.2.1",
+    "ts-loader": "^6.2.2",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.8.3"
   },

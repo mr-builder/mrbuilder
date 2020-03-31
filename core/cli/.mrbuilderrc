@@ -1,4 +1,5 @@
 {
+  "plugin": "./lib/webpack.js",
   "options": {
     "sourceDir": "./src",
     "outputDir": "./lib",
@@ -85,9 +86,8 @@
       "options": {
         "bin": "@mrbuilder/plugin-mocha/bin/cli"
       },
-      "plugins": [
-        "@mrbuilder/plugin-mocha",
-        "@mrbuilder/plugin-enzyme"
+      "presets": [
+        "@mrbuilder/preset-test"
       ]
     },
     "webpack-dev-server": {

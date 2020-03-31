@@ -30,7 +30,7 @@
       "mainFields": "Sets main fields for easier debugging"
     },
     "options": {
-      "test": "/-test\\.[jet]sx?/",
+      "pattern": "/[-.](?:test|spec)\\.[jet]sx?$/",
       "pathinfo": true,
       "node": {
         "fs": "empty",
