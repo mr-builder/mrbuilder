@@ -99,7 +99,7 @@ if (useDecorators) {
     let decIndex = conf.plugins.findIndex(findPlugin('proposal-decorators'));
     let classPropIdx = conf.plugins.findIndex(findPlugin('proposal-class-properties'));
     if (decIndex < 0) {
-        decIndex = conf.plugins.push('@babel/proposal-decorators');
+        decIndex = conf.plugins.push('@babel/plugin-proposal-decorators');
     }
     if (classPropIdx < 0) {
         classPropIdx = decIndex + 1;
