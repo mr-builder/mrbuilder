@@ -7,6 +7,7 @@
     "@mrbuilder/plugin-karma": "^4.0.1",
     "@mrbuilder/plugin-mocha": "^4.0.1",
     "@mrbuilder/plugin-react": "^4.0.1",
+    "@mrbuilder/plugin-babel": "^4.0.1",
     "@mrbuilder/plugin-webpack": "^4.0.1"
   },
   "peerDependencies": {
@@ -14,6 +15,7 @@
   },
   "mrbuilder": {
     "plugins": [
+      "@mrbuilder/plugin-babel",
       "@mrbuilder/plugin-react",
       [
         "@mrbuilder/plugin-webpack",
