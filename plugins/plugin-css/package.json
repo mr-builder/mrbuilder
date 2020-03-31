@@ -1,9 +1,9 @@
 {
   "name": "@mrbuilder/plugin-css",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "CSS support for mbuilder",
   "dependencies": {
-    "@mrbuilder/plugin-browserslist": "^4.0.0",
+    "@mrbuilder/plugin-browserslist": "^4.0.1",
     "autoprefixer": "^9.7.5",
     "css-loader": "^3.4.2",
     "find-package": "^1.0.0",
@@ -15,8 +15,8 @@
     "test": "mrbuilder-mocha"
   },
   "devDependencies": {
-    "@mrbuilder/plugin-enzyme": "^4.0.0",
-    "@mrbuilder/plugin-mocha": "^4.0.0"
+    "@mrbuilder/plugin-enzyme": "^4.0.1",
+    "@mrbuilder/plugin-mocha": "^4.0.1"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

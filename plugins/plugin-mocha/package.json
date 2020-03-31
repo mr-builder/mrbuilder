@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-mocha",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Tools for developing with mrbuilder and mocha",
   "scripts": {
     "clean": "mrbuilder-clean"
@@ -9,8 +9,8 @@
     "mrbuilder-mocha-cli": "./bin/cli.js"
   },
   "dependencies": {
-    "@mrbuilder/optionsmanager": "^4.0.0",
-    "@mrbuilder/plugin-babel": "^4.0.0",
+    "@mrbuilder/optionsmanager": "^4.0.1",
+    "@mrbuilder/plugin-babel": "^4.0.1",
     "chai": "^4.2.0",
     "jsdom": "^16.2.2",
     "mocha": "^7.1.1",
@@ -19,15 +19,11 @@
   "main": "src",
   "source": "src",
   "mrbuilder": {
-    "alias": {
-      "coverageDir": "Output directory for code coverage",
-      "testDir": "Directory to test",
-      "filePattern": "Pattern of files to test",
-      "timeout": "Time allowed to run test"
-    },
-    "plugins": [
-      "@mrbuilder/plugin-babel"
-    ]
+    "options": {
+      "testDir": "test",
+      "filePattern": "*[.-]!(karma[.-]){test,spec}.{js,jsx,ts,tsx,es,esx,es6}",
+      "timeout": "2000"
+    }
   },
   "license": "0BSD",
   "peerDependencies": {
@@ -37,12 +33,5 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
-  },
-  "mrbuilder": {
-    "options": {
-      "testDir": "test",
-      "filePattern": "*[.-]!(karma[.-]){test,spec}.{js,jsx,ts,tsx,es,esx,es6}",
-      "timeout": "2000"
-    }
   }
 }
