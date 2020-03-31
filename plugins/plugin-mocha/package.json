@@ -22,7 +22,8 @@
     "options": {
       "testDir": "test",
       "filePattern": "*[.-]!(karma[.-]){test,spec}.{js,jsx,ts,tsx,es,esx,es6}",
-      "timeout": "2000"
+      "timeout": "2000",
+      "useBabel": true
     }
   },
   "license": "0BSD",
