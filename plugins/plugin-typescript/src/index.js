@@ -2,7 +2,7 @@ const manageTsConfig = require('./manageTsConfig');
 module.exports = function ({
                                test = /[.]tsx?$/,
                                baseUrl = process.cwd(),
-                               extensions,
+                               extensions = ['.ts', '.tsx'],
                                useBabel = false,
                                allowTsInNodeModules = false,
                                context,
