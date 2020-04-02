@@ -1,15 +1,15 @@
 {
   "name": "@mrbuilder/example-lib-tailwindcss",
   "description": "Example showing a lib build for webpack and tailwindcss",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "private": true,
   "devDependencies": {
     "@mrbuilder/cli": "^4.0.1",
     "@mrbuilder/plugin-babel-7": "^4.0.2",
     "@mrbuilder/plugin-tailwindcss": "^4.0.2",
-    "@mrbuilder/plugin-typescript": "^4.0.1",
-    "@mrbuilder/preset-app": "^4.0.2",
-    "@mrbuilder/preset-lib": "^4.0.2"
+    "@mrbuilder/plugin-typescript": "^4.0.3",
+    "@mrbuilder/preset-app": "^4.0.3",
+    "@mrbuilder/preset-lib": "^4.0.3"
   },
   "scripts": {
     "prepare": "mrbuilder",

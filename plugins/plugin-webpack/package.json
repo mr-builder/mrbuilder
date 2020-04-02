@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-webpack",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Tools for developing with mrbuilder and webpack",
   "scripts": {
     "clean": "mrbuilder-clean",
@@ -23,7 +23,7 @@
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
-    "@mrbuilder/plugin-typescript": "^4.0.1",
+    "@mrbuilder/plugin-typescript": "^4.0.3",
     "@types/webpack": "^4.41.10",
     "@types/webpack-env": "^1.15.1",
     "@types/webpack-sources": "^0.1.7"
