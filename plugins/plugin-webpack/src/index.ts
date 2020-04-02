@@ -3,12 +3,14 @@ import {camelCased, cwd, stringify, enhancedResolve} from '@mrbuilder/utils';
 import {OutputOptions, WebpackOptions} from "webpack/declarations/WebpackOptions";
 import processAlias from "./processAlias";
 import {MrBuilderWebpackPluginOptions, StringObject} from './types';
+import {deepMerge} from './deepMerge';
 
 export * from './resolveWebpack';
 export {default as processAlias} from './processAlias';
 
 const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS = ['source', 'browser', 'main'];
+
 const returnMode = (val = process.env.NODE_ENV) => {
     switch (val) {
         case "development":
@@ -46,7 +48,8 @@ const mod = function ({
                           resolve = {},
                           ...rest
                       }: MrBuilderWebpackPluginOptions, webpack: WebpackOptions, om: OptionsManager) {
-    webpack.resolve = resolve;
+    webpack.resolve = deepMerge(webpack.resolve, resolve);
+
     webpack.mode = webpack.mode || returnMode(mode);
     const logger = om.logger('@mrbuilder/plugin-webpack');
     logger.info('webpack mode ', webpack.mode);
