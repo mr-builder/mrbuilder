@@ -87,8 +87,8 @@ const isApp = (argv.slice(2).find(v => /--(app|demo)(=.*)?$/.test(v)));
 profile.split(':').forEach(p => {
     switch (p) {
         case 'production':
-        case 'development':{
-            if (!env.NODE_ENV){
+        case 'development': {
+            if (!env.NODE_ENV) {
                 env.NODE_ENV = p;
             }
             envArray.push(p);
@@ -152,7 +152,18 @@ profile.split(':').forEach(p => {
 env.MRBUILDER_ENV = [...new Set(envArray)].join(':');
 const om = require('@mrbuilder/cli').default;
 const script = om.config('@mrbuilder/cli.bin');
-
+const cliArgv = om.config('@mrbuilder/cli.argv');
+if (cliArgv) {
+    cliArgv.forEach(function (v, i) {
+        const k = v.split('=', 2)[0];
+        if (!this.includes(k)) {
+            process.argv.splice(2 + i, 0, v);
+        }
+    }, process.argv.slice(2).reduce((r, v) => {
+        r.push(v.split('=', 2)[0]);
+        return r;
+    }, []));
+}
 om.info(`running '${script}' MRBUILDER_ENV: '${env.MRBUILDER_ENV}' ${profile}`);
 om.debug(`configuration: \n` + JSON.stringify(Array.from(om.plugins.entries()).map(([name, value]) => ([name, typeof value === 'boolean' ? value : value.config])), null, 2));
 
