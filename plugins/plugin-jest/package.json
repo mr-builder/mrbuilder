@@ -19,7 +19,17 @@
   "license": "BSD0",
   "mrbuilder": {
     "plugins": [
+      [
+        "@mrbuilder/cli",
+        {
+          "bin": "@mrbuilder/plugin-jest/bin/cli.js"
+        }
+      ],
       "@mrbuilder/plugin-babel-7",
+      [
+        "@mrbuilder/plugin-mocha",
+        false
+      ],
       [
         "@mrbuilder/plugin-karma",
         false
