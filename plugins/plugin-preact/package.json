@@ -1,0 +1,17 @@
+{
+  "name": "@mrbuilder/plugin-preact",
+  "version": "4.0.4",
+  "source": "src",
+  "main": "src",
+  "dependencies": {
+    "preact": "^10.4.0"
+  },
+  "mrbuilder": {
+    "plugins": [
+      [
+        "@mrbuilder/plugin-react",
+        false
+      ]
+    ]
+  }
+}
