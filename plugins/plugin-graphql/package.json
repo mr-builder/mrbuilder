@@ -18,5 +18,12 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
+  },
+  "mrbuilder": {
+    "options": {
+      "test": "/\\.(?:graphql|gql)s?$/",
+      "loader": "graphql-tag/loader",
+      "exclude": "/node_modules/"
+    }
   }
 }
