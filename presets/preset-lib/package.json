@@ -69,7 +69,7 @@
     }
   },
   "license": "0BSD",
-  "gitHead": "8932fa60b6c6f6ed18b45918e7873c8e70b8d0be",
+  "gitHead": "4762479fb6964cdeb52d5da1077e5f893ffd57a1",
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"

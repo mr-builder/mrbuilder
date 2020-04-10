@@ -3,8 +3,13 @@
   "version": "4.0.6",
   "source": "src",
   "main": "src",
+  "license": "0BSD",
   "dependencies": {
     "preact": "^10.4.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org"
   },
   "mrbuilder": {
     "options": {
@@ -20,5 +25,6 @@
         false
       ]
     ]
-  }
+  },
+  "gitHead": "4762479fb6964cdeb52d5da1077e5f893ffd57a1"
 }
