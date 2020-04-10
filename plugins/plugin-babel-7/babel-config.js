@@ -69,23 +69,18 @@ if (optionsManager.config('@mrbuilder/plugin-react.useClassDisplayName', true)) 
 }
 
 if (optionsManager.enabled('@mrbuilder/plugin-preact')) {
-    if (!optionsManager.config('@mrbuilder/plugin-preact.useCompat')) {
-        const reactPropIdx = conf.presets.findIndex(findPlugin('react', 'preset'));
-
-        if (reactPropIdx > -1) {
-            logger.info('using preact configuration');
-            const r = Array.isArray(conf.presets[reactPropIdx]) ? conf.presets[reactPropIdx] : [conf.presets[reactPropIdx]];
-            conf.presets[reactPropIdx] = [
-                r[0],
-                {
-                    ...r[1],
-                    "pragma": "h",
-                    "pragmaFrag": "Fragment",
-                }
-            ]
-        } else {
-            logger.info(`@mrbuilder/plugin-preact enabled but did not find '@babel/preset-react' in babel config `);
-        }
+    const reactPropIdx = conf.presets.findIndex(findPlugin('react', 'preset'));
+    if (reactPropIdx > -1) {
+        logger.info('using preact configuration');
+        const r = Array.isArray(conf.presets[reactPropIdx]) ? conf.presets[reactPropIdx] : [conf.presets[reactPropIdx]];
+        conf.presets[reactPropIdx] = [
+            r[0],
+            {
+                ...r[1],
+                "pragma": "h",
+                "pragmaFrag": "Fragment",
+            }
+        ]
     }
 }
 
