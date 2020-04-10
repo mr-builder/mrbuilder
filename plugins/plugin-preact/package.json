@@ -13,17 +13,17 @@
   },
   "mrbuilder": {
     "options": {
+      "useCompat": true,
       "alias": {
-        "react": "preact/compat",
-        "react-dom/test-utils": "test-utils",
-        "react-dom": "preact/compat"
+        "react": "~preact/compat",
+        "react-dom/test-utils": "~preact/test-utils",
+        "react-dom": "~preact/compat",
+        "react/": "~preact/compat/",
+        "react-dom/": "~preact/compat/"
       }
     },
     "plugins": [
-      [
-        "@mrbuilder/plugin-react",
-        false
-      ]
+      "@mrbuilder/plugin-react"
     ]
   },
   "gitHead": "4762479fb6964cdeb52d5da1077e5f893ffd57a1"
