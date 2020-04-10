@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-preact",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "source": "src",
   "main": "src",
   "license": "0BSD",
