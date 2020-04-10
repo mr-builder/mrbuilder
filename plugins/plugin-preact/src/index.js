@@ -1,6 +1,8 @@
-const {enhancedResolve} = require("@mrbuilder/utils");
 
-module.exports = ({useCompat = true}, webpack) => {
+module.exports = ({alias}, webpack) => {
+    if (!alias){
+        return webpack
+    }
     if (!webpack.resolve) {
         webpack.resolve = {};
     }
@@ -9,11 +11,7 @@ module.exports = ({useCompat = true}, webpack) => {
         webpack.resolve.alias = {};
     }
 
-    Object.assign(webpack.resolve.alias, {
-        "react": "preact/compat",
-        "react-dom/test-utils": "test-utils",
-        "react-dom": "preact/compat"
-    });
+    Object.assign(webpack.resolve.alias, alias);
 
     return webpack;
 };
