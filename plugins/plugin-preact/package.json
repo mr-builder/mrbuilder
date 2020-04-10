@@ -1,0 +1,24 @@
+{
+  "name": "@mrbuilder/plugin-preact",
+  "version": "4.0.4",
+  "source": "src",
+  "main": "src",
+  "dependencies": {
+    "preact": "^10.4.0"
+  },
+  "mrbuilder": {
+    "options": {
+      "alias": {
+        "react": "preact/compat",
+        "react-dom/test-utils": "test-utils",
+        "react-dom": "preact/compat"
+      }
+    },
+    "plugins": [
+      [
+        "@mrbuilder/plugin-react",
+        false
+      ]
+    ]
+  }
+}
