@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-graphql",
-  "version": "4.0.2",
+  "version": "4.0.5",
   "description": "Loading graphql webpack",
   "dependencies": {
     "graphql-tag": "^2.9.2"

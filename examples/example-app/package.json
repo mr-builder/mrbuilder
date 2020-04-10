@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/example-app",
   "description": "Sample application using mrbuilder components",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "private": true,
   "dependencies": {
     "@mrbuilder/example-lib": "^4.0.4",
-    "@mrbuilder/example-lib-everything": "^4.0.4",
+    "@mrbuilder/example-lib-everything": "^4.0.5",
     "@mrbuilder/example-lib-webpack": "^4.0.4"
   },
   "devDependencies": {
