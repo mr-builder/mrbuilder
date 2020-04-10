@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/preset-app",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.0.1",
     "@mrbuilder/plugin-babel-7": "^4.0.2",
@@ -15,8 +15,8 @@
     "@mrbuilder/plugin-less": "^4.0.2",
     "@mrbuilder/plugin-react": "^4.0.1",
     "@mrbuilder/plugin-uglify": "^4.0.2",
-    "@mrbuilder/plugin-webpack": "^4.0.3",
-    "@mrbuilder/plugin-webpack-dev-server": "^4.0.3"
+    "@mrbuilder/plugin-webpack": "^4.0.4",
+    "@mrbuilder/plugin-webpack-dev-server": "^4.0.4"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

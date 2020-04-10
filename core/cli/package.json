@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/cli",
-  "version": "4.0.1",
+  "version": "4.0.4",
   "description": "Tools for developing with mrbuilder",
   "dependencies": {
     "@mrbuilder/optionsmanager": "^4.0.1",

@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-jest",
-  "version": "4.0.1",
+  "version": "4.0.4",
   "bin": {
     "mrbuilder-jest-cli": "./bin/cli.js"
   },
