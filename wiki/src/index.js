@@ -7,7 +7,7 @@ ${content.trim()}
 \`\`\`
 `;
 
-module.exports = (options, webpack, om) => {
+module.exports = async (options, webpack, om) => {
 
     options.description = (pkg) => {
         const category  = first(/.*(preset|plugin|core|example)[/-].*/.exec(pkg.name));
@@ -82,5 +82,8 @@ ${quote('json', `
 
         return description;
     };
-    return styleguide(options, webpack, om);
+    const out = await styleguide(options, webpack, om);
+//    console.log('out',out)
+    out.output.filename ='[name].[hash].js'
+    return out;
 };

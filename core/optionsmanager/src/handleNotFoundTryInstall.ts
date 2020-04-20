@@ -2,7 +2,7 @@ import {spawnSync} from 'child_process';
 import path from 'path';
 
 function findExecPath() {
-    return process.env['$npm_execpath'] || require('which')
+    return process.env['$npm_execpath'] ||process.env['npm_execpath'] || require('which')
         .sync('yarn', {nothrow: true}) || require('which')
         .sync('npm', {nothrow: true});
 
@@ -31,7 +31,7 @@ export default function handleNotFoundTryInstall(e: Error, pkg: string, isDev = 
         if (first) {
             first = false;
             info(
-                `using ${isYarn ? 'yarn' : 'npm'} to install '${pkg}' this might take a minute, and
+                `using '${npmPath}' to install '${pkg}' this might take a minute, and
                  should only happen when you haven't installed it as a dependency. After it installs
                  successfully it won't do this the next time you run mrbuilder. If you would
                  rather declare it as a ${isDev ? 'devDependency'
