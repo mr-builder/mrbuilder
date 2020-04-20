@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-css",
-  "version": "4.0.2",
+  "version": "4.0.8",
   "description": "CSS support for mbuilder",
   "dependencies": {
     "@mrbuilder/plugin-browserslist": "^4.0.1",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@mrbuilder/plugin-enzyme": "^4.0.1",
-    "@mrbuilder/plugin-mocha": "^4.0.2"
+    "@mrbuilder/plugin-mocha": "^4.0.8"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

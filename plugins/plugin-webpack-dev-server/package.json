@@ -1,10 +1,10 @@
 {
   "name": "@mrbuilder/plugin-webpack-dev-server",
-  "version": "4.0.4",
+  "version": "4.0.8",
   "description": "webpack dev server for mrbuilder",
   "dependencies": {
-    "@mrbuilder/optionsmanager": "^4.0.1",
-    "@mrbuilder/plugin-webpack": "^4.0.4",
+    "@mrbuilder/optionsmanager": "^4.0.8",
+    "@mrbuilder/plugin-webpack": "^4.0.8",
     "@mrbuilder/utils": "^4.0.1",
     "hard-source-webpack-plugin": "^0.13.1",
     "loglevel": "^1.6.6",

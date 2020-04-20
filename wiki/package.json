@@ -1,13 +1,12 @@
 {
   "name": "@mrbuilder/wiki",
   "private": true,
-  "version": "4.0.4",
+  "version": "4.0.8",
   "dependencies": {
-    "@mrbuilder/cli": "^4.0.4",
+    "@mrbuilder/cli": "^4.0.8",
     "@mrbuilder/plugin-clean": "^4.0.1",
-    "@mrbuilder/plugin-react-styleguidist": "^4.0.4"
+    "@mrbuilder/plugin-react-styleguidist": "^4.0.8"
   },
-
   "scripts": {
     "prepare": "mrbuilder --app  lib/mr-builder.github.io",
     "start": "mrbuilder"
