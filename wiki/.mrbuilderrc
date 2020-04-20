@@ -32,6 +32,10 @@
       {
         "app": "docs",
         "devtool": "source-map",
+        "output": {
+          "filename": "[name].[hash].js",
+          "chunkFilename": "[name].[hash].chunk.js",
+        },
         "node": {
           "fs": "empty"
         }
@@ -81,18 +85,6 @@
                 "content": "../docs/monorepo.md"
               },
               {
-                "name": "Upgrading to 4.x",
-                "content": "../docs/upgrade-3-4.md"
-              },
-              {
-                "name": "Upgrading to 3.x",
-                "content": "../docs/upgrade-2-3.md"
-              },
-              {
-                "name": "Upgrading to 2.x",
-                "content": "../docs/upgrade-1-2.md"
-              },
-              {
                 "name": "Multi Module Project",
                 "content": "../docs/getting-started.md"
               },
@@ -111,6 +103,23 @@
               {
                 "name": "Debugging",
                 "content": "../docs/debugging.md"
+              },
+              {
+                "name": "Upgrading",
+                "sections": [
+                  {
+                    "name": "3.x to 4.x",
+                    "content": "../docs/upgrade-3-4.md"
+                  },
+                  {
+                    "name": "2.x to 3.x",
+                    "content": "../docs/upgrade-2-3.md"
+                  },
+                  {
+                    "name": "1.x to 2.x",
+                    "content": "../docs/upgrade-1-2.md"
+                  }
+                ]
               }
             ]
           },
