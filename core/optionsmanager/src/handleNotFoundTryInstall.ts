@@ -2,7 +2,7 @@ import {spawnSync} from 'child_process';
 import path from 'path';
 
 function findExecPath() {
-    return process.env['$npm_execpath'] || require('which')
+    return process.env['$npm_execpath'] ||process.env['npm_execpath'] || require('which')
         .sync('yarn', {nothrow: true}) || require('which')
         .sync('npm', {nothrow: true});
 
