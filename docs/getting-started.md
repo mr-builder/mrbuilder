@@ -15,7 +15,7 @@ While MR Builder is designed for use in monorepos.  It can also be used stand al
 Just add mrbuilder to your package.json and the scripts section.
 
 ```sh
- $ yarn add mrbuilder
+ $ yarn add @mrbuilder/cli
 
 ```
 And then edit package.json
@@ -23,7 +23,7 @@ And then edit package.json
 {
   "name":"your-component",
   "devDependencies":{
-     "mrbuilder":"2.0.0"
+     "@mrbuilder/cli":"^4.0.0"
   },
   "main":"lib",
   "source":"src",
