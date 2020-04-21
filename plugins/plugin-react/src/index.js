@@ -1,6 +1,6 @@
 const {resolvePkgDir} = require('@mrbuilder/utils');
 const useBabel = require('@mrbuilder/plugin-babel/use-babel.js');
-const {util} = require('@mrbuilder/cli');
+const {info} = require('@mrbuilder/cli');
 let showedWarning = false;
 
 module.exports = function reactPlugin({compatMode,}, webpack, om) {
@@ -18,7 +18,7 @@ module.exports = function reactPlugin({compatMode,}, webpack, om) {
     }
     const reactDir = resolvePkgDir('react');
     if (compatMode) {
-        if (util.isLibrary) {
+        if (info.isLibrary) {
             logger.warn(
                 'compatMode should not be used for libraries results will be unpredictable')
         }
@@ -128,7 +128,7 @@ module.exports = function reactPlugin({compatMode,}, webpack, om) {
 
             }
         });
-    } else if (util.isLibrary) {
+    } else if (info.isLibrary) {
         if (om.config('@mrbuilder/plugin-webpack.useExternals') !== false) {
             if (!webpack.externals) {
                 webpack.externals = [];
