@@ -12,8 +12,8 @@ module.exports = async (options, webpack, om) => {
     options.description = (pkg) => {
         const category  = first(/.*(preset|plugin|core|example)[/-].*/.exec(pkg.name));
         let description = pkg.description || '';
-
-        const src = pkg.homepage || category ? `https://github.com/mr-builder/${category}s/${pkg.name}` : `https://github.com/mr-builder/${pkg.name}`;
+        const simpleName = pkg.name.split('/',2)[1];
+        const src = pkg.homepage || category ? `https://github.com/mr-builder/${category}s/${simpleName}` : `https://github.com/mr-builder/${simpleName}`;
         if (category === 'example') {
             return `
 ---
@@ -22,7 +22,7 @@ ${description}
 ### Installation
 ${quote('sh', `
 $ git clone git@github.com:mr-builder/mrbuilder.git
-$ cd examples/${pkg.name}
+$ cd examples/${simpleName}
 $ yarn install
 `)}
            
