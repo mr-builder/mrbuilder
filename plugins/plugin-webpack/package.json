@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-webpack",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "Tools for developing with mrbuilder and webpack",
   "scripts": {
     "clean": "mrbuilder-clean",
