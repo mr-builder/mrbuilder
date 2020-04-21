@@ -99,7 +99,7 @@ react module system would look like.
         "{your_builder}-webpack-dev-server"
   },
   "mrbuilder":{
-    "plugins":["mrbuilder"//whatever else plugins you need]
+    "plugins":["@mrbuilder/cli"//whatever else plugins you need]
   }
 }
 ```

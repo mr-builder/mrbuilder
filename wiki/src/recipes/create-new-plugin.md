@@ -16,3 +16,6 @@ If the plugin needs access to webpack  export a function, that function will be 
 being webpack's configuration and the second the OptionsManager.   Here you can mutate the plugin as you wish.
 
 
+## New CLI
+If your plugin has a cli and is not just a webpack plugin.  Consider using the cli configuration 
+mechansim to ensure the correct script is executed.  

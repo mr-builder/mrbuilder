@@ -26,47 +26,47 @@ Example
 ```json
 {
   "plugins": [
-       "mrbuilder",
-       "mrbuilder-plugin-env"
+       "@mrbuilder/cli",
+       "@mrbuilder/plugin-env"
      ],
      "env": {
        "development": {
          "plugins": [
            [
-             "mrbuilder-plugin-css",
+             "@mrbuilder/plugin-css",
              {
                "useNameHash": "css/[name].css"
              }
            ],
-           "mrbuilder-plugin-html",
-           "mrbuilder-plugin-webpack-dev-server",
-           "mrbuilder-plugin-hot"
+           "@mrbuilder/plugin-html",
+           "@mrbuilder/plugin-webpack-dev-server",
+           "@mrbuilder/plugin-hot"
          ]
        },
        "production": {
          "plugins": [
            [
-             "mrbuilder-plugin-css",
+             "@mrbuilder/plugin-css",
              {
                "useNameHash": "css/[name].[hash].css"
              }
            ],
            [
-             "mrbuilder-plugin-webpack",
+             "@mrbuilder/plugin-webpack",
              {
                "app": "app",
                "filename": "js/[name].[hash].js",
                "externalizePeers": false
              }
            ],
-           "mrbuilder-plugin-html",
+           "@mrbuilder/plugin-html",
            [
-             "mrbuilder-plugin-chunk",
+             "@mrbuilder/plugin-chunk",
              {
                "filename": "js/[name].[hash].js"
              }
            ],
-           "mrbuilder-plugin-uglify"
+           "@mrbuilder/plugin-uglify"
          ]
        }
      }
@@ -98,10 +98,10 @@ Examples:
 Command Line-
 **Note** dashes after the plugin name will be converted to camelCase
 ```sh
-$ mrbuilder --mrbuilder-plugin-webpack-app=demo
+$ mrbuilder --@mrbuilder/plugin-webpack-app=demo
 ```
 ```sh
-$ mrbuilder --mrbuilder-plugin-webpack-app demo
+$ mrbuilder --@mrbuilder/plugin-webpack-app demo
 ```
 
 Environment-
@@ -114,7 +114,7 @@ Which is equivalent to in `.mrbuilderrc` or `package.json` configuration
 ```json
 {
   "plugins":[
-    ["mrbuilder-plugin-webpack", { "app":"demo"}]
+    ["@mrbuilder/plugin-webpack", { "app":"demo"}]
   ]
 
 }
@@ -137,23 +137,23 @@ plugins will be loaded after the plugins array has been loaded.
 
 Example:
 
-In the following example "mrbuilder-plugin-webpack" will be passed "app":demo by
+In the following example "@mrbuilder/plugin-webpack" will be passed "app":demo by
 default, but will be pass "app":"test" in the development env.  Also in the
-development env, "mrbuilder-plugin-webpack-dev-server" will be added and the
+development env, "@mrbuilder/plugin-webpack-dev-server" will be added and the
 less plugin will not be loaded.
 
 ```json
 
  "plugins":[
-    ["mrbuilder-plugin-webpack", {"app":"demo"}]
-    "mrbuilder-plugin-less"
+    ["@mrbuilder/plugin-webpack", {"app":"demo"}]
+    "@mrbuilder/plugin-less"
  ],
  "env":{
     "development":{
         "plugins":[
-            ["mrbuilder-plugin-webpack", {"app":"test"}],
-            ["mrbuilder-plugin-less", false],
-            "mrbuilder-plugin-webpack-dev-server"
+            ["@mrbuilder/plugin-webpack", {"app":"test"}],
+            ["@mrbuilder/plugin-less", false],
+            "@mrbuilder/plugin-webpack-dev-server"
         ]
     }
  }

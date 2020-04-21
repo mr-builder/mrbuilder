@@ -1,10 +1,10 @@
 import {OptionsManager} from "@mrbuilder/optionsmanager";
 import {camelCased, cwd, stringify, enhancedResolve} from '@mrbuilder/utils';
 import {OutputOptions, WebpackOptions} from "webpack/declarations/WebpackOptions";
+import {deepMerge} from './deepMerge';
 import processAlias from "./processAlias";
 import {MrBuilderWebpackPluginOptions, StringObject} from './types';
-import {deepMerge} from './deepMerge';
-
+import {info} from '@mrbuilder/cli';
 export * from './resolveWebpack';
 export {default as processAlias} from './processAlias';
 
@@ -104,7 +104,7 @@ const mod = function ({
 
     demo = demo || app;
 
-    if (this.isLibrary) {
+    if (info.isLibrary) {
         output.library = typeof library === 'string' ? library : camelCased(pkg.name);
         output.libraryTarget = libraryTarget;
         //Don't hash when its a library
@@ -112,7 +112,7 @@ const mod = function ({
 
         logger.info(`building as library with name "${output.library}"`)
 
-    } else if (this.isDevServer) {
+    } else if (info.isDevServer) {
         //Don't hash when its running in devServer
         output.filename = filename.replace('[hash].', '');
     } else {
@@ -130,7 +130,7 @@ const mod = function ({
         webpack.resolve.extensions.push(...extensions)
     }
 
-    if (this.isLibrary && (useExternals !== false)) {
+    if (info.isLibrary && (useExternals !== false)) {
 
         let externals: string[] = [];
         if (Array.isArray(useExternals)) {
@@ -142,13 +142,11 @@ const mod = function ({
         if (externalizePeers && pkg.peerDependencies) {
             externals = externals.concat(Object.keys(pkg.peerDependencies));
         }
-        const wexternals = webpack.externals || (webpack.externals = []);
-        if (Array.isArray(wexternals)) {
-            webpack.externals = wexternals.concat(Object.keys(externals.reduce((ret: StringObject, key) => {
-                ret[key] = key;
-                return ret;
-            }, {})));
-        }
+        const wexternals = webpack.externals ? Array.isArray(webpack.externals) ? webpack.externals : (webpack.externals = [webpack.externals]) : (webpack.externals = []);
+        webpack.externals = wexternals.concat(Object.keys(externals.reduce((ret: StringObject, key) => {
+            ret[key] = key;
+            return ret;
+        }, {})));
 
         logger.info('packaging as externalize', webpack.externals);
     }
