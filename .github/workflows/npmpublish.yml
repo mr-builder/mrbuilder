@@ -25,4 +25,4 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: yarn lerna publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NPM_TOKEN: ${{secrets.npm_token}}
