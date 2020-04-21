@@ -13,7 +13,7 @@ module.exports = async (options, webpack, om) => {
         const category  = first(/.*(preset|plugin|core|example)[/-].*/.exec(pkg.name));
         let description = pkg.description || '';
         const simpleName = pkg.name.split('/',2)[1];
-        const src = pkg.homepage || category ? `https://github.com/mr-builder/${category}s/${simpleName}` : `https://github.com/mr-builder/${simpleName}`;
+        const src = pkg.homepage || category ? `https://github.com/mr-builder/mrbuilder/tree/master/${category}s/${simpleName}` : `https://github.com/mr-builder/mrbuilder/tree/master/${simpleName}`;
         if (category === 'example') {
             return `
 ---
