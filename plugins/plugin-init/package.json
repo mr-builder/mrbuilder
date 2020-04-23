@@ -1,9 +1,9 @@
 {
   "name": "@mrbuilder/plugin-init",
-  "version": "4.0.10",
+  "version": "4.0.11",
   "main": "bin/mrbuilder-init",
   "dependencies": {
-    "@mrbuilder/cli": "^4.0.10",
+    "@mrbuilder/cli": "^4.0.11",
     "@mrbuilder/optionsmanager": "^4.0.10"
   },
   "scripts": {
