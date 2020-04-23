@@ -4,7 +4,8 @@
     [
       "@mrbuilder/plugin-version",
       {
-        "module": "@mrbuilder/cli/package.json"
+        "module": "../lerna.json",
+        "variable": "MRBUILDER_CLI_VERSION"
       }
     ],
     "@mrbuilder/plugin-filetypes",
