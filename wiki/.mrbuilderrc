@@ -137,6 +137,12 @@
             }
           },
           {
+            "name": "Core",
+            "lerna": {
+              "scope": "@mrbuilder/{cli,tool,optionsmanager,utils}"
+            }
+          },
+          {
             "name": "Examples",
             "lerna": {
               "scope": "@mrbuilder/example-*",
