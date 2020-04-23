@@ -54,15 +54,15 @@ package.json.   To disable set the env `MRBUILDER_NO_AUTOINSTALL=1`.
 
 
 ### Creating a multi module monorepo.
-There is not much special about creating a monorepo, and there are many many
-different ways to arrange them.  But generally a mrbuilder monorepository would
-look as follows
+There is not much special about creating a monorepo, and there are many,many,
+different ways to arrange them.  However generally a  monorepo would
+look as follows:
 
 ```sh
-# ${your_repository}
-# ${your_repository}/${your}-builder
-# ${your_repository}/${your}-builder/package.json
-# ${your_repository}/components/...
+# {your_repository}
+# {your_repository}/{your-builder}
+# {your_repository}/{your-builder}/package.json
+# {your_repository}/packages/...
 
 ```
 
@@ -72,14 +72,13 @@ tool, but by wrapping it in your own build tool, you allow for central configura
 dependency versions and therefore it is suggested you start with one
 
 ```sh
-# ${your_repository}
-# ${your_repository}/${your}-builder
-# ${your_reposotory}/${your}-builder/package.json
+# {your_reposotory}/{your_builder}/
 ```
 In this package.json add the dependency for mrbuilder
 
 ```sh
-# yarn add mrbuilder
+# yarn init 
+# yarn add @mrbuilder/cli
 ```
 
 Then add the scripts into your bin section to your `package.json` A typical
@@ -90,18 +89,30 @@ react module system would look like.
   "version":"0.0.1",
   ...
   "bin":{
-        "{your_builder}-babel": "bin/mrbuilder-babel.js",
-        "{your_builder}-clean": "bin/mrbuilder-clean.js",
-        "{your_builder}-karma": "bin/mrbuilder-karma.js",
-        "{your_builder}-mocha": "bin/mrbuilder-mocha.js",
-        "{your_builder}-webpack": "bin/mrbuilder-webpack.js",
-        "{your_builder}-demo": "bin/mrbuilder-demo.js",
-        "{your_builder}-webpack-dev-server"
+        "{your_builder}": "./bin/{your_builder}.js"
   },
   "mrbuilder":{
-    "plugins":["@mrbuilder/cli"//whatever else plugins you need]
+    "plugins":["@mrbuilder/cli"/*whatever else plugins you need*/]
   }
 }
+```
+
+Now create a script in `{your_repository}/{your_builder}/bin/{your_builder}.js`
+
+```js static
+#!/usr/bin/env  node
+process.env.MRBUILDER_PRESETS = '{your_builder}';
+require('@mrbuilder/cli/bin/mrbuilder');
+```
+
+And make sure it is executable
+```sh
+$ chmod +x {your_repository}/{your_builder}/bin/{your_builder}.js
+```
+And do an install for good measure
+
+```sh
+$ yarn install
 ```
 
 
@@ -120,20 +131,23 @@ scripts set to run
         "{your_builder}":"0.0.1"
     },
     "scripts":{
-        "start":"{your_builder}-demo",
-        "build":"{your_builder}-webpack",
-        "clean":"{your_builder}-clean",
-        "test":"{your_builder}-karma",
-        "prepublish":"yarn run clean && yarn run build && yarn run test"
+        "start":"{your_builder}",
+        "build":"{your_builder}",
+        "prepare":"{your_builder}",
+        "test":"{your_builder}"
     }
 }
 
 ```
 
-If you are using lerna, then you will be able to use its
+If you are using Lerna, then you will be able to use its
 ```sh
  $ lerna run build
  $ lerna run test
 
 ```
 Commands to run against all the modules in your project
+
+### Yarn
+Use `yarn` if you can it just works better. Also you use 
+yarn [workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) if you can they make everything better.

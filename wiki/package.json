@@ -8,7 +8,7 @@
     "@mrbuilder/plugin-react-styleguidist": "^4.0.10"
   },
   "scripts": {
-    "prepare": "mrbuilder --app  lib/mr-builder.github.io",
+    "prepare": "NODE_ENV=production mrbuilder --app  lib/mr-builder.github.io",
     "start": "mrbuilder"
   },
   "source": "src",

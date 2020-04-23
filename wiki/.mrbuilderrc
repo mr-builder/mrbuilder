@@ -50,13 +50,7 @@
       "@mrbuilder/plugin-chunk",
       false
     ],
-    [
-      "@mrbuilder/plugin-clean",
-      {
-        "allowExternal": true,
-        "exclude": ".git"
-      }
-    ],
+    "@mrbuilder/plugin-clean",
     [
       "@mrbuilder/wiki",
       {
@@ -137,6 +131,12 @@
             }
           },
           {
+            "name": "Core",
+            "lerna": {
+              "scope": "@mrbuilder/{cli,tool,optionsmanager,utils}"
+            }
+          },
+          {
             "name": "Examples",
             "lerna": {
               "scope": "@mrbuilder/example-*",
@@ -146,6 +146,7 @@
           }
         ]
       }
-    ]
+    ],
+    "@mrbuilder/plugin-compress"
   ]
 }

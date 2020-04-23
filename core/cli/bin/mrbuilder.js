@@ -98,9 +98,7 @@ profile.split(':').forEach(p => {
         case 'webpack-dev-server':
         case 'dev-server':
         case 'start': {
-            if (!env.NODE_ENV) {
-                env.NODE_ENV = 'development';
-            }
+            env.NODE_ENV = env.NODE_ENV || 'development';
             envArray.push('start');
             break;
         }
@@ -114,6 +112,7 @@ profile.split(':').forEach(p => {
         case 'prepublishOnly':
         case 'webpack':
         case 'prepare':
+            env.NODE_ENV = env.NODE_ENV || 'production';
             if (isApp) {
                 envArray.push('app');
             } else {
