@@ -1,4 +1,3 @@
-
 export type PluginConfig = {} | false;
 export type PluginNameConfig = [string, PluginConfig?];
 export type LoggerFn = (...args: any[]) => void;
@@ -19,7 +18,7 @@ export type PluginAliasObj = {
 };
 export type NameOrPluginNameConfig = string | PluginNameConfig;
 
-export interface PresetsPlugins  {
+export interface PresetsPlugins {
     presets?: NameOrPluginNameConfig[],
     plugins?: NameOrPluginNameConfig[],
     options?: OptionValueObj
@@ -127,3 +126,5 @@ export type OptionsManagerConfig = Partial<Logger> & Partial<{
     presets?: NameOrPluginNameConfig[],
 
 }>
+
+export type InitFn<T> = (option: OptionType, conf: T, optionsManager: OptionsManagerType) => T | Promise<T>;

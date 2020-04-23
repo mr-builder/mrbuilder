@@ -1,15 +1,11 @@
 import optionsManager from '@mrbuilder/cli';
-import {Option} from '@mrbuilder/optionsmanager';
 import {stringify, cwd, parseEntry} from '@mrbuilder/utils';
 import * as path from 'path';
 import * as Webpack from 'webpack';
 
-const scope = optionsManager.info;
-const {
-    warn = console.warn,
-    debug = console.warn,
-    info = console.log,
-} = optionsManager.logger('@mrbuilder/plugin-webpack');
+const scope = optionsManager.logger('@mrbuilder/plugin-webpack');
+
+const {info, debug} = scope;
 
 const countSlash = (v: string): number => {
         if (!v) {
@@ -113,35 +109,8 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
     }
 //This is where the magic happens
 
-    const options: [Option, string][] = [];
+    conf = await optionsManager.initialize(conf, scope);
 
-    optionsManager.forEach((option, key) => option.plugin ? options.push([option, key]) : null);
-
-    for (const [option, key] of options) {
-        let plugin: Function;
-        try {
-            plugin = optionsManager.require(Array.isArray(option.plugin) ? option.plugin[0] : option.plugin || key);
-        } catch (e) {
-            if (e.code !== 'MODULE_NOT_FOUND') {
-                throw e;
-            }
-            warn(`was not found '${key}' from '${option && option.plugin}'`);
-            continue;
-        }
-        if (typeof plugin === 'function') {
-            try {
-                const ret = await plugin.call(scope, option.config || {}, conf, optionsManager);
-                conf = ret || conf;
-            } catch (e) {
-                console.trace(e);
-                warn(`Error in '${option.name}'`, e);
-                throw e;
-            }
-            info(option.name, 'loaded.');
-        } else if (plugin) {
-            debug(`'${key}' not loaded no webpack plugin was found`);
-        }
-    }
     if (conf?.resolve?.extensions?.length) {
         conf.resolve.extensions = Array.from(new Set(conf.resolve.extensions));
     }

@@ -1,30 +1,27 @@
+import {get, objToConf, parseIfBool, parseJSON,} from '@mrbuilder/utils';
 import cp from 'child_process';
 import {basename, join, resolve} from 'path';
-import {get, objToConf, parseIfBool, parseJSON,} from '@mrbuilder/utils';
-import {
-    envify,
-    mergeAlias,
-    mergeArgs,
-    mergeEnv,
-    mergeOptions,
-    mergePlugins,
-    resolveEnv,
-    select,
-    split
-} from './util';
-import _help from './help';
 import handleNotFoundTryInstall from './handleNotFoundTryInstall';
+import _help from './help';
 import {
     AliasObj,
-    EnvFn, ForEachFn,
+    EnvFn,
+    ForEachFn,
     Logger,
-    LoggerFn, NameOrPluginNameConfig, OptionsConfig,
+    LoggerFn,
+    NameOrPluginNameConfig,
+    OptionsConfig,
     OptionsManagerConfig,
     OptionsManagerType,
-    OptionType, OptionValueObj,
-    Package, PluginNameConfig, PluginValue,
-    RequireFn
+    OptionType,
+    OptionValueObj,
+    Package,
+    PluginNameConfig,
+    PluginValue,
+    RequireFn,
+    InitFn
 } from "./types";
+import {envify, mergeAlias, mergeArgs, mergeEnv, mergeOptions, mergePlugins, resolveEnv, select, split} from './util';
 
 const handleNotFoundFail = function (e: Error, pkg: string) {
     this.warn('could not require "%s/package.json" from "%s"',
@@ -435,6 +432,51 @@ export default class OptionsManager implements OptionsManagerType {
             name: this.topPackage.name,
             plugins: this.plugins
         }
+    }
+
+    /**
+     * Tries to load each of the plugins, and configure them, with
+     * plugin.call(scope, options, conf, optionsManager);   Where conf and
+     * scope are passed as arguments.
+     * @param conf
+     * @param scope
+     */
+    async initialize<T>(conf: T, scope: {} | InitFn<T> = {}): Promise<T> {
+        for (const [key, option] of this.plugins.entries()) {
+            if (!option) {
+                continue;
+            }
+            let plugin: Function;
+            try {
+                plugin = this.require(Array.isArray(option.plugin) ? option.plugin[0] : option.plugin || key);
+            } catch (e) {
+                if (e.code !== 'MODULE_NOT_FOUND') {
+                    throw e;
+                }
+                option.warn(`was not found '${key}' from '${option && option.plugin}'`);
+                continue;
+            }
+            if (typeof plugin === 'function') {
+                try {
+                    let ret;
+                    if (typeof scope === 'function') {
+                        ret = await scope(option, conf, this);
+                    } else {
+                        ret = await plugin.call(scope, option.config || {}, conf, this);
+                    }
+                    option.info('loaded.');
+                    conf = ret || conf;
+                } catch (e) {
+                    console.trace(e);
+                    option.warn(`Error in '${option.name}'`, e);
+                    throw e;
+                }
+            } else if (plugin) {
+                option.debug(`'${key}' not loaded no  plugin was found`);
+            }
+        }
+
+        return conf;
     }
 }
 
