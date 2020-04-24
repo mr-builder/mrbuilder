@@ -120,7 +120,7 @@ Each of your components should have a `package.json` within them describing
 there name,version, description and mrbuilder configuration
 
 ### Your Components
-Each of your components should have a dependency to {your}_builder and
+Each of your components should have a dependency to {your_builder} and
 scripts set to run
 
 ```json
@@ -147,6 +147,9 @@ If you are using Lerna, then you will be able to use its
 
 ```
 Commands to run against all the modules in your project
+
+Check out an example [here](https://github.com/mr-builder/mrbuilder-monorepo-example)
+
 
 ### Yarn
 Use `yarn` if you can it just works better. Also you use 
