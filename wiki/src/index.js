@@ -1,5 +1,4 @@
 const styleguide = require('@mrbuilder/plugin-react-styleguidist');
-
 const first = (r) => r && r[1];
 const quote = (lang, content) => `
 \`\`\`${lang}

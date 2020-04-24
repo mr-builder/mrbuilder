@@ -24,8 +24,7 @@
       false
     ],
     [
-      "@mrbuilder/plugin-html",
-      false
+      "@mrbuilder/plugin-html"
     ],
     "@mrbuilder/plugin-doc-prop-types",
     [

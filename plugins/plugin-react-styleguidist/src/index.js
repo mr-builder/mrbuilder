@@ -1,5 +1,6 @@
 const getConfig = require('react-styleguidist/lib/scripts/config').default;
-const sylist = require('react-styleguidist/lib/scripts/make-webpack-config').default;
+const StyleGuidistPlugin = require('react-styleguidist/lib/scripts/make-webpack-config/utils/StyleguidistOptionsPlugin').default;
+const sylist = require('react-styleguidist/lib/scripts/make-webpack-config');
 const {
     join,
     resolve,
@@ -167,10 +168,12 @@ module.exports = function (options = {}, webpack, om) {
             };
         }
         const ret = sylist(conf, process.env.NODE_ENV);
+        webpack.entry = require.resolve('react-styleguidist/lib/client');
+        webpack.plugins.push(new StyleGuidistPlugin(conf))
 
-        webpack.entry = ret.entry;
-        webpack.plugins.push(...ret.plugins);
-        Object.assign(webpack.resolve.alias, ret.resolve.alias);
+        Object.assign(webpack.resolve.alias, {
+          'rsg-components' : enhancedResolve('~react-styleguidist/lib/client/rsg-components'),
+        });
         (webpack.performance || (webpack.performance = {})).hints = false;
         return webpack;
     };
