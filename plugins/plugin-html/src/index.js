@@ -91,6 +91,7 @@ module.exports = function ({
             chunks,
             name,
             title,
+            elementId,
             template: enhancedResolve(template),
             publicPath,
             pkg,

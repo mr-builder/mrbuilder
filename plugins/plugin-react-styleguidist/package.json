@@ -10,30 +10,27 @@
   },
   "mrbuilder": {
     "plugins": [
+      "@mrbuilder/plugin-doc-prop-types",
       [
-        "@mrbuilder/plugin-hot",
-        false
+        "@mrbuilder/plugin-html",
+        {
+          "exported": false,
+          "elementId": "rsg-root"
+        }
       ],
-      "@mrbuilder/plugin-doc-prop-types"
-    ],
-    "env": {
-      "styleguide": {
-        "plugins": [
-          [
-            "@mrbuilder/plugin-html",
-            false
-          ],
-          "@mrbuilder/plugin-doc-prop-types",
-          [
-            "@mrbuilder/plugin-webpack",
-            {
-              "demo": "./styleguide"
-            }
-          ],
-          "@mrbuilder/plugin-react-styleguidist"
-        ]
-      }
-    }
+      [
+        "@mrbuilder/plugin-webpack",
+        {
+          "demo": "./styleguide",
+          "entry": {
+            "index": "~react-styleguidist/lib/client/index"
+          },
+          "alias": {
+            "rsg-components": "~react-styleguidist/lib/client/rsg-components"
+          }
+        }
+      ]
+    ]
   },
   "license": "0BSD",
   "peerDependencies": {

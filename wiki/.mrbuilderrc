@@ -1,6 +1,12 @@
 {
-  "plugin": "./src/index",
   "plugins": [
+    ["@mrbuilder/plugin-css",false],
+    ["@mrbuilder/plugin-less",false],
+    "@mrbuilder/plugin-filetypes",
+    "@mrbuilder/plugin-fonts",
+    "@mrbuilder/plugin-env",
+    "@mrbuilder/plugin-doc-prop-types",
+    "@mrbuilder/plugin-clean",
     [
       "@mrbuilder/plugin-version",
       {
@@ -8,50 +14,26 @@
         "variable": "MRBUILDER_CLI_VERSION"
       }
     ],
-    "@mrbuilder/plugin-filetypes",
-    "@mrbuilder/plugin-fonts",
-    "@mrbuilder/plugin-env",
     [
-      "@mrbuilder/plugin-css",
-      false
+      "@mrbuilder/plugin-html",
+      {
+        "elementId": "rsg-root",
+        "exported": false
+      }
     ],
-    [
-      "@mrbuilder/plugin-less",
-      false
-    ],
-    [
-      "@mrbuilder/plugin-stylus",
-      false
-    ],
-    [
-      "@mrbuilder/plugin-html"
-    ],
-    "@mrbuilder/plugin-doc-prop-types",
     [
       "@mrbuilder/plugin-webpack",
       {
-        "app": "docs",
-        "devtool": "source-map",
-        "output": {
-          "filename": "[name].[hash].js",
-          "chunkFilename": "[name].[hash].chunk.js",
+        "entry": {
+          "index": "~react-styleguidist/lib/client/index"
         },
-        "node": {
-          "fs": "empty"
+        "alias": {
+          "rsg-components": "~react-styleguidist/lib/client/rsg-components"
         }
       }
     ],
     [
-      "@mrbuilder/plugin-hot",
-      false
-    ],
-    [
-      "@mrbuilder/plugin-chunk",
-      false
-    ],
-    "@mrbuilder/plugin-clean",
-    [
-      "@mrbuilder/wiki",
+      "./src/index",
       {
         "styleguideComponents": {
           "LogoRenderer": "@mrbuilder/wiki/src/components/LogoRenderer"
@@ -145,7 +127,20 @@
           }
         ]
       }
-    ],
-    "@mrbuilder/plugin-compress"
-  ]
+    ]
+  ],
+  "env": {
+    "start": {
+      "plugins": [
+        [
+          "@mrbuilder/plugin-clean",
+          false
+        ],
+        [
+          "@mrbuilder/plugin-compress",
+          false
+        ]
+      ]
+    }
+  }
 }
