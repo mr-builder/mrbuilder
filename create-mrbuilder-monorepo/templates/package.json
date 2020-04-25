@@ -1,0 +1,8 @@
+{
+  "name": "@{{namespace}}/project",
+  "private": true,
+  "workspaces": [
+    "./{{packages}}/*",
+    "builder"
+  ]
+}

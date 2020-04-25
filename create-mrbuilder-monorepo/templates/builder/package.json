@@ -1,0 +1,23 @@
+{
+  "name": "@{{namespace}}/builder",
+  "version": "{{version}}",
+  "dependencies": {
+    "@mrbuilder/preset-lib": "^4.0.0",
+    "@mrbuilder/preset-app": "^4.0.0",
+    "@mrbuilder/cli": "^4.0.0",
+    "@mrbuilder/plugin-typescript": "^4.0.0"
+  },
+  "bin": {
+    "{{namespace}}-builder": "./bin/builder.js"
+  },
+  "mrbuilder": {
+    "plugins": [
+      [
+        "@mrbuilder/plugin-typescript",
+        {
+          "useBabel": true
+        }
+      ]
+    ]
+  }
+}
