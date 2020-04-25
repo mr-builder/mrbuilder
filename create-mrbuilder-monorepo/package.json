@@ -1,12 +1,12 @@
 {
   "name": "@mrbuilder/create-mrbuilder-monorepo",
   "description": "Support for yarn create monorepo",
-  "version": "4.0.16",
+  "version": "4.0.17",
   "bin": {
     "create-mrbuilder-monorepo": "./app.js"
   },
   "dependencies": {
-    "@mrbuilder/cli": "^4.0.16",
+    "@mrbuilder/cli": "^4.0.17",
     "plop": "^2.6.0"
   },
   "license": "0BSD",
