@@ -1,5 +1,6 @@
 module.exports = function (plop) {
     // create your generators here
+    plop.setHelper('cwd', process.cwd);
     plop.setGenerator('monorepo', {
         description: 'This is sets up a mrbuilder monorepo',
         prompts: [{
@@ -32,19 +33,19 @@ module.exports = function (plop) {
                 type: 'addMany',
                 templateFiles: './templates/*',
                 base: './templates',
-                destination: '{{namespace}}'
+                destination: '{{cwd}}/{{namespace}}'
             },
             {
                 type: 'addMany',
                 templateFiles: './templates/.*',
                 base: './templates',
-                destination: '{{namespace}}'
+                destination: '{{cwd}}/{{namespace}}'
             },
             {
                 type: 'addMany',
                 templateFiles: './templates/packages/**/*',
                 base: './templates/packages',
-                destination: '{{namespace}}/{{packages}}'
+                destination: '{{cwd}}/{{namespace}}/{{packages}}'
             }
         ]  // array of actions
     });
