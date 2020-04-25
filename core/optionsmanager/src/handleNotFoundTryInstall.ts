@@ -46,10 +46,10 @@ export default function handleNotFoundTryInstall(e: Error, pkg: string, isDev = 
                 `);
         } else {
             info(`using '${isYarn ? 'yarn'
-                : 'npm'}' to install '${installPkg}'.`);
+                : isLerna ? 'lerna' : 'npm'}' to install '${installPkg}'.`);
         }
 
-        const args = isYarn ? ['add', installPkg] : ['add', installPkg];
+        const args = ['add', installPkg];
 
         if (isDev) {
             args.push(isLerna ? '--dev' : '-D');
