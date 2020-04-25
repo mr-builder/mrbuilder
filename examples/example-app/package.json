@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/example-app",
   "description": "Sample application using mrbuilder components",
-  "version": "4.0.11",
+  "version": "4.0.15",
   "private": true,
   "dependencies": {
     "@mrbuilder/example-lib": "^4.0.11",
@@ -12,8 +12,8 @@
     "@mrbuilder/cli": "^4.0.11",
     "@mrbuilder/plugin-jest": "^4.0.10",
     "@mrbuilder/plugin-version": "^4.0.1",
-    "@mrbuilder/preset-app": "^4.0.11",
-    "@mrbuilder/preset-dev": "^4.0.11"
+    "@mrbuilder/preset-app": "^4.0.15",
+    "@mrbuilder/preset-dev": "^4.0.15"
   },
   "scripts": {
     "prepare": "mrbuilder",

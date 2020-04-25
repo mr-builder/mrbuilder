@@ -1,15 +1,15 @@
 {
   "name": "@mrbuilder/plugin-compress",
   "description": "Compress output files",
-  "version": "4.0.11",
+  "version": "4.0.15",
   "main": "src",
   "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
   "dependencies": {
-    "html-webpack-change-assets-extension-plugin": "^1.2.0",
-    "compression-webpack-plugin": "^3.1.0"
+    "compression-webpack-plugin": "^3.1.0",
+    "html-webpack-change-assets-extension-plugin": "^1.2.0"
   },
   "publishConfig": {
     "access": "public",
