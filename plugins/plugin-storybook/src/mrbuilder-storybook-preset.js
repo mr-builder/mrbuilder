@@ -1,11 +1,11 @@
 const om = require('@mrbuilder/cli').default;
 const fs = require('fs');
-const {resolveWebpack} = require('@mrbuilder/plugin-webpack');
+const {resolveWebpack} = require('@mrbuilder/plugin-webpack/lib/resolveWebpack');
 
 
 async function webpack(config, options) {
     const {entry: {...entry}, mode, devServer, output: {...output}} = config;
-    const webpack = await resolveWebpack(config, {isLibrary: false}, null);
+    const webpack = await resolveWebpack(config, {isLibrary: false}, (c)=>c);
     webpack.entry = entry;
     webpack.output = output;
     webpack.mode = mode;
