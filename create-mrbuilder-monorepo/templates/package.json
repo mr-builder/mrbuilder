@@ -1,11 +1,16 @@
 {
   "name": "@{{namespace}}/project",
   "private": true,
+{{#if useYarn}}
   "workspaces": [
     "./{{packages}}/*",
     "builder"
-  ],
+  ],{{else}}
+  "scripts":{
+        "lerna":"lerna",
+        "bootstrap":"lerna bootstrap --hoist"
+},
+{{/if}}
   "dependencies": {
-    "lerna": "^3.20.2"
   }
 }

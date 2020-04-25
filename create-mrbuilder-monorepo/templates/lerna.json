@@ -1,10 +1,15 @@
 {
   "version": "{{version}}",
-  "npmClient": "{{npmClient}}",
-  "useWorkspaces": true,
+  "npmClient": "{{#if useYarn}}yarn{{else}}npm{{/if}}",
   "command": {
     "publish": {
       "gitRemote": "{{upstream}}"
     }
-  }
+  },
+  {{#if useYarn}}"useWorkspaces": true{{else}}"packages":[
+"{{packages}}/*",
+"./builder"
+],
+"hoist":true
+{{/if}}
 }

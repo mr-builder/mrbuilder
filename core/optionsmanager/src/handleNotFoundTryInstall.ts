@@ -2,13 +2,14 @@ import {spawnSync} from 'child_process';
 import path from 'path';
 
 function findExecPath() {
-    return process.env['$npm_execpath'] ||process.env['npm_execpath'] || require('which')
+    return process.env['$npm_execpath'] || process.env['npm_execpath'] || require('which')
         .sync('yarn', {nothrow: true}) || require('which')
         .sync('npm', {nothrow: true});
 
 }
 
 const yarnRe = /.*[/]?yarn([.]js)?$/;
+const lernaRe = /lerna[/]cli([.]js)?$/;
 /**
  * Tries to install a package as dev dependency.
  * @param e
@@ -28,6 +29,7 @@ export default function handleNotFoundTryInstall(e: Error, pkg: string, isDev = 
     if (npmPath) {
         const installPkg = `${pkg}@latest`;
         const isYarn = yarnRe.test(npmPath);
+        const isLerna = isYarn ? false : lernaRe.test(npmPath);
         if (first) {
             first = false;
             info(
@@ -47,10 +49,10 @@ export default function handleNotFoundTryInstall(e: Error, pkg: string, isDev = 
                 : 'npm'}' to install '${installPkg}'.`);
         }
 
-        const args = isYarn ? ['add', installPkg] : ['install', installPkg];
+        const args = isYarn ? ['add', installPkg] : ['add', installPkg];
 
         if (isDev) {
-            args.push(isYarn ? '-D' : '--save-dev');
+            args.push(isLerna ? '--dev' : '-D');
         }
 
         const res = spawnSync(npmPath, args, {
