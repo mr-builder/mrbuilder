@@ -15,6 +15,7 @@
     "presets/*",
     "plugins/*",
     "create-mrbuilder-app",
+    "create-mrbuilder-monorepo",
     "wiki",
     "examples/*"
   ],
