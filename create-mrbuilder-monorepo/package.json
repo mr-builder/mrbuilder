@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/create-mrbuilder-monorepo",
   "description": "Support for yarn create monorepo",
-  "version": "4.0.11",
+  "version": "4.0.12",
   "bin": {
     "create-mrbuilder-monorepo": "./app.js"
   },
