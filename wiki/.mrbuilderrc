@@ -1,5 +1,10 @@
 {
-  "plugin": "./src/index",
+  "presets": [
+    //We call it as a preset to inherit its configuration,
+    //but we are actually a plugin, that calls that plugin-react-styleguidist directly.
+    //this way we can use that configuration, but override the pieces we need.
+    "@mrbuilder/plugin-react-styleguidist"
+  ],
   "plugins": [
     [
       "@mrbuilder/plugin-version",
@@ -8,51 +13,8 @@
         "variable": "MRBUILDER_CLI_VERSION"
       }
     ],
-    "@mrbuilder/plugin-filetypes",
-    "@mrbuilder/plugin-fonts",
-    "@mrbuilder/plugin-env",
     [
-      "@mrbuilder/plugin-css",
-      false
-    ],
-    [
-      "@mrbuilder/plugin-less",
-      false
-    ],
-    [
-      "@mrbuilder/plugin-stylus",
-      false
-    ],
-    [
-      "@mrbuilder/plugin-html",
-      false
-    ],
-    "@mrbuilder/plugin-doc-prop-types",
-    [
-      "@mrbuilder/plugin-webpack",
-      {
-        "app": "docs",
-        "devtool": "source-map",
-        "output": {
-          "filename": "[name].[hash].js",
-          "chunkFilename": "[name].[hash].chunk.js",
-        },
-        "node": {
-          "fs": "empty"
-        }
-      }
-    ],
-    [
-      "@mrbuilder/plugin-hot",
-      false
-    ],
-    [
-      "@mrbuilder/plugin-chunk",
-      false
-    ],
-    "@mrbuilder/plugin-clean",
-    [
-      "@mrbuilder/wiki",
+      "./src/index",
       {
         "styleguideComponents": {
           "LogoRenderer": "@mrbuilder/wiki/src/components/LogoRenderer"
@@ -147,6 +109,6 @@
         ]
       }
     ],
-    "@mrbuilder/plugin-compress"
+    "@mrbuilder/plugin-react"
   ]
 }

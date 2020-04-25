@@ -1,5 +1,4 @@
 const styleguide = require('@mrbuilder/plugin-react-styleguidist');
-
 const first = (r) => r && r[1];
 const quote = (lang, content) => `
 \`\`\`${lang}
@@ -7,12 +6,12 @@ ${content.trim()}
 \`\`\`
 `;
 
-module.exports = async (options, webpack, om) => {
+module.exports = (options, webpack, om) => {
 
     options.description = (pkg) => {
-        const category  = first(/.*(preset|plugin|core|example)[/-].*/.exec(pkg.name));
+        const category = first(/.*(preset|plugin|core|example)[/-].*/.exec(pkg.name));
         let description = pkg.description || '';
-        const simpleName = pkg.name.split('/',2)[1];
+        const simpleName = pkg.name.split('/', 2)[1];
         const src = pkg.homepage || category ? `https://github.com/mr-builder/mrbuilder/tree/master/${category}s/${simpleName}` : `https://github.com/mr-builder/mrbuilder/tree/master/${simpleName}`;
         if (category === 'example') {
             return `
@@ -81,11 +80,7 @@ ${quote('json', `
         }
 
 
-
         return description;
     };
-    const out = await styleguide(options, webpack, om);
-//    console.log('out',out)
-    out.output.filename ='[name].[hash].js'
-    return out;
+    return styleguide(options, webpack, om);
 };

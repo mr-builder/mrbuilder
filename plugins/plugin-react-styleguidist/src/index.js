@@ -1,5 +1,6 @@
 const getConfig = require('react-styleguidist/lib/scripts/config').default;
-const sylist = require('react-styleguidist/lib/scripts/make-webpack-config').default;
+const StyleguidistOptionsPlugin = require('react-styleguidist/lib/scripts/utils/StyleguidistOptionsPlugin').default;
+const RENDERER_REGEXP = /Renderer$/;
 const {
     join,
     resolve,
@@ -137,20 +138,12 @@ module.exports = function (options = {}, webpack, om) {
             Object.assign(options, _newOpts);
         }
         if (options.styleguideComponents) {
-            options.styleguideComponents =
-                Object.keys(options.styleguideComponents).reduce((ret, key) => {
-                    ret[key] = enhancedResolve(options.styleguideComponents[key]);
-                    return ret;
-                }, {});
+            Object.entries(options.styleguideComponents).forEach(([name, filepath]) => {
+                const fullName = name.match(RENDERER_REGEXP) ? `${name.replace(RENDERER_REGEXP, '')}/${name}` : name;
+                webpack.resolve.alias[`rsg-components/${fullName}`] = enhancedResolve(filepath);
+            });
         }
-        if (options.styleguideComponents) {
-            const {styleguideComponents} = options;
-            options.styleguideComponents = Object.keys(styleguideComponents)
-                .reduce((ret, key) => {
-                    ret[key] = enhancedResolve(styleguideComponents[key]);
-                    return ret;
-                }, {})
-        }
+
 
         const conf = getConfig(options);
 
@@ -166,11 +159,7 @@ module.exports = function (options = {}, webpack, om) {
                 return ret;
             };
         }
-        const ret = sylist(conf, process.env.NODE_ENV);
-
-        webpack.entry = ret.entry;
-        webpack.plugins.push(...ret.plugins);
-        Object.assign(webpack.resolve.alias, ret.resolve.alias);
+        webpack.plugins.unshift(new StyleguidistOptionsPlugin(conf));
         (webpack.performance || (webpack.performance = {})).hints = false;
         return webpack;
     };

@@ -1,6 +1,9 @@
 module.exports = function (plop) {
     // create your generators here
     plop.setHelper('cwd', process.cwd);
+    plop.setActionType('install', function (answers) {
+        return `success\nplease run\n$ ${answers.npmClient === 'yarn' ? 'yarn install' : 'lerna bootstrap'}`;
+    });
     plop.setGenerator('monorepo', {
         description: 'This is sets up a mrbuilder monorepo',
         prompts: [{
@@ -23,10 +26,10 @@ module.exports = function (plop) {
             message: 'what do you call your git origin for push?',
             default: 'origin'
         }, {
-            type:'input',
-            name:'npmClient',
+            type: 'input',
+            name: 'npmClient',
             message: 'which npm client would you like Lerna to use?',
-            default:'yarn'
+            default: 'yarn'
         }], // array of inquirer prompts
         actions: [
             {
@@ -43,9 +46,17 @@ module.exports = function (plop) {
             },
             {
                 type: 'addMany',
+                templateFiles: './templates/builder/**/*',
+                base: './templates/builder',
+                destination: '{{cwd}}/{{namespace}}/builder'
+            },
+            {
+                type: 'addMany',
                 templateFiles: './templates/packages/**/*',
                 base: './templates/packages',
                 destination: '{{cwd}}/{{namespace}}/{{packages}}'
+            }, {
+                type: 'install'
             }
         ]  // array of actions
     });

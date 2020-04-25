@@ -4,5 +4,8 @@
   "workspaces": [
     "./{{packages}}/*",
     "builder"
-  ]
+  ],
+  "dependencies": {
+    "lerna": "^3.20.2"
+  }
 }

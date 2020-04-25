@@ -8,33 +8,6 @@
     "@mrbuilder/plugin-webpack": "^4.0.11",
     "react-styleguidist": "^11.0.5"
   },
-  "mrbuilder": {
-    "plugins": [
-      [
-        "@mrbuilder/plugin-hot",
-        false
-      ],
-      "@mrbuilder/plugin-doc-prop-types"
-    ],
-    "env": {
-      "styleguide": {
-        "plugins": [
-          [
-            "@mrbuilder/plugin-html",
-            false
-          ],
-          "@mrbuilder/plugin-doc-prop-types",
-          [
-            "@mrbuilder/plugin-webpack",
-            {
-              "demo": "./styleguide"
-            }
-          ],
-          "@mrbuilder/plugin-react-styleguidist"
-        ]
-      }
-    }
-  },
   "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

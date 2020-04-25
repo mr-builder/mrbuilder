@@ -2,7 +2,7 @@
   "name": "@{{namespace}}/example",
   "version": "{{version}}",
   "devDependencies": {
-    "@{{namespace}}/{{namespace}}-builder": "^{{version}}"
+    "@{{namespace}}/builder": "^{{version}}"
   },
   "scripts": {
     "prepare": "{{namespace}}-builder",
