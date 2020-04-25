@@ -1,8 +1,11 @@
+const {exec} = require('child_process');
 module.exports = function (plop) {
     // create your generators here
     plop.setHelper('cwd', process.cwd);
     plop.setActionType('install', function (answers) {
-        return `success\nplease run\n$ ${answers.npmClient === 'yarn' ? 'yarn install' : 'lerna bootstrap'}`;
+        return `success\nplease run
+ $ cd ${answers.namespace}     
+ $ ${answers.useYarn ? 'yarn install' : 'npm install -g lerna\n $ lerna init\n $ lerna bootstrap\n'}`;
     });
     plop.setGenerator('monorepo', {
         description: 'This is sets up a mrbuilder monorepo',
@@ -26,10 +29,10 @@ module.exports = function (plop) {
             message: 'what do you call your git origin for push?',
             default: 'origin'
         }, {
-            type: 'input',
-            name: 'npmClient',
-            message: 'which npm client would you like Lerna to use?',
-            default: 'yarn'
+            type: 'confirm',
+            name: 'useYarn',
+            message: 'use yarn?',
+            default: 'y'
         }], // array of inquirer prompts
         actions: [
             {

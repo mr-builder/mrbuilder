@@ -2,9 +2,11 @@
   "name": "@{{namespace}}/builder",
   "version": "{{version}}",
   "dependencies": {
-    "@mrbuilder/preset-lib": "^4.0.0",
-    "@mrbuilder/preset-app": "^4.0.0",
-    "@mrbuilder/cli": "^4.0.0",
+    "@mrbuilder/preset-lib": "^4.0.11",
+    "@mrbuilder/preset-app": "^4.0.11",
+    "@mrbuilder/cli": "^4.0.11",
+    "@mrbuilder/plugin-babel-7": "^4.0.10",
+    "@mrbuilder/plugin-babel": "^4.0.1",
     "@mrbuilder/plugin-typescript": "^4.0.0"
   },
   "bin": {
