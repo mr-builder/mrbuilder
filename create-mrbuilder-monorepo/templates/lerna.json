@@ -1,0 +1,10 @@
+{
+  "version": "{{version}}",
+  "npmClient": "{{npmClient}}",
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "gitRemote": "{{upstream}}"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@{{namespace}}/project",
+  "private": true,
+  "workspaces": [
+    "./{{packages}}/*",
+    "builder"
+  ],
+  "dependencies": {
+    "lerna": "^3.20.2"
+  }
+}

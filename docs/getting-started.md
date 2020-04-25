@@ -51,9 +51,16 @@ As of 1.10 mrbuilder will auto install any plugin that is not defined in the
 package.json.   To disable set the env `MRBUILDER_NO_AUTOINSTALL=1`.
 
 
+### The easy way 
+To get started with a monorepo.
 
+```sh
+$ yarn create @mrbuilder/mrbuilder-monorepo
+```
 
-### Creating a multi module monorepo.
+### The Not so easy way.
+
+#### Creating a multi module monorepo.
 There is not much special about creating a monorepo, and there are many,many,
 different ways to arrange them.  However generally a  monorepo would
 look as follows:
@@ -66,7 +73,7 @@ look as follows:
 
 ```
 
-### Your build tool.
+#### Your build tool.
 The first step is creating your build tool.   Yes, I know mrbuilder is your build
 tool, but by wrapping it in your own build tool, you allow for central configuration,
 dependency versions and therefore it is suggested you start with one
@@ -120,7 +127,7 @@ Each of your components should have a `package.json` within them describing
 there name,version, description and mrbuilder configuration
 
 ### Your Components
-Each of your components should have a dependency to {your}_builder and
+Each of your components should have a dependency to {your_builder} and
 scripts set to run
 
 ```json
@@ -147,6 +154,9 @@ If you are using Lerna, then you will be able to use its
 
 ```
 Commands to run against all the modules in your project
+
+Check out an example [here](https://github.com/mr-builder/mrbuilder-monorepo-example)
+
 
 ### Yarn
 Use `yarn` if you can it just works better. Also you use 

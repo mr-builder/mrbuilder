@@ -1,0 +1,11 @@
+{
+  "name": "@{{namespace}}/example",
+  "version": "{{version}}",
+  "devDependencies": {
+    "@{{namespace}}/builder": "^{{version}}"
+  },
+  "scripts": {
+    "prepare": "{{namespace}}-builder",
+    "start": "{{namespace}}-builder"
+  }
+}
