@@ -13,7 +13,7 @@ module.exports = async ({sourceDir, test}, webpack, om) => {
             test = "/\\.stories\\.[jet]sx?$/"
 
         } else {
-            test = "/\\.stories\\.[je]s$/"
+            test = "/\\.stories\\.[je]sx?$/"
         }
     }
     webpack.plugins.push(new DefinePlugin({
