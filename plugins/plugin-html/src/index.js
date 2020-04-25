@@ -85,8 +85,7 @@ module.exports = function ({
 
 
         const page = pages && pages[name] || {};
-
-        webpack.plugins.push(new HtmlWebpackPlugin(Object.assign({}, {
+        const htmlOptions = {
             filename: filename.replace(/(\[name\])/g, name) || `${name}.html`,
             chunks,
             name,
@@ -95,7 +94,11 @@ module.exports = function ({
             template: enhancedResolve(template),
             publicPath,
             pkg,
-        }, page)));
+        };
+        if (om.enabled('@mrbuilder/plugin-compress')) {
+            htmlOptions.jsExtension = '.gz';
+        }
+        webpack.plugins.push(new HtmlWebpackPlugin(htmlOptions, page));
     });
 
     return webpack;

@@ -1,35 +1,16 @@
 {
+  "presets": [
+    //We call it as a preset to inherit its configuration,
+    //but we are actually a plugin, that calls that plugin-react-styleguidist directly.
+    //this way we can use that configuration, but override the pieces we need.
+    "@mrbuilder/plugin-react-styleguidist"
+  ],
   "plugins": [
-    ["@mrbuilder/plugin-css",false],
-    ["@mrbuilder/plugin-less",false],
-    "@mrbuilder/plugin-filetypes",
-    "@mrbuilder/plugin-fonts",
-    "@mrbuilder/plugin-env",
-    "@mrbuilder/plugin-doc-prop-types",
-    "@mrbuilder/plugin-clean",
     [
       "@mrbuilder/plugin-version",
       {
         "module": "../lerna.json",
         "variable": "MRBUILDER_CLI_VERSION"
-      }
-    ],
-    [
-      "@mrbuilder/plugin-html",
-      {
-        "elementId": "rsg-root",
-        "exported": false
-      }
-    ],
-    [
-      "@mrbuilder/plugin-webpack",
-      {
-        "entry": {
-          "index": "~react-styleguidist/lib/client/index"
-        },
-        "alias": {
-          "rsg-components": "~react-styleguidist/lib/client/rsg-components"
-        }
       }
     ],
     [
@@ -127,20 +108,7 @@
           }
         ]
       }
-    ]
-  ],
-  "env": {
-    "start": {
-      "plugins": [
-        [
-          "@mrbuilder/plugin-clean",
-          false
-        ],
-        [
-          "@mrbuilder/plugin-compress",
-          false
-        ]
-      ]
-    }
-  }
+    ],
+    "@mrbuilder/plugin-react"
+  ]
 }

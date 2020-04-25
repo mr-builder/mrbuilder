@@ -8,30 +8,6 @@
     "@mrbuilder/plugin-webpack": "^4.0.11",
     "react-styleguidist": "^11.0.5"
   },
-  "mrbuilder": {
-    "plugins": [
-      "@mrbuilder/plugin-doc-prop-types",
-      [
-        "@mrbuilder/plugin-html",
-        {
-          "exported": false,
-          "elementId": "rsg-root"
-        }
-      ],
-      [
-        "@mrbuilder/plugin-webpack",
-        {
-          "demo": "./styleguide",
-          "entry": {
-            "index": "~react-styleguidist/lib/client/index"
-          },
-          "alias": {
-            "rsg-components": "~react-styleguidist/lib/client/rsg-components"
-          }
-        }
-      ]
-    ]
-  },
   "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
