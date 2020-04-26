@@ -29,5 +29,9 @@
       ]
     ]
   },
-  "license": "0BSD"
+  "license": "0BSD",
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org"
+  }
 }
