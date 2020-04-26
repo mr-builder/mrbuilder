@@ -1,7 +1,7 @@
-import {Context, createElement, Element, Fragment} from "@bikeshaving/crank";
-import {renderer} from "@bikeshaving/crank/dom";
-import "todomvc-common/base.css";
+import {Context, Element, Fragment} from "@bikeshaving/crank";
 import "todomvc-app-css/index.css";
+import "todomvc-common/base.css";
+
 interface Todo {
     id: number;
     title: string;
@@ -39,21 +39,21 @@ function* Header(this: Context): Generator<Element> {
     });
 
     while (true) {
-    yield (
-        <header class="header">
-            <h1>todos</h1>
-            <input
-                class="new-todo"
-                placeholder="What needs to be done?"
-                autofocus
-                value={title}
-            />
-        </header>
-    );
-}
+        yield (
+            <header class="header">
+                <h1>todos</h1>
+                <input
+                    class="new-todo"
+                    placeholder="What needs to be done?"
+                    autofocus
+                    value={title}
+                />
+            </header>
+        );
+    }
 }
 
-function* TodoItem(this: Context, {todo}: {todo: Todo}): Generator<Element> {
+function* TodoItem(this: Context, {todo}: { todo: Todo }): Generator<Element> {
     let active = false;
     let title = todo.title;
     this.addEventListener("click", (ev) => {
@@ -139,30 +139,30 @@ function* TodoItem(this: Context, {todo}: {todo: Todo}): Generator<Element> {
     );
 
     for ({todo} of this) {
-    const classes = [];
-    if (active) {
-        classes.push("editing");
-    }
-    if (todo.completed) {
-        classes.push("completed");
-    }
+        const classes = [];
+        if (active) {
+            classes.push("editing");
+        }
+        if (todo.completed) {
+            classes.push("completed");
+        }
 
-    yield (
-        <li class={classes.join(" ")}>
-            <div class="view">
-                <input class="toggle" type="checkbox" checked={todo.completed} />
-                <label>{todo.title}</label>
-                <button class="destroy" />
-            </div>
-            <input class="edit" value={title} />
-        </li>
-    );
-}
+        yield (
+            <li class={classes.join(" ")}>
+                <div class="view">
+                    <input class="toggle" type="checkbox" checked={todo.completed}/>
+                    <label>{todo.title}</label>
+                    <button class="destroy"/>
+                </div>
+                <input class="edit" value={title}/>
+            </li>
+        );
+    }
 }
 
 function Main(
-this: Context,
-    {todos, filter}: {todos: Todo[]; filter: Filter},
+    this: Context,
+    {todos, filter}: { todos: Todo[]; filter: Filter },
 ): Element {
     const completed = todos.every((todo) => todo.completed);
     this.addEventListener("click", (ev) => {
@@ -193,14 +193,14 @@ this: Context,
             <label for="toggle-all">Mark all as complete</label>
             <ul class="todo-list">
                 {todos.map((todo) => (
-                    <TodoItem todo={todo} crank-key={todo.id} />
+                    <TodoItem todo={todo} crank-key={todo.id}/>
                 ))}
             </ul>
         </section>
     );
 }
 
-function Filters(this: Context, {filter}: {filter: Filter}): Element {
+function Filters(this: Context, {filter}: { filter: Filter }): Element {
     return (
         <ul class="filters">
             <li>
@@ -223,8 +223,8 @@ function Filters(this: Context, {filter}: {filter: Filter}): Element {
 }
 
 function Footer(
-this: Context,
-    {todos, filter}: {todos: Todo[]; filter: Filter},
+    this: Context,
+    {todos, filter}: { todos: Todo[]; filter: Filter },
 ): Element {
     const completed = todos.filter((todo) => todo.completed).length;
     const remaining = todos.length - completed;
@@ -239,13 +239,14 @@ this: Context,
 			<span class="todo-count">
 				<strong>{remaining}</strong> {remaining === 1 ? "item" : "items"} left
 			</span>
-            <Filters filter={filter} />
+            <Filters filter={filter}/>
             {!!completed && <button class="clear-completed">Clear completed</button>}
         </footer>
     );
 }
 
 const STORAGE_KEY = "todos-crank";
+
 function save(todos: Array<Todo>) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
 }
@@ -255,103 +256,103 @@ declare module "@bikeshaving/crank" {
         "todo.create": CustomEvent<Todo>;
         "todo.edit": CustomEvent<Todo>;
         "todo.toggle": CustomEvent<Todo>;
-        "todo.toggleAll": CustomEvent<{completed: boolean}>;
+        "todo.toggleAll": CustomEvent<{ completed: boolean }>;
         "todo.destroy": CustomEvent<Todo>;
     }
 }
 
 export default function* App(this: Context): Generator<Element> {
     let todos: Array<Todo> = [];
-let nextTodoId = 0;
-try {
-    const storedTodos = JSON.parse(localStorage.getItem(STORAGE_KEY) || "");
-    if (Array.isArray(storedTodos) && storedTodos.length) {
-        todos = storedTodos;
-        nextTodoId = Math.max(...storedTodos.map((todo) => todo.id)) + 1;
-    } else {
+    let nextTodoId = 0;
+    try {
+        const storedTodos = JSON.parse(localStorage.getItem(STORAGE_KEY) || "");
+        if (Array.isArray(storedTodos) && storedTodos.length) {
+            todos = storedTodos;
+            nextTodoId = Math.max(...storedTodos.map((todo) => todo.id)) + 1;
+        } else {
+            localStorage.removeItem(STORAGE_KEY);
+        }
+    } catch (err) {
         localStorage.removeItem(STORAGE_KEY);
     }
-} catch (err) {
-    localStorage.removeItem(STORAGE_KEY);
-}
 
-let filter: Filter = "";
-this.addEventListener("todo.create", (ev) => {
-    todos.push({id: nextTodoId++, title: ev.detail.title, completed: false});
-    this.refresh();
-    save(todos);
-});
-
-this.addEventListener("todo.edit", (ev) => {
-    const i = todos.findIndex((todo) => todo.id === ev.detail.id);
-    todos[i].title = ev.detail.title;
-    this.refresh();
-    save(todos);
-});
-
-this.addEventListener("todo.toggle", (ev) => {
-    const i = todos.findIndex((todo) => todo.id === ev.detail.id);
-    todos[i].completed = ev.detail.completed;
-    this.refresh();
-    save(todos);
-});
-
-this.addEventListener("todo.toggleAll", (ev) => {
-    todos = todos.map((todo) => ({...todo, completed: ev.detail.completed}));
-    this.refresh();
-    save(todos);
-});
-
-this.addEventListener("todo.clearCompleted", () => {
-    todos = todos.filter((todo) => !todo.completed);
-    this.refresh();
-    save(todos);
-});
-
-this.addEventListener("todo.destroy", (ev) => {
-    todos = todos.filter((todo) => todo.id !== ev.detail.id);
-    this.refresh();
-    save(todos);
-});
-
-const route = (ev?: HashChangeEvent) => {
-    switch (window.location.hash) {
-        case "#/active": {
-            filter = "active";
-            break;
-        }
-        case "#/completed": {
-            filter = "completed";
-            break;
-        }
-        case "#/": {
-            filter = "";
-            break;
-        }
-        default: {
-            filter = "";
-            window.location.hash = "#/";
-        }
-    }
-
-    if (ev != null) {
+    let filter: Filter = "";
+    this.addEventListener("todo.create", (ev) => {
+        todos.push({id: nextTodoId++, title: ev.detail.title, completed: false});
         this.refresh();
-    }
-};
+        save(todos);
+    });
 
-route();
-window.addEventListener("hashchange", route);
-try {
-    while (true) {
-        yield (
-            <Fragment>
-                <Header />
-                {!!todos.length && <Main todos={todos} filter={filter} />}
-                {!!todos.length && <Footer todos={todos} filter={filter} />}
-            </Fragment>
-        );
+    this.addEventListener("todo.edit", (ev) => {
+        const i = todos.findIndex((todo) => todo.id === ev.detail.id);
+        todos[i].title = ev.detail.title;
+        this.refresh();
+        save(todos);
+    });
+
+    this.addEventListener("todo.toggle", (ev) => {
+        const i = todos.findIndex((todo) => todo.id === ev.detail.id);
+        todos[i].completed = ev.detail.completed;
+        this.refresh();
+        save(todos);
+    });
+
+    this.addEventListener("todo.toggleAll", (ev) => {
+        todos = todos.map((todo) => ({...todo, completed: ev.detail.completed}));
+        this.refresh();
+        save(todos);
+    });
+
+    this.addEventListener("todo.clearCompleted", () => {
+        todos = todos.filter((todo) => !todo.completed);
+        this.refresh();
+        save(todos);
+    });
+
+    this.addEventListener("todo.destroy", (ev) => {
+        todos = todos.filter((todo) => todo.id !== ev.detail.id);
+        this.refresh();
+        save(todos);
+    });
+
+    const route = (ev?: HashChangeEvent) => {
+        switch (window.location.hash) {
+            case "#/active": {
+                filter = "active";
+                break;
+            }
+            case "#/completed": {
+                filter = "completed";
+                break;
+            }
+            case "#/": {
+                filter = "";
+                break;
+            }
+            default: {
+                filter = "";
+                window.location.hash = "#/";
+            }
+        }
+
+        if (ev != null) {
+            this.refresh();
+        }
+    };
+
+    route();
+    window.addEventListener("hashchange", route);
+    try {
+        while (true) {
+            yield (
+                <Fragment>
+                    <Header/>
+                    {!!todos.length && <Main todos={todos} filter={filter}/>}
+                    {!!todos.length && <Footer todos={todos} filter={filter}/>}
+                </Fragment>
+            );
+        }
+    } finally {
+        window.removeEventListener("hashchange", route);
     }
-} finally {
-    window.removeEventListener("hashchange", route);
-}
 }

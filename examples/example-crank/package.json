@@ -1,0 +1,34 @@
+{
+  "name": "@mrbuilder/example-crank",
+  "description": "Sample application using crank.js ",
+  "version": "4.0.17",
+  "private": true,
+  "dependencies": {
+    "todomvc-common": "^1.0.5",
+    "todomvc-app-css": "^2.3.0"
+  },
+  "devDependencies": {
+    "@mrbuilder/plugin-crank": "^4.0.17",
+    "@mrbuilder/plugin-typescript": "^4.0.17",
+    "@mrbuilder/cli": "^4.0.17",
+    "@mrbuilder/preset-app": "^4.0.17",
+    "@mrbuilder/preset-dev": "^4.0.17"
+  },
+  "scripts": {
+    "prepare": "mrbuilder",
+    "start": "mrbuilder",
+    "start:open": "mrbuilder",
+  },
+  "mrbuilder": {
+    "plugins": [
+      "@mrbuilder/plugin-crank",
+      [
+        "@mrbuilder/plugin-typescript",
+        {
+          "useBabel": true
+        }
+      ]
+    ]
+  },
+  "license": "0BSD"
+}
