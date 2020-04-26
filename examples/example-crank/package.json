@@ -16,8 +16,7 @@
   },
   "scripts": {
     "prepare": "mrbuilder",
-    "start": "mrbuilder",
-    "start:open": "mrbuilder",
+    "start": "mrbuilder"
   },
   "mrbuilder": {
     "plugins": [
