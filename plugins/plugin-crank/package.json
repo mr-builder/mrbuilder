@@ -1,0 +1,23 @@
+{
+  "name": "@mrbuilder/plugin-crank",
+  "version": "4.0.17",
+  "description": "Crank plugin for mrbuilder",
+  "main": "./src/index",
+  "author": "Justin Spears <speajus@gmail.com>",
+  "dependencies": {
+    "@bikeshaving/crank": "^0.1.1",
+    "babel-preset-crank": "^0.0.1"
+  },
+  "keywords": [
+    "crank",
+    "mrbuilder"
+  ],
+  "license": "0BSD",
+  "peerDependencies": {
+    "@mrbuilder/cli": "^4.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org"
+  }
+}

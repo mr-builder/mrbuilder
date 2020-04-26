@@ -3,6 +3,7 @@ require('@mrbuilder/plugin-browserslist');
 
 
 const logger = optionsManager.logger('@mrbuilder/plugin-babel');
+const enabled = (plugin) => optionsManager.enabled(`@mrbuilder/plugin-${plugin}`);
 
 
 const fs = require('fs');
@@ -68,19 +69,25 @@ if (optionsManager.config('@mrbuilder/plugin-react.useClassDisplayName', true)) 
     }
 }
 
-if (optionsManager.enabled('@mrbuilder/plugin-preact')) {
+
+if (enabled('preact') || enabled('crank')) {
     const reactPropIdx = conf.presets.findIndex(findPlugin('react', 'preset'));
-    if (reactPropIdx > -1) {
-        logger.info('using preact configuration');
-        const r = Array.isArray(conf.presets[reactPropIdx]) ? conf.presets[reactPropIdx] : [conf.presets[reactPropIdx]];
-        conf.presets[reactPropIdx] = [
-            r[0],
-            {
-                ...r[1],
-                "pragma": "h",
-                "pragmaFrag": "Fragment",
-            }
-        ]
+    if (enabled('preact')) {
+        if (reactPropIdx > -1) {
+            logger.info('using preact configuration');
+            const r = Array.isArray(conf.presets[reactPropIdx]) ? conf.presets[reactPropIdx] : [conf.presets[reactPropIdx]];
+
+            conf.presets[reactPropIdx] = [
+                r[0],
+                {
+                    ...r[1],
+                    "pragma": "h",
+                    "pragmaFrag": "Fragment",
+                }
+            ]
+        }
+    } else if (reactPropIdx > -1) {
+        conf.presets.splice(reactPropIdx, 1);
     }
 }
 
@@ -101,14 +108,17 @@ if (useModules) {
 
 //Jest uses babel typescript plugin, so we detect that typescript and jest is in use, and we use it. All open to better
 //ideas.
-if (optionsManager.enabled('@mrbuilder/plugin-typescript')) {
+if (enabled('typescript')) {
     if (optionsManager.config('@mrbuilder/plugin-typescript.useBabel') ||
-        optionsManager.enabled('@mrbuilder/plugin-jest') ||
-        optionsManager.enabled('@mrbuilder/plugin-mocha')) {
+        enabled('jest') ||
+        enabled('mocha')) {
         if (!conf.presets.some(findPlugin('typescript', 'preset'))) {
             conf.presets.push(['@babel/preset-typescript', {isTSX: true, allExtensions: true}]);
         }
     }
+}
+if (enabled('crank')) {
+    conf.presets.push('babel-preset-crank');
 }
 const useDecorators = mrb('useDecorators', 'legacy');
 if (useDecorators) {

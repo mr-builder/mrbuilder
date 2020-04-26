@@ -4,7 +4,9 @@ const {info} = require('@mrbuilder/cli');
 let showedWarning = false;
 
 module.exports = function reactPlugin({compatMode,}, webpack, om) {
-
+    if (om.enabled('@mrbuilder/plugin-react')) {
+        return webpack;
+    }
     const pages = om.config('@mrbuilder/plugin-html.pages');
     const exported = om.config('@mrbuilder/plugin-html.exported', true);
     const elementId = om.config('@mrbuilder/plugin-html.elementId', 'content');
