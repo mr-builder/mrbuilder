@@ -16,9 +16,7 @@
     "test": "mrbuilder-mocha"
   },
   "devDependencies": {
-    "@mrbuilder/plugin-enzyme": "^4.0.1",
-    "@mrbuilder/plugin-mocha": "^4.0.17",
-    "@mrbuilder/preset-test": "^4.0.17"
+    "@mrbuilder/plugin-mocha": "^4.0.17"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
