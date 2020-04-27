@@ -3,7 +3,7 @@ const useBabel = require('@mrbuilder/plugin-babel/use-babel.js');
 const {info} = require('@mrbuilder/cli');
 let showedWarning = false;
 
-module.exports = function crankPlugin({compatMode,}, webpack, om) {
+function crankPlugin({compatMode,}, webpack, om) {
 
     const pages = om.config('@mrbuilder/plugin-html.pages');
     const exported = om.config('@mrbuilder/plugin-html.exported', true);
@@ -85,3 +85,4 @@ module.exports = function crankPlugin({compatMode,}, webpack, om) {
     }
     return webpack;
 };
+module.exports = crankPlugin;

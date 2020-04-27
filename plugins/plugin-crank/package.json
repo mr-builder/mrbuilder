@@ -2,7 +2,7 @@
   "name": "@mrbuilder/plugin-crank",
   "version": "4.0.17",
   "description": "Crank plugin for mrbuilder",
-  "main": "./src/index",
+  "main": "./src/index.js",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
     "@bikeshaving/crank": "^0.1.1",
