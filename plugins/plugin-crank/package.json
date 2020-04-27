@@ -1,13 +1,13 @@
 {
   "name": "@mrbuilder/plugin-crank",
-  "version": "4.0.17",
+  "version": "4.1.0",
   "description": "Crank plugin for mrbuilder",
   "main": "./src/index.js",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
     "@bikeshaving/crank": "^0.1.1",
-    "babel-preset-crank": "^0.0.1",
-    "@types/react": "^16.9.34"
+    "@types/react": "^16.9.34",
+    "babel-preset-crank": "^0.0.1"
   },
   "keywords": [
     "crank",
