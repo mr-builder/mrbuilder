@@ -1,27 +1,28 @@
-const cssLoader = require('@mrbuilder/plugin-css/src/cssLoader');
+const {cssLoaderModule} = require('@mrbuilder/plugin-css');
 
 
-const { cwd, enhancedResolve: _resolve } = require('@mrbuilder/utils');
+const {cwd, enhancedResolve: _resolve} = require('@mrbuilder/utils');
 
 module.exports = function ({
                                alias,
-                               sourceMap = true,
-                               modules = true,
+                               test,
+                               sourceMap,
+                               modules,
                                paths = [
                                    cwd('node_modules'),
                                    cwd('../node_modules'),
                                ],
-                               nib = true,
-                               includeCss = true,
-                               hoistAtRules = true,
-                               compress = false,
+                               nib,
+                               includeCss,
+                               hoistAtRules,
+                               compress,
                                preferPathResolver,
                            }, webpack, om) {
 
-    paths = paths.map((v) => _resolve(v));
+    paths = paths.map((v) => _resolve(v, om.resolve));
 
     const stylusOptions = {
-        loader : 'stylus-loader',
+        loader: 'stylus-loader',
         options: {
             preferPathResolver,
             sourceMap,
@@ -32,7 +33,7 @@ module.exports = function ({
     };
     if (alias) {
         Object.keys(alias).forEach(function (key) {
-            this[key] = _resolve(alias[key]);
+            this[key] = _resolve(alias[key], om.require);
         }, webpack.resolve.alias || (webpack.resolve.alias = {}));
     }
     if (includeCss !== null) {
@@ -44,17 +45,9 @@ module.exports = function ({
     }
 
     if (nib) {
-        stylusOptions.options.use    = [require('nib')()];
+        stylusOptions.options.use = [require('nib')()];
         stylusOptions.options.import = ['~nib/lib/nib/index.styl'];
     }
 
-
-    cssLoader(webpack, /\.styl$/, false, om, stylusOptions);
-
-    if (modules) {
-        cssLoader(webpack, modules === true ? /\.stylm$/ : modules,
-            true, om, stylusOptions);
-    }
-
-    return webpack;
+    return cssLoaderModule(webpack, modules, test, om, stylusOptions);
 };

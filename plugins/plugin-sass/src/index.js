@@ -1,35 +1,23 @@
-const cssLoader                     = require(
+const {cssLoaderModule} = require(
     '@mrbuilder/plugin-css/src/cssLoader');
-const { enhancedResolve: _resolve } = require('@mrbuilder/utils');
+const {enhancedResolve: _resolve} = require('@mrbuilder/utils');
 
+const TRUE_RE = /[.](?:s[ac]ssm)$/;
 module.exports = function ({
-                               test = /\.s[ac]ss$/,
-                               options,
-                               modules = true,
+                               test,
+                               options = {},
+                               modules,
+                               loader = 'sass-loader',
                            }, webpack, om) {
 
-    if (options == null) {
-        options = {
-            sourceMap: true,
-        }
-    }
-
     if (options.includePaths) {
-        options.includePaths = options.includePaths.map(_resolve);
+        options.includePaths = options.includePaths.map(v => _resolve(v, om));
     }
-
-    cssLoader(webpack, test, true, om, {
-        loader: 'sass-loader',
+    cssLoaderModule(webpack, modules === true ? TRUE_RE : modules, test, om, {
+        loader,
         options
     });
 
-    if (modules) {
-        cssLoader(webpack, modules === true ? /\.s[ac]ssm$/ : modules, true, om,
-            {
-                loader: 'sass-loader',
-                options
-            })
-    }
 
     return webpack;
 };

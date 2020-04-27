@@ -6,7 +6,8 @@
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
     "@bikeshaving/crank": "^0.1.1",
-    "babel-preset-crank": "^0.0.1"
+    "babel-preset-crank": "^0.0.1",
+    "@types/react": "^16.9.34"
   },
   "keywords": [
     "crank",
@@ -19,5 +20,39 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
+  },
+  "mrbuilder": {
+    "plugins": [
+      [
+        "@mrbuilder/plugin-typescript",
+        {
+          "useBabel": true,
+          "tsconfig": {
+            "compileOnSave": false,
+            "compilerOptions": {
+              "baseUrl": "./",
+              "downlevelIteration": true,
+              "suppressExcessPropertyErrors": true,
+              "declaration": true,
+              "outDir": "lib",
+              "sourceRoot": "src",
+              "target": "ES2015",
+              "strictNullChecks": false,
+              "sourceMap": true,
+              "skipLibCheck": true,
+              "jsx": "react",
+              "forceConsistentCasingInFileNames": true,
+              "allowSyntheticDefaultImports": true,
+              "esModuleInterop": true,
+              "moduleResolution": "node",
+              "lib": [
+                "esnext",
+                "dom"
+              ]
+            }
+          }
+        }
+      ]
+    ]
   }
 }

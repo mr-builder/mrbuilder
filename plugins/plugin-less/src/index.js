@@ -1,21 +1,14 @@
-const {cssLoader} = require('@mrbuilder/plugin-css');
+const {cssLoaderModule} = require('@mrbuilder/plugin-css');
 module.exports = function ({
                                test,
                                options,
                                modules,
                            }, webpack, om) {
 
-    cssLoader(webpack, /\.less$/, modules, om, {
+
+    return cssLoaderModule(webpack, modules === true ? /[.]lessm/ : modules, test, om, {
         loader: 'less-loader',
         options
     });
 
-    if (modules) {
-        cssLoader(webpack, modules === true ? /\.lessm$/ : modules, true, om, {
-            loader: 'less-loader',
-            options
-        })
-    }
-
-    return webpack;
 };

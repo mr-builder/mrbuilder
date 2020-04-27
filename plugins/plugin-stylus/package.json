@@ -17,6 +17,15 @@
     "mrbuilder"
   ],
   "mrbuilder": {
+    "options": {
+      "test": "/[.]styl$/",
+      "modules": "/[.]stylm$/",
+      "nib": true,
+      "includeCss": true,
+      "hoistAtRules": true,
+      "compress": false,
+      "sourceMap": true
+    },
     "plugins": [
       "@mrbuilder/plugin-css"
     ]

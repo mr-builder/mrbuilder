@@ -15,6 +15,7 @@
     "react-syntax-highlighter": "^12.2.1"
   },
   "devDependencies": {
+    "@mrbuilder/plugin-babel": "^4.0.1",
     "@mrbuilder/plugin-karma": "^4.0.17"
   },
   "peerDependencies": {
