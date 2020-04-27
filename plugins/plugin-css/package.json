@@ -4,7 +4,6 @@
   "description": "CSS support for mbuilder",
   "dependencies": {
     "@mrbuilder/plugin-browserslist": "^4.1.0",
-    "@mrbuilder/preset-test": "^4.1.0",
     "autoprefixer": "^9.7.5",
     "css-loader": "^3.4.2",
     "find-package": "^1.0.0",
