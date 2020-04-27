@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {container} from './style.less';
+import {container} from './style.module.less';
 import Smile from './Smile';
 export {default as Smile} from './Smile';
 

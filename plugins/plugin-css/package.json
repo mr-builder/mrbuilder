@@ -4,6 +4,7 @@
   "description": "CSS support for mbuilder",
   "dependencies": {
     "@mrbuilder/plugin-browserslist": "^4.0.1",
+    "@mrbuilder/preset-test": "^4.0.17",
     "autoprefixer": "^9.7.5",
     "css-loader": "^3.4.2",
     "find-package": "^1.0.0",
@@ -16,7 +17,8 @@
   },
   "devDependencies": {
     "@mrbuilder/plugin-enzyme": "^4.0.1",
-    "@mrbuilder/plugin-mocha": "^4.0.17"
+    "@mrbuilder/plugin-mocha": "^4.0.17",
+    "@mrbuilder/preset-test": "^4.0.17"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
@@ -31,8 +33,9 @@
   },
   "mrbuilder": {
     "options": {
-      "css": "/\\.css$/",
-      "publicPath": "/public"
+      "test": "/\\.css$/",
+      "publicPath": "/public",
+      "modules": "/\\.cssm$/"
     }
   }
 }

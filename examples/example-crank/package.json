@@ -8,6 +8,7 @@
     "todomvc-app-css": "^2.3.0"
   },
   "devDependencies": {
+    "@bikeshaving/crank": "^0.1.1",
     "@mrbuilder/plugin-crank": "^4.0.17",
     "@mrbuilder/plugin-typescript": "^4.0.17",
     "@mrbuilder/cli": "^4.0.17",
@@ -20,13 +21,7 @@
   },
   "mrbuilder": {
     "plugins": [
-      "@mrbuilder/plugin-crank",
-      [
-        "@mrbuilder/plugin-typescript",
-        {
-          "useBabel": true
-        }
-      ]
+      "@mrbuilder/plugin-crank"
     ]
   },
   "license": "0BSD",
