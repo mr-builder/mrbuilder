@@ -15,7 +15,7 @@
     "@mrbuilder/preset-dev": "^4.0.17"
   },
   "scripts": {
-    "prepare": "mrbuilder",
+    "prepare": "mrbuilder --app lib",
     "start": "mrbuilder"
   },
   "mrbuilder": {

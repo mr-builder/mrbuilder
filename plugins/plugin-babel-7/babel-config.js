@@ -72,6 +72,10 @@ if (optionsManager.config('@mrbuilder/plugin-react.useClassDisplayName', true)) 
 const reactPropIdx = conf.presets.findIndex(findPlugin('react', 'preset'));
 
 if (enabled('preact')) {
+    const preact = {
+        "pragma": "h",
+        "pragmaFrag": "Fragment"
+    }
     if (reactPropIdx > -1) {
         logger.info('using preact configuration');
         const r = Array.isArray(conf.presets[reactPropIdx]) ? conf.presets[reactPropIdx] : [conf.presets[reactPropIdx]];
@@ -80,20 +84,19 @@ if (enabled('preact')) {
             r[0],
             {
                 ...r[1],
-                "pragma": "h",
-                "pragmaFrag": "Fragment",
+                ...preact,
             }
         ]
     } else {
-        conf.presets.push(['@babel/preset-react', {
-            "pragma": "h",
-            "pragmaFrag": "Fragment"
-        }]);
+        conf.presets.push(['@babel/preset-react', preact]);
     }
 }
 
-if (enabled('crank') && reactPropIdx > -1) {
-    conf.presets.splice(reactPropIdx, 1);
+if (enabled('crank')) {
+    if (reactPropIdx > -1) {
+        conf.presets.splice(reactPropIdx, 1);
+    }
+    conf.presets.push('babel-preset-crank');
 }
 
 let useModules = mrb('useModules');
@@ -122,9 +125,7 @@ if (enabled('typescript')) {
         }
     }
 }
-if (enabled('crank')) {
-    conf.presets.push('babel-preset-crank');
-}
+
 const useDecorators = mrb('useDecorators', 'legacy');
 if (useDecorators) {
     let decIndex = conf.plugins.findIndex(findPlugin('proposal-decorators'));
