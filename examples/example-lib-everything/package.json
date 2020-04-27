@@ -68,17 +68,6 @@
             false
           ]
         ]
-      },
-      "test": {
-        "plugins": [
-          [
-            "@mrbuilder/plugin-css",
-            {
-              "useStyleLoader": true,
-              "modules": true
-            }
-          ]
-        ]
       }
     }
   },
