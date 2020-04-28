@@ -54,6 +54,9 @@ const cssLoader = function (webpack, test, modules = false, om, ...conf) {
     if (conf) {
         loaders.push(...conf);
     }
+    if (!test) {
+        throw new Error(`Must have a test condition for this plugin '${test}'`);
+    }
     webpack.module.rules.push({
         //So rather than forcing people to do negative regex'swe will do it here.
         // so I guess it breaks a css file named with .module. but, whatever.
@@ -81,22 +84,31 @@ const cssLoaderModule = (webpack,
                          ...conf) => {
 
     if (modules) {
-        //__MATCHED__ is just to here so we can be sure we matched the regex and the file didn't just end in .module
-        const mod = (v) => v.replace(test, '___MATCHED___').endsWith('.module.___MATCHED___');
-
-        //Really sorry about this madness -- So Jest wants to match only on RegExp.  So here
-        // Jest doesn't need to be as accurate a replacement, because they are all handled through
-        // and ignore proxy anyways.
-        mod.source = test && test.source || modules && modules.source;
-
-        cssLoader(webpack, mod, true, om, ...conf);
-
         if (test) {
-            if (!(test instanceof RegExp)){
-                throw new Error(`test is not a regex `+test);
+            //__MATCHED__ is just to here so we can be sure we matched the regex and the file didn't just end in .module
+            const mod = (v) => {
+                return v.replace(test, '.___MATCHED___').endsWith('.module.___MATCHED___');
+            }
+            mod.toJSON = () => `module:${test}`
+
+            //Really sorry about this madness -- So Jest wants to match only on RegExp.  So here
+            // Jest doesn't need to be as accurate a replacement, because they are all handled through
+            // and ignore proxy anyways.
+            mod.source = test && test.source || modules && modules.source;
+
+            cssLoader(webpack, mod, true, om, ...conf);
+
+
+            if (!(test instanceof RegExp)) {
+                throw new Error(`test is not a regex ` + test);
+            }
+            const unmod = (v) => {
+                return v.replace(test, '.___MATCHED___').endsWith('.module.___MATCHED___') ? false : test.test(v)
             }
 
-            cssLoader(webpack, (v) => v.replace(test, '___MATCHED___').endsWith('.module.___MATCHED___') ? false : test.test(v), false, om, ...conf)
+            unmod.toJSON = () => `not-module:${test}`;
+
+            cssLoader(webpack, unmod, false, om, ...conf)
         }
         //So if module === true then we will only support '.module.ext' syntax,
         // if module is a regex, well we will support it. This is for backwards

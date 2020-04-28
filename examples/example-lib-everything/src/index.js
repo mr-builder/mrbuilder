@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import less, { container } from './style.less';
+import less, { container } from './style.module.less';
 import moment from 'moment';
 import map from 'lodash/map';
 import Readme from '../Readme.md';
@@ -9,7 +9,7 @@ import './stylus.styl';
 import { Hello } from './hello.tsx';
 import yaml from './test.yaml';
 import style from './style.cssm';
-
+import './other.less';
 const USER     = process.env.USER;
 const NODE_ENV = process.env.NODE_ENV;
 
