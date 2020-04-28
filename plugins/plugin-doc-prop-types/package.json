@@ -1,10 +1,10 @@
 {
   "name": "@mrbuilder/plugin-doc-prop-types",
-  "version": "4.1.0",
+  "version": "4.1.2",
   "description": "Allow for auto documentation of propTypes",
   "main": "src",
   "dependencies": {
-    "@mrbuilder/utils": "^4.1.0"
+    "@mrbuilder/utils": "^4.1.2"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
