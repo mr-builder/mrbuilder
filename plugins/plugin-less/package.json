@@ -17,8 +17,8 @@
   "main": "src",
   "mrbuilder": {
     "options": {
-      "test": "/.less$/",
-      "modules": "/.lessm$/",
+      "test": "/[.]less$/",
+      "modules": true,
       "options": {
         "strictMath": true,
         "noIeCompat": true

@@ -95,9 +95,9 @@ module.exports = function ({
             publicPath,
             pkg,
         };
-        if (om.enabled('@mrbuilder/plugin-compress')) {
-            htmlOptions.jsExtension = '.gz';
-        }
+        // if (om.enabled('@mrbuilder/plugin-compress')) {
+        //     htmlOptions.jsExtension = '.gz';
+        // }
         webpack.plugins.push(new HtmlWebpackPlugin(htmlOptions, page));
     });
 
