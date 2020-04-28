@@ -131,9 +131,9 @@ export default class OptionsManager implements OptionsManagerType {
         this.topPackage = topPackage || _require(this.cwd('package.json'));
 
         this.log = log;
-        this.warn = log.bind(this, 'warn', '@mrbuilder');
-        this.debug = log.bind(this, 'debug', '@mrbuilder');
-        this.info = log.bind(this, 'info', '@mrbuilder');
+        this.warn = log.bind(this, 'warn', prefix);
+        this.debug = log.bind(this, 'debug', prefix);
+        this.info = log.bind(this, 'info', prefix);
 
         if (_require === require) {
             this.warn('require is not set, using default require');
