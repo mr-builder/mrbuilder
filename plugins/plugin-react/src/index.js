@@ -4,7 +4,7 @@ const {info} = require('@mrbuilder/cli');
 let showedWarning = false;
 
 module.exports = function reactPlugin({compatMode,}, webpack, om) {
-    if (om.enabled('@mrbuilder/plugin-react')) {
+    if (om.enabled('@mrbuilder/plugin-crank')) {
         return webpack;
     }
     const pages = om.config('@mrbuilder/plugin-html.pages');

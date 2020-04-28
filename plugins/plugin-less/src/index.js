@@ -6,7 +6,7 @@ module.exports = function ({
                            }, webpack, om) {
 
 
-    return cssLoaderModule(webpack, modules === true ? /[.]lessm/ : modules, test, om, {
+    return cssLoaderModule(webpack,  modules, test, om, {
         loader: 'less-loader',
         options
     });
