@@ -1,4 +1,4 @@
-import optionsManager from '@mrbuilder/cli';
+import optionsManager, {logger} from '@mrbuilder/cli';
 import {stringify, cwd, parseEntry} from '@mrbuilder/utils';
 import * as path from 'path';
 import * as Webpack from 'webpack';
@@ -84,8 +84,6 @@ const DONE = (webpack: Webpack.Configuration) => {
      * as they are more specific.
      */
 
-    debug('DEBUG is on');
-    debug('optionsManager', stringify(optionsManager.plugins));
     debug('webpack configuration', stringify(webpack));
     info('output filename', webpack.output.filename);
 
@@ -108,9 +106,9 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
         conf.output.filename = opts.outputFilename;
     }
 //This is where the magic happens
-
+    logger.enableProgress();
     conf = await optionsManager.initialize(conf, scope);
-
+    logger.disableProgress();
     if (conf?.resolve?.extensions?.length) {
         conf.resolve.extensions = Array.from(new Set(conf.resolve.extensions));
     }

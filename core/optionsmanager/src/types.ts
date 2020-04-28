@@ -1,5 +1,6 @@
 export type PluginConfig = {} | false;
 export type PluginNameConfig = [string, PluginConfig?];
+
 export type LoggerFn = (...args: any[]) => void;
 
 export type Logger = {
@@ -9,6 +10,7 @@ export type Logger = {
 }
 export type ForEachFn<T> = (opt: T, key: string) => void;
 export type EnvFn = (plugin: string, def?: any) => any;
+
 export type Package = {
     name: string,
     [key: string]: any
@@ -125,6 +127,7 @@ export type OptionsManagerConfig = Partial<Logger> & Partial<{
     plugins?: NameOrPluginNameConfig[],
     presets?: NameOrPluginNameConfig[],
 
+    log?:(level:keyof Logger, prefix:string, message:string)=>void,
 }>
 
 export type InitFn<T> = (option: OptionType, conf: T, optionsManager: OptionsManagerType) => T | Promise<T>;

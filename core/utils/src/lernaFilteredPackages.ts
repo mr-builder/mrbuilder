@@ -18,6 +18,7 @@ export default async (opts?: LernaOpts): Promise<Project[]> => {
             const ls = new LsCommand({
                 _: [],
                 json: true,
+                loglevel:'silent',
                 ...opts,
                 onRejected,
                 onResolved() {

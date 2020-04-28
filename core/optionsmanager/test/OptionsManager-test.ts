@@ -417,14 +417,13 @@ with-alias-2 - [enabled]
             prefix: 'tester',
             cwd: cwd('with-presets-and-config'),
             env: {TESTER_DEBUG: 12, TESTER_NO_AUTOINSTALL: 1,},
-            info: capture,
-            warn: capture
+            log: capture,
         });
 
         om.logger('p1').info('test');
         om.logger('p1').warn('test');
-        expect(calls.pop().join(' ')).to.eql('WARN [tester:p1] test');
-        expect(calls.pop().join(' ')).to.eql('INFO [tester:p1] test');
+        expect(calls.pop().join(' ')).to.eql('warn p1 test');
+        expect(calls.pop().join(' ')).to.eql('info p1 test');
     });
 
     newOptionManagerTest("with-disabled-plugin", {
