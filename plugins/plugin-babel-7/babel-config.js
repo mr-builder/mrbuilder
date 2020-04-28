@@ -1,4 +1,6 @@
-const optionsManager = require('@mrbuilder/cli').default;
+const {stringify} = require('@mrbuilder/utils');
+
+const {optionsManager, logger: _logger} = require('@mrbuilder/cli');
 require('@mrbuilder/plugin-browserslist');
 
 
@@ -127,11 +129,12 @@ if (enabled('typescript')) {
 }
 
 const useDecorators = mrb('useDecorators', 'legacy');
+const decoratorsBeforeExport = mrb('decoratorsBeforeExport', false);
 if (useDecorators) {
     let decIndex = conf.plugins.findIndex(findPlugin('proposal-decorators'));
     let classPropIdx = conf.plugins.findIndex(findPlugin('proposal-class-properties'));
     if (decIndex < 0) {
-        decIndex = conf.plugins.push(['@babel/plugin-proposal-decorators', {decoratorsBeforeExport: true}]);
+        decIndex = conf.plugins.push(['@babel/plugin-proposal-decorators', {decoratorsBeforeExport}]);
     }
     if (classPropIdx < 0) {
         classPropIdx = decIndex + 1;
@@ -139,11 +142,13 @@ if (useDecorators) {
     }
     if (useDecorators === 'legacy') {
 
-        const dec = conf.plugins[decIndex] = ['@babel/plugin-proposal-decorators', {
+        const decoratorOptions = {
             ...(Array.isArray(conf.plugins[decIndex]) && conf.plugins[decIndex][1]),
-            decoratorsBeforeExport: undefined,
             legacy: true
-        }];
+        }
+        //Does not work with legacy... can't even be there
+        delete decoratorOptions.decoratorsBeforeExport;
+        const dec = conf.plugins[decIndex] = ['@babel/plugin-proposal-decorators', decoratorOptions];
 
         const props = conf.plugins[classPropIdx] = ['@babel/plugin-proposal-class-properties', {
             ...(Array.isArray(conf.plugins[classPropIdx]) && conf.plugins[classPropIdx][1]),
@@ -154,7 +159,17 @@ if (useDecorators) {
             conf.plugins[classPropIdx] = dec;
             conf.plugins[decIndex] = props;
         }
+    } else {
+        const decPlugin = Array.isArray(conf.plugins[decIndex]) ? conf.plugins[decIndex] : ['@babel/plugin-proposal-decorators', {}];
+
+        conf.plugins[decIndex] = [decPlugin[0],
+            {
+                decoratorsBeforeExport,
+                ...(decPlugin[1])
+            }
+        ];
     }
+
 }
 
 const applyConfig = (type) => (op) => {
@@ -179,4 +194,9 @@ if (conf.presets) {
 if (conf.plugins) {
     conf.plugins = conf.plugins.map(applyConfig('plugin')).filter(Boolean);
 }
-module.exports = babelProcess(conf, optionsManager.require.resolve, mrb('coverage', false));
+const babelConfig = babelProcess(conf, optionsManager.require.resolve, mrb('coverage', false));
+logger.debug('configuration');
+if (_logger.level === 'debug') {
+    console.log(stringify(babelConfig));
+}
+module.exports = babelConfig;

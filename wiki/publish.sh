@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#This script publishes the docs.
 pushd lib/mr-builder.github.io && \
 git init && \
 (git remote add origin git@github.com:mr-builder/mr-builder.github.io.git 2>/dev/null || echo 'origin exists') && \

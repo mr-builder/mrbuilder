@@ -129,11 +129,10 @@ export default class OptionsManager implements OptionsManagerType {
 
         this.cwd = (...paths) => resolve(this.env('MODULE_DIR', cwd()), ...paths);
         this.topPackage = topPackage || _require(this.cwd('package.json'));
-
         this.log = log;
-        this.warn = log.bind(this, 'warn', '@mrbuilder');
-        this.debug = log.bind(this, 'debug', '@mrbuilder');
-        this.info = log.bind(this, 'info', '@mrbuilder');
+        this.warn = log.bind(this, 'warn', prefix);
+        this.debug = log.bind(this, 'debug', prefix);
+        this.info = log.bind(this, 'info', prefix);
 
         if (_require === require) {
             this.warn('require is not set, using default require');
@@ -352,7 +351,7 @@ export default class OptionsManager implements OptionsManagerType {
 
 
         const scan = (ignoreRc: boolean, parent: Package, name: string, options?: {}, override?: boolean) => {
-            this.debug('scanning', name);
+            this.debug('scanning', name, 'from', parent.name);
 
             if (Array.isArray(name)) {
                 throw new Error(`${name} can not be an array import from ${parent && parent.name}`);
