@@ -8,7 +8,6 @@ const {
 
 export const mode = om.config('@mrbuilder/plugin-webpack.mode');
 
-
 export const isKarma = om.enabled('@mrbuilder/plugin-karma'),
     isTest = NODE_ENV === 'test' || om.enabled('@mrbuilder/plugin-karma') || om.enabled('@mrbuilder/plugin-mocha') || om.enabled('@mrbuilder/plugin-jest'),
     isDevServer = om.enabled('@mrbuilder/plugin-webpack-dev-server'),

@@ -4,7 +4,8 @@
   "description": "Tools for developing with mrbuilder",
   "dependencies": {
     "@mrbuilder/optionsmanager": "^4.1.0",
-    "in-publish": "^2.0.1"
+    "in-publish": "^2.0.1",
+    "npmlog": "^4.1.2"
   },
   "main": "lib",
   "scripts": {

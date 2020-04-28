@@ -66,7 +66,7 @@ module.exports = function ({
 
     const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
-    logger.info('creating pages', keys, pages || '', 'entry', JSON.stringify(entry, null, 2));
+    logger.info('creating pages', keys, pages || '', 'entry');
 
 
     keys.forEach(name => {
@@ -95,9 +95,9 @@ module.exports = function ({
             publicPath,
             pkg,
         };
-        // if (om.enabled('@mrbuilder/plugin-compress')) {
-        //     htmlOptions.jsExtension = '.gz';
-        // }
+         if (om.enabled('@mrbuilder/plugin-compress')) {
+             htmlOptions.jsExtension = '.gz';
+         }
         webpack.plugins.push(new HtmlWebpackPlugin(htmlOptions, page));
     });
 

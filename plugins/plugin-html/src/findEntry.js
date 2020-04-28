@@ -19,7 +19,7 @@ module.exports = (om) => {
                 try {
                     const stat = fs.lstatSync(index);
                     if (stat.isDirectory()) {
-                        logger.warn(`looking for index in ${v}`);
+                        logger.info(`looking for index in ${v}`);
                         const globIndex = Glob.sync('index.*', {cwd: index, absolute: true})[0];
                         if (globIndex) {
                             entry = {index: globIndex};

@@ -40,7 +40,7 @@ type OptionsPackage = Partial<{
     alias: AliasObj
 }>;
 
-type LogLevel = 'WARN' | 'INFO' | 'DEBUG';
+type LogLevel = 'warn' | 'info' | 'debug';
 
 const nameConfig = (v: string | PluginNameConfig): PluginNameConfig => typeof v === 'string' ? [v] : v;
 
@@ -77,6 +77,16 @@ export default class OptionsManager implements OptionsManagerType {
                     handleNotFound = handleNotFoundTryInstall,
                     plugins = [],
                     presets = [],
+                    log = (level, prefix, ...message) => {
+                        switch (level.toLowerCase()) {
+                            case 'debug':
+                                return debug(prefix, ...message);
+                            case 'warn':
+                                return warn(prefix, ...message);
+                            default:
+                                return info(level, prefix, ...message);
+                        }
+                    }
                 }: OptionsManagerConfig = {
         env: process.env,
         argv: process.argv,
@@ -120,27 +130,10 @@ export default class OptionsManager implements OptionsManagerType {
         this.cwd = (...paths) => resolve(this.env('MODULE_DIR', cwd()), ...paths);
         this.topPackage = topPackage || _require(this.cwd('package.json'));
 
-        this.log = (level: LogLevel, plugin: string, ...args: any[]) => {
-            if (this.env(`QUIET`) && level !== 'WARN') {
-                return;
-            }
-            const message = `${level} [${prefix.toLowerCase()}${plugin ? `:${plugin}` : ''}]`;
-            switch (level) {
-                case 'DEBUG':
-                    if (this.env(`DEBUG`)) {
-                        return debug(message, ...args);
-                    }
-                    break;
-                case 'INFO':
-                    return info(message, ...args);
-                case 'WARN':
-                    return warn(message, ...args);
-            }
-        };
-
-        this.warn = this.log.bind(this, 'WARN', null);
-        this.debug = this.log.bind(this, 'DEBUG', null);
-        this.info = this.log.bind(this, 'INFO', null);
+        this.log = log;
+        this.warn = log.bind(this, 'warn', '@mrbuilder');
+        this.debug = log.bind(this, 'debug', '@mrbuilder');
+        this.info = log.bind(this, 'info', '@mrbuilder');
 
         if (_require === require) {
             this.warn('require is not set, using default require');
@@ -498,15 +491,15 @@ export class Option implements OptionType {
     }
 
     debug = (...args: any[]): void => {
-        this.optionsManager.log('DEBUG', this.name, ...args);
+        this.optionsManager.log('debug', this.name, ...args);
     };
 
     warn = (...args: any[]): void => {
-        this.optionsManager.log('WARN', this.name, ...args);
+        this.optionsManager.log('warn', this.name, ...args);
     };
 
     info = (...args: any[]): void => {
-        this.optionsManager.log('INFO', this.name, ...args);
+        this.optionsManager.log('info', this.name, ...args);
     };
 
     toJSON() {
