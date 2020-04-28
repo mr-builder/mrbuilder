@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-css",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "CSS support for mbuilder",
   "dependencies": {
     "@mrbuilder/plugin-browserslist": "^4.1.0",
