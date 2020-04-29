@@ -1,7 +1,6 @@
 import optionsManager, {logger, Info} from '@mrbuilder/cli';
 import {cwd, parseEntry, logObject} from '@mrbuilder/utils';
 import * as path from 'path';
-import {inspect} from 'util';
 import * as Webpack from 'webpack';
 
 const scope = optionsManager.logger('@mrbuilder/plugin-webpack');
