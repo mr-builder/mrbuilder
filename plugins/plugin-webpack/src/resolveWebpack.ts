@@ -105,10 +105,11 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
     if (opts.outputFilename) {
         conf.output.filename = opts.outputFilename;
     }
-//This is where the magic happens
-    logger.enableProgress();
-    conf = await optionsManager.initialize(conf, scope);
-    logger.disableProgress();
+
+    const loader = logger.newItem("loading", optionsManager.plugins.size);
+    loader.showProgress();
+    conf = await optionsManager.initialize(conf, scope, loader);
+    loader.finish();
     if (conf?.resolve?.extensions?.length) {
         conf.resolve.extensions = Array.from(new Set(conf.resolve.extensions));
     }
