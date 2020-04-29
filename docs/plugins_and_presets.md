@@ -29,3 +29,9 @@ module.exports = function(options, webpack, optionsManager){
 }
 
 ```
+
+### env.MRBUILDER_INTERNAL_PRESETS
+For build tools often you would like your tools configuration to be the fallback.  That is to
+run after the other configurations have run.  For this `MRBUILDER_INTERNAL_PRESETS` exists. 
+If you don't want your consumers to be able to change the configuration (only add plugins) you can
+use `env.MRBUILDER_PRESETS`.  
