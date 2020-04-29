@@ -56,7 +56,8 @@
     },
     "test": {
       "options": {
-        "bin": "@mrbuilder/plugin-mocha/bin/cli"
+        "bin": "@mrbuilder/plugin-mocha/bin/cli",
+        "node_env": "test",
       },
       "presets": [
         "@mrbuilder/preset-test",
@@ -65,7 +66,8 @@
     },
     "jest": {
       "options": {
-        "bin": "@mrbuilder/plugin-jest/bin/cli"
+        "bin": "@mrbuilder/plugin-jest/bin/cli",
+        "node_env": "test"
       },
       "plugins": [
         "@mrbuilder/plugin-jest"
@@ -73,7 +75,8 @@
     },
     "karma": {
       "options": {
-        "bin": "@mrbuilder/plugin-karma/bin/cli"
+        "bin": "@mrbuilder/plugin-karma/bin/cli",
+        "node_env": "test"
       },
       "plugins": [
         "@mrbuilder/plugin-karma"
@@ -84,7 +87,8 @@
     },
     "mocha": {
       "options": {
-        "bin": "@mrbuilder/plugin-mocha/bin/cli"
+        "bin": "@mrbuilder/plugin-mocha/bin/cli",
+        "node_env": "test"
       },
       "presets": [
         "@mrbuilder/preset-test"
@@ -92,7 +96,8 @@
     },
     "webpack-dev-server": {
       "options": {
-        "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli"
+        "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli",
+        "node_env": "development"
       },
       "plugins": [
         "@mrbuilder/plugin-webpack-dev-server"
@@ -100,7 +105,8 @@
     },
     "webpack": {
       "options": {
-        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+        "bin": "@mrbuilder/plugin-webpack/bin/cli",
+        "node_env": "production"
       },
       "plugins": [
         "@mrbuilder/plugin-webpack"
@@ -108,7 +114,8 @@
     },
     "app": {
       "options": {
-        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+        "bin": "@mrbuilder/plugin-webpack/bin/cli",
+        "node_env": "production"
       },
       "presets": [
         "@mrbuilder/preset-app"
@@ -116,7 +123,8 @@
     },
     "demo": {
       "options": {
-        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+        "bin": "@mrbuilder/plugin-webpack/bin/cli",
+        "node_env": "production"
       },
       "presets": [
         "@mrbuilder/preset-app"
@@ -132,7 +140,8 @@
     },
     "analyze": {
       "options": {
-        "bin": "@mrbuilder/plugin-webpack/bin/cli"
+        "bin": "@mrbuilder/plugin-webpack/bin/cli",
+        "node_env": "production"
       },
       "plugins": [
         "@mrbuilder/plugin-analyze"
@@ -140,7 +149,8 @@
     },
     "start": {
       "options": {
-        "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli"
+        "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli",
+        "node_env": "development"
       },
       "plugins": [
         "@mrbuilder/plugin-webpack-dev-server"
@@ -190,6 +200,14 @@
       },
       "plugins": [
         "@mrbuilder/plugin-tailwindcss"
+      ]
+    },
+    "dashboard": {
+      "options": {
+        "bin": "@mrbuilder/plugin-dashboard/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-dashboard"
       ]
     }
   }

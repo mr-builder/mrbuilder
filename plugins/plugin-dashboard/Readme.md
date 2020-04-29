@@ -1,17 +1,12 @@
-A plugin to use [webpack-dashboard](https://github.com/FormidableLabs/webpack-dashboard) thanks ken.
+A plugin to use [webpack-dashboard](https://github.com/FormidableLabs/webpack-dashboard) thanks Ken.
 
-Configure the plugin
-    
-Run the dashboard 
-```bash
-$ MRBUILDER_INTERNAL_PLUGINS=mrbuilder-plugin-webpack ./node_modules/.bin/webpack-dashboard -p 3001 -- ./node_modules/.bin/mrbuilder-webpack-dev-server 
-```
-or add it to your package.json
+Add it to your package.json's scripts.
 
 ```json
 {
+  
   "scripts": {
-    "dashboard": "MRBUILDER_INTERNAL_PLUGINS=mrbuilder-plugin-webpack webpack-dashboard -p 3001 -- mrbuilder-webpack-dev-server"
+    "dashboard": "mrbuilder"
   }
 }
 ```
