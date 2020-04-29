@@ -1,12 +1,11 @@
 // Karma configuration
 const path = require('path');
-const {cwd, stringify} = require('@mrbuilder/utils');
+const {cwd, logObject} = require('@mrbuilder/utils');
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 //we allow for running this script directly so can be run in IDE's.
-const optionsManager = require('@mrbuilder/cli').default;
+const {Info, optionsManager} = require('@mrbuilder/cli');
 const logger = optionsManager.logger('@mrbuilder/plugin-karma');
 const fs = require('fs');
-
 
 module.exports = function (config) {
     //karma doesn't handle async webpack configuration.
@@ -146,9 +145,12 @@ module.exports = function (config) {
         karmaConf.plugins.push('karma-coverage-istanbul-reporter');
     }
 
-    config.set(karmaConf);
-    if (fs.existsSync(mrb('karmaConf', cwd('karma.conf.js')))) {
-        require(cwd('karma.conf.js')(config));
+    const localKarmaConfig = mrb('karmaConf', cwd('karma.conf.js'));
+    if (fs.existsSync(localKarmaConfig)) {
+        logger.info('loading ', localKarmaConfig);
+        config.set(require(localKarmaConfig)(karmaConf));
     }
-    logger.debug('karma configuration', stringify(config), 'karma configuration end');
+    logObject('karma configuration', Info.isDebug, karmaConf);
+    config.set(karmaConf);
+    return karmaConf;
 };
