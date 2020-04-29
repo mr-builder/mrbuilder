@@ -1,11 +1,12 @@
-import optionsManager, {logger} from '@mrbuilder/cli';
-import {stringify, cwd, parseEntry} from '@mrbuilder/utils';
+import optionsManager, {logger, Info} from '@mrbuilder/cli';
+import {cwd, parseEntry, logObject} from '@mrbuilder/utils';
 import * as path from 'path';
+import {inspect} from 'util';
 import * as Webpack from 'webpack';
 
 const scope = optionsManager.logger('@mrbuilder/plugin-webpack');
 
-const {info, debug} = scope;
+const {info} = scope;
 
 const countSlash = (v: string): number => {
         if (!v) {
@@ -58,7 +59,12 @@ const WEBPACK_CONFIG: Webpack.Configuration = {
         rules: []
     }
 };
-
+/**
+ * This is an attempt to fix webpack.resolve.alias.   Currently it uses whatever
+ * was added first to match, rather than what is most specific; which is almost
+ * certainly what you want; that is the deepest (most slashes) are matched first,
+ * as they are more specific.
+ */
 const reorderAlias = (configuration: Webpack.Configuration): Webpack.Configuration => {
     if (configuration.resolve.alias) {
         configuration.resolve.alias = Object.entries(configuration.resolve.alias)
@@ -72,19 +78,14 @@ const reorderAlias = (configuration: Webpack.Configuration): Webpack.Configurati
 };
 const DONE = (webpack: Webpack.Configuration) => {
 
-//only define entry if it doesn't exist already.
+    //only define entry if it doesn't exist already.
     if (!webpack.entry) {
         webpack.entry = {index: optionsManager.cwd(optionsManager.topPackage.source || 'src/index')};
         info('using default entry', webpack.entry.index)
     }
-    /**
-     * This is an attempt to fix webpack.resolve.alias.   Currently it uses whatever
-     * was added first to match, rather than what is most specific; which is almost
-     * certainly what you want; that is the deepest (most slashes) are matched first,
-     * as they are more specific.
-     */
 
-    debug('webpack configuration', stringify(webpack));
+
+    logObject('webpack configuration', Info.isDebug, webpack);
     info('output filename', webpack.output.filename);
 
     return webpack;
