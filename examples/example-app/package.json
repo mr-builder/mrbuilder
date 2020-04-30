@@ -6,7 +6,8 @@
   "dependencies": {
     "@mrbuilder/example-lib": "^4.1.3",
     "@mrbuilder/example-lib-everything": "^4.1.3",
-    "@mrbuilder/example-lib-webpack": "^4.1.3"
+    "@mrbuilder/example-lib-webpack": "^4.1.3",
+    "@mrbuilder/plugin-babel": "^4.1.0"
   },
   "devDependencies": {
     "@mrbuilder/cli": "^4.1.3",

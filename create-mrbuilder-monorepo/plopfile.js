@@ -9,31 +9,32 @@ module.exports = function (plop) {
     });
     plop.setGenerator('monorepo', {
         description: 'This is sets up a mrbuilder monorepo',
-        prompts: [{
-            type: 'input',
-            name: 'namespace',
-            message: 'what namespace do you want to use?'
-        }, {
-            type: 'input',
-            name: 'packages',
-            message: 'what directory would you like to put your packages?',
-            default: 'packages'
-        }, {
-            type: 'input',
-            name: 'version',
-            message: 'what version would you like to start?',
-            default: '0.0.1'
-        }, {
-            type: 'input',
-            name: 'upstream',
-            message: 'what do you call your git origin for push?',
-            default: 'origin'
-        }, {
-            type: 'confirm',
-            name: 'useYarn',
-            message: 'use yarn?',
-            default: 'y'
-        }], // array of inquirer prompts
+        prompts: [
+            {
+                type: 'input',
+                name: 'namespace',
+                message: 'what namespace do you want to use?'
+            }, {
+                type: 'input',
+                name: 'packages',
+                message: 'what directory would you like to put your packages?',
+                default: 'packages'
+            }, {
+                type: 'input',
+                name: 'version',
+                message: 'what version would you like to start?',
+                default: '0.0.1'
+            }, {
+                type: 'input',
+                name: 'upstream',
+                message: 'what do you call your git origin for push?',
+                default: 'origin'
+            }, {
+                type: 'confirm',
+                name: 'useYarn',
+                message: 'use yarn?',
+                default: 'y'
+            }], // array of inquirer prompts
         actions: [
             {
                 type: 'addMany',
@@ -61,6 +62,6 @@ module.exports = function (plop) {
             }, {
                 type: 'install'
             }
-        ]  // array of actions
+        ]
     });
 };

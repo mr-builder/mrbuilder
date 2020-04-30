@@ -1,6 +1,6 @@
 export {default as lernaFilteredPackages} from "./lernaFilteredPackages";
 export * from './parse';
-
+export * from './logObject';
 import path from 'path';
 import {existsSync, readFileSync} from "fs";
 import JSON5 from 'json5';
