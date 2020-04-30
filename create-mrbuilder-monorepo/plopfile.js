@@ -1,4 +1,6 @@
-const {exec} = require('child_process');
+
+const versionOf = (val) => `"@mrbuilder/${val}": "^${require(`@mrbuilder/${val}/package.json`).version}"`;
+
 module.exports = function (plop) {
     // create your generators here
     plop.setHelper('cwd', process.cwd);
@@ -7,6 +9,7 @@ module.exports = function (plop) {
  $ cd ${answers.namespace}     
  $ ${answers.useYarn ? 'yarn install' : 'npm install -g lerna\n $ lerna init\n $ lerna bootstrap\n'}`;
     });
+    plop.setHelper('versionOf', versionOf);
     plop.setGenerator('monorepo', {
         description: 'This is sets up a mrbuilder monorepo',
         prompts: [
