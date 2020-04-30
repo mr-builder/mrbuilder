@@ -12,6 +12,9 @@
     },
     {
       "path": "./core/tool"
+    },
+    {
+      "path": "./plugins/plugin-webpack"
     }
   ]
 }

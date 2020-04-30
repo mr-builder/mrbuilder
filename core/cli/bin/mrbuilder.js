@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 //for better yarn/npm compatibility.
+
 if (require('in-publish').inInstall()) {
     process.exit(0);
 }
@@ -166,9 +167,9 @@ if (cliArgv) {
         return r;
     }, []));
 }
-om.debug(`configuration: \n` + JSON.stringify(Array.from(om.plugins.entries()).map(([name, value]) => ([name, typeof value === 'boolean' ? value : value.config])), null, 2));
+
 om.info(`MRBUILDER_ENV: '${env.MRBUILDER_ENV}' MRBUILDER_PROFILE:'${profile}' NODE_ENV:${env.NODE_ENV}`);
-om.info(`running '${script} ${argv.slice(2).map(v=>`"${v}"`).join(' ')}'`);
+om.info(`running '${script} ${argv.slice(2).map(v => `"${v}"`).join(' ')}'`);
 
 if (script) {
     require(script);

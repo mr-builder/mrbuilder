@@ -433,19 +433,25 @@ export default class OptionsManager implements OptionsManagerType {
      * @param conf
      * @param scope
      */
-    async initialize<T>(conf: T, scope: {} | InitFn<T> = {}): Promise<T> {
+    async initialize<T>(conf: T, scope: {} | InitFn<T> = {}, worker: (v: number) => void = () => {
+    }): Promise<T> {
         for (const [key, option] of this.plugins.entries()) {
             if (!option) {
+                this.debug(key, 'disabled');
+                worker(1);
                 continue;
             }
             let plugin: Function;
             try {
                 plugin = this.require(Array.isArray(option.plugin) ? option.plugin[0] : option.plugin || key);
+                this.debug(key, 'found plugin');
+
             } catch (e) {
                 if (e.code !== 'MODULE_NOT_FOUND') {
                     throw e;
                 }
-                option.warn(`was not found '${key}' from '${option && option.plugin}'`);
+                this.warn(key, `was not found from '${option && option.plugin}'`);
+                worker(1);
                 continue;
             }
             if (typeof plugin === 'function') {
@@ -454,17 +460,19 @@ export default class OptionsManager implements OptionsManagerType {
                     if (typeof scope === 'function') {
                         ret = await scope(option, conf, this);
                     } else {
-                        ret = await plugin.call(scope, option.config || {}, conf, this);
+                        ret = await plugin.call({}, option.config || {}, conf, this);
                     }
-                    option.info('loaded.');
+                    this.info(key, 'loaded');
                     conf = ret || conf;
+                    worker(1);
                 } catch (e) {
                     console.trace(e);
-                    option.warn(`Error in '${option.name}'`, e);
+                    this.warn(`Error in '${option.name}'`, e);
                     throw e;
                 }
             } else if (plugin) {
-                option.debug(`'${key}' not loaded no  plugin was found`);
+                this.info(key, ` not loaded no plugin was found`);
+                worker(1);
             }
         }
 
