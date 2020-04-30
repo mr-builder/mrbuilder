@@ -108,8 +108,8 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
 
     const loader = logger.newItem("loading", optionsManager.plugins.size);
     loader.showProgress();
-    conf = await optionsManager.initialize(conf, scope, loader);
-    loader.finish();
+    conf = await optionsManager.initialize(conf, scope, loader.completeWork.bind(loader));
+    loader.completed();
     if (conf?.resolve?.extensions?.length) {
         conf.resolve.extensions = Array.from(new Set(conf.resolve.extensions));
     }
