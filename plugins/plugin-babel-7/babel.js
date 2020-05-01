@@ -1,7 +1,7 @@
 const {findPlugin, findPreset} = require('@mrbuilder/plugin-babel/util');
 const {asArray} = require('@mrbuilder/utils');
 
-module.exports = function babelBabel({useModules, useDecorators = true, decoratorsBeforeExport = false}, conf) {
+module.exports = function babelBabel({useModules, useDecorators = 'legacy', decoratorsBeforeExport = false}, conf) {
 
     if (useDecorators) {
         let decIndex = conf.plugins.findIndex(findPlugin('proposal-decorators'));
