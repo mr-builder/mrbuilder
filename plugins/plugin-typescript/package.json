@@ -36,6 +36,7 @@
   "mrbuilder": {
     "plugin": "./src/index",
     "options": {
+      "@babel": "./babel.js",
       "managed": false,
       "extensions": [
         ".ts",
