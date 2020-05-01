@@ -1,11 +1,10 @@
 const {optionsManager} = require('@mrbuilder/cli');
-const {enhancedResolve} = require('@mrbuilder/utils');
+const {enhancedResolve, asArray} = require('@mrbuilder/utils');
 const {resolve} = require('path');
 const {existsSync} = require('fs');
 const customPresets = optionsManager.cwd('.storybook', 'presets.js');
 const resolver = (v) => enhancedResolve(v, optionsManager.require);
 
-const asArray = v => Array.isArray(v) ? v : v == null ? [] : [v];
 const logger = optionsManager.logger('@mrbuilder/plugin-storybook');
 logger.debug('main.js found');
 

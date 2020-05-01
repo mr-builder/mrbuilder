@@ -36,14 +36,6 @@
     ],
     "plugins": [
       [
-        "@mrbuilder/plugin-storybook",
-        {
-          "stories": [
-            "../example-lib/src/**/*.stories.jsx"
-          ]
-        }
-      ],
-      [
         "@mrbuilder/plugin-css",
         {
           "modules": true
@@ -69,6 +61,18 @@
       "@mrbuilder/plugin-graphql"
     ],
     "env": {
+      "storybook": {
+        "plugins": [
+          [
+            "@mrbuilder/plugin-storybook",
+            {
+              "stories": [
+                "../example-lib/src/**/*.stories.jsx"
+              ]
+            }
+          ]
+        ]
+      },
       "development": {
         "plugins": [
           [

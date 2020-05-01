@@ -6,14 +6,11 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 const {Info, optionsManager} = require('@mrbuilder/cli');
 const logger = optionsManager.logger('@mrbuilder/plugin-karma');
 const fs = require('fs');
+const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-karma.${key}`, def);
 
 module.exports = function (config) {
     //karma doesn't handle async webpack configuration.
     const webpack = global._MRBUILDER_WEBPACK_;
-
-    const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-karma.${key}`, def);
-
-
     const chromeDataDir = mrb('chromeDataDir', path.resolve(process.env.HOME, '.@mrbuilder/chrome'));
     const useCoverage = mrb('coverage');
     const frameworks = mrb('frameworks', ['mocha']);
