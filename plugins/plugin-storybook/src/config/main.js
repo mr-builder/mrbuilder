@@ -11,7 +11,8 @@ logger.debug('main.js found');
 
 const stories = [
 
-    ...asArray(optionsManager.config('stories', [])).filter(resolver)
+    ...asArray(optionsManager.config('@mrbuilder/plugin-storybook.stories', []))
+        .filter(Boolean).map(v => optionsManager.cwd(v))
 ]
 logger.debug('stories', stories);
 
@@ -24,7 +25,7 @@ const presets = [
 logger.debug('presets', presets);
 
 module.exports = {
-    entries:[ resolve(__dirname, '..', 'stories.js')],
+    entries: [resolve(__dirname, '..', 'stories.js')],
     stories,
     presets
 }

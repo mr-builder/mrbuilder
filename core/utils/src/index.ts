@@ -1,13 +1,11 @@
 export {default as lernaFilteredPackages} from "./lernaFilteredPackages";
 export * from './parse';
 export * from './logObject';
-import path from 'path';
 import {existsSync, readFileSync} from "fs";
 import JSON5 from 'json5';
+import path from 'path';
 
-import {
-    parseRe,
-} from './parse';
+import {parseRe,} from './parse';
 //JSON5 allows for a lot more convienent syntax.
 
 export const cwd = (...args: string[]): string => {
@@ -15,6 +13,10 @@ export const cwd = (...args: string[]): string => {
 };
 
 export const project = cwd;
+
+export function asArray<T>(v?: T): T extends Array<any> ? T : T extends (null | undefined) ? [] : [T] {
+    return (Array.isArray(v) ? v : v == null ? [] : [v]) as any;
+}
 
 export const parseJSON = (filename: string): {} => {
     if (!existsSync(filename)) {

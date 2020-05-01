@@ -22,7 +22,7 @@
     "test": "mrbuilder-karma-test",
     "karma": "mrbuilder",
     "storybook": "mrbuilder",
-    "storybook:start": "mrbuilder --@mrbuilder/plugin-storybook.parameters.theme=dark"
+    "storybook:start": "mrbuilder --@mrbuilder/plugin-storybook.parameters.theme=dark  "
   },
   "peerDependencies": {
     "react": "16.x",
@@ -35,6 +35,14 @@
       "@mrbuilder/preset-lib"
     ],
     "plugins": [
+      [
+        "@mrbuilder/plugin-storybook",
+        {
+          "stories": [
+            "../example-lib/src/**/*.stories.jsx"
+          ]
+        }
+      ],
       [
         "@mrbuilder/plugin-css",
         {

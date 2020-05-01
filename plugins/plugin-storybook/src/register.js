@@ -1,8 +1,9 @@
-const {optionsManager} = require('@mrbuilder/cli');
-const fs = require('fs');
+const {enhancedResolve, logObject} = require("@mrbuilder/utils");
+const {optionsManager, Info} = require('@mrbuilder/cli');
 const {resolveWebpack} = require('@mrbuilder/plugin-webpack/lib/resolveWebpack');
+const fs = require('fs');
+
 const logger = optionsManager.logger('@mrbuilder/plugin-storybook');
-const {enhancedResolve} = require('@mrbuilder/utils');
 const tryResolve = (file) => {
     try {
         optionsManager.require.resolve(file);
@@ -27,33 +28,36 @@ const oneOfRules = (config) => {
     return config;
 }
 
+const removeIf = (arr, fn) => {
+    const idx = arr.findIndex(fn);
+    if (idx > -1) {
+        arr.splice(idx, 1);
+    }
+    return arr;
+}
 
 async function webpackFinal(config) {
     logger.debug('webpackFinal init');
+    logObject('from storybook', Info.isDebug, config);
     const {entry: {...entry}, mode, devServer, output: {...output}} = config;
-    const webpack = await resolveWebpack(config, {isLibrary: false}, (c) => c);
+
+
+    //So storybook has its own client side markdown thing.   if we are using mrbuilders, we will
+    // remove it so that we can get generated markdown instead.
+    if (optionsManager.enabled('@mrbuilder/plugin-markdown')) {
+        optionsManager.debug('disabling storybook\'s markdown using our own');
+        removeIf(config.module.rules, ({test, use: [raw] = []}) => (test && raw && test.source === '\\.md$' && /raw-loader/.test(raw.loader)));
+    }
+    if (optionsManager.enabled('@mrbuilder/plugin-babel')) {
+        optionsManager.debug('disabling storybook\'s babel using our own');
+        removeIf(config.module.rules, ({test}) => test && test.test && test.test('stuff.mjs'));
+    }
+    const webpack = await resolveWebpack(config, {isLibrary: false});
     webpack.entry = entry;
     webpack.output = output;
     webpack.mode = mode;
     //webpack.devServer = devServer;
     delete webpack.externals;
-
-    //So storybook has its own client side markdown thing.   if we are using mrbuilders, we will
-    // remove it so that we can get generated markdown instead.
-    if (optionsManager.enabled('@mrbuilder/plugin-markdown')) {
-        optionsManager.logger('@mrbuilder/plugin-storybook').info('disabling storybooks markdown');
-        const idx = webpack.module.rules.findIndex(({test, use: [raw] = []}) => {
-            if (test && raw && test.source === '\\.md$' && /raw-loader/.test(raw.loader)) {
-                return true;
-            }
-        });
-        if (idx > -1) {
-            webpack.module.rules.splice(idx, 1);
-        }
-    }
-    if (optionsManager.enabled('@mrbuilder/plugin-css')) {
-
-    }
     webpack.module.rules.unshift({
         test: require.resolve('./parameters.js'),
         use: [{
@@ -74,7 +78,7 @@ async function webpackFinal(config) {
     }
     logger.debug('webpackFinal init ends');
 
-    return webpack;
+    return oneOfRules(webpack);
 }
 
 
