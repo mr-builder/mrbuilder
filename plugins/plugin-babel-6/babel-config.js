@@ -84,4 +84,4 @@ if (conf.plugins) {
     conf.plugins = conf.plugins.map(applyConfig('plugin')).filter(Boolean);
 }
 
-module.exports = babelProcess(conf, optionsManager.require.resolve, mrb('coverage', false));
+module.exports = babelProcess(conf, optionsManager.require.resolve);

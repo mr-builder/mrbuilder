@@ -1,4 +1,4 @@
-const {findPlugin, findPreset} = require('./util');
+const {findPlugin, findPreset} = require('@mrbuilder/plugin-babel/util');
 const {asArray} = require('@mrbuilder/utils');
 
 module.exports = function babelBabel({useModules, useDecorators = true, decoratorsBeforeExport = false}, conf) {
@@ -7,7 +7,7 @@ module.exports = function babelBabel({useModules, useDecorators = true, decorato
         let decIndex = conf.plugins.findIndex(findPlugin('proposal-decorators'));
         let classPropIdx = conf.plugins.findIndex(findPlugin('proposal-class-properties'));
         if (decIndex < 0) {
-            decIndex = conf.plugins.push(['@babel/plugin-proposal-decorators', {decoratorsBeforeExport}]);
+            decIndex = conf.plugins.push(['@babel/plugin-proposal-decorators', {decoratorsBeforeExport}]) - 1;
         }
         if (classPropIdx < 0) {
             classPropIdx = decIndex + 1;

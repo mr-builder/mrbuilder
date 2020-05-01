@@ -39,12 +39,12 @@
   "source": "src",
   "main": "src",
   "mrbuilder": {
-    "@babel": "./babel",
     "alias": {
       "coverage": "Run with code coverage, not for production",
       "hot": "Run with hot configuration"
     },
     "options": {
+      "@babel": "./babel",
       "useDecorators": "legacy",
       "config": {
         "presets": [

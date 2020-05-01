@@ -1,9 +1,15 @@
 const {logObject, requireFn, asArray} = require('@mrbuilder/utils');
-const {find, findPlugin, findPreset} = require('@mrbuilder/plugin-babel/util');
+const {find} = require('@mrbuilder/plugin-babel/util');
 const {join} = require('path');
-const {optionsManager, Info} = require('@mrbuilder/cli');
 require('@mrbuilder/plugin-browserslist');
+
+const {optionsManager, Info} = require('@mrbuilder/cli');
 const logger = optionsManager.logger('@mrbuilder/plugin-babel');
+const fs = require('fs');
+const babelProcess = require('./babel-process');
+
+//All configurations shoudl first check babel then babel-7.  Idea being that we may get to normalize babel stuff and not require configuration per version.
+const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-babel-7.${key}`, optionsManager.config(`@mrbuilder/plugin-babel.${key}`, def));
 
 const resolvePlugin = (pluginName, pluginPath) => {
     if (pluginPath.startsWith('.')) {
@@ -48,11 +54,6 @@ function initBabel(babelConf) {
     });
 }
 
-const fs = require('fs');
-const babelProcess = require('./babel-process');
-
-//All configurations shoudl first check babel then babel-7.  Idea being that we may get to normalize babel stuff and not require configuration per version.
-const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-babel-7.${key}`, optionsManager.config(`@mrbuilder/plugin-babel.${key}`, def));
 const babelrc = mrb('babelrc', true) ? optionsManager.cwd('.babelrc') : false;
 let conf = mrb('config', {});
 
@@ -75,12 +76,6 @@ conf = conf || require('./package.json').mrbuilder.options.config || {};
 conf.plugins = asArray(mrb('plugins', conf.plugins)) || [];
 conf.presets = asArray(mrb('presets', conf.presets)) || [];
 
-
-
-//Jest uses babel typescript plugin, so we detect that typescript and jest is in use, and we use it. All open to better
-//ideas.
-
-
 initBabel(conf);
 
 if (conf.presets) {
@@ -89,7 +84,8 @@ if (conf.presets) {
 if (conf.plugins) {
     conf.plugins = conf.plugins.filter(Boolean);
 }
-const babelConfig = babelProcess(conf, optionsManager.require.resolve, mrb('coverage', false));
-logger.debug('configuration');
+const babelConfig = babelProcess(conf, optionsManager.require.resolve);
+
 logObject('babel configuration', Info.isDebug, babelConfig);
+
 module.exports = babelConfig;
