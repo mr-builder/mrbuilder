@@ -18,6 +18,9 @@
   "main": "src",
   "license": "BSD0",
   "mrbuilder": {
+    "options": {
+      "@babel": "./babel"
+    },
     "plugins": [
       [
         "@mrbuilder/cli",

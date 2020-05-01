@@ -20,6 +20,7 @@
   "source": "src",
   "mrbuilder": {
     "options": {
+      "@babel": "./babel",
       "testDir": "test",
       "filePattern": "*[.-]!(karma[.-]){test,spec}.{js,jsx,ts,tsx,es,esx,es6}",
       "timeout": "2000",

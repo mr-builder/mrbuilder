@@ -5,14 +5,15 @@ const {optionsManager, Info} = require('@mrbuilder/cli');
 require('@mrbuilder/plugin-browserslist');
 const logger = optionsManager.logger('@mrbuilder/plugin-babel');
 
-const resolvePlugin = (pluginName, pluginPath)=>{
-    if (pluginPath.startsWith('.')){
+const resolvePlugin = (pluginName, pluginPath) => {
+    if (pluginPath.startsWith('.')) {
         return join(pluginName, pluginPath);
-    }else if (pluginPath.startsWith('/')){
+    } else if (pluginPath.startsWith('/')) {
         return pluginPath;
     }
     return pluginPath;
 }
+
 function initBabel(babelConf) {
     const merge = (type, plugins) => {
         for (const [name, conf] of plugins.map(asArray)) {
@@ -34,7 +35,7 @@ function initBabel(babelConf) {
         if (typeof babelPlugin === 'string') {
             babelConf = requireFn(resolvePlugin(option.name, babelPlugin)).call(option, option.get(), babelConf, optionsManager) || babelConf;
         } else if (Array.isArray(babelPlugin)) {
-            merge('plugins', babelPlugin);
+            merge('plugins', typeof babelPlugin[0] === 'string' ? [babelPlugin] : babelPlugin);
         } else if (typeof babelPlugin === 'object') {
             const {plugins, presets, ...rest} = babelPlugin;
             merge('plugins', plugins);
@@ -74,68 +75,11 @@ conf = conf || require('./package.json').mrbuilder.options.config || {};
 conf.plugins = asArray(mrb('plugins', conf.plugins)) || [];
 conf.presets = asArray(mrb('presets', conf.presets)) || [];
 
-let useModules = mrb('useModules');
-if (useModules) {
-    logger.info('allow exporting as ES6 modules');
-    const idx = conf.presets.findIndex(findPreset('(?:env|2015)'));
-    if (idx > -1) {
-        let newMod = conf.presets[idx];
-        const [mod, c = {}] = Array.isArray(newMod) ? newMod : [newMod];
-        c.modules = false;
-        conf.presets.splice(idx, 1, [mod, c])
-    } else {
-        conf.presets.push(['@babel/preset-env', {modules: false}])
-    }
-}
 
 
 //Jest uses babel typescript plugin, so we detect that typescript and jest is in use, and we use it. All open to better
 //ideas.
 
-
-const useDecorators = mrb('useDecorators', 'legacy');
-const decoratorsBeforeExport = mrb('decoratorsBeforeExport', false);
-if (useDecorators) {
-    let decIndex = conf.plugins.findIndex(findPlugin('proposal-decorators'));
-    let classPropIdx = conf.plugins.findIndex(findPlugin('proposal-class-properties'));
-    if (decIndex < 0) {
-        decIndex = conf.plugins.push(['@babel/plugin-proposal-decorators', {decoratorsBeforeExport}]);
-    }
-    if (classPropIdx < 0) {
-        classPropIdx = decIndex + 1;
-        conf.plugins.splice(classPropIdx, 0, '@babel/plugin-proposal-class-properties');
-    }
-    if (useDecorators === 'legacy') {
-
-        const decoratorOptions = {
-            ...(Array.isArray(conf.plugins[decIndex]) && conf.plugins[decIndex][1]),
-            legacy: true
-        }
-        //Does not work with legacy... can't even be there
-        delete decoratorOptions.decoratorsBeforeExport;
-        const dec = conf.plugins[decIndex] = ['@babel/plugin-proposal-decorators', decoratorOptions];
-
-        const props = conf.plugins[classPropIdx] = ['@babel/plugin-proposal-class-properties', {
-            ...(Array.isArray(conf.plugins[classPropIdx]) && conf.plugins[classPropIdx][1]),
-            loose: true
-        }];
-
-        if (classPropIdx < decIndex) {
-            conf.plugins[classPropIdx] = dec;
-            conf.plugins[decIndex] = props;
-        }
-    } else {
-        const decPlugin = asArray(conf.plugins[decIndex] || ['@babel/plugin-proposal-decorators', {}]);
-
-        conf.plugins[decIndex] = [decPlugin[0],
-            {
-                decoratorsBeforeExport,
-                ...(decPlugin[1])
-            }
-        ];
-    }
-
-}
 
 initBabel(conf);
 

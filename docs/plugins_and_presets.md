@@ -35,3 +35,11 @@ For build tools often you would like your tools configuration to be the fallback
 run after the other configurations have run.  For this `MRBUILDER_INTERNAL_PRESETS` exists. 
 If you don't want your consumers to be able to change the configuration (only add plugins) you can
 use `env.MRBUILDER_PRESETS`.  
+
+
+### Configuring Babel
+Plugins often have to extend the babel configuration.  To allow this to be configured per plugin,
+you can add an '@babel' to your plugins configuration.  The right side, is either a string with the
+name of the file of your code.  An array with a plugin and configuration, an array of plugins, or
+a Babel configuration. Look at [plugin-typescript](https://github.com/mr-builder/mrbuilder/blob/master/plugins/plugin-typescript)
+for an example. 

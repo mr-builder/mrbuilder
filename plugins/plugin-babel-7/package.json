@@ -39,6 +39,7 @@
   "source": "src",
   "main": "src",
   "mrbuilder": {
+    "@babel": "./babel",
     "alias": {
       "coverage": "Run with code coverage, not for production",
       "hot": "Run with hot configuration"
@@ -50,7 +51,6 @@
           "@babel/preset-env"
         ],
         "plugins": [
-          "@babel/plugin-proposal-decorators",
           "@babel/plugin-proposal-function-bind",
           "@babel/plugin-proposal-class-properties",
           "@babel/plugin-transform-async-to-generator",
