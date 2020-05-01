@@ -169,7 +169,7 @@ if (cliArgv) {
 }
 
 om.info(`MRBUILDER_ENV: '${env.MRBUILDER_ENV}' MRBUILDER_PROFILE:'${profile}' NODE_ENV:${env.NODE_ENV}`);
-om.info(`running '${script} ${argv.slice(2).map(v => `"${v}"`).join(' ')}'`);
+om.info(`running '${script}${argv.slice(2).map(v => ` "${v}"`).join('')}'`);
 
 if (script) {
     require(script);

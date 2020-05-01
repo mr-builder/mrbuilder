@@ -1,4 +1,4 @@
-const {stringify} = require('@mrbuilder/utils');
+const {stringify, asArray} = require('@mrbuilder/utils');
 
 const {optionsManager, logger: _logger} = require('@mrbuilder/cli');
 require('@mrbuilder/plugin-browserslist');
@@ -6,7 +6,6 @@ require('@mrbuilder/plugin-browserslist');
 
 const logger = optionsManager.logger('@mrbuilder/plugin-babel');
 const enabled = (plugin) => optionsManager.enabled(`@mrbuilder/plugin-${plugin}`);
-
 
 const fs = require('fs');
 const babelProcess = require('./babel-process');
@@ -127,6 +126,21 @@ if (enabled('typescript')) {
         }
     }
 }
+if (enabled('storybook')) {
+    const docGenIndex = conf.plugins.findIndex(v => /(?:[/]?babel-plugin-)?react-docgen$/.test(Array.isArray(v) ? v[0] : v));
+    if (docGenIndex < 0) {
+        conf.plugins.push(['babel-plugin-react-docgen', {DOC_GEN_COLLECTION_NAME: 'STORYBOOK_REACT_CLASSES'}]);
+    } else {
+        const arr = asArray(conf.plugins[docGenIndex]);
+        conf.plugins[docGenIndex] = [
+            arr[0],
+            {
+                ...arr[1],
+                DOC_GEN_COLLECTION_NAME: 'STORYBOOK_REACT_CLASSES'
+            }
+        ];
+    }
+}
 
 const useDecorators = mrb('useDecorators', 'legacy');
 const decoratorsBeforeExport = mrb('decoratorsBeforeExport', false);
@@ -160,7 +174,7 @@ if (useDecorators) {
             conf.plugins[decIndex] = props;
         }
     } else {
-        const decPlugin = Array.isArray(conf.plugins[decIndex]) ? conf.plugins[decIndex] : ['@babel/plugin-proposal-decorators', {}];
+        const decPlugin = asArray(conf.plugins[decIndex] || ['@babel/plugin-proposal-decorators', {}]);
 
         conf.plugins[decIndex] = [decPlugin[0],
             {

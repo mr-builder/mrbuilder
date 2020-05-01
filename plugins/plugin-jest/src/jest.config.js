@@ -1,18 +1,32 @@
 #!/usr/bin/env node
+
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
 const {optionsManager, Info} = require('@mrbuilder/cli');
 const {logObject} = require("@mrbuilder/utils");
+const logger = optionsManager.logger('@mrbuilder/plugin-jest');
 const {defaults} = require('jest-config');
-const fs = require('fs');
 const jestConfig = {
     ...defaults,
-    rootDir: optionsManager.cwd('src'),
+    rootDir: optionsManager.config('@mrbuilder/cli.src', optionsManager.cwd('src')),
     //allow for configuration override
     ...(optionsManager.config('@mrbuilder/plugin-jest'))
 };
-const escapeSlash = v => v.replace(/[/]/g, '[/]');
+const escapeRe = str => str.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
+const isTypescript = optionsManager.enabled('@mrbuilder/plugin-typescript');
+const isBabel = optionsManager.enabled('@mrbuilder/plugin-babel');
+const isWebpack = optionsManager.enabled('@mrbuilder/plugin-webpack');
+
+const tryResolve = (v) => {
+    try {
+        require.resolve(optionsManager.cwd(v));
+        return true;
+    } catch (e) {
+
+    }
+    return false;
+}
 if (!jestConfig.transform) {
     jestConfig.transform = {};
 }
@@ -37,15 +51,15 @@ if (optionsManager.enabled('@mrbuilder/plugin-webpack')) {
                 if (/react/.test(value)) {
                     return;
                 } else if (key.endsWith('$')) {
-                    jestConfig.moduleNameMapper[`^${key}`] = `${value}`;
+                    jestConfig.moduleNameMapper[`^${escapeRe(key.replace(/\$$/))}$`] = `${value}`;
                 } else {
                     if (key.endsWith('/')) {
-                        jestConfig.moduleNameMapper[`^${escapeSlash(key)}(.*)$`] = `${value}$1`;
+                        jestConfig.moduleNameMapper[`^${escapeRe(key)}(.*)$`] = `${value}$1`;
                     } else if (!/[.]js|mjs|ts|tsx|es\d+?$/.test(value)) {
-                        jestConfig.moduleNameMapper[`^${escapeSlash(key)}([/].*)?$`] = `${value}$1`;
+                        jestConfig.moduleNameMapper[`^${escapeRe(key)}([/].*)?$`] = `${value}$1`;
                     }
 
-                    jestConfig.moduleNameMapper[`^${escapeSlash(key)}$`] = `${value}`;
+                    jestConfig.moduleNameMapper[`^${escapeRe(key)}$`] = `${value}`;
                 }
             });
         }
@@ -95,9 +109,30 @@ if (optionsManager.enabled('@mrbuilder/plugin-webpack')) {
     } else {
         throw new Error(`it appears that webpack was not initialized first, please use the mrbuilder-jest cli to ensure operation`)
     }
-} else if (optionsManager.enabled('@mrbuilder/plugin-babel') || optionsManager.enabled('@mrbuilder/plugin-typescript')) {
-    if (!fs.existsSync(optionsManager.cwd('babel.config.js'))) {
-        jestConfig.transform ['\.[jet]sx?'] = optionsManager.require.resolve('@mrbuilder/plugin-jest/src/transform');
+}
+const tsUseBabel = isTypescript && optionsManager.config('@mrbuilder/plugin-typescript.useBabel');
+
+if (isBabel) {
+    const match =
+        tsUseBabel ?
+            /[.]mjs|js|jsx|ts|tsx|es\d|esx/ :
+            optionsManager.config('@mrbuilder/plugin-babel.test', /[.]mjs|js|jsx|es\d|esx$/);
+    jestConfig.transform [match.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/src/transform');
+}
+
+if (isTypescript && !tsUseBabel) {
+    try {
+
+        jestConfig.preset = require.resolve('ts-jest');
+    } catch (e) {
+        logger.warn(`please add 'ts-jest' to your package.json, or use babel to compile typescript '${JSON.stringify([
+            "@mrbuilder/plugin-typescript",
+            {
+                "useBabel": true,
+            }
+        ], null, 2)}'`);
+
+        jestConfig.transform [/[.]tsx?$/.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/src/transform');
     }
 }
 

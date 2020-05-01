@@ -1,18 +1,32 @@
 #!/usr/bin/env node
-process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-process.env.MRBUILDER_ENV = 'jest';
-process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/cli`;
+const {env, argv} = process;
+env.NODE_ENV = env.NODE_ENV || 'test';
+env.MRBUILDER_ENV = 'jest';
+env.MRBUILDER_INTERNAL_PRESETS = `${env.MRBUILDER_INTERNAL_PRESETS || ''},@mrbuilder/cli`;
 
-const om = require('@mrbuilder/cli').default;
-
-const fs = require('fs');
-if (!(fs.existsSync(om.cwd('jest.config.js')) || require(om.cwd('package.json')).jest)) {
-    const argv = process.argv;
-    if (!(argv.includes('--config', 2) || argv.includes('-c', 2))) {
-        argv.splice(2, 0, '--config', om.require.resolve('@mrbuilder/plugin-jest/src/jest.config.js'));
+const {optionsManager} = require('@mrbuilder/cli');
+const tryRequire = (src) => {
+    try {
+        require.resolve(optionsManager.cwd(src));
+        return true;
+    } catch (e) {
     }
+    return false;
 }
-if (om.enabled('@mrbuilder/plugin-webpack')) {
+
+if (!(argv.includes('-c', 2) || argv.includes('--config', 2) || argv.find(v => /--config=/.test(v), 2))) {
+    if (tryRequire('jest.config')) {
+        return require('jest/bin/jest');
+    }
+    if (require(optionsManager.cwd('package.json')).jest) {
+        return require('jest/bin/jest');
+    }
+} else {
+    return require('jest/bin/jest');
+}
+
+argv.splice(2, 0, '--config', optionsManager.require.resolve('@mrbuilder/plugin-jest/src/jest.config.js'));
+if (optionsManager.enabled('@mrbuilder/plugin-webpack')) {
     require('@mrbuilder/plugin-webpack/webpack.config').then(conf => {
         global._MRBUILDER_WEBPACK = conf;
         return require('jest/bin/jest');

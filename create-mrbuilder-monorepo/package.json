@@ -9,6 +9,12 @@
     "@mrbuilder/cli": "^4.2.0-alpha.0",
     "plop": "^2.6.0"
   },
+  "devDependencies": {
+    "@mrbuilder/preset-app": "^4.2.0-alpha.0",
+    "@mrbuilder/preset-test": "^4.2.0-alpha.0",
+    "@mrbuilder/preset-lib": "^4.2.0-alpha.0",
+    "@mrbuilder/plugin-typescript": "^4.2.0-alpha.0"
+  },
   "license": "0BSD",
   "publishConfig": {
     "access": "public",

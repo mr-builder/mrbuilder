@@ -1,4 +1,4 @@
-import {get, objToConf, parseIfBool, parseJSON,} from '@mrbuilder/utils';
+import {get, objToConf, parseIfBool, parseJSON, asArray,} from '@mrbuilder/utils';
 import cp from 'child_process';
 import {basename, join, resolve} from 'path';
 import handleNotFoundTryInstall from './handleNotFoundTryInstall';
@@ -231,9 +231,10 @@ export default class OptionsManager implements OptionsManagerType {
         };
 
         const processPlugin = (includedFrom: string, plugin: NameOrPluginNameConfig, override: {}, parent: Package): boolean | string => {
-            let [pluginName, pluginOpt] = typeof plugin === 'string' ? [plugin] : plugin;
+            let [pluginName, pluginOpt] = asArray(plugin);
             if (typeof pluginName !== 'string') {
-                throw new Error(`Plugin name needs to be a string, received ${typeof pluginName} please check your '${prefix}' config from '${includedFrom}'`);
+                throw new Error(`\n\n\nPlugin name needs to be a string, but its a ${JSON.stringify(pluginName)}
+                 ${typeof pluginName} please check your config from '${includedFrom}\n\n'`);
             }
 
             if (this.plugins.has(pluginName)) {
