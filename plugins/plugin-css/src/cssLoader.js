@@ -1,7 +1,7 @@
 const useStyle = require('./styleLoader');
 const getLocalIdent = require('./getLocalIdent');
 
-const cssLoader = function (webpack, test, modules = false, om, ...conf) {
+function cssLoader(webpack, test, modules = false, om, ...conf) {
 
     const mrb = (v, d) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''), d);
     const localsConvention = mrb('localsConvention', mrb('camelCase', true) ? 'camelCase' : 'asIs');
@@ -63,7 +63,7 @@ const cssLoader = function (webpack, test, modules = false, om, ...conf) {
         test,
         use: useStyle(webpack, ...loaders)
     });
-};
+}
 
 /**
  * Sets up Webpack for modules (or not), 3 ways
@@ -123,6 +123,6 @@ const cssLoaderModule = (webpack,
     }
     return webpack;
 }
+cssLoader.cssLoaderModule = cssLoaderModule;
+cssLoader.cssLoader = cssLoader;
 module.exports = cssLoader;
-module.exports.cssLoaderModule = cssLoaderModule;
-module.exports.cssLoader = cssLoader;

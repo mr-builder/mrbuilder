@@ -28,10 +28,12 @@ const HotApp = hot(App);
 render(<HotApp/>, document.getElementById('${node}'));
 `;
 
-module.exports = function () {
+function loader() {
     this.cacheable && this.cacheable();
-    const { hot, name, elementId, exported } = loaderUtils.getOptions(this);
+    const {hot, name, elementId, exported} = loaderUtils.getOptions(this);
     return (hot ? generateHot : generate)(name, elementId, exported)
-};
-module.exports.generate = generate;
-module.exports.generateHot = generateHot;
+}
+
+loader.generate = generate;
+loader.generateHot = generateHot;
+module.exports = loader;

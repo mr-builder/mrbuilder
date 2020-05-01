@@ -1,5 +1,5 @@
 const fs = require('fs');
-const useStyle = require('@mrbuilder/plugin-css/src/styleLoader');
+const useStyle = require('@mrbuilder/plugin-css/styleLoader');
 
 module.exports = ({test, autoprefixer = true}, webpack, optionsManager) => {
     const tailwindConfig = require(fs.existsSync(optionsManager.cwd('tailwind.config.js')) ? optionsManager.cwd('tailwind.config.js') : `${__dirname}/tailwind.config.js`);

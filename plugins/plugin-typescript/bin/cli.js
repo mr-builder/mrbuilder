@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require('@mrbuilder/plugin-typescript/src/manageTsConfig')(require('@mrbuilder/cli').default);
+require('@mrbuilder/plugin-typescript/manageTsConfig')(require('@mrbuilder/cli').default);
 if (!process.argv.includes('--outDir')) {
     process.argv.splice(2, 0, '--outDir', 'lib');
 }
