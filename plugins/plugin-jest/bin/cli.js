@@ -25,7 +25,7 @@ if (!(argv.includes('-c', 2) || argv.includes('--config', 2) || argv.find(v => /
     return require('jest/bin/jest');
 }
 
-argv.splice(2, 0, '--config', optionsManager.require.resolve('@mrbuilder/plugin-jest/src/jest.config.js'));
+argv.splice(2, 0, '--config', optionsManager.require.resolve('@mrbuilder/plugin-jest/jest.config'));
 if (optionsManager.enabled('@mrbuilder/plugin-webpack')) {
     require('@mrbuilder/plugin-webpack/webpack.config').then(conf => {
         global._MRBUILDER_WEBPACK = conf;

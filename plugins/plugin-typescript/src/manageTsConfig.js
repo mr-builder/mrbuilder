@@ -7,15 +7,16 @@ module.exports = (optionsManager) => {
     }
     const isManaged = optionsManager.config('@mrbuilder/plugin-typescript.managed', false);
 
-    const configFile = optionsManager.config('@mrbuilder/plugin-typescript.configFile', enhancedResolve('@mrbuilder/plugin-typescript/tsconfig.mrbuilder.json'));
+    const configFile = optionsManager.config('@mrbuilder/plugin-typescript.configFile',
+        require.resolve('../tsconfig.mrbuilder.json'));
     const tsConfig = optionsManager.config('@mrbuilder/plugin-typescript.tsconfig') || optionsManager.require(configFile);
     if (!tsConfig.include) {
         const include = [
-            optionsManager.config('@mrbuilder/cli.sourceDir', './src'),
-            optionsManager.config('@mrbuilder/cli.testDir', './test'),
-            optionsManager.config('@mrbuilder/cli.publicDir', './public'),
+            optionsManager.config('@mrbuilder/cli.sourceDir', optionsManager.cwd('./src')),
+            optionsManager.config('@mrbuilder/cli.testDir', optionsManager.cwd('./test')),
+            optionsManager.config('@mrbuilder/cli.publicDir', optionsManager.cwd('./public')),
         ].filter(Boolean);
-        if (include.length){
+        if (include.length) {
             tsConfig.include = include;
         }
     }

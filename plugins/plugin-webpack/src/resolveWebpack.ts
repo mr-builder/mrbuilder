@@ -1,4 +1,4 @@
-import optionsManager, {logger, Info} from '@mrbuilder/cli';
+import {logger, optionsManager, Info} from '@mrbuilder/cli';
 import {cwd, parseEntry, logObject} from '@mrbuilder/utils';
 import * as path from 'path';
 import * as Webpack from 'webpack';
@@ -107,7 +107,7 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
     }
 
     const loader = logger.newItem("loading", optionsManager.plugins.size);
-    loader.showProgress();
+    loader.enableProgress();
     conf = await optionsManager.initialize(conf, scope, loader.completeWork.bind(loader));
     loader.completed();
     if (conf?.resolve?.extensions?.length) {

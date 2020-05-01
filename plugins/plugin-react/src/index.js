@@ -96,7 +96,7 @@ module.exports = function reactPlugin({compatMode,}, webpack, om) {
                     {
                         [name]: [
                             ...preEntry,
-                            `babel-loader?${JSON.stringify(useBabel(om).options)}!@mrbuilder/plugin-react/src/loader?${JSON.stringify(
+                            `babel-loader?${JSON.stringify(useBabel(om).options)}!@mrbuilder/plugin-react/loader?${JSON.stringify(
                                 {
                                     name: currentAlias,
                                     hot,

@@ -1,6 +1,6 @@
 const {enhancedResolve, logObject} = require("@mrbuilder/utils");
 const {optionsManager, Info} = require('@mrbuilder/cli');
-const {resolveWebpack} = require('@mrbuilder/plugin-webpack/lib/resolveWebpack');
+const {resolveWebpack} = require('@mrbuilder/plugin-webpack/resolveWebpack');
 const fs = require('fs');
 
 const logger = optionsManager.logger('@mrbuilder/plugin-storybook');

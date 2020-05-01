@@ -42,7 +42,7 @@ function crankPlugin({compatMode,}, webpack, om) {
                     webpack.entry,
                     {
                         [name]: [
-                            `babel-loader?${JSON.stringify(useBabel(om).options)}!@mrbuilder/plugin-crank/src/loader?${JSON.stringify(
+                            `babel-loader?${JSON.stringify(useBabel(om).options)}!@mrbuilder/plugin-crank/loader?${JSON.stringify(
                                 {
                                     name: currentAlias,
                                     elementId: page.elementId || elementId,

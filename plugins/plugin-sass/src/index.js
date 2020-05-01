@@ -1,5 +1,4 @@
-const {cssLoaderModule} = require(
-    '@mrbuilder/plugin-css/src/cssLoader');
+const {cssLoaderModule} = require('@mrbuilder/plugin-css/cssLoader');
 const {enhancedResolve: _resolve} = require('@mrbuilder/utils');
 
 const TRUE_RE = /[.](?:s[ac]ssm)$/;

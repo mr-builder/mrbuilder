@@ -1,20 +1,19 @@
 #!/usr/bin/env node
-process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/cli,@mrbuilder/plugin-mocha`;
+const {argv, env} = process;
+env.NODE_ENV = env.NODE_ENV || 'test';
+env.MRBUILDER_INTERNAL_PLUGINS = `${env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/cli,@mrbuilder/plugin-mocha`;
 
 
-const om = require('@mrbuilder/cli').default;
-const {cwd} = require('@mrbuilder/utils');
+const {optionsManager} = require('@mrbuilder/cli');
 const path = require('path');
-const {argv} = process;
-const {info} = om.logger('@mrbuilder/plugin-mocha');
-
-const coverageDir = om.config('@mrbuilder/plugin-mocha.coverageDir');
-const coverageGLobal = om.config('@mrbuilder/plugin-mocha.coverageGlobal');
-const testDir = om.config('@mrbuilder/plugin-mocha.testDir', cwd('test'));
-const filePattern = om.config('@mrbuilder/plugin-mocha.filePattern', '**/*-test.js');
-const timeout = om.config('@mrbuilder/plugin-mocha.timeout', 20000);
-const useBabel = om.config('@mrbuilder/plugin-mocha.useBabel', om.enabled('@mrbuilder/plugin-babel') || om.enabled('@mrbuilder/plugin-typescript'));
+const {info} = optionsManager.logger('@mrbuilder/plugin-mocha');
+const mrb = (key, def) => optionsManager.config('@mrbuilder/plugin-mocha' + (key ? `.${key}` : ''), def);
+const coverageDir = mrb('coverageDir');
+const coverageGLobal = mrb('coverageGlobal');
+const testDir = mrb('testDir', optionsManager.cwd(optionsManager.config('@mrbuilder/cli.testDir')));
+const filePattern = mrb('filePattern', '**/*-test.js');
+const timeout = mrb('timeout', 20000);
+const useBabel = mrb('useBabel', optionsManager.enabled('@mrbuilder/plugin-babel') || optionsManager.config('@mrbuilder/plugin-typescript.useBabel'));
 info(`running tests '${testDir}/${filePattern}'`);
 
 let mocha;
@@ -26,7 +25,7 @@ try {
 
 if (coverageDir || coverageGLobal) {
 
-    let coverage = coverageDir || cwd('coverage');
+    let coverage = coverageDir || optionsManager.cwd('coverage');
 
     argv.splice(2, 0, '--source-map=false', `--report-dir=${coverage}`,
         `--reporter=json`, `--instrument=false`, '--all',
@@ -34,26 +33,23 @@ if (coverageDir || coverageGLobal) {
     mocha = path.resolve(__dirname, '..', 'node_modules', '.bin', 'nyc');
 }
 
-// if (om.enabled("@mrbuilder/plugin-typescript")) {
-//     argv.push('-r', 'ts-node/register');
-// }
-
 if (timeout) {
     //argv is all strings
     argv.push('--timeout', '' + timeout);
 }
 
 if (useBabel) {
-  argv.push('--require', require.resolve('@mrbuilder/plugin-babel/babel-register'));
+    argv.push('--require', require.resolve('@mrbuilder/plugin-babel/babel-register'));
 }
 
-if (om.enabled('@mrbuilder/plugin-enzyme')) {
-    argv.push('--require', path.join(__dirname, '..', 'src', 'cli-helpers'));
-    argv.push('--require', require.resolve('@mrbuilder/plugin-enzyme/src/enzyme-mocha'));
+if (optionsManager.enabled('@mrbuilder/plugin-enzyme')) {
+    argv.push('--require', path.resolve(__dirname, '../src', 'cli-helpers.js'));
+    argv.push('--require', require.resolve('@mrbuilder/plugin-enzyme/enzyme-mocha'));
 }
 
 argv.push(testDir + '/' + filePattern);
 
-om.logger("@mrbuilder/plugin-mocha").info(`running with args `, argv);
+
+optionsManager.logger("@mrbuilder/plugin-mocha").info(`running with args `, argv.join('\\\n'));
 
 require(mocha);

@@ -18,10 +18,11 @@ import ${importAs(exported)} from '${name}';
 renderer.render(<App/>, document.getElementById('${node}'));
 `;
 
-
-module.exports = function () {
+function loader() {
     this.cacheable && this.cacheable();
     const {name, elementId, exported} = loaderUtils.getOptions(this);
     return generate(name, elementId, exported)
-};
-module.exports.generate = generate;
+}
+
+loader.generate = generate;
+module.exports = loader;
