@@ -1,6 +1,7 @@
-const {enhancedResolve, logObject} = require("@mrbuilder/utils");
+const {enhancedResolve, asArray, logObject} = require("@mrbuilder/utils");
 const {optionsManager, Info} = require('@mrbuilder/cli');
 const {resolveWebpack} = require('@mrbuilder/plugin-webpack/resolveWebpack');
+
 const fs = require('fs');
 
 const logger = optionsManager.logger('@mrbuilder/plugin-storybook');
@@ -91,30 +92,15 @@ const customAddons = optionsManager.cwd('.storybook', 'addons.js');
 if (tryResolve(customAddons)) {
     addons.push(customAddons);
 }
+
+const stories = [
+    ...asArray(optionsManager.config('@mrbuilder/plugin-storybook.stories', []))
+        .filter(Boolean).map(v => optionsManager.cwd(v))
+]
 const register = {
+    entries: [require.resolve('./stories.js')],
     webpackFinal,
     addons,
+    stories
 };
-
-const customMainFile = optionsManager.cwd('.storybook', 'main');
-if (tryResolve(customMainFile)) {
-    logger.debug('project main.js found', customMainFile);
-
-    const customMain = require(customMainFile);
-    Object.entries(customMain).forEach(([key, value]) => {
-        if (typeof value === 'function') {
-            const oValue = register[key];
-            if (!oValue) {
-                register[key] = value;
-            } else {
-                if (typeof oValue === 'function') {
-                    register[key] = (c, o) => oValue(value(c, o), o);
-                } else {
-                    register[key] = [...oValue, ...value];
-                }
-            }
-        }
-    });
-}
-logger.debug('register', register);
 module.exports = register;
