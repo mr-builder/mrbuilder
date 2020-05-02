@@ -1,21 +1,23 @@
-const om = require('@mrbuilder/cli').default;
-const {enhancedResolve} = require('@mrbuilder/utils');
-const isDevServer = om.config('@mrbuilder/plugin-storybook.isDevServer');
+const {optionsManager} = require('@mrbuilder/cli');
+const {enhancedResolve, asArray} = require('@mrbuilder/utils');
+const isDevServer = optionsManager.config('@mrbuilder/plugin-storybook.isDevServer');
+
 if (isDevServer) {
     process.env.NODE_ENV = 'development';
 }
 
 const server = require("@storybook/core/server");
-const path = require('path');
-const config = (key, def) => om.config(`@mrbuilder/plugin-storybook.${key}`, def);
-const staticDir = om.config('@mrbuilder/cli.publicDir', om.cwd('public'));
-const options = require(`@storybook/${config('type', 'react')}/dist/server/options`).default;
+
+const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-storybook.${key}`, def);
+
+const options = require(`@storybook/${mrb('type', 'react')}/dist/server/options`).default;
 
 const serverOptions = {
     ...options,
-    configDir: config('configDir', path.join(__dirname, 'config')),
-    staticDir: config('staticDir', Array.isArray(staticDir) ? staticDir : staticDir ? [staticDir] : null),
-    ...[
+    frameworkPresets: ['@mrbuilder/plugin-storybook/register', ...asArray(mrb('frameworkPresets', []))],
+    configDir: mrb('configDir', optionsManager.cwd('.storybook')),
+    staticDir: mrb('staticDir', asArray(mrb('staticDir', optionsManager.config('@mrbuilder/cli.publicDir', optionsManager.cwd('public'))))),
+    ...([
         'port',
         'host',
         'sslCa',
@@ -28,18 +30,14 @@ const serverOptions = {
         'host',
         'ignorePreview',
         'docs',
-        'frameworkPresets',
         'previewUrl',
 
     ].reduce((r, k) => {
-        const v = config(k);
-        if (v != null) {
-            r[k] = config(k);
-        }
+        r[k] = mrb(k, r[k]);
         return r;
-    }, {}),
+    }, {})),
 };
 if (!isDevServer) {
-    config.outputDir = enhancedResolve(config('outputDir', 'storybook-static'));
+    serverOptions.outputDir = enhancedResolve(mrb('outputDir', 'storybook-static'));
 }
 server[isDevServer ? 'buildDev' : 'buildStatic'](serverOptions);
