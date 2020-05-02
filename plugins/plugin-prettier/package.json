@@ -8,7 +8,6 @@
   "bin": {
     "mrbuilder-prettier": "./bin/cli.js"
   },
-  "gitHead": "8932fa60b6c6f6ed18b45918e7873c8e70b8d0be",
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"

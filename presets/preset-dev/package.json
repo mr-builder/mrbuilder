@@ -43,7 +43,6 @@
       "@mrbuilder/plugin-webpack-dev-server"
     ]
   },
-  "gitHead": "4762479fb6964cdeb52d5da1077e5f893ffd57a1",
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
