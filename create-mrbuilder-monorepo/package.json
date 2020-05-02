@@ -15,9 +15,9 @@
     "@mrbuilder/preset-lib": "^4.2.0-alpha.2",
     "@mrbuilder/preset-test": "^4.2.0-alpha.2"
   },
-  "license": "0BSD",
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
-  }
+  },
+  "license": "MIT"
 }

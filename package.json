@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git@github.com:mr-builder/mrbuilder.git"
   },
-  "license": "BSD",
+  "license": "MIT",
   "workspaces": [
     "core/*",
     "presets/*",

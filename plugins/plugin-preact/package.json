@@ -3,7 +3,6 @@
   "version": "4.2.0-alpha.2",
   "source": "src",
   "main": "src",
-  "license": "0BSD",
   "dependencies": {
     "preact": "^10.4.0"
   },
@@ -27,5 +26,5 @@
       "@mrbuilder/plugin-react"
     ]
   },
-  "gitHead": "4762479fb6964cdeb52d5da1077e5f893ffd57a1"
+  "license": "MIT"
 }

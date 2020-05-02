@@ -24,11 +24,9 @@
     "typescript",
     "mrbuilder"
   ],
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
-  "gitHead": "8932fa60b6c6f6ed18b45918e7873c8e70b8d0be",
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
@@ -43,5 +41,6 @@
         ".tsx"
       ]
     }
-  }
+  },
+  "license": "MIT"
 }

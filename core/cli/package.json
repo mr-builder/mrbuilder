@@ -27,12 +27,12 @@
     "mrbuilder-webpack": "./bin/mrbuilder.js",
     "mrbuilder-webpack-dev-server": "./bin/mrbuilder.js"
   },
-  "license": "0BSD",
   "engines": {
     "node": ">=8.0.0"
   },
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
-  }
+  },
+  "license": "MIT"
 }

@@ -72,13 +72,12 @@
       "@mrbuilder/plugin-babel"
     ]
   },
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
-  "gitHead": "4762479fb6964cdeb52d5da1077e5f893ffd57a1",
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
-  }
+  },
+  "license": "MIT"
 }

@@ -16,7 +16,6 @@
     "sass",
     "mrbuilder"
   ],
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
@@ -32,5 +31,6 @@
         "sourceMap": true
       }
     }
-  }
+  },
+  "license": "MIT"
 }
