@@ -29,6 +29,7 @@
   },
   "mrbuilder": {
     "options": {
+      "@babel": "./babel",
       "compatMode": false
     }
   }

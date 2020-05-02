@@ -44,14 +44,13 @@
       "hot": "Run with hot configuration"
     },
     "options": {
+      "@babel": "./babel",
       "useDecorators": "legacy",
       "config": {
         "presets": [
-          "@babel/preset-env",
-          "@babel/preset-react"
+          "@babel/preset-env"
         ],
         "plugins": [
-          "@babel/plugin-proposal-decorators",
           "@babel/plugin-proposal-function-bind",
           "@babel/plugin-proposal-class-properties",
           "@babel/plugin-transform-async-to-generator",
