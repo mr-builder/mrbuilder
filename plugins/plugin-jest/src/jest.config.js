@@ -8,13 +8,15 @@ const logger = optionsManager.logger('@mrbuilder/plugin-jest');
 const {defaults} = require('jest-config');
 const mrb = (key, def) => optionsManager.config(!key ? '@mrbuilder/plugin-jest' : `@mrbuilder/plugin-jest.${key}`, def);
 const enabled = (key) => optionsManager.enabled(`@mrbuilder/plugin-${key}`);
+const mrbConf = {...(mrb())};
+delete mrbConf['@babel'];
 
 const jestConfig = {
     ...defaults,
     coverageDirectory: enhancedResolve(mrb('coverageDirectory', optionsManager.cwd('coverage')), optionsManager.resolve),
     rootDir: mrb('@mrbuilder/cli.src', optionsManager.cwd('src')),
     //allow for configuration override
-    ...(mrb())
+    ...mrbConf
 };
 const escapeRe = str => str.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 

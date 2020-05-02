@@ -16,7 +16,7 @@
   "mrbuilder": {
     "plugins": [
       "@mrbuilder/plugin-typescript",
-      "@mrbuilder/plugin-filetypes"
+      "@mrbuilder/plugin-react"
     ]
   },
   "license": "0BSD"

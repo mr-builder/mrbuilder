@@ -6,7 +6,19 @@ import JSON5 from 'json5';
 import path from 'path';
 
 import {parseRe,} from './parse';
+
 //JSON5 allows for a lot more convienent syntax.
+
+export function requireFn(m: string): Function {
+    const ret = require(m);
+    if ('default' in ret && typeof ret.default === 'function') {
+        return ret.default;
+    }
+    if (typeof ret === 'function') {
+        return ret;
+    }
+    throw new Error(`Not a function`)
+}
 
 export const cwd = (...args: string[]): string => {
     return path.join(process.cwd(), ...args);
