@@ -1,19 +1,19 @@
 {
   "name": "@mrbuilder/create-mrbuilder-monorepo",
   "description": "Support for yarn create monorepo",
-  "version": "4.2.0-alpha.1",
+  "version": "4.2.0-alpha.2",
   "bin": {
     "create-mrbuilder-monorepo": "./app.js"
   },
   "dependencies": {
-    "@mrbuilder/cli": "^4.2.0-alpha.1",
+    "@mrbuilder/cli": "^4.2.0-alpha.2",
     "plop": "^2.6.0"
   },
   "devDependencies": {
-    "@mrbuilder/plugin-typescript": "^4.2.0-alpha.1",
-    "@mrbuilder/preset-app": "^4.2.0-alpha.1",
-    "@mrbuilder/preset-lib": "^4.2.0-alpha.1",
-    "@mrbuilder/preset-test": "^4.2.0-alpha.1"
+    "@mrbuilder/plugin-typescript": "^4.2.0-alpha.2",
+    "@mrbuilder/preset-app": "^4.2.0-alpha.2",
+    "@mrbuilder/preset-lib": "^4.2.0-alpha.2",
+    "@mrbuilder/preset-test": "^4.2.0-alpha.2"
   },
   "license": "0BSD",
   "publishConfig": {
