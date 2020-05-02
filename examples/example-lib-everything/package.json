@@ -1,19 +1,19 @@
 {
   "name": "@mrbuilder/example-lib-everything",
   "description": "An everything example",
-  "version": "4.2.0-alpha.2",
+  "version": "4.2.0-alpha.3",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.2.0-alpha.2",
-    "@mrbuilder/plugin-env": "^4.1.0",
-    "@mrbuilder/plugin-graphql": "^4.2.0-alpha.2",
-    "@mrbuilder/plugin-lodash": "^4.1.0",
-    "@mrbuilder/plugin-markdown": "^4.2.0-alpha.2",
-    "@mrbuilder/plugin-moment": "^4.1.0",
-    "@mrbuilder/plugin-stylus": "^4.2.0-alpha.2",
-    "@mrbuilder/plugin-typescript": "^4.2.0-alpha.2",
-    "@mrbuilder/plugin-worker": "^4.1.0",
-    "@mrbuilder/plugin-yaml": "^4.1.0"
+    "@mrbuilder/cli": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-env": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-graphql": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-lodash": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-markdown": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-moment": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-stylus": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-typescript": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-worker": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-yaml": "^4.2.0-alpha.3"
   },
   "scripts": {
     "analyze": "mrbuilder",

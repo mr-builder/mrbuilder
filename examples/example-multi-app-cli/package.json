@@ -1,10 +1,10 @@
 {
   "name": "@mrbuilder/example-multi-app-cli",
   "description": "Shows how you can use cli to configure mrbuilder",
-  "version": "4.2.0-alpha.2",
+  "version": "4.2.0-alpha.3",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.2.0-alpha.2"
+    "@mrbuilder/cli": "^4.2.0-alpha.3"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",
