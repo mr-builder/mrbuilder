@@ -29,7 +29,6 @@
   },
   "source": "src",
   "main": "src",
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
@@ -63,5 +62,6 @@
     "plugins": [
       "@mrbuilder/plugin-babel"
     ]
-  }
+  },
+  "license": "MIT"
 }

@@ -13,7 +13,6 @@
     "crank",
     "mrbuilder"
   ],
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
@@ -54,5 +53,6 @@
         }
       ]
     ]
-  }
+  },
+  "license": "MIT"
 }

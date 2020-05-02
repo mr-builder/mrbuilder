@@ -24,7 +24,6 @@
     "typescript",
     "mrbuilder"
   ],
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
@@ -43,5 +42,6 @@
         ".tsx"
       ]
     }
-  }
+  },
+  "license": "MIT"
 }

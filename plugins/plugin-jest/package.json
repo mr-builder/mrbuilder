@@ -16,7 +16,6 @@
   },
   "source": "src",
   "main": "src",
-  "license": "BSD0",
   "mrbuilder": {
     "options": {
       "@babel": "./babel"
@@ -47,5 +46,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
-  }
+  },
+  "license": "MIT"
 }

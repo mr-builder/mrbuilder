@@ -28,7 +28,6 @@
   "devDependencies": {
     "lerna": "^3.18.4"
   },
-  "license": "0BSD",
   "gitHead": "8932fa60b6c6f6ed18b45918e7873c8e70b8d0be",
   "publishConfig": {
     "access": "public",
@@ -38,5 +37,6 @@
     "plugins": [
       "@mrbuilder/plugin-babel"
     ]
-  }
+  },
+  "license": "MIT"
 }

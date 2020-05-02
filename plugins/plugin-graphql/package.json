@@ -10,7 +10,6 @@
   },
   "source": "src",
   "main": "src",
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
@@ -25,5 +24,6 @@
       "loader": "graphql-tag/loader",
       "exclude": "/node_modules/"
     }
-  }
+  },
+  "license": "MIT"
 }

@@ -5,7 +5,6 @@
   "dependencies": {
     "prettier": "^2.0.2"
   },
-  "license": "BSD0",
   "bin": {
     "mrbuilder-prettier": "./bin/cli.js"
   },
@@ -13,5 +12,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
-  }
+  },
+  "license": "MIT"
 }

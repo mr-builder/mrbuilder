@@ -8,7 +8,6 @@
   },
   "source": "src",
   "main": "src",
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
@@ -22,5 +21,6 @@
       "test": "/\\.(png|je?pg|gif?f|bmp|ppm|bpg|mpe?g)$/",
       "loader": "file-loader"
     }
-  }
+  },
+  "license": "MIT"
 }

@@ -10,7 +10,6 @@
   },
   "source": "src",
   "main": "src",
-  "license": "BSD0",
   "bin": {
     "mrbuilder-storybook-cli": "./bin/cli.js"
   },
@@ -81,5 +80,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
-  }
+  },
+  "license": "MIT"
 }

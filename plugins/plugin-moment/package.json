@@ -6,7 +6,6 @@
   "dependencies": {
     "moment": "^2.22.2"
   },
-  "license": "0BSD",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
   },
@@ -14,5 +13,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.org"
-  }
+  },
+  "license": "MIT"
 }
