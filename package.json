@@ -14,10 +14,9 @@
     "core/*",
     "presets/*",
     "plugins/*",
-    "create-mrbuilder-app",
-    "create-mrbuilder-monorepo",
     "wiki",
-    "examples/*"
+    "examples/*",
+    "create/*"
   ],
   "dependencies": {
     "lerna": "^3.20.2",
