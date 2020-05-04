@@ -11,7 +11,6 @@
   },
   "devDependencies": {
     "@mrbuilder/plugin-typescript": "^4.2.0-alpha.3",
-    "@mrbuilder/preset-app": "^4.2.0-alpha.3",
     "@mrbuilder/preset-lib": "^4.2.0-alpha.3",
     "@mrbuilder/preset-test": "^4.2.0-alpha.3"
   },

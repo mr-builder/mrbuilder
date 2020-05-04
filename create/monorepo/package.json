@@ -6,14 +6,15 @@
     "create-mrbuilder-monorepo": "./app.js"
   },
   "dependencies": {
-    "@mrbuilder/cli": "^4.2.0-alpha.3",
     "plop": "^2.6.0"
   },
   "devDependencies": {
-    "@mrbuilder/plugin-typescript": "^4.2.0-alpha.3",
-    "@mrbuilder/preset-app": "^4.2.0-alpha.3",
+    "@mrbuilder/cli": "^4.2.0-alpha.3",
     "@mrbuilder/preset-lib": "^4.2.0-alpha.3",
-    "@mrbuilder/preset-test": "^4.2.0-alpha.3"
+    "@mrbuilder/preset-app": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-babel": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-babel-7": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-typescript": "^4.2.0-alpha.3"
   },
   "publishConfig": {
     "access": "public",

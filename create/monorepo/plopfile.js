@@ -1,5 +1,4 @@
-
-const versionOf = (val) => `"@mrbuilder/${val}": "^${require(`@mrbuilder/${val}/package.json`).version}"`;
+const versionOf = (val) => `"@mrbuilder/${val}": "${require('./package.json').devDependencies[`@mrbuilder/${val}`]}"`;
 
 module.exports = function (plop) {
     // create your generators here

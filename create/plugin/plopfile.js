@@ -1,4 +1,4 @@
-const versionOf = (val) => `"@mrbuilder/${val}": "^${require(`@mrbuilder/${val}/package.json`).version}"`;
+
 const {exec} = require('child_process');
 const destination = (d = '') => `{{cwd}}/plugins/plugin-{{name}}/${d}`;
 
@@ -20,7 +20,6 @@ module.exports = function (plop) {
  $ cd plugins/plugin-{{name}}  
  $ ${answers.useYarn ? 'yarn install' : 'npm install'}`;
     });
-    plop.setHelper('versionOf', versionOf);
     plop.setHelper('extension', (v, ans) => ans.typescript ? 'ts' : 'js');
     plop.setHelper('name', ({data: {root: {pluginName}}}) => pluginName.replace(/.*plugin-/, ''));
     plop.setGenerator('monorepo', {
