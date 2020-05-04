@@ -41,7 +41,7 @@ export type OptionsConfig = PresetsPlugins & {
 };
 
 
-export type OptionsManagerType = {
+export type OptionsManagerType = Logger & {
 
     enabled(plugin: string): boolean,
     config(plugin: string, def?: any): any,
@@ -50,7 +50,8 @@ export type OptionsManagerType = {
     help(): void,
     env: EnvFn,
     topPackage: Package,
-    cwd(...paths: string[]): string
+    cwd(...paths: string[]): string,
+
 };
 
 type PluginFn = () => void;
