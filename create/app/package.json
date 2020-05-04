@@ -6,13 +6,14 @@
     "create-mrbuilder-app": "./app.js"
   },
   "scripts": {
-    "test-manual": "rimraf test && mkdir -p test && yarn test:js & yarn test:ts",
+    "test-manual": "rimraf test && mkdir -p test && yarn test:all ",
+    "test:all": "yarn test:js & yarn test:ts",
     "test:js": "yarn test:js:jest & yarn test:js:karma",
     "test:ts": "yarn test:ts:jest & yarn test:ts:karma",
-    "test:js:jest": "cd test && ../app.js js-jest TestJS 'test' n jest y y && cd js-jest && yarn prepare && yarn test",
-    "test:js:karma": "cd test && ../app.js js-karma TestJS 'test' n karma y y && cd js-karma && yarn prepare && yarn test",
-    "test:ts:jest": "cd test && ../app.js ts-jest TestJS 'test' y jest y y && cd js-jest && yarn prepare && yarn test",
-    "test:ts:karma": "cd test && ../app.js ts-karma TestJS 'test' y karma y y && cd js-karma && yarn prepare && yarn test"
+    "test:js:jest": "cd test && ../app.js js-jest Test 'test' n jest y y && cd js-jest && yarn prepare && yarn test",
+    "test:js:karma": "cd test && ../app.js js-karma Test 'test' n karma y y && cd js-karma && yarn prepare && yarn test",
+    "test:ts:jest": "cd test && ../app.js ts-jest Test 'test' y jest y y && cd ts-jest && yarn prepare && yarn test",
+    "test:ts:karma": "cd test && ../app.js ts-karma Test 'test' y karma y y && cd ts-karma && yarn prepare && yarn test"
   },
   "keywords": [
     "mrbuilder"
