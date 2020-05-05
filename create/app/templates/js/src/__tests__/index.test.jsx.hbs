@@ -1,0 +1,11 @@
+import React from 'react';
+import { {{Component}} } from '../index';
+import renderer from 'react-test-renderer';
+
+test('render {{Component}}', function(){
+    const component = renderer.create(
+        <{{Component}}/>
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+})

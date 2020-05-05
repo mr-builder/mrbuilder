@@ -6,7 +6,7 @@ const babelConfig = require('@mrbuilder/plugin-babel/babel-config');
  * @param om
  * @returns {{options}|{[p: string]: *}}
  */
-module.exports = (om) => {
+module.exports = (om = require('@mrbuilder/cli').optionsManager) => {
     let use;
 
     const mrb = (key, v) => om.config(`@mrbuilder/plugin-babel.${key}`, v);
@@ -22,7 +22,7 @@ module.exports = (om) => {
     if (!use.options) {
         use.options = babelConfig;
     }
-    use.options          = {...use.options};
+    use.options = {...use.options};
     const cacheDirectory = mrb('cacheDirectory', true);
     if (cacheDirectory) {
         use.options.cacheDirectory = cacheDirectory;

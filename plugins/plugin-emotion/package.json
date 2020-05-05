@@ -1,0 +1,25 @@
+{
+  "name": "@mrbuilder/plugin-emotion",
+  "version": "4.2.0-alpha.6",
+  "license": "MIT",
+  "author": "speajus@gmail.com",
+  "main": "src",
+  "keywords": [
+    "mrbuilder",
+    "emotion"
+  ],
+  "dependencies": {
+    "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
+    "@emotion/core": "^10.0.28"
+  },
+  "mrbuilder": {
+    "options": {
+      "@babel": {
+        "presets": [
+          "@emotion/babel-preset-css-prop"
+        ]
+      }
+    }
+  }
+}
