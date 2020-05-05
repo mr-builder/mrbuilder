@@ -51,6 +51,7 @@ export default class OptionsManager implements OptionsManagerType {
     readonly plugins = new Map<string, ResolvedOption>();
     readonly require: RequireFn;
     readonly env: EnvFn;
+    readonly envPrefix:string;
     public topPackage: Package;
     help: () => void;
     cwd: (...paths: string[]) => string;
@@ -107,7 +108,7 @@ export default class OptionsManager implements OptionsManagerType {
             prefix = basename(argv[1]).split('-').shift()
         }
         prefix = envify(prefix);
-        envPrefix = envPrefix || envify(prefix);
+        this.envPrefix = envPrefix = envPrefix || envify(prefix);
         confPrefix = confPrefix || prefix.toLowerCase();
         rcFile = `.${confPrefix}rc`;
 

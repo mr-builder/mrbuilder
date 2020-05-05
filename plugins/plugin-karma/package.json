@@ -13,6 +13,7 @@
     "@mrbuilder/plugin-enzyme": "^4.2.0-alpha.3",
     "@mrbuilder/plugin-mocha": "^4.2.0-alpha.3",
     "@mrbuilder/plugin-webpack": "^4.2.0-alpha.3",
+    "@types/enzyme": "^3.10.5",
     "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "^2.0.0",

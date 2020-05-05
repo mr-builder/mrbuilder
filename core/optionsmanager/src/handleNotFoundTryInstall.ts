@@ -64,7 +64,7 @@ export default function handleNotFoundTryInstall(this: OptionsManagerType, e: Er
             stdio: ['inherit', 'inherit', 'inherit'],
             env: Object.assign({}, process.env, {
                 NODE_ENV: 'development',
-                [`MRBUILDER_NO_AUTOINSTALL`]: 1,
+                [`${this.envPrefix}_NO_AUTOINSTALL`]: 1,
             })
         });
 

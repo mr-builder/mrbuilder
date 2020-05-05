@@ -42,7 +42,7 @@ export type OptionsConfig = PresetsPlugins & {
 
 
 export type OptionsManagerType = Logger & {
-
+    envPrefix:string;
     enabled(plugin: string): boolean,
     config(plugin: string, def?: any): any,
     logger(plugin: string): Logger,
