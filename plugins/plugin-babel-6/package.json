@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-babel-6",
-  "version": "4.2.0-alpha.5",
+  "version": "4.2.0-alpha.6",
   "description": "Tools for developing babel with mrbuilder",
   "scripts": {
     "clean": "mrbuilder-clean"
@@ -9,7 +9,7 @@
     "mrbuilder-babel-cli": "bin/cli.js"
   },
   "dependencies": {
-    "@mrbuilder/optionsmanager": "^4.2.0-alpha.5",
+    "@mrbuilder/optionsmanager": "^4.2.0-alpha.6",
     "@mrbuilder/plugin-browserslist": "^4.2.0-alpha.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
