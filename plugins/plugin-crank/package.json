@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-crank",
-  "version": "4.2.0-alpha.8",
+  "version": "4.2.0",
   "description": "Crank plugin for mrbuilder",
   "main": "./src/index.js",
   "author": "Justin Spears <speajus@gmail.com>",
