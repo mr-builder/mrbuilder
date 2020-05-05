@@ -2,8 +2,6 @@
 /*/node_modules
 /*/*/node_modules
 /**/storybook-static
-#cause the tests are all dynamic, and I lerna complains.
-/creat{e}/app/test/*
 /wiki/tsconfig.json
 /examples/*/tsconfig.json
 test-out
