@@ -10,5 +10,6 @@ lerna-debug.log
 lib
 **/lib
 demo
-app
 built
+/examples/*/app
+/create/app/test

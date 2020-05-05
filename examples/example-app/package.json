@@ -1,20 +1,20 @@
 {
   "name": "@mrbuilder/example-app",
   "description": "Sample application using mrbuilder components",
-  "version": "4.2.0-alpha.4",
+  "version": "4.2.0-alpha.5",
   "private": true,
   "dependencies": {
-    "@mrbuilder/example-lib": "^4.2.0-alpha.4",
-    "@mrbuilder/example-lib-everything": "^4.2.0-alpha.4",
-    "@mrbuilder/example-lib-webpack": "^4.2.0-alpha.4",
+    "@mrbuilder/example-lib": "^4.2.0-alpha.5",
+    "@mrbuilder/example-lib-everything": "^4.2.0-alpha.5",
+    "@mrbuilder/example-lib-webpack": "^4.2.0-alpha.5",
     "@mrbuilder/plugin-babel": "^4.2.0-alpha.3"
   },
   "devDependencies": {
-    "@mrbuilder/cli": "^4.2.0-alpha.4",
-    "@mrbuilder/plugin-jest": "^4.2.0-alpha.4",
+    "@mrbuilder/cli": "^4.2.0-alpha.5",
+    "@mrbuilder/plugin-jest": "^4.2.0-alpha.5",
     "@mrbuilder/plugin-version": "^4.2.0-alpha.3",
-    "@mrbuilder/preset-app": "^4.2.0-alpha.4",
-    "@mrbuilder/preset-dev": "^4.2.0-alpha.4"
+    "@mrbuilder/preset-app": "^4.2.0-alpha.5",
+    "@mrbuilder/preset-dev": "^4.2.0-alpha.5"
   },
   "scripts": {
     "prepare": "mrbuilder",
