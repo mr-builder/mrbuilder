@@ -1,0 +1,31 @@
+{
+  "name": "{{namespace}}/plugin-{{name}}",
+  "version": "{{version}}",
+  "license": "MIT",
+  "author": "{{author}}",
+{{#if typescript}}
+  "main": "index",
+  "scripts":{
+     "prepare":"tsc"
+   },
+{{else}}
+"main": "src",
+
+{{/if}}
+  "keywords": [
+    "mrbuilder",
+    "{{name}}"
+  ]
+{{#if cli}}
+  ,"bin": {
+    "{{namespace}}-{{name}}": "./bin/cli.js"
+  }
+{{/if}}
+{{#if babel}}
+  ,"mrbuilder": {
+    "options": {
+      "@babel": "./src/babel"
+    }
+  }
+{{/if}}
+}

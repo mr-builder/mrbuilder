@@ -13,7 +13,7 @@ delete mrbConf['@babel'];
 
 const jestConfig = {
     ...defaults,
-    coverageDirectory: enhancedResolve(mrb('coverageDirectory', optionsManager.cwd('coverage')), optionsManager.resolve),
+    coverageDirectory: enhancedResolve(mrb('coverageDirectory', './coverage'), optionsManager.resolve),
     rootDir: mrb('@mrbuilder/cli.src', optionsManager.cwd('src')),
     //allow for configuration override
     ...mrbConf

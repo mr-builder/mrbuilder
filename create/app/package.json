@@ -1,0 +1,37 @@
+{
+  "name": "@mrbuilder/create-mrbuilder-app",
+  "description": "",
+  "version": "4.2.0-alpha.3",
+  "bin": {
+    "create-mrbuilder-app": "./app.js"
+  },
+  "scripts": {
+    "test-manual": "rimraf test && mkdir -p test && yarn test:all ",
+    "test:all": "yarn test:js & yarn test:ts",
+    "test:js": "yarn test:js:jest & yarn test:js:karma",
+    "test:ts": "yarn test:ts:jest & yarn test:ts:karma",
+    "test:js:jest": "cd test && ../app.js js-jest Test 'test' n jest y y && cd js-jest && yarn prepare && yarn test",
+    "test:js:karma": "cd test && ../app.js js-karma Test 'test' n karma y y && cd js-karma && yarn prepare && yarn test",
+    "test:ts:jest": "cd test && ../app.js ts-jest Test 'test' y jest y y && cd ts-jest && yarn prepare && yarn test",
+    "test:ts:karma": "cd test && ../app.js ts-karma Test 'test' y karma y y && cd ts-karma && yarn prepare && yarn test"
+  },
+  "keywords": [
+    "mrbuilder"
+  ],
+  "dependencies": {
+    "plop": "^2.6.0"
+  },
+  "devDependencies": {
+    "@mrbuilder/cli": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-jest": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-typescript": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-storybook": "^4.2.0-alpha.3",
+    "@mrbuilder/preset-test": "^4.2.0-alpha.3",
+    "@mrbuilder/preset-lib": "^4.2.0-alpha.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org"
+  },
+  "license": "MIT"
+}

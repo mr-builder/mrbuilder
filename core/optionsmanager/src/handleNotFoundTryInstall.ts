@@ -1,5 +1,6 @@
 import {spawnSync} from 'child_process';
 import path from 'path';
+import {OptionsManagerType} from './types';
 
 function findExecPath() {
     return process.env['$npm_execpath'] || process.env['npm_execpath'] || require('which')
@@ -17,12 +18,16 @@ const lernaRe = /lerna[/]cli([.]js)?$/;
  * @param isDev - set to false if it is not a dev dependency.
  */
 let first = true;
-export default function handleNotFoundTryInstall(e: Error, pkg: string, isDev = true) {
+export default function handleNotFoundTryInstall(this: OptionsManagerType, e: Error, pkg: string, isDev = true) {
     const warn = this.warn || console.warn;
     const info = this.info || console.log;
     if (!pkg || pkg === 'undefined') {
         warn(`package was null?`);
         throw new Error('undefined package');
+    }
+    if (this.topPackage?.dependencies?.[pkg] || this.topPackage?.devDependencies?.[pkg] || this.topPackage?.peerDependencies?.[pkg]) {
+        warn(`'${pkg}' is already in your package.json try running install if you see this message again`);
+        return;
     }
 
     const npmPath = findExecPath();
@@ -59,7 +64,7 @@ export default function handleNotFoundTryInstall(e: Error, pkg: string, isDev = 
             stdio: ['inherit', 'inherit', 'inherit'],
             env: Object.assign({}, process.env, {
                 NODE_ENV: 'development',
-                MRBUILDER_AUTO_INSTALLING: 1,
+                [`${this.envPrefix}_NO_AUTOINSTALL`]: 1,
             })
         });
 
