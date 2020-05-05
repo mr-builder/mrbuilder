@@ -9,22 +9,6 @@ added as dep dependencies to your project.   This is a good thing, as now you
 only have to add them in one place.   If you add the deps themselves then
 it will not auto install.
 
-## Upgrade from 1.2.x->2.0.0
-This should be a seamless upgrade, for the supported plugins.   Webpack4 is
-significantly different and third party plugins may need to be changed to
-support webpack 4.  For now 2.0.0 and 1.x will be supported until Webpack5 is
-released.  Then Mrbuilder 3.x and 2.x will be supported.   I only have so much
-bandwidth to support old versions; while at the same time not everyone has
-the bandwith to upgrade all the time.  Sound like a reasonable compromise?
-
-
-## Upgrade from 0.x->1.2
-The 'mrbuilder' package no longer ships with the dependencies.   Dependencies
-will be added as you run commands.  That is calling `mrbuilder` will cause
-the plugin to be installed.  You can add the plugins manually to your package.json
-if you prefer; as it may be faster.
-
-
 ## Configuration
 The tools are designed to run with smart defaults.  Edit your 
 package.json like this
@@ -39,9 +23,6 @@ package.json like this
     "server": "mrbuilder",
     //use "babel":"mrbuilder", to only run babel instead of webpack
     "prepublish": "mrbuilder",
-},
-"devDependencies":{
- "mrbuilder-plugin-support":"^2.2.3"
 }
 ```
 
@@ -92,7 +73,7 @@ module.export = function(options,webpack, optionsManager){
   // options - are just for passing meta data to other loaders and from other loaders.
   // webpack is the actual configuration.  You can do whatever.
   // The optionsManager currently running.
-  return webpack.
+  return webpack
 }
 
 ```
@@ -108,16 +89,6 @@ package.json
   }
 }
 ```
-
-
-
-## Mocha
-For non browser testing we use plain mocha. Its faster and easier to run than Karma but can not do browsery things. It uses the same babel configuration as mrbuilder-babel. It uses a combination of environmental variables and arguments for configuration, though typically it takes neither.
-
-## Karma
-Karma testing is useful for testing in browser.  This configuration
-uses the aformentioned webpack with the following additional settings.
-
 
 
 

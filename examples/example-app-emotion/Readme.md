@@ -1,0 +1,1 @@
+This shows the most basic usage of mrbuilder's emotion plugin.

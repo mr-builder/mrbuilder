@@ -1,5 +1,5 @@
 const {logObject, requireFn, asArray} = require('@mrbuilder/utils');
-const {find} = require('@mrbuilder/plugin-babel/util');
+const {merge, mergeBabelConf} = require('@mrbuilder/plugin-babel/util');
 const {join} = require('path');
 require('@mrbuilder/plugin-browserslist');
 
@@ -21,16 +21,6 @@ const resolvePlugin = (pluginName, pluginPath) => {
 }
 
 function initBabel(babelConf) {
-    const merge = (type, plugins) => {
-        for (const [name, conf] of plugins.map(asArray)) {
-            const bIdx = babelConf[type].findIndex(find(type, name));
-            if (bIdx > -1) {
-                babelConf[type][bIdx] = [name, conf];
-            } else {
-                babelConf[type].push([name, conf]);
-            }
-        }
-    }
 
     optionsManager.forEach(option => {
         const babelPlugin = option.get('@babel');
@@ -41,12 +31,9 @@ function initBabel(babelConf) {
         if (typeof babelPlugin === 'string') {
             babelConf = requireFn(resolvePlugin(option.name, babelPlugin)).call(option, option.get(), babelConf, optionsManager) || babelConf;
         } else if (Array.isArray(babelPlugin)) {
-            merge('plugins', typeof babelPlugin[0] === 'string' ? [babelPlugin] : babelPlugin);
+            merge(babelConf, 'plugins', typeof babelPlugin[0] === 'string' ? [babelPlugin] : babelPlugin);
         } else if (typeof babelPlugin === 'object') {
-            const {plugins, presets, ...rest} = babelPlugin;
-            merge('plugins', plugins);
-            merge('presets', presets);
-            Object.assign(babelConf, rest);
+            mergeBabelConf(babelConf, babelPlugin);
         } else if (babelPlugin) {
             logger.warn(`unknown babel configuration '${babelPlugin}'`);
         }

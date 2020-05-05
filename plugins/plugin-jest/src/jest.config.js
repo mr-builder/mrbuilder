@@ -21,7 +21,7 @@ const jestConfig = {
 const escapeRe = str => str.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
 const isTypescript = enabled('typescript');
-const isBabel = enabled('plugin-babel');
+const isBabel = enabled('babel');
 const isWebpack = enabled('webpack');
 
 if (!jestConfig.transform) {
