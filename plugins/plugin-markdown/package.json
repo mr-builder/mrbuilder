@@ -1,14 +1,14 @@
 {
   "name": "@mrbuilder/plugin-markdown",
   "description": "Provides markdown to react components",
-  "version": "4.2.0-alpha.6",
+  "version": "4.2.0-alpha.7",
   "scripts": {
     "test": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma  --@mrbuilder/plugin-karma.browsers='[SimpleHeadlessChrome]'",
     "karma": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma --@mrbuilder/plugin-mocha.filePattern=*-mocha.js",
     "start": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder"
   },
   "dependencies": {
-    "@mrbuilder/plugin-babel": "^4.2.0-alpha.3",
+    "@mrbuilder/plugin-babel": "^4.2.0-alpha.7",
     "@mrbuilder/utils": "^4.2.0-alpha.3",
     "markdown-it": "^10.0.0",
     "markdown-it-checkbox": "^1.1.0",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@mrbuilder/plugin-babel": "^4.0.1",
-    "@mrbuilder/plugin-karma": "^4.2.0-alpha.6"
+    "@mrbuilder/plugin-karma": "^4.2.0-alpha.7"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

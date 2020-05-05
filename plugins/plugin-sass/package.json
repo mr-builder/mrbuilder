@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/plugin-sass",
-  "version": "4.2.0-alpha.6",
+  "version": "4.2.0-alpha.7",
   "description": "Sass plugin for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
-    "@mrbuilder/plugin-css": "^4.2.0-alpha.6",
+    "@mrbuilder/plugin-css": "^4.2.0-alpha.7",
     "@mrbuilder/utils": "^4.2.0-alpha.3",
     "loader-utils": "^2.0.0",
     "node-sass": "^4.13.1",
