@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-typescript",
-  "version": "4.2.0-alpha.6",
+  "version": "4.2.0-alpha.8",
   "description": "Typescript plugin for mrbuilder",
   "main": "./src",
   "author": "Justin Spears <speajus@gmail.com>",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.9.0",
-    "@mrbuilder/cli": "^4.2.0-alpha.6",
+    "@mrbuilder/cli": "^4.2.0-alpha.8",
     "@types/node": "^13.9.8",
     "@types/react": "^16.9.27",
     "source-map-loader": "^0.2.4",

@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/plugin-webpack-dev-server",
-  "version": "4.2.0-alpha.6",
+  "version": "4.2.0-alpha.8",
   "description": "webpack dev server for mrbuilder",
   "dependencies": {
-    "@mrbuilder/optionsmanager": "^4.2.0-alpha.6",
-    "@mrbuilder/plugin-webpack": "^4.2.0-alpha.6",
-    "@mrbuilder/utils": "^4.2.0-alpha.3",
+    "@mrbuilder/optionsmanager": "^4.2.0-alpha.8",
+    "@mrbuilder/plugin-webpack": "^4.2.0-alpha.8",
+    "@mrbuilder/utils": "^4.2.0-alpha.8",
     "hard-source-webpack-plugin": "^0.13.1",
     "loglevel": "^1.6.6",
     "webpack-dev-server": "^3.9.0"
