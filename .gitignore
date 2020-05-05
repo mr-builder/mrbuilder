@@ -1,8 +1,6 @@
 /node_modules
 /*/node_modules
 /*/*/node_modules
-/**/storybook-static
-/wiki/tsconfig.json
 /examples/*/tsconfig.json
 test-out
 .idea
