@@ -1,9 +1,9 @@
 {
   "name": "@mrbuilder/plugin-html",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "html plugin for mrbuilder",
   "dependencies": {
-    "@mrbuilder/plugin-babel": "^4.2.0",
+    "@mrbuilder/plugin-babel": "^4.2.1",
     "@mrbuilder/utils": "^4.2.0",
     "glob": "^7.1.6",
     "html-webpack-plugin": "^4.0.3",
