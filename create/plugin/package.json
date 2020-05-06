@@ -3,7 +3,7 @@
   "description": "Support for yarn create @mrbuilder/mrbuilder-plugin",
   "version": "4.2.1",
   "bin": {
-    "create-mrbuilder-monorepo": "./app.js"
+    "create-mrbuilder-plugin": "./app.js"
   },
   "dependencies": {
     "@mrbuilder/cli": "^4.2.1",

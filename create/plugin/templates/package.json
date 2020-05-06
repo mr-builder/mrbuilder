@@ -6,7 +6,7 @@
     "access": "public",
     "registry": "http://registry.npmjs.org"
   },
-  "author": "{{author}}",
+  "author": "{{{author}}}",
 {{#if typescript}}
   "main": "index",
   "scripts":{

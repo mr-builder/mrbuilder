@@ -1,0 +1,45 @@
+{
+  "name": "@mrbuilder/example-app-workbox",
+  "description": "Sample application using mrbuilder workbox plugin",
+  "version": "4.2.1",
+  "private": true,
+  "devDependencies": {
+    "@mrbuilder/cli": "^4.2.1",
+    "@mrbuilder/plugin-jest": "^4.2.1",
+    "@mrbuilder/plugin-workbox": "^4.2.0"
+  },
+  "scripts": {
+    "prepare": "mrbuilder",
+    "dashboard": "mrbuilder",
+    "start": "mrbuilder",
+    "start:open": "mrbuilder",
+    "analyze": "mrbuilder"
+  },
+  "mrbuilder": {
+    "plugins": [
+
+      [
+        "@mrbuilder/plugin-workbox",
+        {
+          "injectManifest": {
+            "swSrc": "./src/sw.js",
+            "swDest": "sw.js",
+            "include": [
+              "/\\.html$/",
+              "/\\.js$/",
+              "/\\.css$/",
+              "/\\.woff2$/",
+              "/\\.jpg$/",
+              "/\\.png$/"
+            ],
+            "maximumFileSizeToCacheInBytes": 10000000
+          }
+        }
+      ]
+    ],
+    "presets": [
+      "@mrbuilder/preset-app"
+    ]
+  },
+  "license": "0BSD"
+}
