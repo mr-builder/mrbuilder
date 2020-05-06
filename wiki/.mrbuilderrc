@@ -81,6 +81,12 @@
             ]
           },
           {
+            "name": "Create",
+            "lerna": {
+              "scope": "@mrbuilder/create-*"
+            }
+          },
+          {
             "name": "Plugins",
             "lerna": {
               "scope": "@mrbuilder/plugin-*"

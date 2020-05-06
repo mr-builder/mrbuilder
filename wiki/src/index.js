@@ -9,10 +9,13 @@ ${content.trim()}
 module.exports = (options, webpack, om) => {
 
     options.description = (pkg) => {
-        const category = first(/.*(preset|plugin|core|example)[/-].*/.exec(pkg.name));
+        const category = first(/.*(preset|create|plugin|core|example)[/-].*/.exec(pkg.name));
         let description = pkg.description || '';
         const simpleName = pkg.name.split('/', 2)[1];
         const src = pkg.homepage || category ? `https://github.com/mr-builder/mrbuilder/tree/master/${category}s/${simpleName}` : `https://github.com/mr-builder/mrbuilder/tree/master/${simpleName}`;
+        if (category === 'create'){
+            return pkg.description;
+        }
         if (category === 'example') {
             return `
 ---
