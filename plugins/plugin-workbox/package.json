@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-workbox",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "license": "MIT",
   "publishConfig": {
     "access": "public",
@@ -20,7 +20,6 @@
   },
   "mrbuilder": {
     "plugin": "./src/index",
-    "options": {
-    }
+    "options": {}
   }
 }
