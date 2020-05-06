@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render index 1`] = `
+<div>
+  <button
+    className="css-17tckwd-Button e190i1mp0"
+  >
+    This my "emotion" Button component.
+  </button>
+  <a
+    className="css-1x4026l-Link"
+  >
+    This uses the css prop
+  </a>
+</div>
+`;

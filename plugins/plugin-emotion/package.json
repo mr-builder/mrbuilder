@@ -11,13 +11,42 @@
   "dependencies": {
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27"
+    "@emotion/styled": "^10.0.27",
+    "emotion": "^10.0.27"
   },
   "mrbuilder": {
+    "plugin": false,
+    "plugins": [
+      "@mrbuilder/plugin-react"
+    ],
     "options": {
       "@babel": {
+        "plugins": [
+          [
+            "babel-plugin-jsx-pragmatic",
+            {
+              "module": "@emotion/core",
+              "export": "jsx",
+              "import": "jsx"
+            }
+          ],
+          [
+            "@babel/plugin-transform-react-jsx",
+            {
+              "pragma": "jsx"
+            }
+          ]
+        ],
         "presets": [
-          "@emotion/babel-preset-css-prop"
+          [
+            "@emotion/babel-preset-css-prop",
+            {
+              "autoLabel": true,
+              "labelFormat": "[local]",
+              "useBuiltIns": false,
+              "throwIfNamespace": true
+            }
+          ]
         ]
       }
     }

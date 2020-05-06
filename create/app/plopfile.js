@@ -34,7 +34,7 @@ const ACTIONS = [
         templateFile: './templates/{{extension}}/test/index.test.{{extension}}x.hbs',
         path: '{{cwd}}/{{packageName}}/test/index.test.{{extension}}x',
         skip(ans) {
-            if (ans.test !== 'karma' ) {
+            if (ans.test !== 'karma') {
                 return 'no karma';
             }
         }
@@ -55,6 +55,7 @@ const ACTIONS = [
             const json = JSON.parse(content);
             const devDependencies = json.devDependencies || (json.devDependencies = {});
             const mrbuilder = json.mrbuilder || (json.mrbuilder = {});
+            const scripts = json.scripts || (json.scripts = {});
             devDependencies['@mrbuilder/cli'] = versionOnly('cli');
             if (data.test != 'none') {
                 devDependencies[`@mrbuilder/plugin-${data.test}`] = versionOnly(`plugin-${data.test}`);
@@ -72,10 +73,10 @@ const ACTIONS = [
                 }
                 mrbuilder.env.test.plugins.push(`@mrbuilder/plugin-${data.test}`);
                 mrbuilder.env.test.presets.push(`@mrbuilder/preset-test`);
-                if (data.test === 'karma'){
-                    json.scripts.karma = 'mrbuilder';
+                if (data.test === 'karma') {
+                    scripts.karma = 'mrbuilder';
                 }
-                json.scripts.test = 'mrbuilder';
+                scripts.test = 'mrbuilder';
             }
             if (data.typescript) {
                 devDependencies['@mrbuilder/plugin-typescript'] = versionOnly('plugin-typescript');
@@ -83,8 +84,8 @@ const ACTIONS = [
                 json.types = 'src';
             }
             if (data.storybook) {
-                (json.scripts || (json.scripts = {})).storybook = 'mrbuilder';
-                (json.scripts || (json.scripts = {}))['storybook:start'] = 'mrbuilder';
+                scripts.storybook = 'mrbuilder';
+                scripts['storybook:start'] = 'mrbuilder';
             }
             return JSON.stringify(json, null, 2);
         }
@@ -119,7 +120,7 @@ const PROMPTS = [
         name: 'packageName',
         message: "What is the name of your package?",
         validate: function (value) {
-            return (/.+/).test(value) ? true : 'packageName is required';
+            return /.+/.test(value) ? true : 'packageName is required';
         }
     },
     {
@@ -152,7 +153,11 @@ const PROMPTS = [
         name: 'storybook',
         message: 'Do you want to use storybook?'
     },
-    {name: 'gitActions', type: 'confirm', message: 'Do you want to use git actions?'}
+    {
+        name: 'gitActions',
+        type: 'confirm',
+        message: 'Do you want to use git actions?'
+    }
 ];
 
 module.exports = (plop) => {

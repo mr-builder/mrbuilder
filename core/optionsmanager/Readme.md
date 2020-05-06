@@ -28,12 +28,12 @@ resolution protocol as plugins
 
 
 ## ${envPrefix}_ENV -
-Defaults to `NODE_ENV` and both be null.  This tells the option manager
+Defaults to `NODE_ENV` if it is null.  This tells the option manager
 which env the user, and therefore configuration the app is running with.
 Because `NODE_ENV` is conventionally used for test,development,production,
 but configurations often have more ENV's this allows for more specific
 configuration for an environment.
-I.E. a server build may be env `production-server` but the node env would
+I.E. a server build may be env `production:server` but the node env would
 need to be production for downstream tools to work correctly.
 
 

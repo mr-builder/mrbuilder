@@ -2,6 +2,10 @@
   "name": "{{namespace}}/plugin-{{name}}",
   "version": "{{version}}",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org"
+  },
   "author": "{{author}}",
 {{#if typescript}}
   "main": "index",

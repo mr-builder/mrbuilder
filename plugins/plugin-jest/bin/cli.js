@@ -26,9 +26,16 @@ if (argv.includes('-c', 2)
 
 //use mrbuilders
 argv.splice(2, 0, '--config', optionsManager.require.resolve('@mrbuilder/plugin-jest/jest.config'));
-optionsManager.enabled('@mrbuilder/plugin-webpack') ?
+if (optionsManager.enabled('@mrbuilder/plugin-webpack')) {
+    console.log('using webpack ');
+
     require('@mrbuilder/plugin-webpack/webpack.config').then(conf => {
         global._MRBUILDER_WEBPACK = conf;
         return require('jest/bin/jest');
-    }) : require('jest/bin/jest');
+    });
+} else {
+    console.log('not using webpack ');
+
+    require('jest/bin/jest');
+}
 
