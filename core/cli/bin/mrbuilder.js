@@ -150,11 +150,11 @@ profile.split(':').forEach(p => {
 });
 
 env.MRBUILDER_ENV = [...new Set(envArray)].join(':');
-const om = require('@mrbuilder/cli').default;
-const script = om.config('@mrbuilder/cli.bin');
-const cliArgv = om.config('@mrbuilder/cli.argv');
+const {optionsManager} = require('@mrbuilder/cli');
+const script = optionsManager.config('@mrbuilder/cli.bin');
+const cliArgv = optionsManager.config('@mrbuilder/cli.argv');
 
-env.NODE_ENV = env.NODE_ENV || om.config('@mrbuilder/cli.node_env');
+env.NODE_ENV = env.NODE_ENV || optionsManager.config('@mrbuilder/cli.node_env');
 
 if (cliArgv) {
     cliArgv.forEach(function (v, i) {
@@ -168,8 +168,8 @@ if (cliArgv) {
     }, []));
 }
 
-om.info(`MRBUILDER_ENV: '${env.MRBUILDER_ENV}' MRBUILDER_PROFILE:'${profile}' NODE_ENV:${env.NODE_ENV}`);
-om.info(`running '${script}${argv.slice(2).map(v => ` "${v}"`).join('')}'`);
+optionsManager.info(`MRBUILDER_ENV: '${env.MRBUILDER_ENV}' MRBUILDER_PROFILE:'${profile}' NODE_ENV:${env.NODE_ENV}`);
+optionsManager.info(`running '${script}${argv.slice(2).map(v => ` "${v}"`).join('')}'`);
 
 if (script) {
     require(script);

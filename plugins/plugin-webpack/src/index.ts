@@ -1,12 +1,12 @@
+import {info, Info} from '@mrbuilder/cli';
 import {OptionsManager} from "@mrbuilder/optionsmanager";
 import {camelCased, cwd, stringify, enhancedResolve} from '@mrbuilder/utils';
 import {OutputOptions, WebpackOptions} from "webpack/declarations/WebpackOptions";
 import {deepMerge} from './deepMerge';
 import processAlias from "./processAlias";
 import {MrBuilderWebpackPluginOptions, StringObject} from './types';
-import {info} from '@mrbuilder/cli';
+
 export * from './resolveWebpack';
-export {default as processAlias} from './processAlias';
 
 const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
 const SOURCE_MAIN_FIELDS = ['source', 'browser', 'main'];
@@ -42,15 +42,22 @@ const mod = function ({
                           filename = '[name].[hash].js',
                           globalObject,
                           alias = [],
+                          performance,
                           node,
                           noParse,
                           target,
+                          bail,
                           resolve = {},
                           ...rest
                       }: MrBuilderWebpackPluginOptions, webpack: WebpackOptions, om: OptionsManager) {
+    //@ts-ignore
+    delete rest['@babel'];
+    if (performance) {
+        webpack.performance = performance;
+    }
     webpack.resolve = deepMerge(webpack.resolve, resolve);
-
     webpack.mode = webpack.mode || returnMode(mode);
+    webpack.bail = bail != null ? bail : Info.isProduction;
     const logger = om.logger('@mrbuilder/plugin-webpack');
     logger.info('webpack mode ', webpack.mode);
     //ugh - just do it.

@@ -1,6 +1,6 @@
 require('@mrbuilder/plugin-browserslist');
 const om = require('@mrbuilder/cli').default;
-const types = require('@mrbuilder/cli').info;
+const {Info} = require('@mrbuilder/cli');
 
 const {info} = om.logger('@mrbuilder/plugin-css');
 const mrb = (v, def) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''), def);
@@ -10,7 +10,7 @@ let useStyleLoaderLoader = mrb('useStyleLoader');
 let publicPath = mrb('public');
 let chunkFilename = mrb('chunkFilename', `[name].style.css`);
 if (useNameHash == null || useNameHash === true) {
-    if (types.isLibrary) {
+    if (Info.isLibrary) {
         useNameHash = 'style.css';
     } else {
         useNameHash = '[id].[hash].style.css';
@@ -19,7 +19,7 @@ if (useNameHash == null || useNameHash === true) {
     useNameHash = 'style.css';
 }
 
-if (types.isDevServer) {
+if (Info.isDevServer) {
     useNameHash = useNameHash.replace('[hash].', '');
 }
 if (!filename) {
@@ -28,7 +28,7 @@ if (!filename) {
 info('naming style sheet', filename);
 //So if its not turned on and its Karma than let's say that
 // we don't use it.
-if (process.env.NODE_ENV === 'test' || useStyleLoaderLoader == null && types.isDevServer) {
+if (process.env.NODE_ENV === 'test' || useStyleLoaderLoader == null && Info.isDevServer) {
     useStyleLoaderLoader = true;
 }
 let addedPlugin = false;
@@ -49,6 +49,26 @@ if (!useStyleLoaderLoader) {
         if (!addedPlugin) {
             addedPlugin = true;
             webpack.plugins.push(new MiniCssExtractPlugin(miniOpts));
+            const cssProcessorPluginOptions = mrb('cssProcessorPluginOptions');
+            if (cssProcessorPluginOptions) {
+                const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+                const safePostCssParser = require('postcss-safe-parser');
+                webpack.plugins.push(new OptimizeCSSAssetsPlugin({
+                    cssProcessorOptions: {
+                        parser: safePostCssParser,
+                        map: mrb('sourceMap') ? {
+                                // `inline: false` forces the sourcemap to be output into a
+                                // separate file
+                                inline: false,
+                                // `annotation: true` appends the sourceMappingURL to the end of
+                                // the css file, helping the browser find the sourcemap
+                                annotation: true,
+                            }
+                            : false,
+                    },
+                    cssProcessorPluginOptions
+                }));
+            }
         }
         return use;
     };

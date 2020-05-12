@@ -45,6 +45,7 @@ module.exports = function ({
                                inlineManifests,
                                hot,
                                indexSearch,
+                               minify,
                            },
                            webpack, om) {
     const logger = om.logger('@mrbuilder/plugin-html');
@@ -94,13 +95,15 @@ module.exports = function ({
             template: enhancedResolve(template),
             publicPath,
             pkg,
+            minify,
         };
-         if (om.enabled('@mrbuilder/plugin-compress')) {
-             htmlOptions.jsExtension = '.gz';
-         }
+        if (om.enabled('@mrbuilder/plugin-compress')) {
+            htmlOptions.jsExtension = '.gz';
+        }
         webpack.plugins.push(new HtmlWebpackPlugin(htmlOptions, page));
     });
 
     return webpack;
 };
+module.exports.HtmlWebpackPlugin = HtmlWebpackPlugin;
 module.exports.findEntry = findEntry;

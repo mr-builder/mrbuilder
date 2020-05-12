@@ -3,7 +3,7 @@ function chunks({
                     manifest = 'manifest',
                     vendors = 'vendors',
                     styles = 'styles',
-                    commons ,
+                    commons,
                     excludes = [],
                     publicPath,
                     crossOriginLoading,
@@ -48,9 +48,13 @@ function chunks({
         if (manifest === true) {
             webpack.optimization.runtimeChunk = true;
         } else {
-            webpack.optimization.runtimeChunk = {
-                name: manifest
-            };
+            if (!webpack.optimization.runtimeChunk) {
+                webpack.optimization.runtimeChunk = {};
+            }
+            webpack.optimization.runtimeChunk.name = (entrypoint) => {
+                return manifest.replace(/{\s*([^}]+?)\s*}/g, (v, a) => entrypoint[a])
+            }
+
         }
     }
 

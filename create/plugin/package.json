@@ -1,5 +1,5 @@
 {
-  "name": "@mrbuilder/create-mrbuilder-plugin",
+  "name": "@mrbuilder/create-plugin",
   "description": "Support for yarn create @mrbuilder/mrbuilder-plugin",
   "version": "4.2.2",
   "bin": {

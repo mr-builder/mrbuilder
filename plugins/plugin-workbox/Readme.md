@@ -6,4 +6,4 @@ This plugin configures webpack for [workbox](https://developers.google.com/web/t
 all options are passed into the plugin 
 
 ## Example
-An example can be found [here](../../examples/example-app-workbox)
+An example can be found [here](https://github.com/mr-builder/mrbuilder/tree/master/examples/example-app-workbox)

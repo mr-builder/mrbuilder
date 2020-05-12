@@ -1,0 +1,33 @@
+{
+  "name": "@mrbuilder/example-cra",
+  "description": "This shows how to use cra to ",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "cra-start": "mrbuilder",
+    "cra-build": "mrbuilder",
+    "test": "mrbuilder"
+  },
+  "mrbuilder": {
+    "presets": [
+      "@mrbuilder/preset-cra"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

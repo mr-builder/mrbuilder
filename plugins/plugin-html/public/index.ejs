@@ -1,12 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <title><%= htmlWebpackPlugin.options.title || htmlWebpackPlugin.options.pkg.name %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% if (htmlWebpackPlugin.options.themeColor){ %>
+    <meta name="theme-color" content="<%= htmlWebpackPlugin.options.themeColor %>"/>
+    <% } %>
+    <% for( const [key, value] of Object.entries(htmlWebpackPlugin.options.links || {})){ %>
+    <link rel="<%= key %>" href="<%= value %>"/>
+    <% } %>
+    <% if (htmlWebpackPlugin.options.favicon){ %>
+    <link rel="icon" href="<%= htmlWebpackPlugin.options.favicon %>"/>
+    <% } %>
+
 </head>
 <body>
-<div id="<%= htmlWebpackPlugin.options.elementId%>"></div>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+
+<div id="<%= htmlWebpackPlugin.options.elementId %>"></div>
 
 </body>
 </html>

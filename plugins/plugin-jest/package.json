@@ -12,13 +12,19 @@
     "babel-jest": "^25.2.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.2.4",
-    "react-test-renderer": "^16.13.1"
+    "camelcase": "^6.0.0",
+    "react-test-renderer": "^16.13.1",
+    "jest-watch-typeahead": "^0.6.0"
   },
   "source": "src",
   "main": "src",
   "mrbuilder": {
     "options": {
-      "@babel": "./babel"
+      "@babel": "./babel",
+      "watchPlugins": [
+        "jest-watch-typeahead/filename",
+        "jest-watch-typeahead/testname"
+      ]
     },
     "plugins": [
       [

@@ -2,5 +2,6 @@ A react starter kit for mrbuilder apps.
 
 ## Usage
 ```sh
-$  yarn create @mrbuilder/mrbuilder-app
+$  yarn create @mrbuilder/app
 ```
+

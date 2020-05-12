@@ -7,40 +7,43 @@ module.exports = ({
                       sourceMap = false,
                       extractComments = true,
                       uglifyOptions = {
-                          ie8        : false,
-                          ecma       : 8,
-                          warn       : true,
+                          ie8: false,
+                          ecma: 8,
+                          warn: true,
                           global_defs: {
-                              "@alert"   : "console.log",
-                              DEBUG      : false,
-                              PRODUCTION : true,
+                              "@alert": "console.log",
+                              DEBUG: false,
+                              PRODUCTION: true,
                               DEVELOPMENT: false,
                           },
-                          compress   : {
-                              dead_code  : true,
-                              keep_fargs : false,
+                          compress: {
+                              dead_code: true,
+                              keep_fargs: false,
                               keep_fnames: false,
                           },
-                          output     : {
+                          output: {
                               comments: false,
                               beautify: false,
                           },
-                      }
+                      },
+                      runtimeChunk
                   }, webpack) => {
 
-    if (!webpack.optimization){
+    if (!webpack.optimization) {
         webpack.optimization = {};
     }
-    if (!webpack.optimization.minimizer){
+
+    if (!webpack.optimization.minimizer) {
         webpack.optimization.minimizer = [];
     }
+
     webpack.optimization.minimizer.push(new TerserPlugin({
         test,
         parallel,
         cache,
         sourceMap,
         extractComments,
-        terserOptions:uglifyOptions
+        terserOptions: uglifyOptions
     }));
 
     return webpack;

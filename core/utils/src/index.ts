@@ -34,8 +34,13 @@ export const parseJSON = (filename: string): {} => {
     if (!existsSync(filename)) {
         return;
     }
-    const file = readFileSync(filename) + '';
-    return JSON5.parse(file, parseRe);
+    try {
+        const file = readFileSync(filename) + '';
+        return JSON5.parse(file, parseRe);
+    } catch (e) {
+        console.error(`error parsing: ${filename}`);
+        throw e;
+    }
 };
 
 export function resolvePkgDir(name: string, file?: string, ...rest: string[]): string {
@@ -157,23 +162,29 @@ export function parseEntry(entryNoParse?: string | string[] | { [key: string]: s
             return ret;
         }, {});
     }
+
     let entry: Entry = {};
     const entryArray = Array.isArray(entryNoParse) ? entryNoParse
         : typeof entryNoParse === 'string' ? entryNoParse.split(/,\s*/)
             : entryNoParse;
 
 
-    for (let i = 0, l = entryArray.length; i < l; i++) {
-        const parts = entryArray[i].split('=', 2);
-        let key = parts[0], value = parts[1];
-        if (!value) {
+    for (const entryPath of entryArray) {
+        if (typeof entryPath !== 'string') {
+            throw new Error(`could not parse entry '${entryPath}'`);
+
+        }
+        let [key, value] = entryPath.split('=', 2);
+        if (!value){
             value = key;
-            key = path.basename(key).replace(/([^.]*$)/, '');
+            key = basename(key);
         }
         entry[key] = [...(entry[key] || []), enhancedResolve(value)];
     }
     return entry;
 }
+
+const basename = (key: string = ''): string => path.basename(key).replace(/([.]*$)/, '');
 
 export const enhancedResolve = (p: string, _require = require): string => {
     if (p.startsWith(path.sep)) {

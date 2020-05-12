@@ -1,5 +1,5 @@
 {
-  "name": "@mrbuilder/create-mrbuilder-app",
+  "name": "@mrbuilder/create-app",
   "description": "",
   "version": "4.2.1",
   "bin": {
@@ -27,7 +27,8 @@
     "@mrbuilder/plugin-storybook": "^4.2.0",
     "@mrbuilder/plugin-typescript": "^4.2.1",
     "@mrbuilder/preset-lib": "^4.2.1",
-    "@mrbuilder/preset-test": "^4.2.1"
+    "@mrbuilder/preset-test": "^4.2.1",
+    "chalk": "^4.0.0"
   },
   "publishConfig": {
     "access": "public",

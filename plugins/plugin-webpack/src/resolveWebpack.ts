@@ -80,8 +80,8 @@ const DONE = (webpack: Webpack.Configuration) => {
     //only define entry if it doesn't exist already.
     if (!webpack.entry) {
         webpack.entry = {index: optionsManager.cwd(optionsManager.topPackage.source || 'src/index')};
-        info('using default entry', webpack.entry.index)
     }
+    info('using entry', webpack.entry);
 
 
     logObject('webpack configuration', Info.isDebug, webpack);

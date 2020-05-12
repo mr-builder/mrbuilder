@@ -71,8 +71,7 @@ module.exports = function reactPlugin({compatMode,}, webpack, om) {
     const preEntry = isHot ? om.config('@mrbuilder/plugin-hot.preEntry', []) : [];
 
     if (om.enabled('@mrbuilder/plugin-html')) {
-        const {findEntry} = require('@mrbuilder/plugin-html');
-        const entry = webpack.entry = findEntry(om);
+        const entry = webpack.entry = webpack.entry || require('@mrbuilder/plugin-html').findEntry(om);
         const {generateHot, generate} = require('./loader');
         const keys = pages ? Object.keys(pages) : Object.keys(entry);
 

@@ -1,5 +1,5 @@
 {
-  "name": "@mrbuilder/create-mrbuilder-monorepo",
+  "name": "@mrbuilder/create-monorepo",
   "description": "Support for yarn create monorepo",
   "version": "4.2.1",
   "bin": {
