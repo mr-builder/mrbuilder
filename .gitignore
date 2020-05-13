@@ -14,3 +14,4 @@ built
 /examples/*/app
 /create/app/test
 /**/storybook-static
+examples/*/build

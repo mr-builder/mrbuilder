@@ -14,6 +14,9 @@
     "test": "mrbuilder"
   },
   "mrbuilder": {
+    "plugins": [
+      "@mrbuilder/plugin-typescript"
+    ],
     "presets": [
       "@mrbuilder/preset-cra"
     ]

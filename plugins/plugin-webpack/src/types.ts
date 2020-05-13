@@ -27,6 +27,7 @@ export type MrBuilderWebpackPluginOptions = WebpackOptions & {
     public?: string,
     resolve?: Configuration['resolve'],
     runtimeChunk?: string,
+    chunkFilename?:string,
     libraryTarget?: "var"
         | "assign"
         | "this"

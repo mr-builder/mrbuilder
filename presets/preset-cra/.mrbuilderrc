@@ -16,7 +16,7 @@
           "@mrbuilder/cli",
           {
             "node_env": "development",
-            "bin": "@mrbuilder/plugin-cra/bin/start"
+            "bin": "@mrbuilder/plugin-cra/bin/cra-start"
           }
         ],
         "@mrbuilder/plugin-fonts",
@@ -131,9 +131,7 @@
               ]
             },
             "devtool": "cheap-module-source-map",
-            optimization: {
-              minimize: false
-            },
+
             "output": {
               "path": true,
               chunkFilename: 'static/js/[name].chunk.js'
@@ -149,7 +147,7 @@
           "@mrbuilder/cli",
           {
             "node_env": "development",
-            "cli": "@mrbuilder/plugin-cra/bin/start"
+            "cli": "@mrbuilder/plugin-cra/bin/cra-test"
           }
         ],
         [
@@ -198,7 +196,7 @@
           "@mrbuilder/cli",
           {
             "node_env": "development",
-            "bin": "@mrbuilder/plugin-cra/bin/build"
+            "bin": "@mrbuilder/plugin-cra/bin/cra-build"
           }
         ],
         "@mrbuilder/plugin-fonts",
@@ -221,15 +219,14 @@
         [
           "@mrbuilder/plugin-workbox",
           {
-            generateGW: {
+            generateSW: {
               clientsClaim: true,
               exclude: [
                 "/\.map$/",
                 "/asset-manifest\.json$/"
               ],
-              importWorkboxFrom: 'cdn',
-              navigateFallback: '/index.html',
-              navigateFallbackBlacklist: [
+              //          importWorkboxFrom: 'cdn',
+              navigateFallbackDenylist: [
                 // Exclude URLs starting with /_, as they're likely an API call
                 '/^/_/',
                 // Exclude any URLs whose last part seems to be a file extension
@@ -303,6 +300,9 @@
         [
           "@mrbuilder/plugin-chunk",
           {
+            optimization: {
+              minimize: true
+            },
             // Automatically split vendor and commons
             // https://twitter.com/wSokra/status/969633336732905474
             // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
@@ -336,7 +336,7 @@
             "inject": true,
             "exported": false,
             "template": "./public/index.html",
-            minify: {
+            "minify": {
               removeComments: true,
               collapseWhitespace: true,
               removeRedundantAttributes: true,
@@ -347,7 +347,7 @@
               minifyJS: true,
               minifyCSS: true,
               minifyURLs: true
-            },
+            }
           }
         ],
         [
@@ -369,17 +369,13 @@
               ]
             ],
             "bail": true,
-            "entry": [
-              "./src/index"
-            ],
+            "entry": {
+              "index": "./src/index"
+            },
             "devtool": "source-map",
-            optimization: {
-              minimize: true
-            },
-            "output": {
-              "path": false,
-              chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
-            },
+
+            "outputPath": "./build",
+            chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
           }
         ],
         "@mrbuilder/plugin-cra"

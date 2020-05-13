@@ -43,5 +43,13 @@
     "semver": "6.3.0",
     "ts-pnp": "1.1.6",
     "webpack-manifest-plugin": "2.2.0"
+  },
+  "mrbuilder": {
+    "alias": {
+      "publicUrl": "The absolute url that this site will be served from",
+      "WDS_SOCKET_HOST": "Webpack Dev Server Host",
+      "WDS_SOCKET_PATH": "Webpack Dev Server Path",
+      "WDS_SOCKET_PORT": "Webpack Dev Server Port"
+    }
   }
 }

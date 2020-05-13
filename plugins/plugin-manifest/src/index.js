@@ -6,7 +6,7 @@ module.exports = function ({publicPath, fileName}, webpack, optionsManager) {
 
     webpack.plugins.push(new ManifestPlugin({
         fileName,
-        publicPath: join(publicPath || optionsManager.config('@mrbuilder/cli.publicPath', 'public'), '/'),
+        publicPath: join(publicPath || optionsManager.config('@mrbuilder/cli.publicPath', '/'), '/'),
         generate: (seed, files, entrypoints) => {
             const manifestFiles = files.reduce((manifest, file) => {
                 manifest[file.name] = file.path;

@@ -153,6 +153,10 @@ env.MRBUILDER_ENV = [...new Set(envArray)].join(':');
 const {optionsManager} = require('@mrbuilder/cli');
 const script = optionsManager.config('@mrbuilder/cli.bin');
 const cliArgv = optionsManager.config('@mrbuilder/cli.argv');
+const cliEnv = optionsManager.config('@mrbuilder/cli.env');
+if (cliEnv) {
+    Object.entries(cliEnv).forEach(([key, value]) => process.env[key] = value);
+}
 
 env.NODE_ENV = env.NODE_ENV || optionsManager.config('@mrbuilder/cli.node_env');
 

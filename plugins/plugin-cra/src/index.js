@@ -37,7 +37,7 @@ module.exports = function ({
                            }, webpack, optionsManager) {
     const isEnvProduction = Info.isProduction;
     const isEnvDevelopment = !isEnvProduction;
-    logObject('CRA env', true, env);
+    logObject('CRA env', Info.isDebug, env);
     useTypeScript = useTypeScript || optionsManager.enabled('@mrbuilder/plugin-typescript') || canFind(optionsManager.cwd('tsconfig'))
     webpack.plugins.push(...[
         // Generates an `index.html` file with the <script> injected.
@@ -77,7 +77,7 @@ module.exports = function ({
         // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
         // It will be an empty string unless you specify "homepage"
         // in `package.json`, in which case it will be the pathname of that URL.
-        new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.stringified),
+        new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
         // This gives some necessary context to module not found errors, such as
         // the requesting resource.
         new ModuleNotFoundPlugin(appPath),
@@ -153,9 +153,7 @@ module.exports = function ({
         // }),
         // TypeScript type checking
         useTypeScript && new ForkTsCheckerWebpackPlugin({
-            typescript: resolve.sync('typescript', {
-                basedir: appNodeModules,
-            }),
+            typescript: optionsManager.require.resolve('typescript'),
             async: isEnvDevelopment,
             useTypescriptIncrementalApi: true,
             checkSyntacticErrors: true,

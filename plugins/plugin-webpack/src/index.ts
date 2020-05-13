@@ -47,6 +47,7 @@ const mod = function ({
                           noParse,
                           target,
                           bail,
+                          chunkFilename,
                           resolve = {},
                           ...rest
                       }: MrBuilderWebpackPluginOptions, webpack: WebpackOptions, om: OptionsManager) {
@@ -107,6 +108,9 @@ const mod = function ({
     if (outputPath) {
         //webpack wants an absolute path here.
         output.path = enhancedResolve(outputPath);
+    }
+    if (chunkFilename) {
+        output.chunkFilename = chunkFilename;
     }
 
     demo = demo || app;

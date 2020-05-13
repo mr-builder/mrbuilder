@@ -7,11 +7,11 @@ const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
-const appDirectory = fs.realpathSync(process.cwd());
+const appDirectory = (p = process.cwd()) =>fs.existsSync(p) ? fs.realpathSync(p) : null;
 const mrb = (k, def) => optionsManager.config(`@mrbuilder/plugin-cra${k ? `.${k}` : ''}`, def);
 const crb = (k, def) => optionsManager.config(`@mrbuilder/cli${k ? `.${k}` : ''}`, def);
 
-const resolveApp = relativePath => mrb(`paths.${relativePath}`) || optionsManager.cwd(relativePath);
+const resolveApp = relativePath => appDirectory(mrb(`paths.${relativePath}`) || optionsManager.cwd(relativePath));
 
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
@@ -26,7 +26,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
     process.env.PUBLIC_URL
 );
 
-const moduleFileExtensions = [
+const moduleFileExtensions = mrb('moduleFileExtensions', optionsManager.config('@mrbuilder/plugin-webpack.extensions', [
     'web.mjs',
     'mjs',
     'web.js',
@@ -38,7 +38,7 @@ const moduleFileExtensions = [
     'json',
     'web.jsx',
     'jsx',
-];
+]));
 
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
@@ -54,7 +54,7 @@ const resolveModule = (resolveFn, filePath) => {
 };
 
 // config after eject: we're in ./config/
- module.exports = {
+module.exports = {
     dotenv: resolveApp('.env'),
     appPath: resolveApp('.'),
     appBuild: resolveApp('build'),
@@ -69,7 +69,6 @@ const resolveModule = (resolveFn, filePath) => {
     testsSetup: resolveModule(resolveApp, 'src/setupTests'),
     proxySetup: resolveApp('src/setupProxy.js'),
     appNodeModules: resolveApp('node_modules'),
-    publicUrlOrPath:'/',
+    publicUrlOrPath,
+    moduleFileExtensions
 };
-
-module.exports.moduleFileExtensions = moduleFileExtensions;
