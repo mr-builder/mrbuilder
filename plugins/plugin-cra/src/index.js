@@ -1,6 +1,6 @@
 const {Info,} = require('@mrbuilder/cli');
 const {logObject} = require('@mrbuilder/utils');
-const _env = require('./config/env');
+const _env = require('../config/env');
 const {HtmlWebpackPlugin} = require('@mrbuilder/plugin-html');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
@@ -26,13 +26,13 @@ module.exports = function ({
                                shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false',
                                env = _env(),
                                paths: {
-                                   appHtml = require('./config/paths').appHtml,
-                                   publicUrlOrPath = require('./config/paths').publicUrlOrPath,
-                                   appNodeModules = require('./config/paths').appNodeModules,
-                                   appTsConfig = require('./config/paths').appTsConfig,
-                                   appPath = require('./config/paths').appPath,
+                                   appHtml = require('../config/paths').appHtml,
+                                   publicUrlOrPath = require('../config/paths').publicUrlOrPath,
+                                   appNodeModules = require('../config/paths').appNodeModules,
+                                   appTsConfig = require('../config/paths').appTsConfig,
+                                   appPath = require('../config/paths').appPath,
 
-                               } = require('./config/paths'),
+                               } = require('../config/paths'),
                                useTypeScript,
                            }, webpack, optionsManager) {
     const isEnvProduction = Info.isProduction;
@@ -158,10 +158,10 @@ module.exports = function ({
             useTypescriptIncrementalApi: true,
             checkSyntacticErrors: true,
             resolveModuleNameModule: process.versions.pnp
-                ? `${__dirname}/config/pnpTs.js`
+                ? `${__dirname}/../config/pnpTs.js`
                 : undefined,
             resolveTypeReferenceDirectiveModule: process.versions.pnp
-                ? `${__dirname}/config/pnpTs.js`
+                ? `${__dirname}/../config/pnpTs.js`
                 : undefined,
             tsconfig: appTsConfig,
             reportFiles: [

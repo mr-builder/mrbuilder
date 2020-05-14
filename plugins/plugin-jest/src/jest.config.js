@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
 const {optionsManager, Info} = require('@mrbuilder/cli');
@@ -9,15 +7,27 @@ const {defaults} = require('jest-config');
 const mrb = (key, def) => optionsManager.config(!key ? '@mrbuilder/plugin-jest' : `@mrbuilder/plugin-jest.${key}`, def);
 const enabled = (key) => optionsManager.enabled(`@mrbuilder/plugin-${key}`);
 const mrbConf = {...(mrb())};
+const fs = require('fs');
 delete mrbConf['@babel'];
+
+
+const coverageDirectory = enhancedResolve(mrb('coverageDirectory', './coverage'), optionsManager.resolve);
 
 const jestConfig = {
     ...defaults,
-    coverageDirectory: enhancedResolve(mrb('coverageDirectory', './coverage'), optionsManager.resolve),
+    coverageDirectory,
     rootDir: mrb('@mrbuilder/cli.src', optionsManager.cwd('src')),
     //allow for configuration override
     ...mrbConf
 };
+if (mrbConf.rootDir) {
+    jestConfig.rootDir = enhancedResolve(mrbConf.rootDir, optionsManager.require);
+}
+
+mrbConf.setupFilesAfterEnv = mrbConf.setupFilesAfterEnv && mrbConf.setupFilesAfterEnv.map(v => {
+    return enhancedResolve(v.replace('<root>', jestConfig.rootDir), optionsManager.resolve);
+}).filter(v => fs.existsSync(v));
+
 const escapeRe = str => str.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
 const isTypescript = enabled('typescript');

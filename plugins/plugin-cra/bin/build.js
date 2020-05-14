@@ -1,8 +1,12 @@
 #!/usr/bin/env node
-require('../src/config/env');
-[
-    'PUBLIC_URL',
-    'WDS_SOCKET_HOST',
-    'WDS_SOCKET_PATH',
-    'WDS_SOCKET_PORT'
-]
+const args = process.argv.slice(2);
+
+const scriptIndex = args.findIndex(
+    x => x === 'build' || x === 'start' || x === 'test'
+);
+const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
+
+if (['build', 'start', 'test'].includes(script)) {
+    process.env.MRBUILDER_ENV = `cra-${script}`;
+    require(`@mrbuilder/plugin-cra/bin/cra-${script}`);
+}
