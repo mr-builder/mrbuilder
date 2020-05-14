@@ -51,9 +51,10 @@ async function webpackFinal(config) {
     }
     if (optionsManager.enabled('@mrbuilder/plugin-babel')) {
         optionsManager.debug('disabling storybook\'s babel using our own');
-        removeIf(config.module.rules, ({test}) => test && test.test && test.test('stuff.mjs'));
+        removeIf(config.module.rules, ({test, exclude}) => test && test.test && test.test('stuff.mjs') && exclude && exclude.length);
     }
     const webpack = await resolveWebpack(config, {isLibrary: false});
+
     webpack.entry = entry;
     webpack.output = output;
     webpack.mode = mode;

@@ -2,9 +2,14 @@ const useStyle = require('./styleLoader');
 const getLocalIdent = require('./getLocalIdent');
 
 function cssLoader(webpack, test, modules = false, om, ...conf) {
+    webpack.module.rules.push(cssLoaderGen(webpack, test, modules, om, ...conf));
+}
+
+function cssLoaderGen(webpack, test, modules = false, om, ...conf) {
 
     const mrb = (v, d) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''), d);
     const localsConvention = mrb('localsConvention', mrb('camelCase', true) ? 'camelCase' : 'asIs');
+    const sideEffects = mrb('sideEffects', true);
 
     const loaders = [{
         loader: 'css-loader',
@@ -57,12 +62,13 @@ function cssLoader(webpack, test, modules = false, om, ...conf) {
     if (!test) {
         throw new Error(`Must have a test condition for this plugin '${test}'`);
     }
-    webpack.module.rules.push({
+    return {
         //So rather than forcing people to do negative regex'swe will do it here.
         // so I guess it breaks a css file named with .module. but, whatever.
         test,
-        use: useStyle(webpack, ...loaders)
-    });
+        use: useStyle(webpack, ...loaders),
+        sideEffects
+    }
 }
 
 /**
@@ -84,7 +90,9 @@ const cssLoaderModule = (webpack,
                          ...conf) => {
 
     if (modules) {
+
         if (test) {
+            const oneOf = [];
             //__MATCHED__ is just to here so we can be sure we matched the regex and the file didn't just end in .module
             const mod = (v) => {
                 return v.replace(test, '.___MATCHED___').endsWith('.module.___MATCHED___');
@@ -96,7 +104,7 @@ const cssLoaderModule = (webpack,
             // and ignore proxy anyways.
             mod.source = test && test.source || modules && modules.source;
 
-            cssLoader(webpack, mod, true, om, ...conf);
+            oneOf.push(cssLoaderGen(webpack, mod, true, om, ...conf));
 
 
             if (!(test instanceof RegExp)) {
@@ -108,7 +116,8 @@ const cssLoaderModule = (webpack,
 
             unmod.toJSON = () => `not-module:${test}`;
 
-            cssLoader(webpack, unmod, false, om, ...conf)
+            oneOf.push(cssLoaderGen(webpack, unmod, false, om, ...conf));
+            webpack.module.rules.push({oneOf});
         }
         //So if module === true then we will only support '.module.ext' syntax,
         // if module is a regex, well we will support it. This is for backwards

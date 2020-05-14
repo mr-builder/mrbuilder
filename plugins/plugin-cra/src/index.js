@@ -39,7 +39,21 @@ module.exports = function ({
     const isEnvDevelopment = !isEnvProduction;
     logObject('CRA env', Info.isDebug, env);
     useTypeScript = useTypeScript || optionsManager.enabled('@mrbuilder/plugin-typescript') || canFind(optionsManager.cwd('tsconfig'))
+    webpack.module.rules.push(
+        {parser: {requireEnsure: false}},
+        {
+            loader: require.resolve('file-loader'),
+            // Exclude `js` files to keep "css" loader working as it injects
+            // its runtime that would otherwise be processed through "file" loader.
+            // Also exclude `html` and `json` extensions so they get processed
+            // by webpacks internal loaders.
+            exclude: [/\.(js|mjs|jsx|ts|tsx|css)$/, /\.html$/, /\.json$/],
+            options: {
+                name: 'static/media/[name].[hash:8].[ext]',
+            },
+        },);
     webpack.plugins.push(...[
+
         // Generates an `index.html` file with the <script> injected.
         // new HtmlWebpackPlugin(
         //     Object.assign(

@@ -37,11 +37,13 @@ const isWebpack = enabled('webpack');
 if (!jestConfig.transform) {
     jestConfig.transform = {};
 }
-
-const loader = (rule) => {
-    const use = Array.isArray(rule.use) ? rule.use[0] : rule.use;
-    return typeof use == 'string' ? use : use.loader;
-};
+const loaderName = (u) => {
+    if (Array.isArray(u)) {
+        return u[0] && (u[0].loader || u[0]);
+    }
+    return u.loader || u;
+}
+const loader = ([rule, use]) => use;
 
 if (isWebpack) {
     if (!global._MRBUILDER_WEBPACK) {
@@ -73,36 +75,44 @@ if (isWebpack) {
         });
     }
     if (webpackConf.module.rules) {
-        webpackConf.module.rules.sort((a, b) => {
-            //babel-loader needs to happen last.
-            const aloader = loader(a), bloader = loader(b);
-            if (aloader === bloader) {
-                return 0;
-            }
-            if (aloader === 'babel-loader') {
-                return 1;
-            }
+        webpackConf.module.rules
+            .reduce((ret, rule) => {
+                ret.push(...(rule.test ?
+                    (Array.isArray(rule.test) ? rule.test : [rule.test]).map(t => ([t, loaderName(rule.use)])) :
+                    rule.oneOf ? rule.oneOf.map((v) => [v.test, loaderName(v.use)]) : []));
+                return ret;
+            }, [])
 
-            return -1;
+            .sort((a, b) => {
+                //babel-loader needs to happen last.
+                const aloader = loader(a), bloader = loader(b);
+                if (aloader === bloader) {
+                    return 0;
+                }
+                if (aloader === 'babel-loader') {
+                    return 1;
+                }
 
-        }).map(rule => {
-            if (rule.test) {
-                switch (loader(rule)) {
+                return -1;
+
+            }).forEach(([test, type]) => {
+            if (test) {
+                switch (type) {
                     case 'babel-loader':
-                        jestConfig.transform[rule.test.source || rule.test] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+                        jestConfig.transform[test.source || test] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
                         break;
                     case 'url-loader':
                     case 'file-loader':
-                        jestConfig.transform[rule.test.source || rule.test] = `@mrbuilder/plugin-jest/mediaFileTransformer`;
+                        jestConfig.transform[test.source || test] = `@mrbuilder/plugin-jest/mediaFileTransformer`;
                         break;
                     case 'style-loader':
-                        jestConfig.moduleNameMapper[rule.test.source || rule.test] = 'identity-obj-proxy';
+                        jestConfig.moduleNameMapper[test.source || test] = 'identity-obj-proxy';
                         break;
                     case 'graphql-tag/loader':
                     //fall through
                     case 'graphql-loader':
                         try {
-                            jestConfig.transform[rule.test.source || rule.test] = optionsManager.require.resolve('jest-transform-graphql');
+                            jestConfig.transform[test.source || test] = optionsManager.require.resolve('jest-transform-graphql');
                         } catch (e) {
                             console.warn(`need to manually add 'jest-transform-graphql' to your dependencies`);
                             throw e;
@@ -130,7 +140,7 @@ if (isTypescript && !tsUseBabel) {
         require.resolve('ts-jest');
         jestConfig.preset = 'ts-jest';
     } catch (e) {
-        logger.warn(`please add 'ts-jest' to your package.json, or use babel to compile typescript '${JSON.stringify([
+        logger.warn(`Please add 'ts-jest' to your package.json, or use babel to compile typescript '${JSON.stringify([
             "@mrbuilder/plugin-typescript",
             {
                 "useBabel": true,
