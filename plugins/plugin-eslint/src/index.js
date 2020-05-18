@@ -8,7 +8,7 @@ module.exports       = function ({
                                      exclude,
                                      enforce = 'pre',
                                      configFile = path.resolve(__dirname,
-                                         'eslint.json')
+                                         'eslint')
                                  }, webpack) {
     const warn = this.warn || console.warn;
     const info = this.info || console.log;
