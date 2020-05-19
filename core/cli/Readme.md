@@ -90,5 +90,9 @@ package.json
 }
 ```
 
-
-
+### Configuring the @mrbuilder/cli.
+If you need to create a configuration for the cli.  You can 3 properties.
+ argv - arguments to pass to your script, an array of strings.
+ bin  - a node script to execute.
+ env  - an object that will put the key and value in process.env.
+ 

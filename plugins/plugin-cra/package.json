@@ -1,0 +1,61 @@
+{
+  "name": "@mrbuilder/plugin-cra",
+  "version": "4.2.1",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org"
+  },
+  "bin": {
+    "mrbuilder-react-scripts": "./bin/build.js",
+    "cra-start": "./bin/cra-start.js",
+    "cra-build": "./bin/cra-build.js",
+    "cra-test": "./bin/cra-test.js"
+  },
+  "author": "<Justin Spears> speajus@gmail.com",
+  "main": "src",
+  "keywords": [
+    "mrbuilder",
+    "cra"
+  ],
+  "dependencies": {
+    "@svgr/webpack": "4.3.3",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "babel-plugin-named-asset-import": "^0.3.6",
+    "babel-preset-react-app": "^9.1.2",
+    "camelcase": "^5.3.1",
+    "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "dotenv": "8.2.0",
+    "dotenv-expand": "5.1.0",
+    "fs-extra": "^8.1.0",
+    "jest-environment-jsdom-fourteen": "1.0.1",
+    "jest-resolve": "24.9.0",
+    "jest-watch-typeahead": "0.4.2",
+    "optimize-css-assets-webpack-plugin": "5.0.3",
+    "pnp-webpack-plugin": "1.6.4",
+    "postcss-flexbugs-fixes": "4.1.0",
+    "postcss-loader": "3.0.0",
+    "postcss-normalize": "8.0.1",
+    "postcss-preset-env": "6.7.0",
+    "postcss-safe-parser": "4.0.1",
+    "react-app-polyfill": "^1.0.6",
+    "react-dev-utils": "^10.2.1",
+    "resolve": "1.15.0",
+    "resolve-url-loader": "3.1.1",
+    "semver": "6.3.0",
+    "ts-pnp": "1.1.6",
+    "webpack-manifest-plugin": "2.2.0"
+  },
+  "mrbuilder": {
+    "alias": {
+      "publicUrl": "The absolute url that this site will be served from",
+      "WDS_SOCKET_HOST": "Webpack Dev Server Host",
+      "WDS_SOCKET_PATH": "Webpack Dev Server Path",
+      "WDS_SOCKET_PORT": "Webpack Dev Server Port"
+    }
+  }
+}

@@ -1,9 +1,11 @@
 {
-  "plugin": "./lib/webpack.js",
+  "plugin": "./lib/webpack",
   "options": {
     "sourceDir": "./src",
     "outputDir": "./lib",
-    "testDir": "./test"
+    "testDir": "./test",
+    "publicUrl": "/public",
+    "publicDir": "./public"
   },
   "env": {
     "clean": {

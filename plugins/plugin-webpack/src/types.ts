@@ -1,5 +1,6 @@
-import {ExternalItem, WebpackOptions} from "webpack/declarations/WebpackOptions";
 import {Configuration} from 'webpack';
+import {ExternalItem, WebpackOptions} from "webpack/declarations/WebpackOptions";
+
 export type StringObject = {
     [key: string]: string
 }
@@ -25,6 +26,8 @@ export type MrBuilderWebpackPluginOptions = WebpackOptions & {
     externalizePeers?: boolean,
     public?: string,
     resolve?: Configuration['resolve'],
+    runtimeChunk?: string,
+    chunkFilename?:string,
     libraryTarget?: "var"
         | "assign"
         | "this"

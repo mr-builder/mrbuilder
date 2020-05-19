@@ -36,6 +36,7 @@
     "options": {
       "@babel": "./babel.js",
       "managed": false,
+      "test": "/[.]tsx?$/",
       "extensions": [
         ".ts",
         ".tsx"

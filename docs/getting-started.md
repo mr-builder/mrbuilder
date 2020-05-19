@@ -10,6 +10,25 @@ build configuration, although it does allow per module configuration when a modu
 deviates from the common build configuration.   Within a multi module system
 it may make sence to have a module that holds said common configuration.
 
+### A new project
+The easiest way to get started with MR Builder is to use [yarn](https://classic.yarnjs.com) create
+app.
+
+```sh 
+$ yarn create @mrbuilder/app
+```
+
+This will prompt you for a few questions, and your app will be ready to go.
+
+### A new monorepo
+Want to explore using a monorepo?   Mr Builder has a create script for that too.
+
+```sh 
+$ yarn create @mrbuilder/monorepo
+```
+
+
+
 ### Just a module
 While MR Builder is designed for use in monorepos.  It can also be used stand alone
 Just add mrbuilder to your package.json and the scripts section.
@@ -51,14 +70,8 @@ As of 1.10 mrbuilder will auto install any plugin that is not defined in the
 package.json.   To disable set the env `MRBUILDER_NO_AUTOINSTALL=1`.
 
 
-### The easy way 
-To get started with a monorepo.
 
-```sh
-$ yarn create @mrbuilder/mrbuilder-monorepo
-```
-
-### The Not so easy way.
+### The Not so easy way to create a monorepo.
 
 #### Creating a multi module monorepo.
 There is not much special about creating a monorepo, and there are many,many,
@@ -74,7 +87,7 @@ look as follows:
 ```
 
 #### Your build tool.
-The first step is creating your build tool.   Yes, I know mrbuilder is your build
+Create your own build tool.  Yes, I know mrbuilder is your build
 tool, but by wrapping it in your own build tool, you allow for central configuration,
 dependency versions and therefore it is suggested you start with one
 
@@ -124,7 +137,7 @@ $ yarn install
 
 
 Each of your components should have a `package.json` within them describing
-there name,version, description and mrbuilder configuration
+there name,version and description.
 
 ### Your Components
 Each of your components should have a dependency to {your_builder} and

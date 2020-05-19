@@ -2,9 +2,9 @@ const {parseEntry} = require('@mrbuilder/utils');
 const Glob = require('glob');
 const fs = require('fs');
 
-module.exports = (om) => {
+module.exports = (om = require('@mrbuilder/cli').optionsManager) => {
     const logger = om.logger('@mrbuilder/plugin-html');
-    const confEntry = om.config('@mrbuilder/plugin-html.entry', om.config('@mrbuilder/plugin-webpack.entry'));
+    const confEntry = om.enabled('@mrbuilder/plugin-cra') ? require('@mrbuilder/plugin-cra/config/paths').appIndexJs : om.config('@mrbuilder/plugin-html.entry', om.config('@mrbuilder/plugin-webpack.entry'));
     let entry = confEntry ? parseEntry(confEntry) : null;
     let indexSearch = om.config('@mrbuilder/plugin-html.indexSearch');
     const pkg = om.topPackage;

@@ -11,6 +11,8 @@ const babelProcess = require('./babel-process');
 //All configurations shoudl first check babel then babel-7.  Idea being that we may get to normalize babel stuff and not require configuration per version.
 const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-babel-7.${key}`, optionsManager.config(`@mrbuilder/plugin-babel.${key}`, def));
 
+const isPreset = pName => /^(?:@babel[/]preset|babel-preset)-/.test(Array.isArray(pName) ? pName[0] : pName);
+
 const resolvePlugin = (pluginName, pluginPath) => {
     if (pluginPath.startsWith('.')) {
         return join(pluginName, pluginPath);
@@ -31,7 +33,10 @@ function initBabel(babelConf) {
         if (typeof babelPlugin === 'string') {
             babelConf = requireFn(resolvePlugin(option.name, babelPlugin)).call(option, option.get(), babelConf, optionsManager) || babelConf;
         } else if (Array.isArray(babelPlugin)) {
-            merge(babelConf, 'plugins', typeof babelPlugin[0] === 'string' ? [babelPlugin] : babelPlugin);
+            mergeBabelConf(babelConf,(typeof babelPlugin[0] === 'string' ? [babelPlugin] : babelPlugin).reduce((ret, p) => {
+                ret[isPreset(p) ? 'presets' : 'plugins'].push(p);
+                return ret;
+            }, {plugins: [], presets: []}));
         } else if (typeof babelPlugin === 'object') {
             mergeBabelConf(babelConf, babelPlugin);
         } else if (babelPlugin) {

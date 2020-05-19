@@ -1,5 +1,55 @@
 const versionOnly = (val) => require(`./package.json`).devDependencies[`@mrbuilder/${val}`];
 const versionOf = (val) => `"@mrbuilder/${val}": "${versionOnly(val)}"`;
+const {spawn:_spawn} = require('child_process');
+const {promisify} = require('util');
+const spawn = promisify(_spawn);
+const chalk = require('chalk')
+
+const PROMPTS = [
+    {
+        type: 'input',
+        name: 'packageName',
+        message: "What is the name of your package?",
+        validate: function (value) {
+            return /.+/.test(value) ? true : 'packageName is required';
+        }
+    },
+    {
+        type: 'input',
+        name: 'Component',
+        message: 'What is the name of your component?',
+        default(ans) {
+            const c = ans.packageName.replace(/-([a-zA-Z])/g, (a, v) => v.toUpperCase());
+            return c[0].toUpperCase() + c.substring(1);
+        }
+    },
+    {
+        type: 'input',
+        name: 'description',
+        message: 'A short description of your component:'
+    },
+    {
+        type: 'confirm',
+        name: 'typescript',
+        message: 'Do you want to use typescript?'
+    },
+    {
+        type: 'list',
+        name: 'test',
+        choices: ['jest', 'karma', 'none'],
+        message: 'Which testing library do you want to use?'
+    },
+    {
+        type: 'confirm',
+        name: 'storybook',
+        message: 'Do you want to use storybook?'
+    },
+    {
+        name: 'gitActions',
+        type: 'confirm',
+        message: 'Do you want to use git actions?'
+    }
+];
 const ACTIONS = [
 
     {
@@ -111,62 +161,39 @@ const ACTIONS = [
         type: 'add',
         templateFile: './templates/{{extension}}/public/App.{{extension}}x.hbs',
         path: '{{cwd}}/{{packageName}}/public/App.{{extension}}x'
+    },
+    {
+        type:"install",
     }
 ]
 
-const PROMPTS = [
-    {
-        type: 'input',
-        name: 'packageName',
-        message: "What is the name of your package?",
-        validate: function (value) {
-            return /.+/.test(value) ? true : 'packageName is required';
-        }
-    },
-    {
-        type: 'input',
-        name: 'Component',
-        message: 'What is the name of your component?',
-        default(ans) {
-            const c = ans.packageName.replace(/-([a-zA-Z])/g, (a, v) => v.toUpperCase());
-            return c[0].toUpperCase() + c.substring(1);
-        }
-    },
-    {
-        type: 'input',
-        name: 'description',
-        message: 'A short description of your component:'
-    },
-    {
-        type: 'confirm',
-        name: 'typescript',
-        message: 'Do you want to use typescript?'
-    },
-    {
-        type: 'list',
-        name: 'test',
-        choices: ['jest', 'karma', 'none'],
-        message: 'Which testing library do you want to use?'
-    },
-    {
-        type: 'confirm',
-        name: 'storybook',
-        message: 'Do you want to use storybook?'
-    },
-    {
-        name: 'gitActions',
-        type: 'confirm',
-        message: 'Do you want to use git actions?'
-    }
-];
+const cmd = (command, description)=>`
+  $ ${chalk.cyan(command)}
+    ${description}
+`
+async function  install(ans){
+    process.chdir(path.join(process.cwd(), ans.projectName));
+    await spawn(process.env.npm_execpath || 'yarn', ['install']);
+    return `
+    ${chalk.green('Success')} creating an app.
+    Inside ${ans.projectName} you can now run.
 
+    ${cmd('yarn start', 'starts a development server')}
+    ${cmd('yarn prepare', 'compiles library')}
+    ${cmd('yarn prepare --app out', 'compiles an application in the \'out\' directory')}
+    ${ans.storybook && cmd('yarn storybook:start', 'starts a storybook server')}    
+    ${ans.storybook && cmd('yarn storybook', 'compiles storybooks')}
+    ${ans.test !== 'none' && cmd('yarn test', `runs ${ans.test}`)} }
+    ${ans.test !== 'karma' && cmd('yarn karma', `runs karma in interactive mode`)}    
+    `
+}
 module.exports = (plop) => {
 
     plop.setHelper('cwd', process.cwd);
     plop.setHelper('versionOf', versionOf);
     plop.setHelper('versionOnly', versionOnly);
     plop.setHelper('extension', ({data: {root: {typescript}}}) => typescript ? 'ts' : 'js');
-
+    plop.setActionType('install', install);
     plop.setGenerator('application', {
         description: 'This is sets up a mrbuilder application',
         prompts: PROMPTS,

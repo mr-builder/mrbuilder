@@ -1,0 +1,497 @@
+{
+  "plugins": [
+    [
+      "@mrbuilder/plugin-webpack-dev-server",
+      false
+    ],
+    [
+      "@mrbuilder/plugin-browserslist",
+      {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    ],
+    [
+      "@mrbuilder/plugin-fonts",
+      {
+        name: 'static/media/[name].[hash:8].[ext]'
+      }
+    ],
+    [
+      "@mrbuilder/plugin-filetypes",
+      {
+        test: [
+          "/\.bmp$/",
+          "/\.gif$/",
+          "/\.jpe?g$/",
+          "/\.png$/"
+        ],
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'static/media/[name].[hash:8].[ext]',
+        }
+      }
+    ]
+  ],
+  "env": {
+    "cra-start": {
+      "plugins": [
+        [
+          "@mrbuilder/cli",
+          {
+            "node_env": "development",
+            "bin": "@mrbuilder/plugin-cra/bin/cra-start"
+          }
+        ],
+
+        [
+          "@mrbuilder/plugin-workbox",
+          false
+        ],
+        "@mrbuilder/plugin-manifest",
+        [
+          "@mrbuilder/plugin-uglify",
+          false
+        ],
+        [
+          "@mrbuilder/plugin-css",
+          {
+            "ident": "postcss",
+            "plugins": [
+              'postcss-flexbugs-fixes',
+              [
+                'postcss-preset-env',
+                {
+                  autoprefixer: {
+                    flexbox: 'no-2009',
+                  },
+                  stage: 3,
+                }
+              ],
+              'postcss-normalize'
+            ]
+          }
+        ],
+        [
+          "@mrbuilder/plugin-chunk",
+          false
+        ],
+        [
+          "@mrbuilder/plugin-babel",
+          {
+            // This is a feature of `babel-loader` for webpack (not Babel itself).
+            // It enables caching results in ./node_modules/.cache/babel-loader/
+            // directory for faster rebuilds.
+            cacheDirectory: true,
+            // See #6846 for context on why cacheCompression is disabled
+            cacheCompression: false,
+            compact: true
+          }
+        ],
+        [
+          "@mrbuilder/plugin-html",
+          false
+        ],
+        [
+          "@mrbuilder/plugin-webpack",
+          {
+            "@babel": [
+              [
+                'babel-preset-react-app'
+              ],
+              [
+                'babel-plugin-named-asset-import',
+                {
+                  loaderMap: {
+                    svg: {
+                      ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
+                    },
+                  },
+                }
+              ]
+            ],
+            "mode": "development",
+            "bail": false,
+            "entry": {
+              "index": [
+                "./src/index"
+              ]
+            },
+            "devtool": "cheap-module-source-map",
+            "output": {
+              "path": true,
+              chunkFilename: 'static/js/[name].chunk.js'
+            },
+          }
+        ],
+        "@mrbuilder/plugin-cra",
+      ]
+    },
+    "cra-build": {
+      "plugins": [
+        [
+          "@mrbuilder/cli",
+          {
+            "node_env": "development",
+            "bin": "@mrbuilder/plugin-cra/bin/cra-build"
+          }
+        ],
+        [
+          "@mrbuilder/plugin-workbox",
+          {
+            generateSW: {
+              clientsClaim: true,
+              exclude: [
+                "/\.map$/",
+                "/asset-manifest\.json$/"
+              ],
+              swDest: 'service-worker.js',
+              //          importWorkboxFrom: 'cdn',
+              navigateFallbackDenylist: [
+                // Exclude URLs starting with /_, as they're likely an API call
+                '/^/_/',
+                // Exclude any URLs whose last part seems to be a file extension
+                // as they're likely a resource and not a SPA route.
+                // URLs containing a "?" character won't be blacklisted as they're likely
+                // a route with query params (e.g. auth callbacks).
+                '/\/[^/?]+\\.[^/]+$/',
+              ]
+            }
+          }
+        ],
+        "@mrbuilder/plugin-manifest",
+        [
+          "@mrbuilder/plugin-uglify",
+          {
+            terserOptions: {
+              parse: {
+                // We want terser to parse ecma 8 code. However, we don't want it
+                // to apply any minification steps that turns valid ecma 5 code
+                // into invalid ecma 5 code. This is why the 'compress' and 'output'
+                // sections only apply transformations that are ecma 5 safe
+                // https://github.com/facebook/create-react-app/pull/4234
+                ecma: 8,
+              },
+              compress: {
+                ecma: 5,
+                warnings: false,
+                // Disabled because of an issue with Uglify breaking seemingly valid code:
+                // https://github.com/facebook/create-react-app/issues/2376
+                // Pending further investigation:
+                // https://github.com/mishoo/UglifyJS2/issues/2011
+                comparisons: false,
+                // Disabled because of an issue with Terser breaking valid code:
+                // https://github.com/facebook/create-react-app/issues/5250
+                // Pending further investigation:
+                // https://github.com/terser-js/terser/issues/120
+                inline: 2,
+              },
+              mangle: {
+                safari10: true,
+              },
+              // Added for profiling in devtools
+              keep_classnames: false,
+              keep_fnames: false,
+              output: {
+                ecma: 5,
+                comments: false,
+                // Turned on because emoji and regex is not minified properly using default
+                // https://github.com/facebook/create-react-app/issues/2488
+                ascii_only: true,
+              },
+            },
+            sourceMap: true
+          }
+        ],
+        [
+          "@mrbuilder/plugin-css",
+          {
+            filename: 'static/css/[name].[contenthash:8].css',
+            chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+            cssProcessorOptions: {
+              preset: [
+                'default',
+                {
+                  minifyFontValues: {
+                    removeQuotes: false
+                  }
+                }
+              ],
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-chunk",
+          {
+            optimization: {
+              minimize: true
+            },
+            // Automatically split vendor and commons
+            // https://twitter.com/wSokra/status/969633336732905474
+            // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+            splitChunks: {
+              chunks: 'all',
+              name: false,
+            },
+            // Keep the runtime chunk separated to enable long term caching
+            // https://twitter.com/wSokra/status/969679223278505985
+            // https://github.com/facebook/create-react-app/issues/5358
+            runtimeChunk: {
+              name: 'runtime-{name}',
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-babel",
+          {
+            // This is a feature of `babel-loader` for webpack (not Babel itself).
+            // It enables caching results in ./node_modules/.cache/babel-loader/
+            // directory for faster rebuilds.
+            cacheDirectory: true,
+            // See #6846 for context on why cacheCompression is disabled
+            cacheCompression: false,
+            compact: true
+          }
+        ],
+        [
+          "@mrbuilder/plugin-html",
+          {
+            "inject": true,
+            "exported": false,
+            "template": "./public/index.html",
+            "minify": {
+              removeComments: true,
+              collapseWhitespace: true,
+              removeRedundantAttributes: true,
+              useShortDoctype: true,
+              removeEmptyAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              keepClosingSlash: true,
+              minifyJS: true,
+              minifyCSS: true,
+              minifyURLs: true
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-webpack",
+          {
+            "@babel": [
+              [
+                'babel-preset-react-app'
+              ],
+              [
+                'babel-plugin-named-asset-import',
+                {
+                  loaderMap: {
+                    svg: {
+                      ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
+                    },
+                  },
+                }
+              ]
+            ],
+            "bail": true,
+            "entry": {
+              "index": "./src/index"
+            },
+            "devtool": "source-map",
+            "outputPath": "./build",
+            filename: 'static/js/[name].[contenthash:8].js',
+            chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
+          }
+        ],
+        "@mrbuilder/plugin-cra"
+      ]
+    },
+    "cra-test": {
+      "plugins": [
+        [
+          "@mrbuilder/plugin-jest",
+          {
+            "rootDir": ".",
+            "roots": [
+              "<rootDir>/src"
+            ],
+            "collectCoverageFrom": [
+              "src/**/*.{js,jsx,ts,tsx}",
+              "!src/**/*.d.ts"
+            ],
+            "setupFiles": [
+              "react-app-polyfill/jsdom"
+            ],
+            "setupFilesAfterEnv": [
+              "<rootDir>/src/setupTests.js"
+            ],
+            "testMatch": [
+              "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+              "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+            ],
+            "testEnvironment": "jest-environment-jsdom-fourteen",
+            "transform": {
+            },
+            "transformIgnorePatterns": [
+              "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+              "^.+\\.module\\.(css|sass|scss)$"
+            ],
+            "modulePaths": [],
+            "moduleNameMapper": {
+              "^react-native$": "react-native-web",
+              "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+            },
+            "moduleFileExtensions": [
+              "web.js",
+              "js",
+              "web.ts",
+              "ts",
+              "web.tsx",
+              "tsx",
+              "json",
+              "web.jsx",
+              "jsx",
+              "node"
+            ],
+            "watchPlugins": [
+              "jest-watch-typeahead/filename",
+              "jest-watch-typeahead/testname"
+            ]
+          }
+        ],
+        [
+          "@mrbuilder/cli",
+          {
+            "bin": "@mrbuilder/plugin-cra/bin/cra-test",
+            "env": {
+              "NODE_ENV": "test",
+              "PUBLIC_URL": "",
+              "BABEL_ENV": "test/"
+            }
+          }
+        ],
+
+        [
+          "@mrbuilder/plugin-workbox",
+          {
+            generateSW: {
+              clientsClaim: true,
+              exclude: [
+                "/\.map$/",
+                "/asset-manifest\.json$/"
+              ],
+              //          importWorkboxFrom: 'cdn',
+              navigateFallbackDenylist: [
+                // Exclude URLs starting with /_, as they're likely an API call
+                '/^/_/',
+                // Exclude any URLs whose last part seems to be a file extension
+                // as they're likely a resource and not a SPA route.
+                // URLs containing a "?" character won't be blacklisted as they're likely
+                // a route with query params (e.g. auth callbacks).
+                '/\/[^/?]+\\.[^/]+$/',
+              ]
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-uglify",
+          false
+        ],
+        [
+          "@mrbuilder/plugin-css",
+          {
+            filename: 'static/css/[name].[contenthash:8].css',
+            chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+            cssProcessorOptions: {
+              preset: [
+                'default',
+                {
+                  minifyFontValues: {
+                    removeQuotes: false
+                  }
+                }
+              ],
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-chunk",
+          {
+            optimization: {
+              minimize: true
+            },
+            // Automatically split vendor and commons
+            // https://twitter.com/wSokra/status/969633336732905474
+            // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+            splitChunks: {
+              chunks: 'all',
+              name: false,
+            },
+            // Keep the runtime chunk separated to enable long term caching
+            // https://twitter.com/wSokra/status/969679223278505985
+            // https://github.com/facebook/create-react-app/issues/5358
+            runtimeChunk: {
+              name: 'runtime-{name}',
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-babel",
+          {
+            // This is a feature of `babel-loader` for webpack (not Babel itself).
+            // It enables caching results in ./node_modules/.cache/babel-loader/
+            // directory for faster rebuilds.
+            cacheDirectory: true,
+            // See #6846 for context on why cacheCompression is disabled
+            cacheCompression: false,
+            compact: true
+          }
+        ],
+        [
+          "@mrbuilder/plugin-html",
+          false
+        ],
+        [
+          "@mrbuilder/plugin-webpack",
+          {
+            "@babel": [
+              [
+                'babel-preset-react-app'
+              ],
+              [
+                'babel-plugin-named-asset-import',
+                {
+                  loaderMap: {
+                    svg: {
+                      ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
+                    },
+                  },
+                }
+              ]
+            ],
+            "bail": true,
+            "entry": {
+              "index": "./src/index"
+            },
+            "devtool": "source-map",
+            "outputPath": "./build",
+            chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
+          }
+        ],
+        "@mrbuilder/plugin-cra"
+      ]
+    },
+    "development": {
+      "presets": [
+        "@mrbuilder/preset-dev"
+      ]
+    }
+  }
+}

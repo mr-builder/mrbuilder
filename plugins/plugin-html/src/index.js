@@ -45,24 +45,35 @@ module.exports = function ({
                                inlineManifests,
                                hot,
                                indexSearch,
+                               minify,
                            },
                            webpack, om) {
+    let pkg;
     const logger = om.logger('@mrbuilder/plugin-html');
-    const pkg = require(om.cwd('package.json'));
+    let entry;
+
+    if (om.enabled('@mrbuilder/plugin-cra')) {
+        logger.info('using paths from CRA');
+        const paths = require('@mrbuilder/plugin-cra/config/paths');
+        template = paths.appHtml;
+        pkg = paths.appPath;
+        publicPath = paths.appPublic;
+        entry = {index: paths.appIndexJs};
+    } else {
+        pkg = require(om.cwd('package.json'));
+        if (!template) {
+            template = path.resolve(__dirname, '..', 'public',
+                analytics ? 'index_analytics.ejs' : 'index.ejs');
+        }
+        if (!publicPath) {
+            publicPath = 'public';
+        }
+        entry = webpack.entry = webpack.entry || findEntry(om);
+    }
 
     if (!title) {
         title = `${pkg.name}: ${pkg.description || ''}`
     }
-    if (!template) {
-        template = path.resolve(__dirname, '..', 'public',
-            analytics ? 'index_analytics.ejs' : 'index.ejs');
-    }
-
-    if (!publicPath) {
-        publicPath = 'public';
-    }
-
-    const entry = webpack.entry = webpack.entry || findEntry(om);
 
     const keys = pages ? Object.keys(pages) : Object.keys(entry);
 
@@ -94,13 +105,15 @@ module.exports = function ({
             template: enhancedResolve(template),
             publicPath,
             pkg,
+            minify,
         };
-         if (om.enabled('@mrbuilder/plugin-compress')) {
-             htmlOptions.jsExtension = '.gz';
-         }
+        if (om.enabled('@mrbuilder/plugin-compress')) {
+            htmlOptions.jsExtension = '.gz';
+        }
         webpack.plugins.push(new HtmlWebpackPlugin(htmlOptions, page));
     });
 
     return webpack;
 };
+module.exports.HtmlWebpackPlugin = HtmlWebpackPlugin;
 module.exports.findEntry = findEntry;

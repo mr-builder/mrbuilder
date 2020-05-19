@@ -6,7 +6,7 @@
     "@mrbuilder/plugin-babel": "^4.2.1",
     "@mrbuilder/utils": "^4.2.0",
     "glob": "^7.1.6",
-    "html-webpack-plugin": "^4.0.3",
+    "html-webpack-plugin": "^4.0.4",
     "html-webpack-template": "^6.2.0"
   },
   "source": "src",

@@ -14,6 +14,9 @@ export const deepMerge = (ob1: any, ob2: any) => {
     if (ob1 == null) {
         return ob2;
     }
+    if (Array.isArray(ob1)) {
+        return [...ob1, ...ob2];
+    }
     switch (typeof ob2) {
         case 'number':
         case 'boolean':
@@ -28,9 +31,7 @@ export const deepMerge = (ob1: any, ob2: any) => {
                 return ob2;
             }
     }
-    if (Array.isArray(ob1)) {
-        return [...ob1, ...ob2];
-    }
+
     return Object.entries(ob2).reduce((ret, [key, value]) => {
         ret[key] = deepMerge(ob1[key], value);
         return ret;
