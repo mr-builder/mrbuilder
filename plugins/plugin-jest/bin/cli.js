@@ -2,6 +2,7 @@
 const {env, argv} = process;
 env.NODE_ENV = env.NODE_ENV || 'test';
 env.MRBUILDER_ENV = 'jest';
+env.MRBUILDER_INTERNAL_PLUGINS = `${env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
 env.MRBUILDER_INTERNAL_PRESETS = `${env.MRBUILDER_INTERNAL_PRESETS || ''},@mrbuilder/cli`;
 
 const {optionsManager} = require('@mrbuilder/cli');

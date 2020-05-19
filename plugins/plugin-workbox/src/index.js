@@ -4,7 +4,7 @@ module.exports = function (options, webpack, optionsManager) {
     if (options.generateSW) {
         const {...generateSW} = options.generateSW;
         if (!generateSW.navigateFallback) {
-            generateSW.navigateFallback = require('@mrbuilder/plugin-cra/src/config/paths')
+            generateSW.navigateFallback = require('@mrbuilder/plugin-cra/config/paths')
                 .publicUrlOrPath + 'index.html';
         }
         webpack.plugins.push(new GenerateSW(generateSW));

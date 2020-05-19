@@ -54,7 +54,7 @@ module.exports = function ({
 
     if (om.enabled('@mrbuilder/plugin-cra')) {
         logger.info('using paths from CRA');
-        const paths = require('@mrbuilder/plugin-cra/src/config/paths');
+        const paths = require('@mrbuilder/plugin-cra/config/paths');
         template = paths.appHtml;
         pkg = paths.appPath;
         publicPath = paths.appPublic;
