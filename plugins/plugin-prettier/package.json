@@ -3,7 +3,8 @@
   "version": "4.2.0",
   "description": "Provides prettier cli wrapper",
   "dependencies": {
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.5",
+    "prettier-loader": "^3.3.0"
   },
   "bin": {
     "mrbuilder-prettier": "./bin/cli.js"
@@ -12,5 +13,17 @@
     "access": "public",
     "registry": "http://registry.npmjs.org"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "mrbuilder": {
+    "options": {
+      "trailingComma": "es5",
+      "tabWidth": 4,
+      "resolveConfigOptions": {
+        "editorconfig": true,
+        "config": "@mrbuilder/plugin-prettier/src/prettier.config.js"
+      },
+      "skipRewritingSource": false,
+      "ignoreInitial": false
+    }
+  }
 }
