@@ -211,6 +211,14 @@
       "plugins": [
         "@mrbuilder/plugin-dashboard"
       ]
+    },
+    "lint": {
+      "options": {
+        "bin": "@mrbuilder/plugin-eslint/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-eslint"
+      ]
     }
   }
 }

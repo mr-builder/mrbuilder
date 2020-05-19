@@ -1,17 +1,10 @@
-import {OptionsManager} from '../src';
-import {join, parse} from 'path';
-import {expect} from 'chai';
 import {stringify} from "@mrbuilder/utils";
-import 'mocha';
+import {expect} from 'chai';
 
-import {
-    existsSync,
-    readdirSync,
-    statSync,
-    symlinkSync,
-    unlinkSync,
-    mkdirSync,
-} from 'fs';
+import {existsSync, readdirSync, statSync, symlinkSync, unlinkSync, mkdirSync,} from 'fs';
+import 'mocha';
+import {join, parse} from 'path';
+import {OptionsManager} from '../src';
 import {CwdFn, OptionsManagerConfig} from "../src/types";
 
 const isDirectory = (sourceDir: string): boolean => {
@@ -260,6 +253,7 @@ describe('@mrbuilder/optionsmanager', function () {
     newOptionManagerTest('with-plugin',
         om => expect(om.enabled('whatever')).to.be.true);
 
+
     newOptionManagerTest('with-plugin-and-config', om => {
         expect(om.enabled('whatever')).to.be.true;
         expect(om.config('whatever.someValue')).to.be.true;
@@ -293,6 +287,16 @@ describe('@mrbuilder/optionsmanager', function () {
         expect(om.enabled('metest')).to.be.true;
         expect(om.config('metest.stuff')).to.eq(1);
     });
+
+    newOptionManagerTest('with-internal-plugin', {
+            env: {
+                'TESTER_INTERNAL_PLUGINS': 'other',
+                'TESTER_ENV':'what'
+            }
+        },
+        om => {
+            expect(om.config('whatever.someValue')).to.be.true
+        });
 
 
     newOptionManagerTest('with-env', {

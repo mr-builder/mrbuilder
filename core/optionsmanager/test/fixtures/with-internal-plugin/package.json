@@ -1,0 +1,7 @@
+{
+  "name": "with-internal-plugin",
+  "version": "1",
+  "dependencies": {
+    "whatever": "1"
+  }
+}
