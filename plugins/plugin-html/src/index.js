@@ -54,11 +54,11 @@ module.exports = function ({
 
     if (om.enabled('@mrbuilder/plugin-cra')) {
         logger.info('using paths from CRA');
-        const paths = require('@mrbuilder/plugin-cra/src/config/paths');
+        const paths = require('@mrbuilder/plugin-cra/config/paths');
         template = paths.appHtml;
         pkg = paths.appPath;
         publicPath = paths.appPublic;
-        entry = {index: paths.appIndexJs};
+        entry = webpack.entry || {index: paths.appIndexJs};
     } else {
         pkg = require(om.cwd('package.json'));
         if (!template) {

@@ -1,6 +1,6 @@
 const {Info,} = require('@mrbuilder/cli');
 const {logObject} = require('@mrbuilder/utils');
-const _env = require('./config/env');
+const _env = require('../config/env');
 const {HtmlWebpackPlugin} = require('@mrbuilder/plugin-html');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
@@ -10,6 +10,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const Webpack = require('webpack');
+const path = require('path')
 const canFind = (path) => {
     try {
         require(path);
@@ -24,22 +25,56 @@ const canFind = (path) => {
 
 module.exports = function ({
                                shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false',
-                               env = _env(),
+                               env,
                                paths: {
-                                   appHtml = require('./config/paths').appHtml,
-                                   publicUrlOrPath = require('./config/paths').publicUrlOrPath,
-                                   appNodeModules = require('./config/paths').appNodeModules,
-                                   appTsConfig = require('./config/paths').appTsConfig,
-                                   appPath = require('./config/paths').appPath,
+                                   appHtml = require('../config/paths').appHtml,
+                                   publicUrlOrPath = require('../config/paths').publicUrlOrPath,
+                                   appNodeModules = require('../config/paths').appNodeModules,
+                                   appTsConfig = require('../config/paths').appTsConfig,
+                                   appPath = require('../config/paths').appPath,
 
-                               } = require('./config/paths'),
+                               } = require('../config/paths'),
                                useTypeScript,
                            }, webpack, optionsManager) {
+    if (!env) {
+        env = _env(publicUrlOrPath.slice(0, -1))
+    }
     const isEnvProduction = Info.isProduction;
     const isEnvDevelopment = !isEnvProduction;
     logObject('CRA env', Info.isDebug, env);
     useTypeScript = useTypeScript || optionsManager.enabled('@mrbuilder/plugin-typescript') || canFind(optionsManager.cwd('tsconfig'))
+    webpack.module.strictExportPresence = true;
+    webpack.module.rules.push(
+        {parser: {requireEnsure: false}},
+        {
+            loader: require.resolve('file-loader'),
+            // Exclude `js` files to keep "css" loader working as it injects
+            // its runtime that would otherwise be processed through "file" loader.
+            // Also exclude `html` and `json` extensions so they get processed
+            // by webpacks internal loaders.
+            exclude: [/\.(js|mjs|jsx|ts|tsx|css)$/,
+                optionsManager.enabled('@mrbuilder/plugin-fonts') && /\.svg$/,
+                /\.html$/,
+                /\.json$/
+            ].filter(Boolean),
+            options: {
+                name: 'static/media/[name].[hash:8].[ext]',
+            },
+        },);
+    Object.assign(webpack.output, {
+        publicPath: publicUrlOrPath,
+        // are used on the same page.
+        jsonpFunction: `webpackJsonp${optionsManager.topPackage.name.replace(/[@/]/g, '_')}`,
+        devtoolModuleFilenameTemplate: isEnvProduction
+            ? info =>
+                path
+                    .relative(paths.appSrc, info.absoluteResourcePath)
+                    .replace(/\\/g, '/')
+            : isEnvDevelopment &&
+            (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+    });
     webpack.plugins.push(...[
+
         // Generates an `index.html` file with the <script> injected.
         // new HtmlWebpackPlugin(
         //     Object.assign(
@@ -158,10 +193,10 @@ module.exports = function ({
             useTypescriptIncrementalApi: true,
             checkSyntacticErrors: true,
             resolveModuleNameModule: process.versions.pnp
-                ? `${__dirname}/config/pnpTs.js`
+                ? `${__dirname}/../config/pnpTs.js`
                 : undefined,
             resolveTypeReferenceDirectiveModule: process.versions.pnp
-                ? `${__dirname}/config/pnpTs.js`
+                ? `${__dirname}/../config/pnpTs.js`
                 : undefined,
             tsconfig: appTsConfig,
             reportFiles: [

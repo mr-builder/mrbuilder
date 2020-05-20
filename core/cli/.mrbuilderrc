@@ -4,7 +4,7 @@
     "sourceDir": "./src",
     "outputDir": "./lib",
     "testDir": "./test",
-    "publicUrl": "/public",
+    "publicUrl": "/",
     "publicDir": "./public"
   },
   "env": {
@@ -210,6 +210,14 @@
       },
       "plugins": [
         "@mrbuilder/plugin-dashboard"
+      ]
+    },
+    "lint": {
+      "options": {
+        "bin": "@mrbuilder/plugin-eslint/bin/cli"
+      },
+      "plugins": [
+        "@mrbuilder/plugin-eslint"
       ]
     }
   }

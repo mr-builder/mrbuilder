@@ -194,7 +194,7 @@ export default class OptionsManager implements OptionsManagerType {
                 //otherwise we try resolving again.
                 if (retry) {
                     handleNotFound.call(this, e, packageName);
-                    return resolvePkgJson(packageName);
+                    return resolvePkgJson(packageName, false);
                 }
 
                 throw e;

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
 const {optionsManager, Info} = require('@mrbuilder/cli');
@@ -9,15 +7,27 @@ const {defaults} = require('jest-config');
 const mrb = (key, def) => optionsManager.config(!key ? '@mrbuilder/plugin-jest' : `@mrbuilder/plugin-jest.${key}`, def);
 const enabled = (key) => optionsManager.enabled(`@mrbuilder/plugin-${key}`);
 const mrbConf = {...(mrb())};
+const fs = require('fs');
 delete mrbConf['@babel'];
+
+
+const coverageDirectory = enhancedResolve(mrb('coverageDirectory', './coverage'), optionsManager.resolve);
 
 const jestConfig = {
     ...defaults,
-    coverageDirectory: enhancedResolve(mrb('coverageDirectory', './coverage'), optionsManager.resolve),
+    coverageDirectory,
     rootDir: mrb('@mrbuilder/cli.src', optionsManager.cwd('src')),
     //allow for configuration override
     ...mrbConf
 };
+if (mrbConf.rootDir) {
+    jestConfig.rootDir = enhancedResolve(mrbConf.rootDir, optionsManager.require);
+}
+
+mrbConf.setupFilesAfterEnv = mrbConf.setupFilesAfterEnv && mrbConf.setupFilesAfterEnv.map(v => {
+    return enhancedResolve(v.replace('<root>', jestConfig.rootDir), optionsManager.resolve);
+}).filter(v => fs.existsSync(v));
+
 const escapeRe = str => str.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
 const isTypescript = enabled('typescript');
@@ -27,11 +37,13 @@ const isWebpack = enabled('webpack');
 if (!jestConfig.transform) {
     jestConfig.transform = {};
 }
-
-const loader = (rule) => {
-    const use = Array.isArray(rule.use) ? rule.use[0] : rule.use;
-    return typeof use == 'string' ? use : use.loader;
-};
+const loaderName = (u) => {
+    if (Array.isArray(u)) {
+        return u[0] && (u[0].loader || u[0]);
+    }
+    return u.loader || u;
+}
+const loader = ([rule, use]) => use;
 
 if (isWebpack) {
     if (!global._MRBUILDER_WEBPACK) {
@@ -63,36 +75,44 @@ if (isWebpack) {
         });
     }
     if (webpackConf.module.rules) {
-        webpackConf.module.rules.sort((a, b) => {
-            //babel-loader needs to happen last.
-            const aloader = loader(a), bloader = loader(b);
-            if (aloader === bloader) {
-                return 0;
-            }
-            if (aloader === 'babel-loader') {
-                return 1;
-            }
+        webpackConf.module.rules
+            .reduce((ret, rule) => {
+                ret.push(...(rule.test ?
+                    (Array.isArray(rule.test) ? rule.test : [rule.test]).map(t => ([t, loaderName(rule.use)])) :
+                    rule.oneOf ? rule.oneOf.map((v) => [v.test, loaderName(v.use)]) : []));
+                return ret;
+            }, [])
 
-            return -1;
+            .sort((a, b) => {
+                //babel-loader needs to happen last.
+                const aloader = loader(a), bloader = loader(b);
+                if (aloader === bloader) {
+                    return 0;
+                }
+                if (aloader === 'babel-loader') {
+                    return 1;
+                }
 
-        }).map(rule => {
-            if (rule.test) {
-                switch (loader(rule)) {
+                return -1;
+
+            }).forEach(([test, type]) => {
+            if (test) {
+                switch (type) {
                     case 'babel-loader':
-                        jestConfig.transform[rule.test.source || rule.test] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+                        jestConfig.transform[test.source || test] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
                         break;
                     case 'url-loader':
                     case 'file-loader':
-                        jestConfig.transform[rule.test.source || rule.test] = `@mrbuilder/plugin-jest/mediaFileTransformer`;
+                        jestConfig.transform[test.source || test] = `@mrbuilder/plugin-jest/mediaFileTransformer`;
                         break;
                     case 'style-loader':
-                        jestConfig.moduleNameMapper[rule.test.source || rule.test] = 'identity-obj-proxy';
+                        jestConfig.moduleNameMapper[test.source || test] = 'identity-obj-proxy';
                         break;
                     case 'graphql-tag/loader':
                     //fall through
                     case 'graphql-loader':
                         try {
-                            jestConfig.transform[rule.test.source || rule.test] = optionsManager.require.resolve('jest-transform-graphql');
+                            jestConfig.transform[test.source || test] = optionsManager.require.resolve('jest-transform-graphql');
                         } catch (e) {
                             console.warn(`need to manually add 'jest-transform-graphql' to your dependencies`);
                             throw e;
@@ -104,31 +124,47 @@ if (isWebpack) {
             }
         });
     }
+} else {
+    const ifEnabled = (v, ...rest) => v ? enabled(v) ? v : ifEnabled(...rest) : null;
+    const needsConfiguration = ifEnabled('css', 'filetypes', 'fonts', 'less', 'sass', 'stylus', 'yaml', 'graphql');
+
+    if (needsConfiguration) {
+        logger.warn(`webpack is not enabled, so configuration of '${needsConfiguration}' will not happen.  Enable 
+    '@mrbuilder/plugin-webpack' in your mrbuilder configuration.
+    `)
+    }
 }
-const tsUseBabel = isTypescript && optionsManager.config('@mrbuilder/plugin-typescript.useBabel');
+const tsUseBabel = optionsManager.config('@mrbuilder/plugin-typescript.useBabel');
 
 if (isBabel) {
-    const match =
-        tsUseBabel ?
-            /[.]mjs|js|jsx|ts|tsx|es\d|esx/ :
-            optionsManager.config('@mrbuilder/plugin-babel.test', /[.]mjs|js|jsx|es\d|esx$/);
-    jestConfig.transform [match.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+    const bTest = optionsManager.config('@mrbuilder/plugin-babel.test', /[.]mjs|js|jsx|es\d|esx$/);
+    if (bTest) {
+        jestConfig.transform [bTest.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+
+    }
 }
 
-if (isTypescript && !tsUseBabel) {
-    try {
-        require.resolve('ts-jest');
-        jestConfig.preset = 'ts-jest';
-    } catch (e) {
-        logger.warn(`please add 'ts-jest' to your package.json, or use babel to compile typescript '${JSON.stringify([
-            "@mrbuilder/plugin-typescript",
-            {
-                "useBabel": true,
-            }
-        ], null, 2)}'`);
-
-        jestConfig.transform [/[.]tsx?$/.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+if (isTypescript) {
+    let addbabelTs = tsUseBabel;
+    if (!tsUseBabel) {
+        try {
+            require.resolve('ts-jest');
+            jestConfig.preset = 'ts-jest';
+        } catch (e) {
+            logger.warn(`Please add 'ts-jest' to your package.json, or use babel to compile typescript '${JSON.stringify([
+                "@mrbuilder/plugin-typescript",
+                {
+                    "useBabel": true,
+                }
+            ], null, 2)}'`);
+            addbabelTs = true;
+        }
     }
+    if (addbabelTs) {
+        const tsxTest = optionsManager.config('@mrbuilder/plugin-typescript.test', /[.]tsx?$/);
+        jestConfig.transform[tsxTest.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+    }
+
 }
 
 

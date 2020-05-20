@@ -1,5 +1,5 @@
 {
-  "name": "@mrbuilder/example-cra",
+  "name": "@mrbuilder/example-app-cra",
   "description": "This shows how to use cra to ",
   "version": "0.1.0",
   "private": true,
@@ -8,10 +8,13 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
+  "devDependencies": {
+    "@mrbuilder/preset-cra": "^4.1.0"
+  },
   "scripts": {
-    "cra-start": "mrbuilder",
-    "cra-build": "mrbuilder",
-    "test": "mrbuilder"
+    "start": "mrbuilder-react-scripts start",
+    "build": "mrbuilder-react-scripts build",
+    "test": "mrbuilder-react-scripts test"
   },
   "mrbuilder": {
     "plugins": [

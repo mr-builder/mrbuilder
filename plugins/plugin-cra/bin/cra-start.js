@@ -1,7 +1,7 @@
 'use strict';
-process.env.MRBUILDER_INTERNAL_PLUGINS = `@mrbuilder/plugin-cra,${process.env.MRBUILDER_INTERNAL_PLUGINS}`
+process.env.MRBUILDER_INTERNAL_PRESETS = `@mrbuilder/preset-cra,@mrbuilder/cli,${process.env.MRBUILDER_INTERNAL_PRESETS || ''}`
 const {resolveWebpack} = require('@mrbuilder/plugin-webpack/resolveWebpack');
-
+const {optionsManager} = require('@mrbuilder/cli');
 
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'development';
@@ -15,7 +15,7 @@ process.on('unhandledRejection', err => {
 });
 
 // Ensure environment variables are read.
-require('../src/config/env')();
+require('../config/env')();
 
 
 const fs = require('fs');
@@ -31,9 +31,9 @@ const {
     prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
-const paths = require('../src/config/paths');
+const paths = require('../config/paths');
 //const configFactory = require('../src/config/webpack.config');
-const createDevServerConfig = require('../src/config/webpackDevServer.config');
+const createDevServerConfig = require('../config/webpackDevServer.config');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
@@ -59,7 +59,7 @@ if (process.env.HOST) {
         `If this was unintentional, check that you haven't mistakenly set it in your shell.`
     );
     console.log(
-        `Learn more here: ${chalk.yellow('https://bit.ly/CRA-advanced-config')}`
+        `Learn more here: ${chalk.yellow('https://mr-builder.github.io')}`
     );
     console.log();
 }
@@ -73,7 +73,7 @@ checkBrowsers(paths.appPath, isInteractive)
         // run on a different port. `choosePort()` Promise resolves to the next free port.
         return choosePort(HOST, DEFAULT_PORT);
     })
-    .then(async port=>{
+    .then(async port => {
         if (port == null) {
             throw new Error(`must have port`);
         }
@@ -84,11 +84,11 @@ checkBrowsers(paths.appPath, isInteractive)
             config
         })
     })
-    .then( ({port,config}) => {
+    .then(({port, config}) => {
 
         const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-        const appName = require(paths.appPackageJson).name;
-        const useTypeScript = fs.existsSync(paths.appTsConfig);
+        const appName = optionsManager.topPackage.name;
+        const useTypeScript = optionsManager.enabled('@mrbuilder/plugin-webpack');
         const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
         const urls = prepareUrls(
             protocol,
@@ -114,7 +114,7 @@ checkBrowsers(paths.appPath, isInteractive)
             webpack,
         });
         // Load proxy config
-        const proxySetting = require(paths.appPackageJson).proxy;
+        const proxySetting = optionsManager.topPackage.proxy;
         const proxyConfig = prepareProxy(
             proxySetting,
             paths.appPublic,

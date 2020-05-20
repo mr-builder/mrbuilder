@@ -17,5 +17,10 @@
     "access": "public",
     "registry": "http://registry.npmjs.org"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "mrbuilder": {
+    "options": {
+      "ext": "js,jsx"
+    }
+  }
 }

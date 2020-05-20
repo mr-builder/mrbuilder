@@ -1,44 +1,130 @@
 {
   "plugins": [
     [
-      "@mrbuilder/plugin-webpack-dev-server",
-      false
+      "@mrbuilder/plugin-eslint",
+      {
+        test: "/[.](js|mjs|jsx|ts|tsx)$/",
+        enforce: 'pre',
+        configFile: '@mrbuilder/plugin-cra/eslint',
+        cache: true,
+        fix: false,
+        formatter: 'react-dev-utils/eslintFormatter',
+      }
+    ],
+    "@mrbuilder/plugin-react",
+    [
+      "@mrbuilder/plugin-babel",
+      {
+        // This is a feature of `babel-loader` for webpack (not Babel itself).
+        // It enables caching results in ./node_modules/.cache/babel-loader/
+        // directory for faster rebuilds.
+        cacheDirectory: true,
+        // See #6846 for context on why cacheCompression is disabled
+        cacheCompression: false,
+        compact: true
+      }
     ],
     [
-      "@mrbuilder/plugin-hot",
-      false
+      "@mrbuilder/plugin-browserslist",
+      {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    ],
+    [
+      "@mrbuilder/plugin-fonts",
+      {
+        name: 'static/media/[name].[hash:8].[ext]'
+      }
+    ],
+    [
+      "@mrbuilder/plugin-filetypes",
+      {
+        test: [
+          "/\.bmp$/",
+          "/\.gif$/",
+          "/\.jpe?g$/",
+          "/\.png$/",
+        ],
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'static/media/[name].[hash:8].[ext]',
+        }
+      }
     ]
   ],
   "env": {
     "cra-start": {
       "plugins": [
         [
-          "@mrbuilder/cli",
+          "@mrbuilder/plugin-hot",
           {
-            "node_env": "development",
-            "bin": "@mrbuilder/plugin-cra/bin/cra-start"
+            preEntry: []
           }
         ],
-        "@mrbuilder/plugin-fonts",
-        "@mrbuilder/plugin-filetypes",
         [
-          "@mrbuilder/plugin-browserslist",
+          "@mrbuilder/cli",
           {
-            "production": [
-              ">0.2%",
-              "not dead",
-              "not op_mini all"
+            "bin": "@mrbuilder/plugin-cra/bin/cli",
+            "argv": [
+              "start"
             ],
-            "development": [
-              "last 1 chrome version",
-              "last 1 firefox version",
-              "last 1 safari version"
-            ]
+            "env": {
+              "NODE_ENV": "development"
+            }
           }
         ],
         [
           "@mrbuilder/plugin-workbox",
           false
+        ],
+        [
+          "@mrbuilder/plugin-uglify",
+          false
+        ],
+        [
+          "@mrbuilder/plugin-css",
+          {
+            "useStyleLoader": true,
+            "plugins": [
+              'postcss-flexbugs-fixes',
+              [
+                'postcss-preset-env',
+                {
+                  autoprefixer: {
+                    flexbox: 'no-2009',
+                  },
+                  stage: 3,
+                }
+              ],
+              // Adds PostCSS Normalize as the reset css with default options,
+              // so that it honors browserslist config in package.json
+              // which in turn let's users customize the target behavior as per their needs.
+              'postcss-normalize'
+            ],
+            cssProcessorOptions: {
+              preset: [
+                'default',
+              ],
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-html",
+          {
+            "inject": true,
+            "exported": false,
+            "template": "./public/index.html",
+          }
         ],
         "@mrbuilder/plugin-manifest",
         [
@@ -67,6 +153,10 @@
         [
           "@mrbuilder/plugin-chunk",
           {
+            vendors: false,
+            commons: false,
+            styles: false,
+            manifest: false,
             "minimize": false,
             // Automatically split vendor and commons
             // https://twitter.com/wSokra/status/969633336732905474
@@ -80,6 +170,8 @@
             // https://github.com/facebook/create-react-app/issues/5358
             runtimeChunk: {
               name: 'runtime-{name}',
+            },
+            cacheGroups: {
             }
           }
         ],
@@ -131,63 +223,28 @@
               ]
             },
             "devtool": "cheap-module-source-map",
-
+            filename: 'static/js/bundle.js',
+            chunkFilename: 'static/js/[name].chunk.js',
             "output": {
-              "path": true,
-              chunkFilename: 'static/js/[name].chunk.js'
+              pathinfo: true,
+              futureEmitAssets: true,
             },
+            node: {
+              module: 'empty',
+              dgram: 'empty',
+              dns: 'mock',
+              fs: 'empty',
+              http2: 'empty',
+              net: 'empty',
+              tls: 'empty',
+              child_process: 'empty',
+            },
+            // Turn off performance processing because we utilize
+            // our own hints via the FileSizeReporter
+            performance: false
           }
         ],
         "@mrbuilder/plugin-cra"
-      ]
-    },
-    "test": {
-      "plugins": [
-        [
-          "@mrbuilder/cli",
-          {
-            "node_env": "development",
-            "cli": "@mrbuilder/plugin-cra/bin/cra-test"
-          }
-        ],
-        [
-          "@mrbuilder/plugin-jest",
-          {
-            "roots": [
-              "<rootDir>/src"
-            ],
-            "collectCoverageFrom": [
-              "src/**/*.{js,jsx,ts,tsx}",
-              "!src/**/*.d.ts"
-            ],
-            "setupFiles": [
-              "react-app-polyfill/jsdom"
-            ],
-            "setupFilesAfterEnv": [
-              "<rootDir>/src/setupTests.js"
-            ],
-            "testMatch": [
-              "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-              "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
-            ],
-            "testEnvironment": "jest-environment-jsdom-fourteen",
-            "transform": {
-              "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "@mrbuilder/plugin-jest/src/mediaFileTransform.js"
-            },
-            "transformIgnorePatterns": [
-              "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-              "^.+\\.module\\.(css|sass|scss)$"
-            ],
-            "modulePaths": [],
-            "moduleNameMapper": {
-              "^react-native$": "react-native-web",
-            },
-            "watchPlugins": [
-              "jest-watch-typeahead/filename",
-              "jest-watch-typeahead/testname"
-            ]
-          }
-        ]
       ]
     },
     "cra-build": {
@@ -195,25 +252,13 @@
         [
           "@mrbuilder/cli",
           {
-            "node_env": "development",
-            "bin": "@mrbuilder/plugin-cra/bin/cra-build"
-          }
-        ],
-        "@mrbuilder/plugin-fonts",
-        "@mrbuilder/plugin-filetypes",
-        [
-          "@mrbuilder/plugin-browserslist",
-          {
-            "production": [
-              ">0.2%",
-              "not dead",
-              "not op_mini all"
+            "bin": "@mrbuilder/plugin-cra/bin/cli",
+            "argv": [
+              "build"
             ],
-            "development": [
-              "last 1 chrome version",
-              "last 1 firefox version",
-              "last 1 safari version"
-            ]
+            "env": {
+              "NODE_ENV": "production"
+            }
           }
         ],
         [
@@ -225,6 +270,7 @@
                 "/\.map$/",
                 "/asset-manifest\.json$/"
               ],
+              swDest: 'service-worker.js',
               //          importWorkboxFrom: 'cdn',
               navigateFallbackDenylist: [
                 // Exclude URLs starting with /_, as they're likely an API call
@@ -285,6 +331,24 @@
         [
           "@mrbuilder/plugin-css",
           {
+            filename: 'static/css/[name].[contenthash:8].css',
+            chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+            "plugins": [
+              'postcss-flexbugs-fixes',
+              [
+                'postcss-preset-env',
+                {
+                  autoprefixer: {
+                    flexbox: 'no-2009',
+                  },
+                  stage: 3,
+                }
+              ],
+              // Adds PostCSS Normalize as the reset css with default options,
+              // so that it honors browserslist config in package.json
+              // which in turn let's users customize the target behavior as per their needs.
+              'postcss-normalize'
+            ],
             cssProcessorOptions: {
               preset: [
                 'default',
@@ -316,18 +380,6 @@
             runtimeChunk: {
               name: 'runtime-{name}',
             }
-          }
-        ],
-        [
-          "@mrbuilder/plugin-babel",
-          {
-            // This is a feature of `babel-loader` for webpack (not Babel itself).
-            // It enables caching results in ./node_modules/.cache/babel-loader/
-            // directory for faster rebuilds.
-            cacheDirectory: true,
-            // See #6846 for context on why cacheCompression is disabled
-            cacheCompression: false,
-            compact: true
           }
         ],
         [
@@ -373,18 +425,101 @@
               "index": "./src/index"
             },
             "devtool": "source-map",
-
             "outputPath": "./build",
+            filename: 'static/js/[name].[contenthash:8].js',
             chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
           }
         ],
         "@mrbuilder/plugin-cra"
       ]
     },
-    "development": {
-      "presets": [
-        "@mrbuilder/preset-dev"
+    "cra-test": {
+      "plugins": [
+        [
+          "@mrbuilder/cli",
+          {
+            "bin": "@mrbuilder/plugin-cra/bin/cli",
+            "argv": [
+              "test"
+            ],
+            "env": {
+              "NODE_ENV": "test",
+              "PUBLIC_URL": "",
+              "BABEL_ENV": "test/"
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-jest",
+          {
+            "rootDir": ".",
+            "roots": [
+              "<rootDir>/src"
+            ],
+            "collectCoverageFrom": [
+              "src/**/*.{js,jsx,ts,tsx}",
+              "!src/**/*.d.ts"
+            ],
+            "setupFiles": [
+              "react-app-polyfill/jsdom"
+            ],
+            "setupFilesAfterEnv": [
+              "<rootDir>/src/setupTests.js"
+            ],
+            "testMatch": [
+              "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+              "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+            ],
+            "testEnvironment": "jest-environment-jsdom-fourteen",
+            "transform": {
+              "^.+\\.css$": "@mrbuilder/plugin-cra/config/jest/cssTransform.js",
+              "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "@mrbuilder/plugin-cra/config/jest/fileTransform.js"
+            },
+            "transformIgnorePatterns": [
+              "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+              "^.+\\.module\\.(css|sass|scss)$"
+            ],
+            "modulePaths": [],
+            "moduleNameMapper": {
+              "^react-native$": "react-native-web",
+              "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+            },
+            "moduleFileExtensions": [
+              "web.js",
+              "js",
+              "web.ts",
+              "ts",
+              "web.tsx",
+              "tsx",
+              "json",
+              "web.jsx",
+              "jsx",
+              "node"
+            ],
+            "watchPlugins": [
+              "jest-watch-typeahead/filename",
+              "jest-watch-typeahead/testname"
+            ]
+          }
+        ],
+        [
+          "@mrbuilder/plugin-css",
+          {
+            useStyleLoader: true,
+            cssProcessorOptions: {
+              preset: [
+                'default',
+                {
+                  minifyFontValues: {
+                    removeQuotes: false
+                  }
+                }
+              ],
+            }
+          }
+        ],
+        "@mrbuilder/plugin-cra",
       ]
-    }
+    },
   }
 }

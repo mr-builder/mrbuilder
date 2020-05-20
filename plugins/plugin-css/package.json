@@ -13,7 +13,6 @@
     "postcss-safe-parser": "^4.0.2"
   },
   "scripts": {
-    "test": "mrbuilder-mocha"
   },
   "devDependencies": {
     "@mrbuilder/plugin-mocha": "^4.2.1"
@@ -31,7 +30,8 @@
     "options": {
       "test": "/\\.css$/",
       "publicPath": "/public",
-      "modules": "/\\.cssm$/"
+      "modules": "/\\.cssm$/",
+      "sideEffects": true
     }
   },
   "license": "MIT"
