@@ -9,4 +9,6 @@ const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 if (['build', 'start', 'test'].includes(script)) {
     process.env.MRBUILDER_ENV = `cra-${script}`;
     require(`@mrbuilder/plugin-cra/bin/cra-${script}`);
+}else{
+    console.error(`unknown script '${script}'`);
 }

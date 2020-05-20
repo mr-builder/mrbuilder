@@ -16,13 +16,7 @@
   "license": "MIT",
   "mrbuilder": {
     "options": {
-      "trailingComma": "es5",
-      "jsxSingleQuote": "es5",
-      "tabWidth": 4,
-      "semi": true,
-      "bracketSpacing": false,
-      "arrowParens": "always",
-      "singleQuote": true
+      "test": "/[.][jet]sx?$/"
     }
   }
 }

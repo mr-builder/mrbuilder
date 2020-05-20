@@ -13,11 +13,13 @@
     "@mrbuilder/plugin-stylus": "^4.2.1",
     "@mrbuilder/plugin-typescript": "^4.2.1",
     "@mrbuilder/plugin-worker": "^4.2.0",
-    "@mrbuilder/plugin-yaml": "^4.2.0"
+    "@mrbuilder/plugin-yaml": "^4.2.0",
+    "@mrbuilder/plugin-prettier": "^4.2.0"
+
   },
   "scripts": {
     "analyze": "mrbuilder",
-    "prepare": "mrbuilder",
+    "prepare": "mrbuilder-prettier && mrbuilder",
     "start": "mrbuilder",
     "test": "mrbuilder-karma-test",
     "karma": "mrbuilder",
