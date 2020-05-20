@@ -47,11 +47,16 @@ module.exports = function ({
             // its runtime that would otherwise be processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|mjs|jsx|ts|tsx|css)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|mjs|jsx|ts|tsx|css)$/,
+                optionsManager.enabled('@mrbuilder/plugin-fonts') && /\.svg$/,
+                /\.html$/,
+                /\.json$/
+            ].filter(Boolean),
             options: {
                 name: 'static/media/[name].[hash:8].[ext]',
             },
         },);
+
     webpack.plugins.push(...[
 
         // Generates an `index.html` file with the <script> injected.

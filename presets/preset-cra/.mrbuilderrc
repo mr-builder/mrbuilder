@@ -1,6 +1,18 @@
 {
   "plugins": [
     [
+      "@mrbuilder/plugin-babel",
+      {
+        // This is a feature of `babel-loader` for webpack (not Babel itself).
+        // It enables caching results in ./node_modules/.cache/babel-loader/
+        // directory for faster rebuilds.
+        cacheDirectory: true,
+        // See #6846 for context on why cacheCompression is disabled
+        cacheCompression: false,
+        compact: true
+      }
+    ],
+    [
       "@mrbuilder/plugin-webpack-dev-server",
       false
     ],
@@ -32,7 +44,7 @@
           "/\.bmp$/",
           "/\.gif$/",
           "/\.jpe?g$/",
-          "/\.png$/"
+          "/\.png$/",
         ],
         loader: 'url-loader',
         options: {
@@ -52,10 +64,47 @@
             "bin": "@mrbuilder/plugin-cra/bin/cra-start"
           }
         ],
-
         [
           "@mrbuilder/plugin-workbox",
           false
+        ],
+        "@mrbuilder/plugin-manifest",
+        [
+          "@mrbuilder/plugin-uglify",
+          false
+        ],
+        [
+          "@mrbuilder/plugin-css",
+          {
+            "useStyleLoader": true,
+            "plugins": [
+              'postcss-flexbugs-fixes',
+              ['postcss-preset-env',{
+                autoprefixer: {
+                  flexbox: 'no-2009',
+                },
+                stage: 3,
+              }],
+              // Adds PostCSS Normalize as the reset css with default options,
+              // so that it honors browserslist config in package.json
+              // which in turn let's users customize the target behavior as per their needs.
+              'postcss-normalize'
+            ],
+            cssProcessorOptions: {
+              preset: [
+                'default',
+              ],
+            }
+          }
+        ],
+
+        [
+          "@mrbuilder/plugin-html",
+          {
+            "inject": true,
+            "exported": false,
+            "template": "./public/index.html",
+          }
         ],
         "@mrbuilder/plugin-manifest",
         [
@@ -85,22 +134,7 @@
           "@mrbuilder/plugin-chunk",
           false
         ],
-        [
-          "@mrbuilder/plugin-babel",
-          {
-            // This is a feature of `babel-loader` for webpack (not Babel itself).
-            // It enables caching results in ./node_modules/.cache/babel-loader/
-            // directory for faster rebuilds.
-            cacheDirectory: true,
-            // See #6846 for context on why cacheCompression is disabled
-            cacheCompression: false,
-            compact: true
-          }
-        ],
-        [
-          "@mrbuilder/plugin-html",
-          false
-        ],
+
         [
           "@mrbuilder/plugin-webpack",
           {
@@ -123,6 +157,7 @@
             "bail": false,
             "entry": {
               "index": [
+                "react-dev-utils/webpackHotDevClient",
                 "./src/index"
               ]
             },
@@ -217,6 +252,19 @@
           {
             filename: 'static/css/[name].[contenthash:8].css',
             chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+            "plugins": [
+              'postcss-flexbugs-fixes',
+              ['postcss-preset-env',{
+                autoprefixer: {
+                  flexbox: 'no-2009',
+                },
+                stage: 3,
+              }],
+              // Adds PostCSS Normalize as the reset css with default options,
+              // so that it honors browserslist config in package.json
+              // which in turn let's users customize the target behavior as per their needs.
+              'postcss-normalize'
+            ],
             cssProcessorOptions: {
               preset: [
                 'default',
@@ -248,18 +296,6 @@
             runtimeChunk: {
               name: 'runtime-{name}',
             }
-          }
-        ],
-        [
-          "@mrbuilder/plugin-babel",
-          {
-            // This is a feature of `babel-loader` for webpack (not Babel itself).
-            // It enables caching results in ./node_modules/.cache/babel-loader/
-            // directory for faster rebuilds.
-            cacheDirectory: true,
-            // See #6846 for context on why cacheCompression is disabled
-            cacheCompression: false,
-            compact: true
           }
         ],
         [
@@ -377,7 +413,6 @@
             }
           }
         ],
-
         [
           "@mrbuilder/plugin-workbox",
           {
