@@ -1,4 +1,4 @@
 .stuff {
-    color: red;
-    background: #222222;
+  color: red;
+  background: #222222;
 }
