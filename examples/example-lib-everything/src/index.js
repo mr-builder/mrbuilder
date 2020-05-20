@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import less, { container } from './style.module.less';
+import React, {Component} from 'react';
+import less, {container} from './style.module.less';
 import moment from 'moment';
 import map from 'lodash/map';
 import Readme from '../Readme.md';
 import Timer from './timer.worker';
 import stylus from './stylus_module.stylm';
 import './stylus.styl';
-import { Hello } from './hello.tsx';
+import {Hello} from './hello.tsx';
 import yaml from './test.yaml';
 import style from './style.cssm';
 import './other.less';
@@ -23,8 +23,7 @@ export default class WebpackExample extends Component {
         super(...rest);
         this.timer = new Timer();
 
-        this.timer.onmessage = ({ data: { count } }) =>
-            this.setState({ count });
+        this.timer.onmessage = ({data: {count}}) => this.setState({count});
     }
 
     componentWillUnmount() {
@@ -36,7 +35,7 @@ export default class WebpackExample extends Component {
     }
 
     sendMessage = () => {
-        this.setState({ time: Date.now() });
+        this.setState({time: Date.now()});
         this.timer.postMessage('hello');
     };
 
@@ -45,7 +44,7 @@ export default class WebpackExample extends Component {
 
         return (
             <div>
-                <span id="header" className={container}>
+                <span id='header' className={container}>
                     Hello
                 </span>{' '}
                 from webpack everything example.
@@ -54,7 +53,7 @@ export default class WebpackExample extends Component {
                 </h2>
                 <Readme className={stylus.readme} />
                 <ul>{map([1, 2, 3], this.renderItem)}</ul>
-                <div id="yaml" className={'yaml'}>
+                <div id='yaml' className={'yaml'}>
                     Yaml - {yaml.name}
                 </div>
                 <div className={'time'}>Time since button click: {time}</div>

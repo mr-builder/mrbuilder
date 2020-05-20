@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { number, string } from 'prop-types';
+import {number, string} from 'prop-types';
 
 export interface HelloProps {
     name: string;
@@ -15,17 +15,17 @@ export class Hello extends React.Component<HelloProps, HelloState> {
     };
 
     handleIncrement = () => {
-        this.setState({ value: this.state.value + 1 });
+        this.setState({value: this.state.value + 1});
     };
 
     handleDecrement = () => {
-        this.setState({ value: Math.max(this.state.value - 1, 0) });
+        this.setState({value: Math.max(this.state.value - 1, 0)});
     };
 
     render() {
         return (
-            <div className="hello">
-                <div className="greeting">
+            <div className='hello'>
+                <div className='greeting'>
                     Hello{' '}
                     {this.props.name + getExclamationMarks(this.state.value)}{' '}
                     from TypeScript
