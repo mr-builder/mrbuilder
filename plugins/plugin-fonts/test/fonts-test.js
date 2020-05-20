@@ -8,6 +8,6 @@ describe('@mrbuilder/plugin-fonts', function () {
             }
         };
         m({}, webpack);
-        expect(webpack.module.rules).to.have.length(4);
+        expect(webpack.module.rules).to.have.length(1);
     });
 });

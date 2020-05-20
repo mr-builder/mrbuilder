@@ -2,7 +2,6 @@ const {enhancedResolve, asArray, logObject} = require("@mrbuilder/utils");
 const {optionsManager, Info} = require('@mrbuilder/cli');
 const {resolveWebpack} = require('@mrbuilder/plugin-webpack/resolveWebpack');
 
-const fs = require('fs');
 
 const logger = optionsManager.logger('@mrbuilder/plugin-storybook');
 const tryResolve = (file) => {
@@ -12,21 +11,6 @@ const tryResolve = (file) => {
     } catch (e) {
         return false;
     }
-}
-const oneOfRules = (config) => {
-    const cssRule = config.module.rules.find((rule) => (
-        rule.oneOf && Object.keys(rule).length === 1) &&
-        rule.oneOf.some((rule) => `${rule.test}`.includes('\\.module\\.css')),
-    );
-
-    if (cssRule) {
-        cssRule.test = /\.css$/;
-    }
-
-    config.module.rules = [{
-        oneOf: [...config.module.rules],
-    }];
-    return config;
 }
 
 const removeIf = (arr, fn) => {
@@ -51,9 +35,18 @@ async function webpackFinal(config) {
     }
     if (optionsManager.enabled('@mrbuilder/plugin-babel')) {
         optionsManager.debug('disabling storybook\'s babel using our own');
-        removeIf(config.module.rules, ({test}) => test && test.test && test.test('stuff.mjs'));
+        const oneOf = [];
+        config.module.rules = config.module.rules.filter(v => {
+            if (v.test && v.test.test && v.test.test('test.jsx')) {
+                oneOf.push(v);
+                return false;
+            }
+            return true;
+        })
+        config.module.rules.push({oneOf});
     }
     const webpack = await resolveWebpack(config, {isLibrary: false});
+
     webpack.entry = entry;
     webpack.output = output;
     webpack.mode = mode;
@@ -67,19 +60,9 @@ async function webpackFinal(config) {
         }]
     });
 
-    const customWebpack = optionsManager.cwd('.storybook', 'webpack.config.js');
-    if (fs.existsSync(customWebpack)) {
-        const f = require(customWebpack);
-        if (f) {
-            if (typeof f == 'function') {
-                return f(webpack);
-            }
-            return f;
-        }
-    }
     logger.debug('webpackFinal init ends');
 
-    return oneOfRules(webpack);
+    return webpack;
 }
 
 

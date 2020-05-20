@@ -6,6 +6,12 @@
     "access": "public",
     "registry": "http://registry.npmjs.org"
   },
+  "bin": {
+    "mrbuilder-react-scripts": "./bin/build.js",
+    "cra-start": "./bin/cra-start.js",
+    "cra-build": "./bin/cra-build.js",
+    "cra-test": "./bin/cra-test.js"
+  },
   "author": "<Justin Spears> speajus@gmail.com",
   "main": "src",
   "keywords": [

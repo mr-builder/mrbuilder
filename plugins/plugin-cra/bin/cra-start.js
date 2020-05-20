@@ -1,5 +1,5 @@
 'use strict';
-process.env.MRBUILDER_INTERNAL_PLUGINS = `@mrbuilder/plugin-cra,${process.env.MRBUILDER_INTERNAL_PLUGINS}`
+process.env.MRBUILDER_INTERNAL_PRESETS = `@mrbuilder/preset-cra,@mrbuilder/cli,${process.env.MRBUILDER_INTERNAL_PRESETS || ''}`
 const {resolveWebpack} = require('@mrbuilder/plugin-webpack/resolveWebpack');
 
 

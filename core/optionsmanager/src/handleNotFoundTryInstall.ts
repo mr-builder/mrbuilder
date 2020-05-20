@@ -18,18 +18,24 @@ const lernaRe = /lerna[/]cli([.]js)?$/;
  * @param isDev - set to false if it is not a dev dependency.
  */
 let first = true;
-export default function handleNotFoundTryInstall(this: OptionsManagerType, e: Error, pkg: string, isDev = true) {
+export default function handleNotFoundTryInstall(this: OptionsManagerType, e: Error, pkg: string, isDev = true):boolean {
     const warn = this.warn || console.warn;
     const info = this.info || console.log;
+    const prefix = `${this.envPrefix}_NO_AUTOINSTALL`;
+
     if (!pkg || pkg === 'undefined') {
         warn(`package was null?`);
         throw new Error('undefined package');
     }
     if (this.topPackage?.dependencies?.[pkg] || this.topPackage?.devDependencies?.[pkg] || this.topPackage?.peerDependencies?.[pkg]) {
         warn(`'${pkg}' is already in your package.json try running install if you see this message again`);
-        return;
+        return false;
     }
 
+    if (process.env[prefix]){
+        warn(`'${pkg}' is already installing`);
+        return false;
+    }
     const npmPath = findExecPath();
     if (npmPath) {
         const installPkg = `${pkg}@latest`;
@@ -64,7 +70,7 @@ export default function handleNotFoundTryInstall(this: OptionsManagerType, e: Er
             stdio: ['inherit', 'inherit', 'inherit'],
             env: Object.assign({}, process.env, {
                 NODE_ENV: 'development',
-                [`${this.envPrefix}_NO_AUTOINSTALL`]: 1,
+                [prefix]: '1',
             })
         });
 
