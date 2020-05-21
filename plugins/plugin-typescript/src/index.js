@@ -4,7 +4,6 @@ const {Util} =require('@mrbuilder/cli');
 module.exports = function ({
                                test,
                                baseUrl = process.cwd(),
-                               extensions,
                                useBabel,
                                allowTsInNodeModules,
                                context,
@@ -14,12 +13,6 @@ module.exports = function ({
 
     manageTsConfig(om);
     const logger = om.logger('@mrbuilder/plugin-webpack');
-    if (extensions) {
-        if (!webpack.resolve.extensions) {
-            webpack.resolve.extensions = [];
-        }
-        webpack.resolve.extensions.push(...extensions)
-    }
 
     if (useBabel || om.enabled('@mrbuilder/plugin-jest')) {
         if (require('@mrbuilder/plugin-babel/version') > 6) {

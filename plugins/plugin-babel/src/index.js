@@ -15,13 +15,6 @@ module.exports = ({
 
     const use = useBabel(om);
 
-    if (!webpack.resolve.extensions) {
-        webpack.resolve.extensions = [];
-    }
-    if (extensions) {
-        webpack.resolve.extensions.push(...extensions);
-    }
-
     if (!test) {
 
         test = /\.(?:es[m\d]?|jsx?|mjs)$/;

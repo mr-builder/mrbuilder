@@ -1,18 +1,18 @@
-const path = require('path');
 const {existsSync} = require('fs');
 const {cwd} = require('@mrbuilder/utils');
 const {enhancedResolve} = require('@mrbuilder/utils');
-
+const {extensions} = require('@mrbuilder/cli');
 module.exports = function ({
-                               fix = true,
-                               include = [cwd('src')],
-                               test = /\.jsx?$/,
+                               fix,
+                               include,
+                               test,
+                               ext=extensions,
                                exclude,
-                               cache = true,
+                               cache,
                                formatter,
-                               enforce = 'pre',
-                               configFile = path.resolve(__dirname, 'eslint')
-                           }, webpack,om) {
+                               enforce,
+                               configFile
+                           }, webpack, om) {
     const warn = this.warn || console.warn;
     const info = this.info || console.log;
 
@@ -26,30 +26,40 @@ module.exports = function ({
                 warn('could not parse', e);
             }
         }
-        return enhancedResolve(configFile, om.require);
+        return require.resolve(enhancedResolve(configFile, om.require));
     };
+    configFile = loadConfig();
     if (fix) {
         warn('eslint fix is enabled, it may cause webpack to infinitely reload '
             + 'use "MRBUILDER_PLUGIN_ESLINT_FIX=0" to or '
             + '"--@mrbuilder/plugin-eslint-fix=0" disable')
     }
+    if (configFile.startsWith('@mrbuilder/plugin-eslint') && om.enabled('@mrbuilder/plugin-prettier')) {
+        info('using "prettier" eslint settings');
+    }
     const obj = {
-        test,
-        use: [{
+        test: test ? test : ext ? v => (ext.some(e => ('.' + e.replace(/^[.]/, '')).endsWith(v))) : /\.jsx?$/,
+        use: {
             loader: "eslint-loader",
             options: {
-                configFile: loadConfig(),
+                configFile,
                 fix,
                 formatter,
                 cache,
             }
-        }]
+        }
     };
     if (enforce) {
         obj.enforce = enforce;
     }
     if (include) {
-        obj.include = include;
+        if (include == null) {
+            include = [
+                om.config('@mrbuilder/cli.sourceDir'),
+                om.config('@mrbuilder/cli.testDir'),
+            ]
+        }
+        obj.include = (Array.isArray(include) ? include : include ? [include] : []).map(v => enhancedResolve(v, om.require));
     }
     if (exclude) {
         obj.exclude = exclude;

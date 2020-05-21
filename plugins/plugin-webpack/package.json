@@ -35,11 +35,6 @@
     "options": {
       "library": true,
       "libraryTarget": "umd",
-      "extensions": [
-        ".js",
-        ".jsx",
-        ".json"
-      ],
       "mainFields": true,
       "outputPath": "./lib",
       "externalizePeers": true,

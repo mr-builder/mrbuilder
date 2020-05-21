@@ -18,7 +18,7 @@ This plugin is a core plugin that provides the root of the [webpack](https://web
 | filename      | string     | [name].[hash].js|Name the javascript files      |
 | alias         | string[]   | [react,react-dom]| Create alias's so only 1 version is used|
 | node          | object     |              | Maps to [webpack.node](https://webpack.js.org/configuration/node/)             |
-| extensions    | string[]   | [.js,.jsx,.json]| Add extensions                |
+| extensions    | string[]   | [.js,.jsx,.json]| Add extensions (depreacted use cli.extensions) |
 | public        | string     | ""           | The "publicPath" options in webpack|
 | useTarget     | string     | "web"        | The target property in webpack     |
 | noParse       | regex      |              | A pattern for webpack not to parse|

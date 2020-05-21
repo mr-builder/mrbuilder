@@ -20,7 +20,12 @@
   "license": "MIT",
   "mrbuilder": {
     "options": {
-      "ext": "js,jsx"
+      "ext": "js,jsx",
+      "fix": true,
+      "exclude": "/node_modules/",
+      "cache": true,
+      "enforce": "pre",
+      "configFile": "@mrbuilder/plugin-eslint/src/eslint.js"
     }
   }
 }

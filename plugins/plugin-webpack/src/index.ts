@@ -27,7 +27,7 @@ const returnMode = (val = process.env.NODE_ENV) => {
 const mod = function ({
                           library,
                           libraryTarget = 'umd',
-                          extensions = ['.js', '.jsx', '.json'],
+                          extensions,
                           mainFields = true,
                           app,
                           mode,
@@ -138,7 +138,7 @@ const mod = function ({
         if (!webpack.resolve.extensions) {
             webpack.resolve.extensions = [];
         }
-        webpack.resolve.extensions.push(...extensions)
+        webpack.resolve.extensions = Array.from(new Set(webpack.resolve.extensions.concat(...extensions)));
     }
 
     if (info.isLibrary && (useExternals !== false)) {

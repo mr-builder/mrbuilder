@@ -28,12 +28,12 @@ const config = {
         'expect': true,
         '__REACT_HOT_LOADER__': true
     },
-    'extends': [
+    'extends': optionsManager.config('@mrbuilder/plugin-eslint.config', [
         isReact && 'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
         isTypescript && 'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
         isPrettier && (isReact ? "prettier/react" : "prettier/standard"),
         isPrettier && isTypescript && "prettier/@typescript-eslint"
-    ].filter(Boolean)
+    ]).filter(Boolean)
 }
 
 logObject("eslint config", Info.isDebug, config);

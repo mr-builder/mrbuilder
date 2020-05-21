@@ -1,8 +1,7 @@
 'use strict';
 
-const path = require('path');
 const fs = require('fs');
-const {optionsManager} = require('@mrbuilder/cli');
+const {optionsManager, extensions} = require('@mrbuilder/cli');
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
 const {enhancedResolve} = require('@mrbuilder/utils');
 // Make sure any symlinks in the project folder are resolved:
@@ -38,19 +37,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
     process.env.PUBLIC_URL
 );
 
-const moduleFileExtensions = mrb('moduleFileExtensions', optionsManager.config('@mrbuilder/plugin-webpack.extensions', [
-    'web.mjs',
-    'mjs',
-    'web.js',
-    'js',
-    'web.ts',
-    'ts',
-    'web.tsx',
-    'tsx',
-    'json',
-    'web.jsx',
-    'jsx',
-]));
+const moduleFileExtensions = extensions;
 
 const noDot = v => v.replace(/^[.]/, '');
 // Resolve file paths in the same order as webpack
