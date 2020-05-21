@@ -1,12 +1,12 @@
 {
   "name": "@mrbuilder/example-app-workbox",
   "description": "Sample application using mrbuilder workbox plugin",
-  "version": "4.2.2",
+  "version": "4.3.0-alpha.0",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.2.1",
-    "@mrbuilder/plugin-jest": "^4.2.1",
-    "@mrbuilder/plugin-workbox": "^4.2.2"
+    "@mrbuilder/cli": "^4.3.0-alpha.0",
+    "@mrbuilder/plugin-jest": "^4.3.0-alpha.0",
+    "@mrbuilder/plugin-workbox": "^4.3.0-alpha.0"
   },
   "scripts": {
     "prepare": "mrbuilder",

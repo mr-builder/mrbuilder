@@ -1,21 +1,20 @@
 {
   "name": "@mrbuilder/example-lib-everything",
   "description": "An everything example",
-  "version": "4.2.1",
+  "version": "4.3.0-alpha.0",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.2.1",
+    "@mrbuilder/cli": "^4.3.0-alpha.0",
     "@mrbuilder/plugin-env": "^4.2.0",
-    "@mrbuilder/plugin-graphql": "^4.2.1",
+    "@mrbuilder/plugin-graphql": "^4.3.0-alpha.0",
     "@mrbuilder/plugin-lodash": "^4.2.0",
-    "@mrbuilder/plugin-markdown": "^4.2.1",
+    "@mrbuilder/plugin-markdown": "^4.3.0-alpha.0",
     "@mrbuilder/plugin-moment": "^4.2.0",
-    "@mrbuilder/plugin-stylus": "^4.2.1",
-    "@mrbuilder/plugin-typescript": "^4.2.1",
+    "@mrbuilder/plugin-prettier": "^4.3.0-alpha.0",
+    "@mrbuilder/plugin-stylus": "^4.3.0-alpha.0",
+    "@mrbuilder/plugin-typescript": "^4.3.0-alpha.0",
     "@mrbuilder/plugin-worker": "^4.2.0",
-    "@mrbuilder/plugin-yaml": "^4.2.0",
-    "@mrbuilder/plugin-prettier": "^4.2.0"
-
+    "@mrbuilder/plugin-yaml": "^4.2.0"
   },
   "scripts": {
     "analyze": "mrbuilder",

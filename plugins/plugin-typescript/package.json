@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-typescript",
-  "version": "4.2.1",
+  "version": "4.3.0-alpha.0",
   "description": "Typescript plugin for mrbuilder",
   "main": "./src",
   "author": "Justin Spears <speajus@gmail.com>",
@@ -9,15 +9,15 @@
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.9.0",
-    "@mrbuilder/cli": "^4.2.1",
+    "@mrbuilder/cli": "^4.3.0-alpha.0",
     "@types/node": "^13.9.8",
     "@types/react": "^16.9.27",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.2",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "typescript": "^3.8.3",
-    "@typescript-eslint/parser": "^2.34.0",
-    "@typescript-eslint/eslint-plugin": "^2.34.0"
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
     "@mrbuilder/cli": "^4.0.0-alpha.1"

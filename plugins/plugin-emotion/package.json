@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-emotion",
-  "version": "4.2.1",
+  "version": "4.3.0-alpha.0",
   "license": "MIT",
   "author": "speajus@gmail.com",
   "main": "src",

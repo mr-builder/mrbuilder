@@ -1,18 +1,18 @@
 {
   "name": "@mrbuilder/create-plugin",
   "description": "Support for yarn create @mrbuilder/mrbuilder-plugin",
-  "version": "4.2.2",
+  "version": "4.3.0-alpha.0",
   "bin": {
     "create-mrbuilder-plugin": "./app.js"
   },
   "dependencies": {
-    "@mrbuilder/cli": "^4.2.1",
+    "@mrbuilder/cli": "^4.3.0-alpha.0",
     "plop": "^2.6.0"
   },
   "devDependencies": {
-    "@mrbuilder/plugin-typescript": "^4.2.1",
-    "@mrbuilder/preset-lib": "^4.2.1",
-    "@mrbuilder/preset-test": "^4.2.1"
+    "@mrbuilder/plugin-typescript": "^4.3.0-alpha.0",
+    "@mrbuilder/preset-lib": "^4.3.0-alpha.0",
+    "@mrbuilder/preset-test": "^4.3.0-alpha.0"
   },
   "publishConfig": {
     "access": "public",
