@@ -88,7 +88,7 @@ checkBrowsers(paths.appPath, isInteractive)
 
         const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
         const appName = optionsManager.topPackage.name;
-        const useTypeScript = optionsManager.enabled('@mrbuilder/plugin-webpack');
+        const useTypeScript = optionsManager.enabled('@mrbuilder/plugin-typescript');
         const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
         const urls = prepareUrls(
             protocol,
