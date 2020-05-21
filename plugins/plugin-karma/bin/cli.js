@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+process.env.MRBUILDER_INTERNAL_PLUGINS=`@mrbuilder/plugin-karma,${process.env.MRBUILDER_INTERNAL_PLUGINS || ''}`
 const path = require('path');
 const {env, argv, cwd} = process;
 
