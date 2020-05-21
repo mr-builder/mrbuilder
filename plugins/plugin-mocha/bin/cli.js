@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const {argv, env} = process;
 env.NODE_ENV = env.NODE_ENV || 'test';
-env.MRBUILDER_INTERNAL_PLUGINS = `${env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/cli,@mrbuilder/plugin-mocha`;
+env.MRBUILDER_INTERNAL_PLUGINS = `${env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-mocha,@mrbuilder/cli`;
 
 
 const {optionsManager} = require('@mrbuilder/cli');

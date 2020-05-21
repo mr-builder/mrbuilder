@@ -1,5 +1,6 @@
+
 const {enhancedResolve, asArray, logObject} = require("@mrbuilder/utils");
-const {optionsManager, Info} = require('@mrbuilder/cli');
+const {optionsManager, Info,dotExtensions} = require('@mrbuilder/cli');
 const {resolveWebpack} = require('@mrbuilder/plugin-webpack/resolveWebpack');
 
 
@@ -50,6 +51,7 @@ async function webpackFinal(config) {
     webpack.entry = entry;
     webpack.output = output;
     webpack.mode = mode;
+    webpack.resolve.extensions = dotExtensions;
     //webpack.devServer = devServer;
     delete webpack.externals;
     webpack.module.rules.unshift({

@@ -1,29 +1,30 @@
 #!/usr/bin/env node
-process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-prettier`;
+process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-prettier,@mrbuilder/cli`;
 
-const om = require('@mrbuilder/cli').default;
-const fs = require('fs');
-
-const exists = (...files) => {
-    for (let i = 0, l = files.length; i < l; i++) {
-        if (fs.existsSync(om.cwd(files[i]))) {
-            return true;
-        }
-    }
-    return false;
-};
-
-const argv = process.argv;
-
-if (!(exists('.prettierrc', 'prettier.config.js') || require(om.cwd('package.json')).prettier)) {
-    if (!argv.includes('--config', 2)) {
-        argv.splice(2, 0, '--config', om.require.resolve('@mrbuilder/plugin-prettier/src/prettier.config.js'));
-    }
-}
-if (!(argv.includes('--write', 2) || argv.includes('--check', 2))) {
-    argv.push('--write', '{src,test}/**');
+const {optionsManager} = require('@mrbuilder/cli');
+const {argv} = process;
+const orig = argv.slice(2);
+if (!orig.includes('--config')) {
+    argv.splice(2, 0, '--config', require.resolve('@mrbuilder/plugin-prettier/src/prettier.config.js'));
 }
 
-return require('prettier/bin-prettier');
+if (!(orig.includes('--write') || orig.includes('--check'))) {
+    if (optionsManager.config('@mrbuilder/plugin-prettier.write', true)) {
+        argv.push('--write');
+    }
+}
 
-//(.prettierrc, package.json, prettier.config.js)
+if (orig.filter(v => !/^-/.test(v)).length == 0) {
+
+    const files = optionsManager.config('@mrbuilder/plugin-prettier.files') || [];
+    if (!files.length) {
+        //gosh I know this bad.   But prettier does not give a lot of options.
+        files.push(`${optionsManager.config('@mrbuilder/cli.sourceDir', 'src')}/**/!(*.styl|*.stylm)`)
+        files.push(`${optionsManager.config('@mrbuilder/cli.testDir', 'test')}/**/!(*.styl|*.stylm)`)
+        process.argv.push(...files);
+    }
+}
+
+console.log('argv', process.argv);
+
+require('prettier/bin-prettier');

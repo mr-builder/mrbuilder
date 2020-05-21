@@ -3,8 +3,14 @@
   "version": "4.2.0",
   "description": "Provides prettier cli wrapper",
   "dependencies": {
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.5",
+    "@typescript-eslint/parser": "^2.34.0",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-config-prettier": "^6.11.0",
+    "@mrbuilder/plugin-eslint": "^4.2.0"
   },
+  "main": "src",
   "bin": {
     "mrbuilder-prettier": "./bin/cli.js"
   },
@@ -12,5 +18,14 @@
     "access": "public",
     "registry": "http://registry.npmjs.org"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "mrbuilder": {
+    "plugin": false,
+    "options": {
+      "test": "/[.][jet]sx?$/"
+    },
+    "plugins": [
+      "@mrbuilder/plugin-eslint"
+    ]
+  }
 }
