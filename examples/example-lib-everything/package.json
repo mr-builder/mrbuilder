@@ -23,6 +23,7 @@
     "start": "mrbuilder",
     "test": "mrbuilder-karma-test",
     "karma": "mrbuilder",
+    "lint": "mrbuilder",
     "storybook": "mrbuilder",
     "prettier": "mrbuilder",
     "storybook:start": "mrbuilder --@mrbuilder/plugin-storybook.parameters.theme=dark  "
@@ -61,7 +62,8 @@
       "@mrbuilder/plugin-stylus",
       "@mrbuilder/plugin-worker",
       "@mrbuilder/plugin-typescript",
-      "@mrbuilder/plugin-graphql"
+      "@mrbuilder/plugin-graphql",
+      "@mrbuilder/plugin-prettier"
     ],
     "env": {
       "storybook": {

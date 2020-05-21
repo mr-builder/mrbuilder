@@ -49,7 +49,7 @@ export default class WebpackExample extends Component {
         </span>{" "}
         from webpack everything example.
         <h2 className={less.user}>
-          Hi {USER}! Your running with NODE_ENV: "{NODE_ENV}"
+          Hi {USER}! Your running with NODE_ENV: &quot;{NODE_ENV}&quot;
         </h2>
         <Readme className={stylus.readme} />
         <ul>{map([1, 2, 3], this.renderItem)}</ul>
