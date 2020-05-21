@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/create-app",
   "description": "",
-  "version": "4.3.0-alpha.0",
+  "version": "4.3.0",
   "bin": {
     "create-mrbuilder-app": "./app.js"
   },
@@ -22,12 +22,12 @@
     "plop": "^2.6.0"
   },
   "devDependencies": {
-    "@mrbuilder/cli": "^4.3.0-alpha.0",
-    "@mrbuilder/plugin-jest": "^4.3.0-alpha.0",
-    "@mrbuilder/plugin-storybook": "^4.3.0-alpha.0",
-    "@mrbuilder/plugin-typescript": "^4.3.0-alpha.0",
-    "@mrbuilder/preset-lib": "^4.3.0-alpha.0",
-    "@mrbuilder/preset-test": "^4.3.0-alpha.0",
+    "@mrbuilder/cli": "^4.3.0",
+    "@mrbuilder/plugin-jest": "^4.3.0",
+    "@mrbuilder/plugin-storybook": "^4.3.0",
+    "@mrbuilder/plugin-typescript": "^4.3.0",
+    "@mrbuilder/preset-lib": "^4.3.0",
+    "@mrbuilder/preset-test": "^4.3.0",
     "chalk": "^4.0.0"
   },
   "publishConfig": {
