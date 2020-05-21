@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
 const {optionsManager, Info} = require('@mrbuilder/cli');
@@ -119,36 +121,52 @@ if (isWebpack) {
                         }
                         break;
                     default:
-                        logObject('no jest config', true, rule);
+                        logObject('no jest config', true, type);
                 }
             }
         });
     }
+} else {
+    const ifEnabled = (v, ...rest) => v ? enabled(v) ? v : ifEnabled(...rest) : null;
+    const needsConfiguration = ifEnabled('css', 'filetypes', 'fonts', 'less', 'sass', 'stylus', 'yaml', 'graphql');
+
+    if (needsConfiguration) {
+        logger.warn(`webpack is not enabled, so configuration of '${needsConfiguration}' will not happen.  Enable 
+    '@mrbuilder/plugin-webpack' in your mrbuilder configuration.
+    `)
+    }
 }
-const tsUseBabel = isTypescript && optionsManager.config('@mrbuilder/plugin-typescript.useBabel');
+const tsUseBabel = optionsManager.config('@mrbuilder/plugin-typescript.useBabel');
 
 if (isBabel) {
-    const match =
-        tsUseBabel ?
-            /[.]mjs|js|jsx|ts|tsx|es\d|esx/ :
-            optionsManager.config('@mrbuilder/plugin-babel.test', /[.]mjs|js|jsx|es\d|esx$/);
-    jestConfig.transform [match.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+    const bTest = optionsManager.config('@mrbuilder/plugin-babel.test', /[.]mjs|js|jsx|es\d|esx$/);
+    if (bTest) {
+        jestConfig.transform [bTest.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+
+    }
 }
 
-if (isTypescript && !tsUseBabel) {
-    try {
-        require.resolve('ts-jest');
-        jestConfig.preset = 'ts-jest';
-    } catch (e) {
-        logger.warn(`Please add 'ts-jest' to your package.json, or use babel to compile typescript '${JSON.stringify([
-            "@mrbuilder/plugin-typescript",
-            {
-                "useBabel": true,
-            }
-        ], null, 2)}'`);
-
-        jestConfig.transform [/[.]tsx?$/.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+if (isTypescript) {
+    let addbabelTs = tsUseBabel;
+    if (!tsUseBabel) {
+        try {
+            require.resolve('ts-jest');
+            jestConfig.preset = 'ts-jest';
+        } catch (e) {
+            logger.warn(`Please add 'ts-jest' to your package.json, or use babel to compile typescript '${JSON.stringify([
+                "@mrbuilder/plugin-typescript",
+                {
+                    "useBabel": true,
+                }
+            ], null, 2)}'`);
+            addbabelTs = true;
+        }
     }
+    if (addbabelTs) {
+        const tsxTest = optionsManager.config('@mrbuilder/plugin-typescript.test', /[.]tsx?$/);
+        jestConfig.transform[tsxTest.source] = optionsManager.require.resolve('@mrbuilder/plugin-jest/transform');
+    }
+
 }
 
 

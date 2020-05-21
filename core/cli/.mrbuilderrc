@@ -4,7 +4,7 @@
     "sourceDir": "./src",
     "outputDir": "./lib",
     "testDir": "./test",
-    "publicUrl": "/public",
+    "publicUrl": "/",
     "publicDir": "./public"
   },
   "env": {

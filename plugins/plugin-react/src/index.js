@@ -110,7 +110,10 @@ module.exports = function reactPlugin({compatMode,}, webpack, om) {
                 );
 
             } else {
-                webpack.entry[name] = preEntry.concat(webpack.entry[name]);
+                webpack.entry = {
+                    ...webpack.entry,
+                    [name]:preEntry.concat(webpack.entry[name])
+                }
                 //don't show warning if the setting is set.
                 showedWarning = showedWarning || exported === false || page.exported === false;
                 if (!showedWarning) {

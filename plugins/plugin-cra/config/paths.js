@@ -34,7 +34,7 @@ const resolveApp = (relativePath, ...keys) => {
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 const publicUrlOrPath = getPublicUrlOrPath(
     process.env.NODE_ENV === 'development',
-    mrb('publicUrl', crb('publicUrl', require(optionsManager.cwd('package.json')).homepage)),
+    mrb('publicUrl', crb('publicUrl')),
     process.env.PUBLIC_URL
 );
 

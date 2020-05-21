@@ -7,7 +7,7 @@
     "registry": "http://registry.npmjs.org"
   },
   "bin": {
-    "mrbuilder-react-scripts": "./bin/build.js",
+    "mrbuilder-react-scripts": "./bin/cli.js",
     "cra-start": "./bin/cra-start.js",
     "cra-build": "./bin/cra-build.js",
     "cra-test": "./bin/cra-test.js"
@@ -56,6 +56,23 @@
       "WDS_SOCKET_HOST": "Webpack Dev Server Host",
       "WDS_SOCKET_PATH": "Webpack Dev Server Path",
       "WDS_SOCKET_PORT": "Webpack Dev Server Port"
+    },
+    "options": {
+      "@babel": [
+        [
+          "babel-preset-react-app"
+        ],
+        [
+          "babel-plugin-named-asset-import",
+          {
+            "loaderMap": {
+              "svg": {
+                "ReactComponent": "@svgr/webpack?-svgo,+titleProp,+ref![path]"
+              }
+            }
+          }
+        ]
+      ]
     }
   }
 }

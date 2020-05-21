@@ -1,15 +1,18 @@
-const path           = require('path');
-const { existsSync } = require('fs');
-const { cwd }        = require('@mrbuilder/utils');
-module.exports       = function ({
-                                     fix = true,
-                                     include = [cwd('src')],
-                                     test = /\.jsx?$/,
-                                     exclude,
-                                     enforce = 'pre',
-                                     configFile = path.resolve(__dirname,
-                                         'eslint')
-                                 }, webpack) {
+const path = require('path');
+const {existsSync} = require('fs');
+const {cwd} = require('@mrbuilder/utils');
+const {enhancedResolve} = require('@mrbuilder/utils');
+
+module.exports = function ({
+                               fix = true,
+                               include = [cwd('src')],
+                               test = /\.jsx?$/,
+                               exclude,
+                               cache = true,
+                               formatter,
+                               enforce = 'pre',
+                               configFile = path.resolve(__dirname, 'eslint')
+                           }, webpack,om) {
     const warn = this.warn || console.warn;
     const info = this.info || console.log;
 
@@ -23,21 +26,22 @@ module.exports       = function ({
                 warn('could not parse', e);
             }
         }
-        return configFile;
-
+        return enhancedResolve(configFile, om.require);
     };
     if (fix) {
         warn('eslint fix is enabled, it may cause webpack to infinitely reload '
-             + 'use "MRBUILDER_PLUGIN_ESLINT_FIX=0" to or '
-             + '"--@mrbuilder/plugin-eslint-fix=0" disable')
+            + 'use "MRBUILDER_PLUGIN_ESLINT_FIX=0" to or '
+            + '"--@mrbuilder/plugin-eslint-fix=0" disable')
     }
     const obj = {
         test,
         use: [{
-            loader : "eslint-loader",
+            loader: "eslint-loader",
             options: {
                 configFile: loadConfig(),
-                fix
+                fix,
+                formatter,
+                cache,
             }
         }]
     };
@@ -51,7 +55,7 @@ module.exports       = function ({
         obj.exclude = exclude;
     }
 
-    webpack.module.rules.push(obj);
+    webpack.module.rules.unshift(obj);
 
 
     return webpack;
