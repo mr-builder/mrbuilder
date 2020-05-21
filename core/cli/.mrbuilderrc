@@ -1,5 +1,5 @@
 {
-  "plugin": "./lib/webpack",
+  "plugin": false,
   "options": {
     "sourceDir": "./src",
     "outputDir": "./lib",

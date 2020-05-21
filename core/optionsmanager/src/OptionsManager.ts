@@ -438,7 +438,7 @@ export default class OptionsManager implements OptionsManagerType {
     async initialize<T>(conf: T, scope: {} | InitFn<T> = {}, worker: (v: number) => void = () => {
     }): Promise<T> {
         for (const [key, option] of this.plugins.entries()) {
-            if (!option) {
+            if (!option || option.plugin === false) {
                 this.debug(key, 'disabled');
                 worker(1);
                 continue;

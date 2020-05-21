@@ -27,4 +27,5 @@ if (isCRA) {
     _extensions.forEach((v) => _extensions.push('web.' + v));
 }
 
-export const extensions = Array.from(new Set(_extensions));
+export const extensions = Array.from(new Set(_extensions.map(v=>v.replace(/^[.]/,''))));
+export const dotExtensions = extensions.map(v=>`.${v}`);

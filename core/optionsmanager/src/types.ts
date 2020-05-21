@@ -37,7 +37,7 @@ export type OptionsConfig = PresetsPlugins & {
     ignoreRc?: boolean,
     env?: EnvConfig,
     alias?: AliasObj,
-    plugin?: string,
+    plugin?: string | false,
 };
 
 
@@ -55,7 +55,7 @@ export type OptionsManagerType = Logger & {
 };
 
 type PluginFn = () => void;
-export type PluginValue = string | PluginFn | { name: string };
+export type PluginValue = string | false | PluginFn | { name: string };
 
 export type AliasObj = {
     [key: string]: string

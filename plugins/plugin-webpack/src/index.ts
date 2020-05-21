@@ -138,7 +138,8 @@ const mod = function ({
         if (!webpack.resolve.extensions) {
             webpack.resolve.extensions = [];
         }
-        webpack.resolve.extensions = Array.from(new Set(webpack.resolve.extensions.concat(...extensions)));
+        webpack.resolve.extensions = Array.from(new Set(webpack.resolve.extensions.concat(...extensions)))
+            .map(v => '.' + v.replace(/^[.]/, ''));
     }
 
     if (info.isLibrary && (useExternals !== false)) {

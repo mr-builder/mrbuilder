@@ -37,8 +37,11 @@ module.exports = function ({
     if (configFile.startsWith('@mrbuilder/plugin-eslint') && om.enabled('@mrbuilder/plugin-prettier')) {
         info('using "prettier" eslint settings');
     }
+    if (typeof ext === 'string'){
+        ext = ext.split(/,\s*/);
+    }
     const obj = {
-        test: test ? test : ext ? v => (ext.some(e => ('.' + e.replace(/^[.]/, '')).endsWith(v))) : /\.jsx?$/,
+        test: test ? test : ext ? v => (ext.find(e => ('.' + e.replace(/^[.]/, '')).endsWith(v)) != null) : /\.jsx?$/,
         use: {
             loader: "eslint-loader",
             options: {

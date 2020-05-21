@@ -1,4 +1,4 @@
-import {logger, optionsManager, Info} from '@mrbuilder/cli';
+import {optionsManager, Info} from '@mrbuilder/cli';
 import {cwd, parseEntry, logObject} from '@mrbuilder/utils';
 import * as path from 'path';
 import * as Webpack from 'webpack';
@@ -109,7 +109,7 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
     conf = await optionsManager.initialize(conf, scope);
 
     if (conf?.resolve?.extensions?.length) {
-        conf.resolve.extensions = Array.from(new Set(conf.resolve.extensions));
+        conf.resolve.extensions = Array.from(new Set(conf.resolve.extensions)).map(v => `.${v.replace(/^[.]/, '')}`);
     }
 
     return onDone(reorderAlias(conf));
