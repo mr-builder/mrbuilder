@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# https://github.com/not-an-aardvark/git-delete-squashed
+# see https://github.com/not-an-aardvark/git-delete-squashed
 git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do
   mergeBase=$(git merge-base master $branch)
 
