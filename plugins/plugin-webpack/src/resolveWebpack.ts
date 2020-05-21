@@ -1,5 +1,5 @@
 import {optionsManager, Info, dotExtensions} from '@mrbuilder/cli';
-import {cwd, parseEntry, logObject} from '@mrbuilder/utils';
+import {logObject} from '@mrbuilder/utils';
 import * as path from 'path';
 import * as Webpack from 'webpack';
 import {initialConfig} from './initialConfig';
@@ -29,7 +29,7 @@ const publicPath = optionsManager.config('@mrbuilder/plugin-webpack.public', '')
 const OPTS = {
     ...info,
     publicPath,
-    outputPath: optionsManager.config('@mrbuilder/plugin-webpack.outputPath', cwd('lib')),
+    outputPath: optionsManager.config('@mrbuilder/plugin-webpack.outputPath', optionsManager.cwd('lib')),
     outputFilename: optionsManager.config('@mrbuilder/plugin-webpack.outputFilename', '[name].js'),
     useScopeHoist: optionsManager.config('@mrbuilder/plugin-webpack.useScopeHoist', true),
     useTarget: optionsManager.config('@mrbuilder/plugin-webpack.target', 'web')
@@ -47,7 +47,7 @@ export const WEBPACK_CONFIG: Webpack.Configuration = initialConfig.call(
         resolveLoader: {
             modules: [
                 'node_modules',
-                cwd('node_modules'),
+                optionsManager.cwd('node_modules'),
                 path.resolve(__dirname, '..', 'node_modules'),
             ],
             alias: {}
