@@ -32,6 +32,7 @@
     "@mrbuilder/cli": "^4.0.0"
   },
   "mrbuilder": {
+    "plugin": false,
     "options": {
       "library": true,
       "libraryTarget": "umd",

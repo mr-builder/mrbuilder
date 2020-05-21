@@ -2,6 +2,7 @@ import {optionsManager, Info, dotExtensions} from '@mrbuilder/cli';
 import {cwd, parseEntry, logObject} from '@mrbuilder/utils';
 import * as path from 'path';
 import * as Webpack from 'webpack';
+import {initialConfig} from './initialConfig';
 
 const scope = optionsManager.logger('@mrbuilder/plugin-webpack');
 
@@ -34,30 +35,33 @@ const OPTS = {
     useTarget: optionsManager.config('@mrbuilder/plugin-webpack.target', 'web')
 };
 
-const WEBPACK_CONFIG: Webpack.Configuration = {
-    resolve: {
-        alias: {},
-        modules: ['node_modules']
-    },
+export const WEBPACK_CONFIG: Webpack.Configuration = initialConfig.call(
+    optionsManager.logger('@mrbuilder/plugin-webpack'),
+    optionsManager.config('@mrbuilder/plugin-webpack'), {
+        resolve: {
+            alias: {},
+            modules: ['node_modules'],
+            extensions: dotExtensions,
+        },
 
-    resolveLoader: {
-        modules: [
-            'node_modules',
-            cwd('node_modules'),
-            path.resolve(__dirname, '..', 'node_modules'),
-        ],
-        alias: {}
-    },
-    output: {
-        // path: opts.outputPath,
-        // filename: opts.outputFilename,
-        publicPath,
-    },
-    plugins: [],
-    module: {
-        rules: []
-    }
-};
+        resolveLoader: {
+            modules: [
+                'node_modules',
+                cwd('node_modules'),
+                path.resolve(__dirname, '..', 'node_modules'),
+            ],
+            alias: {}
+        },
+        output: {
+            // path: opts.outputPath,
+            // filename: opts.outputFilename,
+            publicPath,
+        },
+        plugins: [],
+        module: {
+            rules: []
+        }
+    }, optionsManager);
 /**
  * This is an attempt to fix webpack.resolve.alias.   Currently it uses whatever
  * was added first to match, rather than what is most specific; which is almost
@@ -90,13 +94,6 @@ const DONE = (webpack: Webpack.Configuration) => {
     return webpack;
 };
 
-//we take this away from webpack so we an expose it to the config.
-(entryNoParse => {
-    if (!entryNoParse) {
-        return;
-    }
-    WEBPACK_CONFIG.entry = Object.freeze(parseEntry(entryNoParse))
-})(optionsManager.config('@mrbuilder/plugin-webpack.entry'));
 
 export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone = DONE): Promise<Webpack.Configuration> => {
     if (opts.outputPath) {
@@ -105,7 +102,6 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
     if (opts.outputFilename) {
         conf.output.filename = opts.outputFilename;
     }
-    conf.resolve.extensions = dotExtensions;
     conf = await optionsManager.initialize(conf, scope);
     if (conf?.resolve?.extensions?.length) {
         conf.resolve.extensions = Array.from(new Set(conf.resolve.extensions)).map(v => `.${v.replace(/^[.]/, '')}`);

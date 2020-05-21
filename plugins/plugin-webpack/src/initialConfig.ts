@@ -24,7 +24,7 @@ const returnMode = (val = process.env.NODE_ENV) => {
 
 };
 
-const mod = function ({
+export function initialConfig({
                           library,
                           libraryTarget = 'umd',
                           extensions,
@@ -184,4 +184,3 @@ const mod = function ({
 
 };
 
-module.exports = mod;
