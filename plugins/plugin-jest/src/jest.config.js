@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 process.env.MRBUILDER_INTERNAL_PLUGINS = `${process.env.MRBUILDER_INTERNAL_PLUGINS || ''},@mrbuilder/plugin-jest`;
 const {optionsManager, Info} = require('@mrbuilder/cli');
@@ -119,7 +121,7 @@ if (isWebpack) {
                         }
                         break;
                     default:
-                        logObject('no jest config', true, rule);
+                        logObject('no jest config', true, type);
                 }
             }
         });

@@ -35,7 +35,6 @@ HtmlWebpackPlugin.prototype.generateAssetTags = function (assets) {
 module.exports = function ({
                                pages,
                                title,
-
                                publicPath,
                                template,
                                filename,
@@ -48,7 +47,6 @@ module.exports = function ({
                                minify,
                            },
                            webpack, om) {
-    let pkg;
     const logger = om.logger('@mrbuilder/plugin-html');
     let entry;
 
@@ -56,15 +54,14 @@ module.exports = function ({
         logger.info('using paths from CRA');
         const paths = require('@mrbuilder/plugin-cra/config/paths');
         template = paths.appHtml;
-        pkg = paths.appPath;
         publicPath = paths.appPublic;
         entry = webpack.entry || {index: paths.appIndexJs};
     } else {
-        pkg = require(om.cwd('package.json'));
         if (!template) {
             template = path.resolve(__dirname, '..', 'public',
                 analytics ? 'index_analytics.ejs' : 'index.ejs');
         }
+
         if (!publicPath) {
             publicPath = 'public';
         }
@@ -72,7 +69,7 @@ module.exports = function ({
     }
 
     if (!title) {
-        title = `${pkg.name}: ${pkg.description || ''}`
+        title = `${om.topPackage.name}: ${om.topPackage.description || ''}`
     }
 
     const keys = pages ? Object.keys(pages) : Object.keys(entry);
@@ -104,7 +101,7 @@ module.exports = function ({
             elementId,
             template: enhancedResolve(template),
             publicPath,
-            pkg,
+            pkg: om.topPackage,
             minify,
         };
         if (om.enabled('@mrbuilder/plugin-compress')) {
@@ -115,5 +112,5 @@ module.exports = function ({
 
     return webpack;
 };
-module.exports.HtmlWebpackPlugin = HtmlWebpackPlugin;
 module.exports.findEntry = findEntry;
+module.exports.HtmlWebpackPlugin = HtmlWebpackPlugin;

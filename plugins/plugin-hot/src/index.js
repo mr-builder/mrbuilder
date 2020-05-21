@@ -1,7 +1,7 @@
 const {HotModuleReplacementPlugin} = require('webpack');
 
 module.exports = function ({
-                               preEntry = ['react-hot-loader/patch'],
+                               preEntry,
                                hot = true,
                                inline = true,
                                devtool,

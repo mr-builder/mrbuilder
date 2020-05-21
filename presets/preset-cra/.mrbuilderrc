@@ -11,7 +11,6 @@
         formatter: 'react-dev-utils/eslintFormatter',
       }
     ],
-    "@mrbuilder/plugin-react",
     [
       "@mrbuilder/plugin-babel",
       {
@@ -66,12 +65,6 @@
     "cra-start": {
       "plugins": [
         [
-          "@mrbuilder/plugin-hot",
-          {
-            preEntry: []
-          }
-        ],
-        [
           "@mrbuilder/cli",
           {
             "bin": "@mrbuilder/plugin-cra/bin/cli",
@@ -81,6 +74,14 @@
             "env": {
               "NODE_ENV": "development"
             }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-hot",
+          {
+            preEntry: [
+              "react-dev-utils/webpackHotDevClient"
+            ]
           }
         ],
         [
@@ -128,13 +129,10 @@
         ],
         "@mrbuilder/plugin-manifest",
         [
-          "@mrbuilder/plugin-uglify",
-          false
-        ],
-        [
           "@mrbuilder/plugin-css",
           {
             "ident": "postcss",
+            "useStyleLoader": true,
             "plugins": [
               'postcss-flexbugs-fixes',
               [
@@ -157,7 +155,7 @@
             commons: false,
             styles: false,
             manifest: false,
-            "minimize": false,
+            minimize: false,
             // Automatically split vendor and commons
             // https://twitter.com/wSokra/status/969633336732905474
             // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
@@ -176,18 +174,6 @@
           }
         ],
         [
-          "@mrbuilder/plugin-babel",
-          {
-            // This is a feature of `babel-loader` for webpack (not Babel itself).
-            // It enables caching results in ./node_modules/.cache/babel-loader/
-            // directory for faster rebuilds.
-            cacheDirectory: true,
-            // See #6846 for context on why cacheCompression is disabled
-            cacheCompression: false,
-            compact: true
-          }
-        ],
-        [
           "@mrbuilder/plugin-html",
           {
             "inject": true,
@@ -199,26 +185,10 @@
         [
           "@mrbuilder/plugin-webpack",
           {
-            "@babel": [
-              [
-                'babel-preset-react-app'
-              ],
-              [
-                'babel-plugin-named-asset-import',
-                {
-                  loaderMap: {
-                    svg: {
-                      ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
-                    },
-                  },
-                }
-              ]
-            ],
             "mode": "development",
             "bail": false,
             "entry": {
               "index": [
-                "react-dev-utils/webpackHotDevClient",
                 "./src/index"
               ]
             },
@@ -244,7 +214,8 @@
             performance: false
           }
         ],
-        "@mrbuilder/plugin-cra"
+        "@mrbuilder/plugin-cra",
+        "@mrbuilder/plugin-react"
       ]
     },
     "cra-build": {
@@ -252,6 +223,7 @@
         [
           "@mrbuilder/cli",
           {
+            "node_env": "development",
             "bin": "@mrbuilder/plugin-cra/bin/cli",
             "argv": [
               "build"
@@ -379,7 +351,9 @@
             // https://github.com/facebook/create-react-app/issues/5358
             runtimeChunk: {
               name: 'runtime-{name}',
-            }
+            },
+            vendor: false,
+            style: false,
           }
         ],
         [
@@ -405,21 +379,6 @@
         [
           "@mrbuilder/plugin-webpack",
           {
-            "@babel": [
-              [
-                'babel-preset-react-app'
-              ],
-              [
-                'babel-plugin-named-asset-import',
-                {
-                  loaderMap: {
-                    svg: {
-                      ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
-                    },
-                  },
-                }
-              ]
-            ],
             "bail": true,
             "entry": {
               "index": "./src/index"
@@ -430,7 +389,9 @@
             chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
           }
         ],
-        "@mrbuilder/plugin-cra"
+        "@mrbuilder/plugin-cra",
+        "@mrbuilder/plugin-react"
+
       ]
     },
     "cra-test": {
@@ -506,20 +467,35 @@
           "@mrbuilder/plugin-css",
           {
             useStyleLoader: true,
-            cssProcessorOptions: {
-              preset: [
-                'default',
-                {
-                  minifyFontValues: {
-                    removeQuotes: false
-                  }
-                }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-workbox",
+          {
+            generateSW: {
+              clientsClaim: true,
+              exclude: [
+                "/\.map$/",
+                "/asset-manifest\.json$/"
               ],
+              //          importWorkboxFrom: 'cdn',
+              navigateFallbackDenylist: [
+                // Exclude URLs starting with /_, as they're likely an API call
+                '/^/_/',
+                // Exclude any URLs whose last part seems to be a file extension
+                // as they're likely a resource and not a SPA route.
+                // URLs containing a "?" character won't be blacklisted as they're likely
+                // a route with query params (e.g. auth callbacks).
+                '/\/[^/?]+\\.[^/]+$/',
+              ]
             }
           }
         ],
         "@mrbuilder/plugin-cra",
+        "@mrbuilder/plugin-webpack",
+        "@mrbuilder/plugin-react"
+
       ]
-    },
+    }
   }
 }
