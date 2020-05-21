@@ -1,7 +1,7 @@
-const {NamedModulesPlugin, HotModuleReplacementPlugin} = require('webpack');
+const {HotModuleReplacementPlugin} = require('webpack');
 
 module.exports = function ({
-                               preEntry = ['react-hot-loader/patch'],
+                               preEntry,
                                hot = true,
                                inline = true,
                                devtool,
@@ -11,8 +11,12 @@ module.exports = function ({
     if (!webpack.devServer) {
         webpack.devServer = {};
     }
-    webpack.devServer.hot    = hot;
+    webpack.devServer.hot = hot;
     webpack.devServer.inline = inline;
-    webpack.plugins.push(new NamedModulesPlugin(), new HotModuleReplacementPlugin());
+    if (!webpack.optimization) {
+        webpack.optimization = {};
+    }
+    webpack.optimization.namedModules = true;
+    webpack.plugins.push(new HotModuleReplacementPlugin());
 
 };

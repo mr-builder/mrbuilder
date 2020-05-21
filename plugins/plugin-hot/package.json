@@ -11,5 +11,12 @@
     "access": "public",
     "registry": "http://registry.npmjs.org"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "mrbuilder": {
+    "options": {
+      "preEntry": [
+        "react-hot-loader/patch"
+      ]
+    }
+  }
 }

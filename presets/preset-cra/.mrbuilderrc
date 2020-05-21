@@ -1,6 +1,17 @@
 {
   "plugins": [
     [
+      "@mrbuilder/plugin-eslint",
+      {
+        test: "/[.](js|mjs|jsx|ts|tsx)$/",
+        enforce: 'pre',
+        configFile: '@mrbuilder/plugin-cra/eslint',
+        cache: true,
+        fix: false,
+        formatter: 'react-dev-utils/eslintFormatter',
+      }
+    ],
+    [
       "@mrbuilder/plugin-babel",
       {
         // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -11,10 +22,6 @@
         cacheCompression: false,
         compact: true
       }
-    ],
-    [
-      "@mrbuilder/plugin-webpack-dev-server",
-      false
     ],
     [
       "@mrbuilder/plugin-browserslist",
@@ -60,15 +67,27 @@
         [
           "@mrbuilder/cli",
           {
-            "node_env": "development",
-            "bin": "@mrbuilder/plugin-cra/bin/cra-start"
+            "bin": "@mrbuilder/plugin-cra/bin/cli",
+            "argv": [
+              "start"
+            ],
+            "env": {
+              "NODE_ENV": "development"
+            }
+          }
+        ],
+        [
+          "@mrbuilder/plugin-hot",
+          {
+            preEntry: [
+              "react-dev-utils/webpackHotDevClient"
+            ]
           }
         ],
         [
           "@mrbuilder/plugin-workbox",
           false
         ],
-        "@mrbuilder/plugin-manifest",
         [
           "@mrbuilder/plugin-uglify",
           false
@@ -79,12 +98,15 @@
             "useStyleLoader": true,
             "plugins": [
               'postcss-flexbugs-fixes',
-              ['postcss-preset-env',{
-                autoprefixer: {
-                  flexbox: 'no-2009',
-                },
-                stage: 3,
-              }],
+              [
+                'postcss-preset-env',
+                {
+                  autoprefixer: {
+                    flexbox: 'no-2009',
+                  },
+                  stage: 3,
+                }
+              ],
               // Adds PostCSS Normalize as the reset css with default options,
               // so that it honors browserslist config in package.json
               // which in turn let's users customize the target behavior as per their needs.
@@ -97,7 +119,6 @@
             }
           }
         ],
-
         [
           "@mrbuilder/plugin-html",
           {
@@ -108,13 +129,10 @@
         ],
         "@mrbuilder/plugin-manifest",
         [
-          "@mrbuilder/plugin-uglify",
-          false
-        ],
-        [
           "@mrbuilder/plugin-css",
           {
             "ident": "postcss",
+            "useStyleLoader": true,
             "plugins": [
               'postcss-flexbugs-fixes',
               [
@@ -132,43 +150,72 @@
         ],
         [
           "@mrbuilder/plugin-chunk",
-          false
+          {
+            vendors: false,
+            commons: false,
+            styles: false,
+            manifest: false,
+            minimize: false,
+            // Automatically split vendor and commons
+            // https://twitter.com/wSokra/status/969633336732905474
+            // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+            splitChunks: {
+              chunks: 'all',
+              name: false,
+            },
+            // Keep the runtime chunk separated to enable long term caching
+            // https://twitter.com/wSokra/status/969679223278505985
+            // https://github.com/facebook/create-react-app/issues/5358
+            runtimeChunk: {
+              name: 'runtime-{name}',
+            },
+            cacheGroups: {
+            }
+          }
         ],
-
+        [
+          "@mrbuilder/plugin-html",
+          {
+            "inject": true,
+            "exported": false,
+            "template": "./public/index.html",
+            "minify": false,
+          }
+        ],
         [
           "@mrbuilder/plugin-webpack",
           {
-            "@babel": [
-              [
-                'babel-preset-react-app'
-              ],
-              [
-                'babel-plugin-named-asset-import',
-                {
-                  loaderMap: {
-                    svg: {
-                      ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
-                    },
-                  },
-                }
-              ]
-            ],
             "mode": "development",
             "bail": false,
             "entry": {
               "index": [
-                "react-dev-utils/webpackHotDevClient",
                 "./src/index"
               ]
             },
             "devtool": "cheap-module-source-map",
+            filename: 'static/js/bundle.js',
+            chunkFilename: 'static/js/[name].chunk.js',
             "output": {
-              "path": true,
-              chunkFilename: 'static/js/[name].chunk.js'
+              pathinfo: true,
+              futureEmitAssets: true,
             },
+            node: {
+              module: 'empty',
+              dgram: 'empty',
+              dns: 'mock',
+              fs: 'empty',
+              http2: 'empty',
+              net: 'empty',
+              tls: 'empty',
+              child_process: 'empty',
+            },
+            // Turn off performance processing because we utilize
+            // our own hints via the FileSizeReporter
+            performance: false
           }
         ],
         "@mrbuilder/plugin-cra",
+        "@mrbuilder/plugin-react"
       ]
     },
     "cra-build": {
@@ -177,7 +224,13 @@
           "@mrbuilder/cli",
           {
             "node_env": "development",
-            "bin": "@mrbuilder/plugin-cra/bin/cra-build"
+            "bin": "@mrbuilder/plugin-cra/bin/cli",
+            "argv": [
+              "build"
+            ],
+            "env": {
+              "NODE_ENV": "production"
+            }
           }
         ],
         [
@@ -254,12 +307,15 @@
             chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
             "plugins": [
               'postcss-flexbugs-fixes',
-              ['postcss-preset-env',{
-                autoprefixer: {
-                  flexbox: 'no-2009',
-                },
-                stage: 3,
-              }],
+              [
+                'postcss-preset-env',
+                {
+                  autoprefixer: {
+                    flexbox: 'no-2009',
+                  },
+                  stage: 3,
+                }
+              ],
               // Adds PostCSS Normalize as the reset css with default options,
               // so that it honors browserslist config in package.json
               // which in turn let's users customize the target behavior as per their needs.
@@ -295,7 +351,9 @@
             // https://github.com/facebook/create-react-app/issues/5358
             runtimeChunk: {
               name: 'runtime-{name}',
-            }
+            },
+            vendor: false,
+            style: false,
           }
         ],
         [
@@ -321,21 +379,6 @@
         [
           "@mrbuilder/plugin-webpack",
           {
-            "@babel": [
-              [
-                'babel-preset-react-app'
-              ],
-              [
-                'babel-plugin-named-asset-import',
-                {
-                  loaderMap: {
-                    svg: {
-                      ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
-                    },
-                  },
-                }
-              ]
-            ],
             "bail": true,
             "entry": {
               "index": "./src/index"
@@ -346,11 +389,27 @@
             chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
           }
         ],
-        "@mrbuilder/plugin-cra"
+        "@mrbuilder/plugin-cra",
+        "@mrbuilder/plugin-react"
+
       ]
     },
     "cra-test": {
       "plugins": [
+        [
+          "@mrbuilder/cli",
+          {
+            "bin": "@mrbuilder/plugin-cra/bin/cli",
+            "argv": [
+              "test"
+            ],
+            "env": {
+              "NODE_ENV": "test",
+              "PUBLIC_URL": "",
+              "BABEL_ENV": "test/"
+            }
+          }
+        ],
         [
           "@mrbuilder/plugin-jest",
           {
@@ -374,6 +433,8 @@
             ],
             "testEnvironment": "jest-environment-jsdom-fourteen",
             "transform": {
+              "^.+\\.css$": "@mrbuilder/plugin-cra/config/jest/cssTransform.js",
+              "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "@mrbuilder/plugin-cra/config/jest/fileTransform.js"
             },
             "transformIgnorePatterns": [
               "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
@@ -403,14 +464,9 @@
           }
         ],
         [
-          "@mrbuilder/cli",
+          "@mrbuilder/plugin-css",
           {
-            "bin": "@mrbuilder/plugin-cra/bin/cra-test",
-            "env": {
-              "NODE_ENV": "test",
-              "PUBLIC_URL": "",
-              "BABEL_ENV": "test/"
-            }
+            useStyleLoader: true,
           }
         ],
         [
@@ -435,97 +491,10 @@
             }
           }
         ],
-        [
-          "@mrbuilder/plugin-uglify",
-          false
-        ],
-        [
-          "@mrbuilder/plugin-css",
-          {
-            filename: 'static/css/[name].[contenthash:8].css',
-            chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-            cssProcessorOptions: {
-              preset: [
-                'default',
-                {
-                  minifyFontValues: {
-                    removeQuotes: false
-                  }
-                }
-              ],
-            }
-          }
-        ],
-        [
-          "@mrbuilder/plugin-chunk",
-          {
-            optimization: {
-              minimize: true
-            },
-            // Automatically split vendor and commons
-            // https://twitter.com/wSokra/status/969633336732905474
-            // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-            splitChunks: {
-              chunks: 'all',
-              name: false,
-            },
-            // Keep the runtime chunk separated to enable long term caching
-            // https://twitter.com/wSokra/status/969679223278505985
-            // https://github.com/facebook/create-react-app/issues/5358
-            runtimeChunk: {
-              name: 'runtime-{name}',
-            }
-          }
-        ],
-        [
-          "@mrbuilder/plugin-babel",
-          {
-            // This is a feature of `babel-loader` for webpack (not Babel itself).
-            // It enables caching results in ./node_modules/.cache/babel-loader/
-            // directory for faster rebuilds.
-            cacheDirectory: true,
-            // See #6846 for context on why cacheCompression is disabled
-            cacheCompression: false,
-            compact: true
-          }
-        ],
-        [
-          "@mrbuilder/plugin-html",
-          false
-        ],
-        [
-          "@mrbuilder/plugin-webpack",
-          {
-            "@babel": [
-              [
-                'babel-preset-react-app'
-              ],
-              [
-                'babel-plugin-named-asset-import',
-                {
-                  loaderMap: {
-                    svg: {
-                      ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
-                    },
-                  },
-                }
-              ]
-            ],
-            "bail": true,
-            "entry": {
-              "index": "./src/index"
-            },
-            "devtool": "source-map",
-            "outputPath": "./build",
-            chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
-          }
-        ],
-        "@mrbuilder/plugin-cra"
-      ]
-    },
-    "development": {
-      "presets": [
-        "@mrbuilder/preset-dev"
+        "@mrbuilder/plugin-cra",
+        "@mrbuilder/plugin-webpack",
+        "@mrbuilder/plugin-react"
+
       ]
     }
   }

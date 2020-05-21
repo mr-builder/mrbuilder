@@ -10,6 +10,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const Webpack = require('webpack');
+const path = require('path')
 const canFind = (path) => {
     try {
         require(path);
@@ -24,7 +25,7 @@ const canFind = (path) => {
 
 module.exports = function ({
                                shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false',
-                               env = _env(),
+                               env,
                                paths: {
                                    appHtml = require('../config/paths').appHtml,
                                    publicUrlOrPath = require('../config/paths').publicUrlOrPath,
@@ -35,10 +36,14 @@ module.exports = function ({
                                } = require('../config/paths'),
                                useTypeScript,
                            }, webpack, optionsManager) {
+    if (!env) {
+        env = _env(publicUrlOrPath.slice(0, -1))
+    }
     const isEnvProduction = Info.isProduction;
     const isEnvDevelopment = !isEnvProduction;
     logObject('CRA env', Info.isDebug, env);
     useTypeScript = useTypeScript || optionsManager.enabled('@mrbuilder/plugin-typescript') || canFind(optionsManager.cwd('tsconfig'))
+    webpack.module.strictExportPresence = true;
     webpack.module.rules.push(
         {parser: {requireEnsure: false}},
         {
@@ -56,7 +61,18 @@ module.exports = function ({
                 name: 'static/media/[name].[hash:8].[ext]',
             },
         },);
-
+    Object.assign(webpack.output, {
+        publicPath: publicUrlOrPath,
+        // are used on the same page.
+        jsonpFunction: `webpackJsonp${optionsManager.topPackage.name.replace(/[@/]/g, '_')}`,
+        devtoolModuleFilenameTemplate: isEnvProduction
+            ? info =>
+                path
+                    .relative(paths.appSrc, info.absoluteResourcePath)
+                    .replace(/\\/g, '/')
+            : isEnvDevelopment &&
+            (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+    });
     webpack.plugins.push(...[
 
         // Generates an `index.html` file with the <script> injected.

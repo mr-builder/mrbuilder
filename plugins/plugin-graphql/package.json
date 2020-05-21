@@ -3,10 +3,10 @@
   "version": "4.2.1",
   "description": "Loading graphql webpack",
   "dependencies": {
-    "graphql": "^15.0.0",
-    "graphql-tag": "^2.10.3",
+    "graphql-tag": "^2.9.2",
     "babel-plugin-graphql-tag": "^2.5.0",
-    "babel-plugin-import-graphql": "^2.7.0"
+    "babel-plugin-import-graphql": "^2.7.0",
+    "graphql": "^15.0.0"
   },
   "devDependencies": {
     "@mrbuilder/plugin-mocha": "^4.2.1"
