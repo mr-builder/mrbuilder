@@ -1,6 +1,7 @@
 const {parseEntry} = require('@mrbuilder/utils');
-const Glob = require('glob');
 const fs = require('fs');
+const {extensions} = require('@mrbuilder/cli');
+const path = require('path');
 
 module.exports = (om = require('@mrbuilder/cli').optionsManager) => {
     const logger = om.logger('@mrbuilder/plugin-html');
@@ -19,10 +20,12 @@ module.exports = (om = require('@mrbuilder/cli').optionsManager) => {
                 try {
                     const stat = fs.lstatSync(index);
                     if (stat.isDirectory()) {
+
                         logger.info(`looking for index in ${v}`);
-                        const globIndex = Glob.sync('index.*', {cwd: index, absolute: true})[0];
-                        if (globIndex) {
-                            entry = {index: globIndex};
+                        const indexPath = path.join(index, 'index.');
+                        const ext = extensions.find(v => fs.existsSync( indexPath+ v));
+                        if (ext) {
+                            entry = {index: `${indexPath}${ext}`};
                             logger.info(` using "${entry.index}"`);
                             return true;
                         }

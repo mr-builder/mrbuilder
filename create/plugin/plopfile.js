@@ -17,10 +17,11 @@ module.exports = function (plop) {
     plop.setHelper('cwd', process.cwd);
     plop.setActionType('install', function (answers) {
         return `success\nplease run
- $ cd plugins/plugin-{{name}}  
+ $ cd plugins/plugin-${answers.name}  
  $ ${answers.useYarn ? 'yarn install' : 'npm install'}`;
     });
     plop.setHelper('extension', (v, ans) => ans.typescript ? 'ts' : 'js');
+    plop.setHelper('no_at_namespace', ({data: {root: {namespace}}}) => namespace.replace(/^@/, ''))
     plop.setHelper('name', ({data: {root: {pluginName}}}) => pluginName.replace(/.*plugin-/, ''));
     plop.setGenerator('monorepo', {
             description: 'This is sets up a mrbuilder plugin',
@@ -132,16 +133,18 @@ module.exports = function (plop) {
                         }
                     }
                 },
+
                 {
                     type: 'add',
                     templateFile: './templates/ts/bin/cli.js',
-                    path: destination('src/cli.js'),
+                    path: destination('bin/cli.js'),
                     skip(answers) {
                         if (!answers.typescript || !answers.cli) {
                             return "no cli";
                         }
                     }
                 },
+
                 {
                     type: 'add',
                     templateFile: './templates/js/bin/cli.js',

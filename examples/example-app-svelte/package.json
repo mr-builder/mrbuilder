@@ -1,0 +1,34 @@
+{
+  "name": "@mrbuilder/example-app-svelte",
+  "description": "This shows how to use svelte plugin",
+  "version": "4.3.0",
+  "private": true,
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@mrbuilder/preset-app": "^4.3.0",
+    "@mrbuilder/plugin-svelte": "^4.3.0"
+  },
+  "scripts": {
+    "start": "mrbuilder",
+    "prepare": "mrbuilder --app build"
+  },
+  "mrbuilder": {
+    "plugins": [
+      [
+        "@mrbuilder/plugin-react",
+        false
+      ],
+      "@mrbuilder/plugin-svelte",
+      [
+        "@mrbuilder/plugin-html",
+        {
+          "template": "./public/index.html"
+        }
+      ]
+    ],
+    "presets": [
+      "@mrbuilder/preset-app"
+    ]
+  }
+}

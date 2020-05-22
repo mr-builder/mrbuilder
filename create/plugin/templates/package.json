@@ -22,7 +22,7 @@
   ]
 {{#if cli}}
   ,"bin": {
-    "{{namespace}}-{{name}}": "./bin/cli.js"
+    "{{no_at_namespace}}-{{name}}": "./bin/cli.js"
   }
 {{/if}}
 {{#if babel}}
