@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/preset-lib",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.3.0",
     "@mrbuilder/plugin-babel-7": "^4.3.0",
@@ -11,7 +11,7 @@
     "@mrbuilder/plugin-eslint": "^4.3.0",
     "@mrbuilder/plugin-filetypes": "^4.3.0",
     "@mrbuilder/plugin-fonts": "^4.3.0",
-    "@mrbuilder/plugin-html": "^4.3.0",
+    "@mrbuilder/plugin-html": "^4.3.1",
     "@mrbuilder/plugin-less": "^4.3.0",
     "@mrbuilder/plugin-react": "^4.3.0",
     "@mrbuilder/plugin-webpack": "^4.3.0"
