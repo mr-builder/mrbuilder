@@ -4,6 +4,9 @@
   "command": {
     "publish": {
       "gitRemote": "{{upstream}}"
+    },
+    "run": {
+      "stream": true
     }
   },
   {{#if useYarn}}"useWorkspaces": true{{else}}"packages":[

@@ -2,15 +2,22 @@
   "name": "@{{namespace}}/project",
   "private": true,
 {{#if useYarn}}
-  "workspaces": [
-    "./{{packages}}/*",
-    "builder"
-  ],{{else}}
-  "scripts":{
-        "lerna":"lerna",
-        "bootstrap":"lerna bootstrap --hoist"
-},
+  "workspaces": {
+      "packages":[
+        "./{{packages}}/*",
+        "builder"
+      ]
+  },
 {{/if}}
-  "dependencies": {
-  }
+  "scripts":{
+  "link":"lerna exec yarn link",
+  "unlink":"lerna exec yarn unlink",
+  "test":"lerna run test",
+{{#if useYarn}}
+     "prepare":"lerna run prepare"
+{{else}}
+        "lerna":"lerna",
+    "bootstrap":"lerna bootstrap --hoist"
+{{/if}}
+        }
 }
