@@ -1,4 +1,3 @@
-
 const {exec} = require('child_process');
 const destination = (d = '') => `{{cwd}}/plugins/plugin-{{name}}/${d}`;
 
@@ -17,12 +16,14 @@ module.exports = function (plop) {
     plop.setHelper('cwd', process.cwd);
     plop.setActionType('install', function (answers) {
         return `success\nplease run
- $ cd plugins/plugin-${answers.name}  
+ $ cd plugins/plugin-${answers.pluginName}  
  $ ${answers.useYarn ? 'yarn install' : 'npm install'}`;
     });
     plop.setHelper('extension', (v, ans) => ans.typescript ? 'ts' : 'js');
-    plop.setHelper('no_at_namespace', ({data: {root: {namespace}}}) => namespace.replace(/^@/, ''))
+    plop.setHelper('no_at_namespace', ({data: {root: {namespace}}}) => namespace ? namespace.replace(/^@/, '') : '')
     plop.setHelper('name', ({data: {root: {pluginName}}}) => pluginName.replace(/.*plugin-/, ''));
+    plop.setHelper('pkg-name', ({data: {root: {namespace, pluginName}}}) => namespace ? `${namespace}/plugin-${pluginName}` : `plugin-${pluginName}`);
+    plop.setHelper('script-bin',  ({data: {root: {namespace, pluginName}}}) => namespace ? `${namespace.replace(/^@/,'')}-${pluginName}` : pluginName);
     plop.setGenerator('monorepo', {
             description: 'This is sets up a mrbuilder plugin',
             prompts: [

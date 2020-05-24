@@ -10,7 +10,8 @@
     {{{versionOf "plugin-typescript"}}}
   },
   "bin": {
-    "{{namespace}}-builder": "./bin/builder.js"
+    "{{namespace}}-builder": "./bin/builder.js",
+    "{{namespace}}-builder-tsc": "./bin/builder.js"
   },
   "mrbuilder": {
     "plugins": [
@@ -18,7 +19,8 @@
         "@mrbuilder/plugin-typescript",
         {
           "useBabel": true
-        }
+        },
+        "@mrbuilder/cli"
       ]
     ]
   }

@@ -1,3 +1,5 @@
+{{pkg-name}}
+===
 {{description}}
 
 {{#if babel}}

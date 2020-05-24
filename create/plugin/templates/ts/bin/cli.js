@@ -1,3 +1,3 @@
 #!/usr/bin/env node
-process.env.MRBUILDER_INTERNAL_PLUGINS=`{{namespace}}/plugin-{{name}},${process.env.MRBUILDER_INTERNAL_PLUGINS || ''}`;
-require('{{namespace}}/plugin-{{name}}/lib/cli.js');
+process.env.MRBUILDER_INTERNAL_PLUGINS=`{{pkg-name}},${process.env.MRBUILDER_INTERNAL_PLUGINS || ''}`;
+require('{{pkg-name}}/lib/cli.js');

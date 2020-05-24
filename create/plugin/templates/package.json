@@ -1,5 +1,5 @@
 {
-  "name": "{{namespace}}/plugin-{{name}}",
+  "name": "{{pkg-name}}",
   "version": "{{version}}",
   "license": "MIT",
   "publishConfig": {
@@ -22,7 +22,7 @@
   ]
 {{#if cli}}
   ,"bin": {
-    "{{no_at_namespace}}-{{name}}": "./bin/cli.js"
+    "{{script-bin}}": "./bin/cli.js"
   }
 {{/if}}
 {{#if babel}}

@@ -1,6 +1,8 @@
 {
   "name": "@{{namespace}}/example",
   "version": "{{version}}",
+  "source": "src",
+  "main": "lib",
   "devDependencies": {
     "@{{namespace}}/builder": "^{{version}}"
   },
