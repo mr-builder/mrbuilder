@@ -3,7 +3,7 @@
   "description": "",
   "version": "4.3.2",
   "bin": {
-    "create-mrbuilder-app": "./app.js"
+    "create-app": "./app.js"
   },
   "scripts": {
     "test-manual": "rimraf test && mkdir -p test && yarn test:all ",
