@@ -3,7 +3,7 @@
   "description": "Support for yarn create monorepo",
   "version": "4.3.1",
   "bin": {
-    "create-mrbuilder-monorepo": "./app.js"
+    "create-monorepo": "./app.js"
   },
   "dependencies": {
     "plop": "^2.6.0"
