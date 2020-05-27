@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/create-app",
   "description": "",
-  "version": "4.3.3",
+  "version": "4.3.4",
   "bin": {
     "create-app": "./app.js"
   },
@@ -26,7 +26,7 @@
     "@mrbuilder/plugin-jest": "^4.3.0",
     "@mrbuilder/plugin-storybook": "^4.3.2",
     "@mrbuilder/plugin-typescript": "^4.3.0",
-    "@mrbuilder/preset-lib": "^4.3.1",
+    "@mrbuilder/preset-lib": "^4.3.4",
     "@mrbuilder/preset-test": "^4.3.0",
     "chalk": "^4.0.0"
   },
