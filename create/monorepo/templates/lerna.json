@@ -10,8 +10,9 @@
     }
   },
   {{#if useYarn}}"useWorkspaces": true{{else}}"packages":[
-"{{packages}}/*",
-"./builder"
+"./builder",
+"{{packages}}/*"
+
 ],
 "hoist":true
 {{/if}}
