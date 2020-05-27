@@ -1,5 +1,5 @@
 {
-  "name": "@{{namespace}}/builder",
+  "name": "{{scoped-namespace}}-builder",
   "version": "{{version}}",
   "dependencies": {
     {{{versionOf "cli"}}},

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+process.env.MRBUILDER_INTERNAL_PLUGINS = `@mrbuilder/plugin-eslint,${process.env.MRBUILDER_INTERNAL_PLUGINS || ''}`;
 const {optionsManager, Info} = require('@mrbuilder/cli');
 const {logObject} = require('@mrbuilder/utils');
 const isReact = optionsManager.enabled('@mrbuilder/plugin-react');
