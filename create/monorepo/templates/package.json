@@ -1,5 +1,5 @@
 {
-  "name": "@{{namespace}}/project",
+  "name": "{{scoped-namespace}}-project",
   "private": true,
 {{#if useYarn}}
   "workspaces": {

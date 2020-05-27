@@ -1,10 +1,10 @@
 {
-  "name": "@{{namespace}}/example",
+  "name": "{{scoped-namespace}}-example",
   "version": "{{version}}",
   "source": "src",
   "main": "lib",
   "devDependencies": {
-    "@{{namespace}}/builder": "^{{version}}"
+    "{{scoped-namespace}}-builder": "^{{version}}"
   },
   "scripts": {
     "prepare": "{{namespace}}-builder",
