@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/example-app-emotion",
   "description": "Sample application using mrbuilder components and emotion",
-  "version": "4.3.1",
+  "version": "4.3.5",
   "private": true,
   "devDependencies": {
     "@mrbuilder/plugin-emotion": "^4.3.0",
-    "@mrbuilder/plugin-jest": "^4.3.0",
+    "@mrbuilder/plugin-jest": "^4.3.5",
     "@mrbuilder/plugin-version": "^4.3.0",
     "@mrbuilder/preset-app": "^4.3.1"
   },
