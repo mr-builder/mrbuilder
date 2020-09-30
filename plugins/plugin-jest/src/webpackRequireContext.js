@@ -15,7 +15,6 @@ module.exports = {
         const relativeTo = path.parse(${JSON.stringify(filename)}).dir;
         function readDirectory (directory) {
             const dirPath = path.resolve(relativeTo,directory);
-            debugger;
             fs.readdirSync(dirPath).forEach((file) => {
                 const relPath = path.join(directory, file);
                 const fullPath = path.resolve(relativeTo, relPath)
