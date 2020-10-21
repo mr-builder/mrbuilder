@@ -1,13 +1,5 @@
-import {configOrBool, parseValue, set} from '@mrbuilder/utils';
-import {
-    AliasObj,
-    EnvConfig,
-    NameOrPluginNameConfig,
-    OptionsConfig,
-    OptionValueObj,
-    PluginNameConfig,
-    PresetsPlugins
-} from "./types";
+import {configOrBool, parseValue, set, splitRest} from '@mrbuilder/utils';
+import {AliasObj, NameOrPluginNameConfig, OptionsConfig, PluginNameConfig, PresetsPlugins} from "./types";
 
 type FalseOrObject = false | { [key: string]: any }
 
@@ -94,7 +86,7 @@ export const parseArgs = (args: string[] = process.argv): ArgObj => {
         for (let i = 2, l = args.length; i < l; i++) {
             const arg = args[i];
             if (arg.startsWith('-')) {
-                let [key, value] = arg.replace(/^--?/, '').split('=', 2);
+                let [key, value] = splitRest(arg.replace(/^--?/, ''),'=');
                 if (value) {
                     ret[key] = parseValue(value);
                 } else {
@@ -142,7 +134,7 @@ export const mergeArgs = (plugin: string, argv = process.argv): FalseOrObject =>
             if (offset !== -1) {
                 const remainingArgKey = argPart.substring(offset);
                 if (remainingArgKey.includes('=')) {
-                    const parts = remainingArgKey.split('=', 2).filter(Boolean);
+                    const parts = splitRest(remainingArgKey, '=').filter(Boolean);
 
                     if (parts.length === 1) {
                         return parse(parts[0], arg);
@@ -199,6 +191,7 @@ export const mergeAliasEnv = (aliases: string[] | { [key: string]: any }, option
     return options;
 };
 
+
 export const mergeAliasArgs = (aliases: string[], options: OptionsObj | false, {argv}: Process = process) => {
     if (options === false) {
         options = {};
@@ -214,7 +207,7 @@ export const mergeAliasArgs = (aliases: string[], options: OptionsObj | false, {
         }
 
         if (argKey) {
-            const parts = argKey.split('=', 2);
+            const parts = splitRest(argKey, '=');
             const key = parts.shift().split('-').map(camel).join('');
             if (aliases.includes(key)) {
                 if (parts.length) {

@@ -1,11 +1,23 @@
-export {default as lernaFilteredPackages} from "./lernaFilteredPackages";
-export * from './parse';
-export * from './logObject';
 import {existsSync, readFileSync} from "fs";
 import JSON5 from 'json5';
 import path from 'path';
 
 import {parseRe,} from './parse';
+
+export {default as lernaFilteredPackages} from "./lernaFilteredPackages";
+export * from './parse';
+export * from './logObject';
+/**
+ * Splits a string, into the number of parts of the count, based on the deliminter.
+ *
+ * @param str {string} string to split
+ * @param delimiter {string} delimeter to split on.
+ * @param count {number} of items to return.
+ */
+export const splitRest = (str: string, delimiter: string, count = 2): string[] => {
+    const parts = str.split(delimiter);
+    return [...parts.slice(0, count-1), parts.slice(count-1).join(delimiter)];
+}
 
 //JSON5 allows for a lot more convienent syntax.
 
@@ -174,8 +186,8 @@ export function parseEntry(entryNoParse?: string | string[] | { [key: string]: s
             throw new Error(`could not parse entry '${entryPath}'`);
 
         }
-        let [key, value] = entryPath.split('=', 2);
-        if (!value){
+        let [key, value] = splitRest(entryPath, '=');
+        if (!value) {
             value = key;
             key = basename(key);
         }
@@ -224,7 +236,7 @@ export const enhancedResolve = (p: string, _require = require): string => {
     }
     return p;
 };
-type RegExOrFn = | RegExp | string | ((str: string) => boolean) ;
+type RegExOrFn = | RegExp | string | ((str: string) => boolean);
 
 export const regexOrFuncApply = (first?: RegExOrFn, second?: RegExOrFn): RegExOrFn => {
     if (!first) {
