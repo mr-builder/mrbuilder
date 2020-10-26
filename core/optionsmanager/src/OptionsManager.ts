@@ -414,8 +414,8 @@ export default class OptionsManager implements OptionsManagerType {
     }
 
     config(name: string, def?: any): any {
-        const parts = splitRest(name, '.');
-        const v = this.plugins.get(parts.shift());
+        const [plugin, ...parts] = splitRest(name, '.');
+        const v = this.plugins.get(plugin);
         if (!v) {
             //if not enabled no default.
             return;

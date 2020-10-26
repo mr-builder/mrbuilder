@@ -15,8 +15,12 @@ export * from './logObject';
  * @param count {number} of items to return.
  */
 export const splitRest = (str: string, delimiter: string, count = 2): string[] => {
-    const parts = str.split(delimiter);
-    return [...parts.slice(0, count-1), parts.slice(count-1).join(delimiter)];
+    const parts = (str || '').split(delimiter);
+    if (parts.length === 1) {
+        return parts.slice(0, count - 1)
+    }
+
+    return [...parts.slice(0, count - 1), parts.slice(count - 1).join(delimiter)];
 }
 
 //JSON5 allows for a lot more convienent syntax.
