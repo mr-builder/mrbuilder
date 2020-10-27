@@ -1,4 +1,4 @@
-import {get, objToConf, parseIfBool, parseJSON, asArray,} from '@mrbuilder/utils';
+import {get, objToConf, parseIfBool, parseJSON, asArray, splitRest} from '@mrbuilder/utils';
 import cp from 'child_process';
 import {basename, join, resolve} from 'path';
 import handleNotFoundTryInstall from './handleNotFoundTryInstall';
@@ -21,7 +21,17 @@ import {
     RequireFn,
     InitFn
 } from "./types";
-import {envify, mergeAlias, mergeArgs, mergeEnv, mergeOptions, mergePlugins, resolveEnv, select, split} from './util';
+import {
+    envify,
+    mergeAlias,
+    mergeArgs,
+    mergeEnv,
+    mergeOptions,
+    mergePlugins,
+    resolveEnv,
+    select,
+    split,
+} from './util';
 
 const handleNotFoundFail = function (e: Error, pkg: string) {
     this.warn('could not require "%s/package.json" from "%s"',
@@ -404,8 +414,8 @@ export default class OptionsManager implements OptionsManagerType {
     }
 
     config(name: string, def?: any): any {
-        const parts = name.split('.', 2);
-        const v = this.plugins.get(parts.shift());
+        const [plugin, ...parts] = splitRest(name, '.');
+        const v = this.plugins.get(plugin);
         if (!v) {
             //if not enabled no default.
             return;

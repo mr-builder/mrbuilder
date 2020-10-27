@@ -5,8 +5,8 @@ import has from 'lodash/has';
 import get from 'lodash/get';
 import fs from 'fs';
 import path from 'path';
-import inquirer, {Message} from 'inquirer';
-import {lernaFilteredPackages} from '@mrbuilder/utils';
+import inquirer from 'inquirer';
+import {lernaFilteredPackages, splitRest} from '@mrbuilder/utils';
 
 export const settings = {
     exit: process.exit,
@@ -270,7 +270,7 @@ export async function muckFile(pkg: Package, file: string, opts: InternalOption)
 
 }
 
-export  function makeOptions(name: string, args: string[],): InternalOption | void {
+export function makeOptions(name: string, args: string[],): InternalOption | void {
     function help(msg?: string): void {
         if (msg) {
             settings.error(msg);
@@ -310,7 +310,7 @@ export  function makeOptions(name: string, args: string[],): InternalOption | vo
     //need this to suck up files at the end.
     let i = 0;
     ARGS: for (let l = args.length; i < l; i++) {
-        let [arg, val] = args[i].split('=', 2);
+        let [arg, val] = splitRest(args[i], '=');
         switch (arg) {
             //actions
             case '--prompt':
@@ -319,11 +319,11 @@ export  function makeOptions(name: string, args: string[],): InternalOption | vo
                 if (!message) {
                     throw new Error(`message must be defined for "${arg}"`);
                 }
-                commands.push([_prompt, message.split('=', 2)]);
+                commands.push([_prompt, splitRest(message,'=')]);
                 break;
             case '-s':
             case '--set':
-                const [key, value] = (val || args[++i]).split('=', 2);
+                const [key, value] = splitRest(val || args[++i],'=');
                 commands.push([_set, [key, parse(value)]]);
                 break;
             case '-d':
@@ -337,7 +337,7 @@ export  function makeOptions(name: string, args: string[],): InternalOption | vo
                 break;
             case '-m':
             case '--move':
-                commands.push([_move, (val || args[++i]).split(/\s*=\s*/, 2)]);
+                commands.push([_move, splitRest(val || args[++i], '=')]);
                 break;
 
             //options
