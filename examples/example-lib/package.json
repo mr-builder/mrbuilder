@@ -18,10 +18,5 @@
     "prepare": "mrbuilder-babel",
     "test": "mrbuilder-mocha"
   },
-  "license": "0BSD",
-  "mrbuilder": {
-    "plugins": [
-      "@mrbuilder/plugin-babel"
-    ]
-  }
+  "license": "0BSD"
 }

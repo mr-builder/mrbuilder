@@ -63,7 +63,7 @@ module.exports = function ({
         }
 
         if (!publicPath) {
-            publicPath = 'public';
+            publicPath = '/';
         }
         entry = webpack.entry = webpack.entry || findEntry(om);
     }

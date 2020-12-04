@@ -19,7 +19,7 @@
   "mrbuilder": {
     "options": {
       "test": "/\\.twcss$/",
-      "publicPath": "/public",
+      "publicPath": "/",
       "config": {
         "theme": {},
         "variants": {},

@@ -9,7 +9,7 @@ module.exports = (om = require('@mrbuilder/cli').optionsManager) => {
     let entry = confEntry ? parseEntry(confEntry) : null;
     let indexSearch = om.config('@mrbuilder/plugin-html.indexSearch');
     const pkg = om.topPackage;
-    const defaultSearch = [om.config('@mrbuilder/plugin-html.publicPath'), om.config('@mrbuilder/cli.publicDir'), om.config('@mrbuilder/cli.sourceDir', pkg.source || 'src'), pkg.main || 'lib'];
+    const defaultSearch = [ om.config('@mrbuilder/cli.publicDir'), om.config('@mrbuilder/cli.sourceDir', pkg.source || 'src'), pkg.main || 'lib'];
     if (indexSearch || !confEntry) {
         indexSearch = (indexSearch != null ? Array.isArray(indexSearch) ? indexSearch : [indexSearch] : defaultSearch).filter(Boolean);
         if (!indexSearch.find(v => {
