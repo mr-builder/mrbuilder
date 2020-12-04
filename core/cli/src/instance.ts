@@ -1,7 +1,6 @@
 import {OptionsManager} from "@mrbuilder/optionsmanager";
-import {parseIfBool, logObject} from '@mrbuilder/utils';
+import {logObject, parseIfBool} from '@mrbuilder/utils';
 import _logger from 'npmlog';
-import {Info} from '.';
 
 export const logger = _logger;
 

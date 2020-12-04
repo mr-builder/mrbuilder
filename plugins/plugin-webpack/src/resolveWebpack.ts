@@ -24,12 +24,12 @@ const countSlash = (v: string): number => {
 
 //So if you defined publicPath to /public/ it will parse as a regex.
 // this fixes that.
-const publicPath = optionsManager.config('@mrbuilder/plugin-webpack.public', '') + '';
+const publicPath = optionsManager.config('@mrbuilder/plugin-webpack.public', '/') + '';
 
 const OPTS = {
     ...info,
     publicPath,
-    outputPath: optionsManager.config('@mrbuilder/plugin-webpack.outputPath', optionsManager.cwd('lib')),
+    outputPath: optionsManager.cwd(optionsManager.config('@mrbuilder/plugin-webpack.outputPath','lib')),
     outputFilename: optionsManager.config('@mrbuilder/plugin-webpack.outputFilename', '[name].js'),
     useScopeHoist: optionsManager.config('@mrbuilder/plugin-webpack.useScopeHoist', true),
     useTarget: optionsManager.config('@mrbuilder/plugin-webpack.target', 'web')

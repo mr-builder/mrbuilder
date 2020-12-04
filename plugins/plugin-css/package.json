@@ -28,7 +28,7 @@
   "mrbuilder": {
     "options": {
       "test": "/\\.css$/",
-      "publicPath": "/public",
+      "publicPath": "/",
       "modules": "/\\.cssm$/",
       "sideEffects": true
     }
