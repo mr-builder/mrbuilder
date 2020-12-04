@@ -130,13 +130,21 @@ const ACTIONS = [
             }
             if (data.typescript) {
                 devDependencies['@mrbuilder/plugin-typescript'] = versionOnly('plugin-typescript');
+                devDependencies['@types/enzyme'] = '^3.0.0';
+                devDependencies['@types/chai'] = '^4.0.0';
+                devDependencies['@types/jest'] = '^4.0.0';
+
                 (mrbuilder.plugins || (mrbuilder.plugins = [])).push('@mrbuilder/plugin-typescript');
                 json.types = 'src';
             }
             if (data.storybook) {
                 scripts.storybook = 'mrbuilder';
                 scripts['storybook:start'] = 'mrbuilder';
+                devDependencies['@mrbuilder/plugin-storybook'] = versionOnly('plugin-storybook');
             }
+            devDependencies['@mrbuilder/preset-app'] = versionOnly('plugin-app');
+            devDependencies['@mrbuilder/preset-lib'] = versionOnly('plugin-lib');
+
             return JSON.stringify(json, null, 2);
         }
     }, {
