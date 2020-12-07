@@ -131,7 +131,7 @@ const ACTIONS = [
                 devDependencies['@mrbuilder/plugin-typescript'] = versionOnly('plugin-typescript');
                 devDependencies['@types/enzyme']                = '^3.0.0';
                 devDependencies['@types/chai']                  = '^4.0.0';
-                devDependencies['@types/jest']                  = '^4.0.0';
+                devDependencies['@types/jest']                  = '^26.0.0';
 
                 (mrbuilder.plugins || (mrbuilder.plugins = [])).push('@mrbuilder/plugin-typescript');
                 json.types = 'src';
@@ -180,8 +180,7 @@ const cmd = (command, description) => `
 `
 
 async function install(ans) {
-    process.chdir(join(process.cwd(), ans.projectName || ''));
-    await execa(process.env.npm_execpath || 'yarn', ['install']);
+    await execa(process.env.npm_execpath || 'yarn', ['install'], {cwd:join(process.cwd(), ans.projectName || '')});
     return `
     ${chalk.green('Success')} creating an app.
     Inside ${ans.projectName} you can now run.
