@@ -1,10 +1,8 @@
-const versionOnly     = (val) => require(`./package.json`).devDependencies[`@mrbuilder/${val}`];
-const versionOf       = (val) => `"@mrbuilder/${val}": "${versionOnly(val)}"`;
-const {spawn: _spawn} = require('child_process');
-const {promisify}     = require('util');
-const spawn           = promisify(_spawn);
-const chalk           = require('chalk')
-const {join}          = require('path');
+const versionOnly = (val) => require(`./package.json`).devDependencies[`@mrbuilder/${val}`];
+const versionOf   = (val) => `"@mrbuilder/${val}": "${versionOnly(val)}"`;
+const execa       = require('execa');
+const chalk       = require('chalk')
+const {join}      = require('path');
 
 const PROMPTS = [
     {
@@ -133,7 +131,7 @@ const ACTIONS = [
                 devDependencies['@mrbuilder/plugin-typescript'] = versionOnly('plugin-typescript');
                 devDependencies['@types/enzyme']                = '^3.0.0';
                 devDependencies['@types/chai']                  = '^4.0.0';
-                devDependencies['@types/jest']                  = '^4.0.0';
+                devDependencies['@types/jest']                  = '^26.0.0';
 
                 (mrbuilder.plugins || (mrbuilder.plugins = [])).push('@mrbuilder/plugin-typescript');
                 json.types = 'src';
@@ -149,7 +147,7 @@ const ACTIONS = [
             return JSON.stringify(json, null, 2);
         }
     }, {
-        type        : 'add',
+        type        : 'add',q
         templateFile: './templates/.gitignore.hbs',
         path        : '{{cwd}}/{{packageName}}/.gitignore'
     }, {
@@ -182,8 +180,7 @@ const cmd = (command, description) => `
 `
 
 async function install(ans) {
-    process.chdir(join(process.cwd(), ans.projectName));
-    await spawn(process.env.npm_execpath || 'yarn', ['install']);
+    await execa(process.env.npm_execpath || 'yarn', ['install'], {cwd:join(process.cwd(), ans.projectName || '')});
     return `
     ${chalk.green('Success')} creating an app.
     Inside ${ans.projectName} you can now run.
@@ -191,10 +188,10 @@ async function install(ans) {
     ${cmd('yarn start', 'starts a development server')}
     ${cmd('yarn prepare', 'compiles library')}
     ${cmd('yarn prepare --app out', 'compiles an application in the \'out\' directory')}
-    ${ans.storybook && cmd('yarn storybook:start', 'starts a storybook server')}    
-    ${ans.storybook && cmd('yarn storybook', 'compiles storybooks')}
-    ${ans.test !== 'none' && cmd('yarn test', `runs ${ans.test}`)} }
-    ${ans.test !== 'karma' && cmd('yarn karma', `runs karma in interactive mode`)}    
+    ${ans.storybook ? cmd('yarn storybook:start', 'starts a storybook server') : ''}    
+    ${ans.storybook ? cmd('yarn storybook', 'compiles storybooks') : ''}
+    ${ans.test !== 'none' ? cmd('yarn test', `runs ${ans.test}`) : ''}
+    ${ans.test === 'karma' ? cmd('yarn karma', `runs karma in interactive mode`) : ''}    
     `
 }
 
