@@ -107,6 +107,8 @@ const ACTIONS = [
             const scripts                     = json.scripts || (json.scripts = {});
             devDependencies['@mrbuilder/cli'] = versionOnly('cli');
             if (data.test != 'none') {
+
+                devDependencies['@mrbuilder/preset-test'] = versionOnly('preset-test');
                 devDependencies[`@mrbuilder/plugin-${data.test}`] = versionOnly(`plugin-${data.test}`);
                 if (!mrbuilder.env) {
                     mrbuilder.env = {};
@@ -141,8 +143,8 @@ const ACTIONS = [
                 scripts['storybook:start']                     = 'mrbuilder';
                 devDependencies['@mrbuilder/plugin-storybook'] = versionOnly('plugin-storybook');
             }
-            devDependencies['@mrbuilder/preset-app'] = versionOnly('plugin-app');
-            devDependencies['@mrbuilder/preset-lib'] = versionOnly('plugin-lib');
+            devDependencies['@mrbuilder/preset-app'] = versionOnly('preset-app');
+            devDependencies['@mrbuilder/preset-lib'] = versionOnly('preset-lib');
 
             return JSON.stringify(json, null, 2);
         }
@@ -174,14 +176,15 @@ const ACTIONS = [
     }
 ]
 
-const printCommand = (command, description) => `${chalk.bold('$')} ${chalk.cyan(command)}\n ${description}`;
+const printCommand = (command, description) => `${chalk.bold('$')} ${chalk.cyan(command)}\n   ${description}`;
+
 
 async function install(ans) {
     await execa(process.env.npm_execpath || 'yarn', ['install'], {cwd:join(process.cwd(), ans.packageName || '')});
     return `
     ${chalk.green('Success')} creating an app.
     Inside ${ans.packageName} you can now run.
-    $ cd ${ans.packageName}
+    ${chalk.bold('$')} ${chalk.cyan(`cd ${ans.packageName}`)}
     ${printCommand('yarn start', 'starts a development server')}
     ${printCommand('yarn prepare', 'compiles library')}
     ${printCommand('yarn prepare --app out', 'compiles an application in the \'out\' directory')}
