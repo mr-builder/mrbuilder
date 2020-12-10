@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/create-app",
   "description": "",
-  "version": "4.3.8",
+  "version": "4.3.9",
   "bin": {
     "create-app": "./app.js"
   },
@@ -27,9 +27,9 @@
     "@mrbuilder/plugin-jest": "^4.3.7",
     "@mrbuilder/plugin-storybook": "^4.3.2",
     "@mrbuilder/plugin-typescript": "^4.3.7",
+    "@mrbuilder/preset-app": "^4.3.7",
     "@mrbuilder/preset-lib": "^4.3.7",
     "@mrbuilder/preset-test": "^4.3.7",
-    "@mrbuilder/preset-app": "^4.3.7",
     "chalk": "^4.0.0"
   },
   "publishConfig": {
