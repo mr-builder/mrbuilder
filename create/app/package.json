@@ -29,6 +29,7 @@
     "@mrbuilder/plugin-typescript": "^4.3.7",
     "@mrbuilder/preset-lib": "^4.3.7",
     "@mrbuilder/preset-test": "^4.3.7",
+    "@mrbuilder/preset-app": "^4.3.7",
     "chalk": "^4.0.0"
   },
   "publishConfig": {
