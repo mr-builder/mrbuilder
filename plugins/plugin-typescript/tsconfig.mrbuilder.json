@@ -5,7 +5,6 @@
     "suppressExcessPropertyErrors": true,
     "declaration": true,
     "outDir": "lib",
-    "sourceRoot": "src",
     "target": "es6",
     "strictNullChecks": false,
     "sourceMap": true,
