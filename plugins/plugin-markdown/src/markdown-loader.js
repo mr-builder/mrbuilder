@@ -101,5 +101,7 @@ module.exports = function (source) {
         md.renderer = renderer;
     }
     this.cacheable && this.cacheable();
-    return md.render(source);
+    const ret = md.render(source);
+
+    return ret;
 };
