@@ -107,6 +107,8 @@ const ACTIONS = [
             const scripts                     = json.scripts || (json.scripts = {});
             devDependencies['@mrbuilder/cli'] = versionOnly('cli');
             if (data.test != 'none') {
+
+                devDependencies['@mrbuilder/preset-test'] = versionOnly('preset-test');
                 devDependencies[`@mrbuilder/plugin-${data.test}`] = versionOnly(`plugin-${data.test}`);
                 if (!mrbuilder.env) {
                     mrbuilder.env = {};
@@ -141,8 +143,8 @@ const ACTIONS = [
                 scripts['storybook:start']                     = 'mrbuilder';
                 devDependencies['@mrbuilder/plugin-storybook'] = versionOnly('plugin-storybook');
             }
-            devDependencies['@mrbuilder/preset-app'] = versionOnly('plugin-app');
-            devDependencies['@mrbuilder/preset-lib'] = versionOnly('plugin-lib');
+            devDependencies['@mrbuilder/preset-app'] = versionOnly('preset-app');
+            devDependencies['@mrbuilder/preset-lib'] = versionOnly('preset-lib');
 
             return JSON.stringify(json, null, 2);
         }
@@ -174,24 +176,22 @@ const ACTIONS = [
     }
 ]
 
-const cmd = (command, description) => `
-  $ ${chalk.cyan(command)}
-    ${description}
-`
+const printCommand = (command, description) => `${chalk.bold('$')} ${chalk.cyan(command)}\n   ${description}`;
+
 
 async function install(ans) {
-    await execa(process.env.npm_execpath || 'yarn', ['install'], {cwd:join(process.cwd(), ans.projectName || '')});
+    await execa(process.env.npm_execpath || 'yarn', ['install'], {cwd:join(process.cwd(), ans.packageName || '')});
     return `
     ${chalk.green('Success')} creating an app.
-    Inside ${ans.projectName} you can now run.
-
-    ${cmd('yarn start', 'starts a development server')}
-    ${cmd('yarn prepare', 'compiles library')}
-    ${cmd('yarn prepare --app out', 'compiles an application in the \'out\' directory')}
-    ${ans.storybook ? cmd('yarn storybook:start', 'starts a storybook server') : ''}    
-    ${ans.storybook ? cmd('yarn storybook', 'compiles storybooks') : ''}
-    ${ans.test !== 'none' ? cmd('yarn test', `runs ${ans.test}`) : ''}
-    ${ans.test === 'karma' ? cmd('yarn karma', `runs karma in interactive mode`) : ''}    
+    Inside ${ans.packageName} you can now run.
+    ${chalk.bold('$')} ${chalk.cyan(`cd ${ans.packageName}`)}
+    ${printCommand('yarn start', 'starts a development server')}
+    ${printCommand('yarn prepare', 'compiles library')}
+    ${printCommand('yarn prepare --app out', 'compiles an application in the \'out\' directory')}
+    ${ans.storybook ? printCommand('yarn storybook:start', 'starts a storybook server') : ''}    
+    ${ans.storybook ? printCommand('yarn storybook', 'compiles storybooks') : ''}
+    ${ans.test !== 'none' ? printCommand('yarn test', `runs ${ans.test}`) : ''}
+    ${ans.test === 'karma' ? printCommand('yarn karma', `runs karma in interactive mode`) : ''}    
     `
 }
 
