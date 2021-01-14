@@ -60,6 +60,7 @@
       "options": {
         "bin": "@mrbuilder/plugin-mocha/bin/cli",
         "node_env": "test",
+        "test": true,
       },
       "presets": [
         "@mrbuilder/preset-test",
@@ -69,7 +70,8 @@
     "jest": {
       "options": {
         "bin": "@mrbuilder/plugin-jest/bin/cli",
-        "node_env": "test"
+        "node_env": "test",
+        "test": true
       },
       "plugins": [
         "@mrbuilder/plugin-jest"
@@ -78,7 +80,8 @@
     "karma": {
       "options": {
         "bin": "@mrbuilder/plugin-karma/bin/cli",
-        "node_env": "test"
+        "node_env": "test",
+        "test": true
       },
       "plugins": [
         "@mrbuilder/plugin-karma"
@@ -90,7 +93,8 @@
     "mocha": {
       "options": {
         "bin": "@mrbuilder/plugin-mocha/bin/cli",
-        "node_env": "test"
+        "node_env": "test",
+        "test": true
       },
       "presets": [
         "@mrbuilder/preset-test"
@@ -99,7 +103,8 @@
     "webpack-dev-server": {
       "options": {
         "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli",
-        "node_env": "development"
+        "node_env": "development",
+        "devServer": true
       },
       "plugins": [
         "@mrbuilder/plugin-webpack-dev-server"
@@ -152,7 +157,8 @@
     "start": {
       "options": {
         "bin": "@mrbuilder/plugin-webpack-dev-server/bin/cli",
-        "node_env": "development"
+        "node_env": "development",
+        "devServer": true,
       },
       "plugins": [
         "@mrbuilder/plugin-webpack-dev-server"
@@ -170,6 +176,9 @@
       ]
     },
     "open": {
+      "options": {
+        "devServer": true
+      },
       "plugins": [
         [
           "@mrbuilder/plugin-webpack-dev-server",
@@ -190,7 +199,8 @@
     },
     "storybook": {
       "options": {
-        "bin": "@mrbuilder/plugin-storybook/bin/cli"
+        "bin": "@mrbuilder/plugin-storybook/bin/cli",
+        "app": true
       },
       "plugins": [
         "@mrbuilder/plugin-storybook"
