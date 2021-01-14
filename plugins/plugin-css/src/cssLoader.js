@@ -1,31 +1,39 @@
-const useStyle = require('./styleLoader');
-const getLocalIdent = require('./getLocalIdent');
+const useStyle         = require('./styleLoader');
+const getLocalIdent    = require('./getLocalIdent');
+const {oneOf, isOneOf} = require('./oneOf');
+
+function addCssRule(webpack, rule) {
+    if (!webpack.module.rules.find(isOneOf)) {
+        webpack.module.rules.push({oneOf});
+    }
+    oneOf.push(rule);
+}
 
 function cssLoader(webpack, test, modules = false, om, ...conf) {
-    webpack.module.rules.push(cssLoaderGen(webpack, test, modules, om, ...conf));
+    addCssRule(webpack, cssLoaderGen(webpack, test, modules, om, ...conf));
 }
 
 function cssLoaderGen(webpack, test, modules = false, om, ...conf) {
 
-    const mrb = (v, d) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''), d);
+    const mrb              = (v, d) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''), d);
     const localsConvention = mrb('localsConvention', mrb('camelCase', true) ? 'camelCase' : 'asIs');
-    const sideEffects = mrb('sideEffects', true);
+    const sideEffects      = mrb('sideEffects', true);
 
     const loaders = [{
-        loader: 'css-loader',
+        loader : 'css-loader',
         options: modules ? {
             sourceMap: mrb('sourceMap', true),
             localsConvention,
-            modules: modules ? {
+            modules  : modules ? {
                 ...(typeof modules === 'object' ? modules : {}),
                 localIdentName: mrb('localIdentName', '[hash]_[package-name]_[hyphen:base-name]_[local]'),
-                context: mrb('context', om.config('@mbuilder/cli.sourceDir', 'src')),
+                context       : mrb('context', om.config('@mbuilder/cli.sourceDir', 'src')),
                 getLocalIdent
             } : false
         } : {
             sourceMap: mrb('sourceMap', true),
             localsConvention,
-            modules: modules ? {
+            modules  : modules ? {
                 ...(typeof modules === 'object' ? modules : {}),
                 context: mrb('context', om.config('@mbuilder/cli.sourceDir', 'src'))
             } : false
@@ -48,7 +56,7 @@ function cssLoaderGen(webpack, test, modules = false, om, ...conf) {
     }
     if (plugins.length) {
         loaders.push({
-            loader: 'postcss-loader',
+            loader : 'postcss-loader',
             options: {
                 plugins
             }
@@ -83,28 +91,28 @@ function cssLoaderGen(webpack, test, modules = false, om, ...conf) {
  * @param conf - The configuration for that type of loader.
  * @return {*}
  */
-const cssLoaderModule = (webpack,
-                         modules,
-                         test,
-                         om,
-                         ...conf) => {
+const cssLoaderModule     = (webpack,
+                             modules,
+                             test,
+                             om,
+                             ...conf) => {
 
     if (modules) {
 
         if (test) {
             const oneOf = [];
             //__MATCHED__ is just to here so we can be sure we matched the regex and the file didn't just end in .module
-            const mod = (v) => {
+            const mod   = (v) => {
                 return v.replace(test, '.___MATCHED___').endsWith('.module.___MATCHED___');
             }
-            mod.toJSON = () => `module:${test}`
+            mod.toJSON  = () => `module:${test}`
 
             //Really sorry about this madness -- So Jest wants to match only on RegExp.  So here
             // Jest doesn't need to be as accurate a replacement, because they are all handled through
             // and ignore proxy anyways.
             mod.source = test && test.source || modules && modules.source;
 
-            oneOf.push(cssLoaderGen(webpack, mod, true, om, ...conf));
+            addCssRule(webpack, cssLoaderGen(webpack, mod, true, om, ...conf));
 
 
             if (!(test instanceof RegExp)) {
@@ -116,8 +124,7 @@ const cssLoaderModule = (webpack,
 
             unmod.toJSON = () => `not-module:${test}`;
 
-            oneOf.push(cssLoaderGen(webpack, unmod, false, om, ...conf));
-            webpack.module.rules.push({oneOf});
+            addCssRule(webpack, cssLoaderGen(webpack, unmod, false, om, ...conf));
         }
         //So if module === true then we will only support '.module.ext' syntax,
         // if module is a regex, well we will support it. This is for backwards
@@ -133,5 +140,5 @@ const cssLoaderModule = (webpack,
     return webpack;
 }
 cssLoader.cssLoaderModule = cssLoaderModule;
-cssLoader.cssLoader = cssLoader;
-module.exports = cssLoader;
+cssLoader.cssLoader       = cssLoader;
+module.exports            = cssLoader;
