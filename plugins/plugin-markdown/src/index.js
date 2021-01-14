@@ -1,10 +1,10 @@
 const useBabel = require('@mrbuilder/plugin-babel/use-babel');
 
 module.exports = function ({
-                               test,
+                               test = /\.mdx?$/,
                                include,
                                exclude,
-                               fileExtensions,
+                               fileExtensions = ['.md', '.mdx'],
                                ...options
                            } = {},
                            webpack, om) {
