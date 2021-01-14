@@ -3,10 +3,10 @@
   "version": "4.3.2",
   "description": "Provides mrbuilder wrapper for storybook",
   "dependencies": {
-    "@storybook/addon-docs": "^5.3.17",
-    "@storybook/addon-knobs": "^5.3.17",
-    "@storybook/addon-options": "^5.3.17",
-    "@storybook/react": "^5.3.17"
+    "@storybook/addon-docs": "^6.1.11",
+    "@storybook/addon-knobs": "^6.1.11",
+    "@storybook/addons": "^6.1.11",
+    "@storybook/react": "^6.1.11"
   },
   "source": "src",
   "main": "src",
@@ -35,17 +35,25 @@
         "sidebarAnimations": true,
         "selectedAddonPanel": null
       },
+      "stories": [
+        "src/**/*.stories.@(js|mdx|jsx|tsx|ts)"
+      ],
       "addons": [
-        "@storybook/addon-knobs/register",
-        "@storybook/addon-options/register"
       ]
     },
     "env": {
       "start": {
         "options": {
-          "outputDir": null,
-          "isDevServer": true
-        }
+          "outputDir": null
+        },
+        "plugins": [
+          [
+            "@mrbuilder/cli",
+            {
+              "devServer": true
+            }
+          ]
+        ]
       }
     },
     "plugins": [

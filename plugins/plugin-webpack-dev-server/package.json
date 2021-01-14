@@ -8,7 +8,7 @@
     "@mrbuilder/utils": "^4.3.7",
     "hard-source-webpack-plugin": "^0.13.1",
     "loglevel": "^1.6.6",
-    "webpack-dev-server": "^3.9.0"
+    "webpack-dev-server": "^3.11.1"
   },
   "source": "src",
   "main": "src",
@@ -26,7 +26,13 @@
     },
     "plugins": [
       "@mrbuilder/plugin-webpack",
-      "@mrbuilder/plugin-html"
+      "@mrbuilder/plugin-html",
+      [
+        "@mrbuilder/cli",
+        {
+          "devServer": true
+        }
+      ]
     ],
     "options": {
       "historyApiFallback": true,

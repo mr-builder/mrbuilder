@@ -3,6 +3,7 @@ import { Hello } from "./hello";
 import WebpackExample from "./index";
 import { text } from "@storybook/addon-knobs";
 import Readme from "../Readme.md";
+import Simple from './Simple.mdx';
 
 const Button = function Button(props) {
   return <button {...props} />;
@@ -26,5 +27,7 @@ export const withHello = () => {
 export const withEverything = () => <WebpackExample />;
 
 export const withReadme = () => <Readme />;
+
+export const withSimple = () => <Simple/>;
 
 export default { title: "Example Lib Storybook" };

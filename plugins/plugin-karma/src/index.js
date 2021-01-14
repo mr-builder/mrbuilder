@@ -30,6 +30,7 @@ module.exports = function ({
         webpack.module.rules.unshift({
             test,
             include,
+            type: 'javascript/auto',
             use: use(om),
         });
     }
@@ -41,6 +42,7 @@ module.exports = function ({
                 test,
                 // instrument only testing sources with Istanbul
                 include,
+                type: 'javascript/auto',
                 use: {
                     loader: 'istanbul-instrumenter-loader',
                     options: {

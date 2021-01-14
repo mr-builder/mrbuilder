@@ -1,44 +1,27 @@
 import * as React from "react";
-import { number, string } from "prop-types";
+import {useState} from "react";
 
 export interface HelloProps {
-  name: string;
+    name?: string;
 }
 
-export type HelloState = {
-  value?: number;
-};
 
-export class Hello extends React.Component<HelloProps, HelloState> {
-  state = {
-    value: 0,
-  };
-
-  handleIncrement = () => {
-    this.setState({ value: this.state.value + 1 });
-  };
-
-  handleDecrement = () => {
-    this.setState({ value: Math.max(this.state.value - 1, 0) });
-  };
-
-  render() {
+export const Hello: React.FC<HelloProps> = (props) => {
+    const [value, setValue] = useState(0);
     return (
-      <div className="hello">
-        <div className="greeting">
-          Hello {this.props.name + getExclamationMarks(this.state.value)} from
-          TypeScript
+        <div className="hello">
+            <div className="greeting">
+                Hello {props.name + getExclamationMarks(value)} from TypeScript
+            </div>
+            <div>
+                <button onClick={() => setValue(Math.max(value - 1, 0))}>-</button>
+                <button onClick={() => setValue(value + 1)}>+</button>
+            </div>
         </div>
-        <div>
-          <button onClick={this.handleDecrement}>-</button>
-          <button onClick={this.handleIncrement}>+</button>
-        </div>
-      </div>
     );
-  }
 }
 
 // helpers
 function getExclamationMarks(numChars: number) {
-  return Array(numChars + 1).join("!");
+    return Array(numChars + 1).join("!");
 }

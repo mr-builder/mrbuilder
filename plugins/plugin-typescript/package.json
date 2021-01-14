@@ -8,19 +8,19 @@
     "mrbuilder-typescript": "./bin/cli.js"
   },
   "dependencies": {
-    "@babel/preset-typescript": "^7.9.0",
+    "@babel/preset-typescript": "^7.12.7",
     "@mrbuilder/cli": "^4.3.7",
     "@types/node": "^13.9.8",
     "@types/react": "^16.9.27",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "source-map-loader": "^0.2.4",
-    "ts-loader": "^6.2.2",
-    "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "typescript": "^3.8.3"
+    "ts-loader": "^8.0.14",
+    "tsconfig-paths-webpack-plugin": "^3.3.0",
+    "typescript": "^4.1.3"
   },
   "devDependencies": {
-    "@mrbuilder/cli": "^4.0.0-alpha.1"
+    "@mrbuilder/cli": "^4.0.0"
   },
   "keywords": [
     "typescript",

@@ -3,12 +3,13 @@
   "description": "Provides markdown to react components",
   "version": "4.3.7",
   "scripts": {
-    "test": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma  --@mrbuilder/plugin-karma.browsers='[SimpleHeadlessChrome]'",
-    "karma": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder-karma --@mrbuilder/plugin-mocha.filePattern=*-mocha.js",
+    "test": "$npm_execpath run karma --single-run  --@mrbuilder/plugin-karma.browsers='[SimpleHeadlessChrome]'",
+    "karma": "MRBUILDER_PLUGINS=. mrbuilder",
     "start": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder"
   },
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.3.0",
+    "@mrbuilder/plugin-browserslist": "^4.3.7",
     "@mrbuilder/utils": "^4.3.7",
     "markdown-it": "^10.0.0",
     "markdown-it-checkbox": "^1.1.0",
@@ -27,6 +28,10 @@
     "plugin": "./src/index",
     "options": {
       "test": "/\\.mdx?$/",
+      "fileExtensions": [
+        "md",
+        "mdx"
+      ],
       "extensions": {
         "sh": "shell",
         "js": "javascript",

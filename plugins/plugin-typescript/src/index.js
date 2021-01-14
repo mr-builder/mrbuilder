@@ -69,12 +69,12 @@ module.exports = function ({
     const use = [
 
         {
-            loader: 'ts-loader',
+            loader: require.resolve('ts-loader'),
             options
         },
     ];
     if (process.env.NODE_ENV !== 'production') {
-        use.unshift('source-map-loader')
+        use.unshift(require.resolve('source-map-loader'));
     }
     webpack.module.rules.push({
         test,

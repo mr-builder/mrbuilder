@@ -25,7 +25,15 @@
       "filePattern": "*[.-]!(karma[.-]){test,spec}.{js,jsx,ts,tsx,es,esx,es6}",
       "timeout": "2000",
       "useBabel": true
-    }
+    },
+    "plugins": [
+      [
+        "@mrbuilder/cli",
+        {
+          "test": true
+        }
+      ]
+    ]
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

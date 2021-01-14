@@ -25,7 +25,8 @@
       [
         "@mrbuilder/cli",
         {
-          "bin": "@mrbuilder/plugin-jest/bin/cli.js"
+          "bin": "@mrbuilder/plugin-jest/bin/cli.js",
+          "test": true
         }
       ],
       "@mrbuilder/plugin-babel-7",
