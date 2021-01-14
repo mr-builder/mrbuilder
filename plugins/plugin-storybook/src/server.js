@@ -1,12 +1,13 @@
-const {optionsManager} = require('@mrbuilder/cli');
+const {optionsManager, Info}     = require('@mrbuilder/cli');
 const {enhancedResolve, asArray} = require('@mrbuilder/utils');
-const isDevServer = optionsManager.config('@mrbuilder/plugin-storybook.isDevServer');
+const fs                         = require('fs');
+const path                       = require('path');
+const server                     = require("@storybook/core/server");
 
-if (isDevServer) {
+if (Info.isDevServer) {
     process.env.NODE_ENV = 'development';
 }
 
-const server = require("@storybook/core/server");
 
 const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-storybook.${key}`, def);
 
@@ -15,8 +16,6 @@ const options = require(`@storybook/${mrb('type', 'react')}/dist/server/options`
 const serverOptions = {
     ...options,
     frameworkPresets: ['@mrbuilder/plugin-storybook/register', ...asArray(mrb('frameworkPresets', []))],
-    configDir: mrb('configDir', optionsManager.cwd('.storybook')),
-    staticDir: mrb('staticDir', asArray(mrb('staticDir', optionsManager.config('@mrbuilder/cli.publicDir', optionsManager.cwd('public'))))),
     ...([
         'port',
         'host',
@@ -37,7 +36,19 @@ const serverOptions = {
         return r;
     }, {})),
 };
-if (!isDevServer) {
+if (!Info.isDevServer) {
     serverOptions.outputDir = enhancedResolve(mrb('outputDir', 'storybook-static'));
 }
-server[isDevServer ? 'buildDev' : 'buildStatic'](serverOptions);
+const staticDir = mrb('staticDir', mrb('staticDir', optionsManager.config('@mrbuilder/cli.publicDir', optionsManager.cwd('public'))));
+const configDir = mrb('configDir')
+
+if (staticDir && fs.existsSync(staticDir)) {
+    serverOptions.staticDir = staticDir;
+}
+
+const defaultStorybook = `${process.cwd()}/.storybook`;
+
+serverOptions.configDir = configDir ? enhancedResolve(configDir)
+    : fs.existsSync(defaultStorybook) ? defaultStorybook : path.join(__dirname, '..', 'config');
+
+server[Info.isDevServer ? 'buildDev' : 'buildStatic'](serverOptions);

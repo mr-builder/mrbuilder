@@ -1,6 +1,8 @@
 module.exports = (parameters) => {
     let imports = `import { addDecorator,addParameters } from '@storybook/react';
     import { withKnobs } from '@storybook/addon-knobs';
+    import { addons } from '@storybook/addons';
+
     `;
 
 
