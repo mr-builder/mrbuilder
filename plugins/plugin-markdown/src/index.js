@@ -7,12 +7,22 @@ module.exports = function ({
                                ...options
                            } = {},
                            webpack, om) {
-
+    Object.assign(webpack, {
+        resolve: {
+            ...webpack.resolve,
+            extensions: [
+                ...(webpack.resolve && webpack.resolve.extensions || []),
+                '.md',
+                '.mdx'
+            ]
+        }
+    });
     webpack.module.rules.push({
         test,
         include,
         exclude,
-        use: [
+        type: 'javascript/auto',
+        use : [
             useBabel(om),
             {
                 loader: require.resolve('./markdown-loader'),
