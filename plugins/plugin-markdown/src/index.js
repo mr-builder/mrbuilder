@@ -4,6 +4,7 @@ module.exports = function ({
                                test,
                                include,
                                exclude,
+                               fileExtensions,
                                ...options
                            } = {},
                            webpack, om) {
@@ -12,8 +13,7 @@ module.exports = function ({
             ...webpack.resolve,
             extensions: [
                 ...(webpack.resolve && webpack.resolve.extensions || []),
-                '.md',
-                '.mdx'
+                ...fileExtensions
             ]
         }
     });

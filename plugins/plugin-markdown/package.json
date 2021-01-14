@@ -26,7 +26,10 @@
   "mrbuilder": {
     "plugin": "./src/index",
     "options": {
-      "test": "/\\.mdx?$/",
+      "fileExtensions": [
+        "md",
+        "mdx"
+      ],
       "extensions": {
         "sh": "shell",
         "js": "javascript",
