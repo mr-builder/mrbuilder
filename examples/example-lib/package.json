@@ -6,7 +6,8 @@
   "devDependencies": {
     "@mrbuilder/cli": "^4.3.7",
     "@mrbuilder/plugin-typescript": "^4.3.7",
-    "@mrbuilder/preset-babel-7": "^4.3.7"
+    "@mrbuilder/preset-babel-7": "^4.3.7",
+    "@mrbuilder/plugin-storybook": "^4.3.2"
   },
   "source": "src",
   "main": "lib",
@@ -16,7 +17,9 @@
     "demo": "mrbuilder",
     "jest": "mrbuilder",
     "prepare": "mrbuilder-babel",
-    "test": "mrbuilder-mocha"
+    "test": "mrbuilder-mocha",
+    "storybook:start": "mrbuilder",
+    "storybook": "mrbuilder"
   },
   "license": "0BSD"
 }

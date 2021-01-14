@@ -66,16 +66,7 @@
     ],
     "env": {
       "storybook": {
-        "plugins": [
-          [
-            "@mrbuilder/plugin-storybook",
-            {
-              "stories": [
-                "../example-lib/src/**/*.stories.jsx"
-              ]
-            }
-          ]
-        ]
+        "plugins": ["@mrbuilder/plugin-storybook"]
       },
       "development": {
         "plugins": [
