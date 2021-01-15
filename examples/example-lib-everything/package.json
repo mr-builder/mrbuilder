@@ -1,18 +1,18 @@
 {
   "name": "@mrbuilder/example-lib-everything",
   "description": "An everything example",
-  "version": "4.3.7",
+  "version": "4.4.0",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.3.7",
+    "@mrbuilder/cli": "^4.4.0",
     "@mrbuilder/plugin-env": "^4.3.0",
-    "@mrbuilder/plugin-graphql": "^4.3.7",
+    "@mrbuilder/plugin-graphql": "^4.4.0",
     "@mrbuilder/plugin-lodash": "^4.3.0",
-    "@mrbuilder/plugin-markdown": "^4.3.7",
+    "@mrbuilder/plugin-markdown": "^4.4.0",
     "@mrbuilder/plugin-moment": "^4.3.0",
     "@mrbuilder/plugin-prettier": "^4.3.4",
-    "@mrbuilder/plugin-stylus": "^4.3.7",
-    "@mrbuilder/plugin-typescript": "^4.3.7",
+    "@mrbuilder/plugin-stylus": "^4.4.0",
+    "@mrbuilder/plugin-typescript": "^4.4.0",
     "@mrbuilder/plugin-worker": "^4.3.7",
     "@mrbuilder/plugin-yaml": "^4.3.0"
   },
@@ -66,7 +66,9 @@
     ],
     "env": {
       "storybook": {
-        "plugins": ["@mrbuilder/plugin-storybook"]
+        "plugins": [
+          "@mrbuilder/plugin-storybook"
+        ]
       },
       "development": {
         "plugins": [

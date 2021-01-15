@@ -1,9 +1,9 @@
 {
   "name": "@mrbuilder/plugin-less",
-  "version": "4.3.7",
+  "version": "4.4.0",
   "description": "less support for mrbuilder",
   "dependencies": {
-    "@mrbuilder/plugin-css": "^4.3.7",
+    "@mrbuilder/plugin-css": "^4.4.0",
     "less": "^3.11.1",
     "less-loader": "^5.0.0"
   },

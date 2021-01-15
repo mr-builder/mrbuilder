@@ -1,20 +1,20 @@
 {
   "name": "@mrbuilder/preset-lib",
-  "version": "4.3.7",
+  "version": "4.4.0",
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.3.0",
-    "@mrbuilder/plugin-babel-7": "^4.3.7",
-    "@mrbuilder/plugin-browserslist": "^4.3.7",
-    "@mrbuilder/plugin-css": "^4.3.7",
+    "@mrbuilder/plugin-babel-7": "^4.4.0",
+    "@mrbuilder/plugin-browserslist": "^4.4.0",
+    "@mrbuilder/plugin-css": "^4.4.0",
     "@mrbuilder/plugin-env": "^4.3.0",
     "@mrbuilder/plugin-enzyme": "^4.3.0",
     "@mrbuilder/plugin-eslint": "^4.3.4",
     "@mrbuilder/plugin-filetypes": "^4.3.0",
-    "@mrbuilder/plugin-fonts": "^4.3.7",
-    "@mrbuilder/plugin-html": "^4.3.7",
-    "@mrbuilder/plugin-less": "^4.3.7",
+    "@mrbuilder/plugin-fonts": "^4.4.0",
+    "@mrbuilder/plugin-html": "^4.4.0",
+    "@mrbuilder/plugin-less": "^4.4.0",
     "@mrbuilder/plugin-react": "^4.3.0",
-    "@mrbuilder/plugin-webpack": "^4.3.7"
+    "@mrbuilder/plugin-webpack": "^4.4.0"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

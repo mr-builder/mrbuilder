@@ -1,14 +1,14 @@
 {
   "name": "@mrbuilder/preset-test",
-  "version": "4.3.7",
+  "version": "4.4.0",
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.3.0",
-    "@mrbuilder/plugin-css": "^4.3.7",
+    "@mrbuilder/plugin-css": "^4.4.0",
     "@mrbuilder/plugin-enzyme": "^4.3.0",
-    "@mrbuilder/plugin-karma": "^4.3.7",
-    "@mrbuilder/plugin-mocha": "^4.3.7",
+    "@mrbuilder/plugin-karma": "^4.4.0",
+    "@mrbuilder/plugin-mocha": "^4.4.0",
     "@mrbuilder/plugin-react": "^4.3.0",
-    "@mrbuilder/plugin-webpack": "^4.3.7"
+    "@mrbuilder/plugin-webpack": "^4.4.0"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
