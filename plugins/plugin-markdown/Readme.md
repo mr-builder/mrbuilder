@@ -22,7 +22,6 @@ and inline _stuff_
 | git status   | git status     | git status    |
 | git diff     | git diff       | git diff      |
 
-
 ```
 Should be rendered as
 
