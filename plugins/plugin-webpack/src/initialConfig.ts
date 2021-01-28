@@ -8,8 +8,6 @@ import {MrBuilderWebpackPluginOptions, StringObject} from './types';
 
 export * from './resolveWebpack';
 
-const DEFAULT_MAIN_FIELDS = ['browser', 'main'];
-const SOURCE_MAIN_FIELDS = ['source', 'browser', 'main'];
 
 const returnMode = (val = process.env.NODE_ENV) => {
     switch (val) {
@@ -163,15 +161,6 @@ export function initialConfig({
         logger.info('packaging as externalize', webpack.externals);
     }
 
-    if (mainFields) {
-        mainFields = typeof mainFields === 'string' ? mainFields.split(/,\s*/) : mainFields;
-        mainFields = Array.isArray(mainFields) ? mainFields : mainFields === true
-            ? webpack.target === 'node' ? ['source', 'main'] : SOURCE_MAIN_FIELDS
-            : DEFAULT_MAIN_FIELDS;
-
-        webpack.resolve.mainFields = mainFields;
-        logger.info(`using mainFields`, mainFields);
-    }
     if (node) {
         webpack.node = Object.assign({}, webpack.node, node);
         logger.info('using node config', stringify(webpack.node));
