@@ -3,7 +3,7 @@
   "description": "Provides markdown to react components",
   "version": "4.4.0",
   "scripts": {
-    "test": "$npm_execpath run karma --single-run  --@mrbuilder/plugin-karma.browsers='[SimpleHeadlessChrome]'",
+    "test": "$npm_execpath run karma --single-run",
     "karma": "MRBUILDER_PLUGINS=. mrbuilder",
     "start": "MRBUILDER_PLUGINS=@mrbuilder/plugin-markdown mrbuilder"
   },

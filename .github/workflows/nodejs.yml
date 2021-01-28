@@ -25,8 +25,8 @@ jobs:
         env:
           CI: true
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - uses: ahmedrizwan/angular-karma-test-action
       - run: yarn test
         env:
           CI: true
+          BROWSERS: ChromeHeadlessCI
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

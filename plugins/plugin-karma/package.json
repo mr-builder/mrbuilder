@@ -28,7 +28,8 @@
   "main": "src",
   "mrbuilder": {
     "alias": {
-      "mainFields": "Sets main fields for easier debugging"
+      "mainFields": "Sets main fields for easier debugging",
+      "browsers": "which browsers to test with"
     },
     "options": {
       "pattern": "/[-.](?:test|spec)\\.[jet]sx?$/",
@@ -61,7 +62,23 @@
           "test": true
         }
       ]
-    ]
+    ],
+    "env": {
+      "test": {
+        "options": {
+          "browsers": [
+            "Firefox"
+          ]
+        }
+      },
+      "karma": {
+        "options": {
+          "browsers": [
+            "Chrome"
+          ]
+        }
+      }
+    }
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

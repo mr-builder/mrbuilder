@@ -51,10 +51,6 @@ if (MRBUILDER_COVERAGE || MRBUILDER_COVERAGE_DIR
     }
 }
 
-if (argv.includes('--single-run', 2) && !argv.includes('--browsers', 2)) {
-    argv.push('--browsers', 'Firefox');
-}
-
 require('@mrbuilder/plugin-webpack/webpack.config').then((webpack) => {
     //karma does not allow for async configuration.  So we do this. Not proud.
     global._MRBUILDER_WEBPACK_ = webpack;
