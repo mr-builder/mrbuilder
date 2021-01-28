@@ -7,7 +7,7 @@ import {initialConfig} from './initialConfig';
 const scope = optionsManager.logger('@mrbuilder/plugin-webpack');
 
 const {info} = scope;
-const SOURCE_MAIN_FIELDS = ['source', 'browser', 'main'];
+const SOURCE_MAIN_FIELDS = ['source', 'browser', 'module', 'main'];
 
 const countSlash = (v: string): number => {
         if (!v) {
@@ -103,11 +103,11 @@ export const resolveWebpack = async (conf = WEBPACK_CONFIG, opts = OPTS, onDone 
     if (opts.outputFilename) {
         conf.output.filename = opts.outputFilename;
     }
-    let mainFields = optionsManager.config('@mrbuilder/plugin-webpack.mainFields');
+    let mainFields = optionsManager.config('@mrbuilder/plugin-webpack.mainFields', true);
     if (mainFields) {
         mainFields = typeof mainFields === 'string' ? mainFields.split(/,\s*/) : mainFields;
         if (mainFields === true){
-            mainFields = conf.target === 'node' ? ['source', 'main'] : SOURCE_MAIN_FIELDS
+            mainFields = conf.target === 'node' ? ['source', 'module', 'main'] : SOURCE_MAIN_FIELDS
         }
         conf.resolve.mainFields = mainFields;
         info(`using mainFields`, mainFields);
