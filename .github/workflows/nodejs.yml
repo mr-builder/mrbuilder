@@ -26,7 +26,7 @@ jobs:
           CI: true
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Run Karma Tests
-        uses: ahmedrizwan/angular-karma-test-action
+      - uses: ahmedrizwan/angular-karma-test-action
       - run: yarn test
         env:
           CI: true
