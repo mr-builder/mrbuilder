@@ -13,6 +13,7 @@
   "main": "lib",
   "scripts": {
     "mocha": "mrbuilder",
+    "karma": "mrbuilder",
     "start": "mrbuilder",
     "demo": "mrbuilder",
     "jest": "mrbuilder",
