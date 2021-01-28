@@ -1,13 +1,13 @@
 {
   "name": "@mrbuilder/preset-dev",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "dependencies": {
     "@mrbuilder/plugin-css": "^4.4.0",
     "@mrbuilder/plugin-eslint": "^4.3.4",
     "@mrbuilder/plugin-hot": "^4.3.0",
     "@mrbuilder/plugin-react": "^4.3.0",
-    "@mrbuilder/plugin-webpack-dev-server": "^4.4.0",
-    "@mrbuilder/preset-app": "^4.4.0"
+    "@mrbuilder/plugin-webpack-dev-server": "^4.4.1",
+    "@mrbuilder/preset-app": "^4.4.1"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

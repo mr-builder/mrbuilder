@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/create-monorepo",
   "description": "Support for yarn create monorepo",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "bin": {
     "create-monorepo": "./app.js"
   },
@@ -13,8 +13,8 @@
     "@mrbuilder/plugin-babel": "^4.3.0",
     "@mrbuilder/plugin-babel-7": "^4.4.0",
     "@mrbuilder/plugin-typescript": "^4.4.0",
-    "@mrbuilder/preset-app": "^4.4.0",
-    "@mrbuilder/preset-lib": "^4.4.0"
+    "@mrbuilder/preset-app": "^4.4.1",
+    "@mrbuilder/preset-lib": "^4.4.1"
   },
   "publishConfig": {
     "access": "public",

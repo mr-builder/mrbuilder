@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/preset-lib",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "dependencies": {
     "@mrbuilder/plugin-babel": "^4.3.0",
     "@mrbuilder/plugin-babel-7": "^4.4.0",
@@ -14,7 +14,7 @@
     "@mrbuilder/plugin-html": "^4.4.0",
     "@mrbuilder/plugin-less": "^4.4.0",
     "@mrbuilder/plugin-react": "^4.3.0",
-    "@mrbuilder/plugin-webpack": "^4.4.0"
+    "@mrbuilder/plugin-webpack": "^4.4.1"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
