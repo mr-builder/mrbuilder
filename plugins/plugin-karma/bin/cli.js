@@ -51,8 +51,8 @@ if (MRBUILDER_COVERAGE || MRBUILDER_COVERAGE_DIR
     }
 }
 
-if (argv.includes('--single-run', 2) && !argv.includes('--browser', 2)) {
-    argv.push('--browser', 'Firefox');
+if (argv.includes('--single-run', 2) && !argv.includes('--browsers', 2)) {
+    argv.push('--browsers', 'Firefox');
 }
 
 require('@mrbuilder/plugin-webpack/webpack.config').then((webpack) => {
