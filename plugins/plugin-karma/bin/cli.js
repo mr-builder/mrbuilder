@@ -15,10 +15,10 @@ const {
 } = env;
 
 
-function indexOfArg() {
+function indexOfArg(...find) {
     const args = argv.slice(2);
-    for (let i = 0, l = arguments.length; i < l; i++) {
-        let idx = args.indexOf(arguments[i]);
+    for (let i = 0, l = find.length; i < l; i++) {
+        const idx = args.indexOf(find[i]);
         if (idx != -1) {
             return idx;
         }
