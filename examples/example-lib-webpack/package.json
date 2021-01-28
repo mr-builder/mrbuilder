@@ -22,5 +22,8 @@
     "plugins": [
       "@mrbuilder/plugin-typescript"
     ]
+  },
+  "dependencies": {
+    "@mrbuilder/preset-lib": "^4.4.0"
   }
 }

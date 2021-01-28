@@ -1,24 +1,24 @@
 #!/usr/bin/env node
-process.env.MRBUILDER_INTERNAL_PLUGINS=`@mrbuilder/plugin-karma,${process.env.MRBUILDER_INTERNAL_PLUGINS || ''}`
-const path = require('path');
-const {env, argv, cwd} = process;
+process.env.MRBUILDER_INTERNAL_PLUGINS = `@mrbuilder/plugin-karma,${process.env.MRBUILDER_INTERNAL_PLUGINS || ''}`
+const path                             = require('path');
+const {env, argv, cwd}                 = process;
 
 if (!env.NODE_ENV) {
     env.NODE_ENV = 'test';
 }
 
 const {
-    MRBUILDER_COVERAGE,
-    MRBUILDER_COVERAGE_DIR,
-    MRBUILDER_COVERAGE_USE_GLOBAL,
-    npm_lifecycle_event,
-} = env;
+          MRBUILDER_COVERAGE,
+          MRBUILDER_COVERAGE_DIR,
+          MRBUILDER_COVERAGE_USE_GLOBAL,
+          npm_lifecycle_event,
+      } = env;
 
 
 function indexOfArg() {
     const args = argv.slice(2);
     for (let i = 0, l = arguments.length; i < l; i++) {
-        let idx = args.indexOf(arguments[i]);
+        const idx = args.indexOf(arguments[i]);
         if (idx != -1) {
             return idx;
         }
@@ -49,10 +49,6 @@ if (MRBUILDER_COVERAGE || MRBUILDER_COVERAGE_DIR
         env.MRBUILDER_COVERAGE_DIR = path.resolve(cwd(), '..', 'coverage',
             path.basename(cwd()))
     }
-}
-
-if (argv.includes('--single-run', 2) && !argv.includes('--browser', 2)) {
-    argv.push('--browser', 'Firefox');
 }
 
 require('@mrbuilder/plugin-webpack/webpack.config').then((webpack) => {

@@ -1,36 +1,41 @@
 // Karma configuration
-const path = require('path');
-const {cwd, logObject} = require('@mrbuilder/utils');
-process.env.NODE_ENV = process.env.NODE_ENV || 'test';
+const path                   = require('path');
+const {cwd, logObject}       = require('@mrbuilder/utils');
+process.env.NODE_ENV         = process.env.NODE_ENV || 'test';
 //we allow for running this script directly so can be run in IDE's.
 const {Info, optionsManager} = require('@mrbuilder/cli');
-const logger = optionsManager.logger('@mrbuilder/plugin-karma');
-const fs = require('fs');
-const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-karma.${key}`, def);
+const logger                 = optionsManager.logger('@mrbuilder/plugin-karma');
+const fs                     = require('fs');
+const mrb                    = (key, def) => optionsManager.config(`@mrbuilder/plugin-karma.${key}`, def);
 
 module.exports = function (config) {
     //karma doesn't handle async webpack configuration.
-    const webpack = global._MRBUILDER_WEBPACK_;
-    const chromeDataDir = mrb('chromeDataDir', path.resolve(process.env.HOME, '.@mrbuilder/chrome'));
-    const useCoverage = mrb('coverage');
-    const frameworks = mrb('frameworks', ['mocha']);
-    const basePath = mrb('basePath', cwd());
-    const preprocessors = mrb('preprocessors', ['webpack', 'sourcemap']);
-    const browsers = mrb('browsers', ['Chrome']);
-    const port = mrb('port', 9876);
-    const reporters = mrb('reports', ['spec']);
-    const colors = mrb('colors', true);
+    const webpack         = global._MRBUILDER_WEBPACK_;
+    const chromeDataDir   = mrb('chromeDataDir', path.resolve(process.env.HOME, '.@mrbuilder/chrome'));
+    const useCoverage     = mrb('coverage');
+    const frameworks      = mrb('frameworks', ['mocha']);
+    const basePath        = mrb('basePath', cwd());
+    const preprocessors   = mrb('preprocessors', ['webpack', 'sourcemap']);
+    const _browsers       = mrb('browsers', ['Chrome']);
+    const browsers        = Array.isArray(_browsers) ? _browsers : _browsers == null ? ['Chrome'] : _browsers.split(',');
+    const port            = mrb('port', 9876);
+    const reporters       = mrb('reports', ['spec']);
+    const colors          = mrb('colors', true);
     const customLaunchers = mrb('customLaunchers', {
         Chrome_with_debugging: {
             base: 'Chrome',
             chromeDataDir,
         },
-        Chrome_travis_ci: {
-            base: 'ChromeHeadless',
+        Chrome_travis_ci     : {
+            base : 'ChromeHeadless',
             flags: ['--no-sandbox'],
         },
-        SimpleHeadlessChrome: {
-            base: 'ChromeHeadless',
+        ChromeHeadlessCI     : {
+            base : 'ChromeHeadless',
+            flags: ['--no-sandbox', '--disable-extensions']
+        },
+        SimpleHeadlessChrome : {
+            base : 'ChromeHeadless',
             flags: ['--disable-translate', '--disable-extensions', '--remote-debugging-port=9223'],
         },
     });
@@ -38,8 +43,8 @@ module.exports = function (config) {
 
     webpack.devtool = mrb('devtool', 'inline-source-map');
     const testIndex = mrb('testIndex', path.resolve(__dirname, 'test-index.js'));
-    const files = mrb('files', [testIndex]);
-    webpack.entry = testIndex;
+    const files     = mrb('files', [testIndex]);
+    webpack.entry   = testIndex;
 
     logger.info('files:' + files + ' browsers:' + browsers);
 
@@ -134,10 +139,10 @@ module.exports = function (config) {
         karmaConf.reporters.push('coverage-istanbul');
 
         karmaConf.coverageIstanbulReporter = {
-            reports: ['lcovonly', 'text-summary'],
-            fixWebpackSourcePaths: true,
+            reports                : ['lcovonly', 'text-summary'],
+            fixWebpackSourcePaths  : true,
             skipFilesWithNoCoverage: true,
-            dir: optionsManager,
+            dir                    : optionsManager,
         };
         karmaConf.plugins.push('karma-coverage-istanbul-reporter');
     }

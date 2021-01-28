@@ -28,4 +28,5 @@ jobs:
       - run: yarn test
         env:
           CI: true
+          BROWSERS: ChromeHeadlessCI
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
