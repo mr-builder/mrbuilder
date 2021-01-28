@@ -1,24 +1,24 @@
 #!/usr/bin/env node
-process.env.MRBUILDER_INTERNAL_PLUGINS=`@mrbuilder/plugin-karma,${process.env.MRBUILDER_INTERNAL_PLUGINS || ''}`
-const path = require('path');
-const {env, argv, cwd} = process;
+process.env.MRBUILDER_INTERNAL_PLUGINS = `@mrbuilder/plugin-karma,${process.env.MRBUILDER_INTERNAL_PLUGINS || ''}`
+const path                             = require('path');
+const {env, argv, cwd}                 = process;
 
 if (!env.NODE_ENV) {
     env.NODE_ENV = 'test';
 }
 
 const {
-    MRBUILDER_COVERAGE,
-    MRBUILDER_COVERAGE_DIR,
-    MRBUILDER_COVERAGE_USE_GLOBAL,
-    npm_lifecycle_event,
-} = env;
+          MRBUILDER_COVERAGE,
+          MRBUILDER_COVERAGE_DIR,
+          MRBUILDER_COVERAGE_USE_GLOBAL,
+          npm_lifecycle_event,
+      } = env;
 
 
-function indexOfArg(...find) {
+function indexOfArg() {
     const args = argv.slice(2);
-    for (let i = 0, l = find.length; i < l; i++) {
-        const idx = args.indexOf(find[i]);
+    for (let i = 0, l = arguments.length; i < l; i++) {
+        const idx = args.indexOf(arguments[i]);
         if (idx != -1) {
             return idx;
         }
