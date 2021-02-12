@@ -52,8 +52,8 @@ module.exports = function (config) {
     //otherwise bad things happen, some kind file not found exception.
 
     webpack.devtool = mrb('devtool', 'inline-source-map');
-    const testIndex = mrb('testIndex', path.resolve(__dirname, 'test-index.js'));
-    const files     = mrb('files', [testIndex]);
+    const testIndex = mrb('testIndex', path.join(__dirname, 'test-index.js'));
+    const files     = mrb('files', [optionsManager.require.resolve(testIndex.replace(/^[~]/, `${process.cwd()}/`))]);
     webpack.entry   = testIndex;
     const preprocessors =  Array.isArray(_preprocessors) ? files.reduce(function (ret, file) {
         if (typeof file === 'string') {
