@@ -15,12 +15,22 @@ module.exports = function (config) {
     const useCoverage     = mrb('coverage');
     const frameworks      = mrb('frameworks', ['mocha']);
     const basePath        = mrb('basePath', cwd());
-    const preprocessors   = mrb('preprocessors', ['webpack', 'sourcemap']);
+    const _preprocessors   = mrb('preprocessors', ['webpack', 'sourcemap']);
     const _browsers       = mrb('browsers', ['Chrome']);
     const browsers        = Array.isArray(_browsers) ? _browsers : _browsers == null ? ['Chrome'] : _browsers.split(',');
     const port            = mrb('port', 9876);
     const reporters       = mrb('reports', ['spec']);
     const colors          = mrb('colors', true);
+    const plugins         = mrb('plugins',   [
+        'karma-mocha',
+        'karma-chrome-launcher',
+        'karma-firefox-launcher',
+        'karma-spec-reporter',
+        'karma-sourcemap-loader',
+        'karma-webpack',
+    ]);
+    
+
     const customLaunchers = mrb('customLaunchers', {
         Chrome_with_debugging: {
             base: 'Chrome',
@@ -45,7 +55,17 @@ module.exports = function (config) {
     const testIndex = mrb('testIndex', path.resolve(__dirname, 'test-index.js'));
     const files     = mrb('files', [testIndex]);
     webpack.entry   = testIndex;
-
+    const preprocessors =  Array.isArray(_preprocessors) ? files.reduce(function (ret, file) {
+        if (typeof file === 'string') {
+            ret[file] = _preprocessors;
+        }
+        return ret;
+    }, {}) : (files || []).reduce(function (ret, file) {
+        if (typeof file === 'string') {
+            ret[file] = ['webpack', 'sourcemap'];
+        }
+        return ret;
+    }, _preprocessors || {});
     logger.info('files:' + files + ' browsers:' + browsers);
 
     const karmaConf = {
@@ -64,12 +84,7 @@ module.exports = function (config) {
         customLaunchers,
 
         // list of preprocessors
-        preprocessors: files.reduce(function (ret, file) {
-            if (typeof file === 'string') {
-                ret[file] = preprocessors;
-            }
-            return ret;
-        }, {}),
+        preprocessors,
 
 
         webpack,
@@ -126,14 +141,17 @@ module.exports = function (config) {
 
         // List plugins explicitly, since autoloading karma-webpack
         // won't work here
-        plugins: [
-            require('karma-mocha'),
-            require('karma-chrome-launcher'),
-            require('karma-firefox-launcher'),
-            require('karma-spec-reporter'),
-            require('karma-sourcemap-loader'),
-            require('karma-webpack'),
-        ],
+        plugins: plugins.map(v=>{
+            try {
+                return require(v.replace(/^(?:karma-)?/, 'karma-'));
+            }catch(e){
+                try {
+                    require(v);
+                }catch(e){
+                    return v;
+                }
+            }
+        }),
     };
     if (useCoverage) {
         karmaConf.reporters.push('coverage-istanbul');
