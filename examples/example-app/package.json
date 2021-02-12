@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/example-app",
   "description": "Sample application using mrbuilder components",
-  "version": "4.4.2",
+  "version": "4.4.3",
   "private": true,
   "dependencies": {
     "@mrbuilder/example-lib": "^4.4.1",
-    "@mrbuilder/example-lib-everything": "^4.4.2",
+    "@mrbuilder/example-lib-everything": "^4.4.3",
     "@mrbuilder/example-lib-webpack": "^4.4.1",
     "@mrbuilder/plugin-babel": "^4.3.0"
   },
