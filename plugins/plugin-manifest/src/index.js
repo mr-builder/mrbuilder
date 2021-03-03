@@ -3,10 +3,11 @@ const {join} = require('path');
 const {asArray} = require('@mrbuilder/utils');
 
 module.exports = function ({publicPath, fileName}, webpack, optionsManager) {
+    publicPath = publicPath || om.config('@mrbuilder/cli.publicUrl', om.config('@mrbuilder/plugin-webpack.public', '/'));
 
     webpack.plugins.push(new ManifestPlugin({
         fileName,
-        publicPath: join(publicPath || optionsManager.config('@mrbuilder/cli.publicPath', '/'), '/'),
+        publicPath,
         generate: (seed, files, entrypoints) => {
             const manifestFiles = files.reduce((manifest, file) => {
                 manifest[file.name] = file.path;

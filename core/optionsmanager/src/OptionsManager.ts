@@ -1,6 +1,6 @@
-import {get, objToConf, parseIfBool, parseJSON, asArray, splitRest} from '@mrbuilder/utils';
+import { get, objToConf, parseIfBool, parseJSON, asArray, splitRest } from '@mrbuilder/utils';
 import cp from 'child_process';
-import {basename, join, resolve} from 'path';
+import { basename, join, resolve } from 'path';
 import handleNotFoundTryInstall from './handleNotFoundTryInstall';
 import _help from './help';
 import {
@@ -61,7 +61,7 @@ export default class OptionsManager implements OptionsManagerType {
     readonly plugins = new Map<string, ResolvedOption>();
     readonly require: RequireFn;
     readonly env: EnvFn;
-    readonly envPrefix:string;
+    readonly envPrefix: string;
     public topPackage: Package;
     help: () => void;
     cwd: (...paths: string[]) => string;
@@ -71,47 +71,47 @@ export default class OptionsManager implements OptionsManagerType {
     log: (level: LogLevel, pluginName: string, ...args: any[]) => void;
 
     constructor({
-                    prefix,
-                    envPrefix,
-                    confPrefix,
-                    rcFile,
-                    env = process.env,
-                    argv = process.argv,
-                    cwd = process.cwd,
-                    info = console.info || console.warn,
-                    debug = console.info || console.warn,
-                    warn = console.warn,
-                    _require = require,
-                    //Object of collected aliases, may be modified
-                    aliasObj = {},
-                    topPackage,
-                    handleNotFound = handleNotFoundTryInstall,
-                    plugins = [],
-                    presets = [],
-                    log = (level, prefix, ...message) => {
-                        switch (level.toLowerCase()) {
-                            case 'debug':
-                                return debug(prefix, ...message);
-                            case 'warn':
-                                return warn(prefix, ...message);
-                            default:
-                                return info(level, prefix, ...message);
-                        }
-                    }
-                }: OptionsManagerConfig = {
-        env: process.env,
-        argv: process.argv,
-        cwd: process.cwd,
-        info: console.info || console.warn,
-        debug: console.info || console.warn,
-        warn: console.warn,
-        _require: require,
+        prefix,
+        envPrefix,
+        confPrefix,
+        rcFile,
+        env = process.env,
+        argv = process.argv,
+        cwd = process.cwd,
+        info = console.info || console.warn,
+        debug = console.info || console.warn,
+        warn = console.warn,
+        _require = require,
         //Object of collected aliases, may be modified
-        aliasObj: {},
-        handleNotFound: handleNotFoundTryInstall,
-        plugins: [],
-        presets: [],
-    }) {
+        aliasObj = {},
+        topPackage,
+        handleNotFound = handleNotFoundTryInstall,
+        plugins = [],
+        presets = [],
+        log = (level, prefix, ...message) => {
+            switch (level.toLowerCase()) {
+                case 'debug':
+                    return debug(prefix, ...message);
+                case 'warn':
+                    return warn(prefix, ...message);
+                default:
+                    return info(level, prefix, ...message);
+            }
+        }
+    }: OptionsManagerConfig = {
+            env: process.env,
+            argv: process.argv,
+            cwd: process.cwd,
+            info: console.info || console.warn,
+            debug: console.info || console.warn,
+            warn: console.warn,
+            _require: require,
+            //Object of collected aliases, may be modified
+            aliasObj: {},
+            handleNotFound: handleNotFoundTryInstall,
+            plugins: [],
+            presets: [],
+        }) {
         const seenPresets = new Set();
         this.help = _help(this);
         if (!prefix) {
@@ -192,7 +192,7 @@ export default class OptionsManager implements OptionsManagerType {
                         // is thrown.
                         cp.execFileSync(process.argv[0],
                             ['-e', `require.resolve('${pkgPath}')`],
-                            {stdio: 'ignore', cwd: cwd()});
+                            { stdio: 'ignore', cwd: cwd() });
                     }
                 }
 
@@ -300,7 +300,7 @@ export default class OptionsManager implements OptionsManagerType {
             // you can't set a module false inside of itself.  so I think its reasonable.
 
             if (alias) {
-                options.unshift(mergeAlias(alias, aliasObj, {env, argv}));
+                options.unshift(mergeAlias(alias, aliasObj, { env, argv }));
             }
 
             if (pluginName.startsWith('.')) {
@@ -391,7 +391,7 @@ export default class OptionsManager implements OptionsManagerType {
      * @param plugin
      */
     logger(plugin: string): Logger {
-        const {warn, info, debug} = this.plugins.get(plugin) || this;
+        const { warn, info, debug } = this.plugins.get(plugin) || this;
         return {
             warn,
             info,
@@ -430,7 +430,7 @@ export default class OptionsManager implements OptionsManagerType {
         return !!this.plugins.get(name);
     }
 
-//make nice stringify
+    //make nice stringify
     toJSON() {
         return {
             name: this.topPackage.name,
@@ -495,11 +495,13 @@ export default class OptionsManager implements OptionsManagerType {
 
 export class Option implements OptionType {
     constructor(public name: string,
-                public plugin: PluginValue,
-                public config: {},
-                public optionsManager: OptionsManager,
-                public parent?: Package,
-                public alias?: AliasObj) {
+        public plugin: string,
+        public config: {},
+        public optionsManager: OptionsManager,
+        public parent?: Package,
+        public alias?: AliasObj,
+
+    ) {
     }
 
     get(key: string, def?: any): any {
@@ -521,14 +523,23 @@ export class Option implements OptionType {
         this.optionsManager.log('info', this.name, ...args);
     };
 
-    toJSON() {
+    toJSON(): OptionsJson {
         return {
             name: this.name,
-            plugin: typeof this.plugin === 'function' ? (this.plugin.name
-                || '[function]')
-                : this.plugin,
+            plugin: this.plugin,
             config: this.config,
-            parent: `[${this.parent && this.parent.name}]`
+            parent: this.parent?.name,
         }
     }
+
+    static fromJson(json: OptionsJson, om: OptionsManager) {
+        return new Option(json.name, json.plugin, json.config, om)
+    }
+}
+
+type OptionsJson = {
+    name: string;
+    plugin: string;
+    parent: string;
+    config: any;
 }

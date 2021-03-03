@@ -7,7 +7,7 @@ const mrb = (v, def) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''), 
 let useNameHash = mrb('useNameHash');
 let filename = mrb('filename');
 let useStyleLoaderLoader = mrb('useStyleLoader');
-let publicPath = mrb('public');
+let publicPath = mrb('public', om.config('@mrbuilder/cli.publicUrl', om.config('@mrbuilder/plugin-webpack.public', '/'))) + '';
 let chunkFilename = mrb('chunkFilename', `[name].style.css`);
 if (useNameHash == null || useNameHash === true) {
     if (Info.isLibrary) {

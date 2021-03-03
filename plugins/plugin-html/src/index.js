@@ -63,7 +63,7 @@ module.exports = function ({
         }
 
         if (!publicPath) {
-            publicPath = '/';
+            publicPath = om.config('@mrbuilder/cli.publicUrl', om.config('@mrbuilder/plugin-webpack.public', '/'));
         }
         entry = webpack.entry = webpack.entry || findEntry(om);
     }

@@ -19,7 +19,6 @@
   },
   "mrbuilder": {
     "options": {
-      "publicPath": "/",
       "filename": "[name].html",
       "elementId": "content",
       "exported": true,
