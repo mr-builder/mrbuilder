@@ -7,7 +7,6 @@ const mrb = (v, def) => om.config('@mrbuilder/plugin-css' + (v ? `.${v}` : ''), 
 let useNameHash = mrb('useNameHash');
 let filename = mrb('filename');
 let useStyleLoaderLoader = mrb('useStyleLoader');
-let publicPath = mrb('public', om.config('@mrbuilder/cli.publicUrl', om.config('@mrbuilder/plugin-webpack.public', '/'))) + '';
 let chunkFilename = mrb('chunkFilename', `[name].style.css`);
 if (useNameHash == null || useNameHash === true) {
     if (Info.isLibrary) {
@@ -41,11 +40,9 @@ if (!useStyleLoaderLoader) {
         const use = [MiniCssExtractPlugin.loader, ...args];
         const miniOpts = {
             filename,
-            chunkFilename
+            chunkFilename,
         };
-        if (publicPath) {
-            miniOpts.publicPath = publicPath;
-        }
+
         if (!addedPlugin) {
             addedPlugin = true;
             webpack.plugins.push(new MiniCssExtractPlugin(miniOpts));

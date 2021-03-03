@@ -1,6 +1,7 @@
 const useStyle         = require('./styleLoader');
 const getLocalIdent    = require('./getLocalIdent');
 const {oneOf, isOneOf} = require('./oneOf');
+const { optionsManager } = require('@mrbuilder/cli/lib');
 
 function addCssRule(webpack, rule) {
     if (!webpack.module.rules.find(isOneOf)) {
