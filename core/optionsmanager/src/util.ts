@@ -10,13 +10,8 @@ export const select = (...args: any[]): any => {
         }
     }
 };
-const toCamel = (s: string): string => {
-    return s.toLowerCase().replace(/([-_][a-z])/ig, ($1) => {
-        return $1.toUpperCase()
-            .replace('-', '')
-            .replace('_', '');
-    });
-};
+const fromHyphenToCamel = (s: string): string => s.toLowerCase().replace(/([-_][a-z])/ig, ($1) => $1.toUpperCase().replace('-', '').replace('_', ''));
+
 export const split = (v: string | string[] = []): string[] => (Array.isArray(v) ? v : v.split(/,\s*/)).filter(Boolean);
 
 
@@ -88,10 +83,10 @@ export const mergeEnv = (plugin: string, env = process.env): unknown => {
             }
             let cur: any = ret || (ret = {});
             for (let i = 1; i < parts.length - 1; i++) {
-                const camelName = toCamel(parts[i])
+                const camelName = fromHyphenToCamel(parts[i])
                 cur = cur[camelName] || (cur[camelName] = {});
             }
-            cur[toCamel(parts[parts.length - 1])] = parse(value, key);
+            cur[fromHyphenToCamel(parts[parts.length - 1])] = parse(value, key);
         }
     });
 
