@@ -67,3 +67,15 @@ a plugin exists in both arrays it will use the configuration of the env.ENV.plug
 array.  If no configuration is given for env.ENV.plugins than no configuration
 will be passed to the plugin.  If a plugin in env.ENV.plugins second argument
 is false than it will be disabled.
+
+## Options passed as Environmental variables.
+To pass an option from the environment to a plugin, their are 2 options.
+First pass a stringified object to the env variable such as
+```sh
+export MRBUILDER_PLUGIN_EXAMPLE="{\"moreStuff\":1}" 
+```
+Or to pass individual options, use `__` to seperate plugin name and key names.
+
+```sh
+export MRBUILDER_PLUGIN_EXAMPLE__MORE_STUFF="1";
+```

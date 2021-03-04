@@ -1,7 +1,7 @@
 import {configOrBool, parseValue, set, splitRest} from '@mrbuilder/utils';
 import {AliasObj, NameOrPluginNameConfig, OptionsConfig, PluginNameConfig, PresetsPlugins} from "./types";
 
-type FalseOrObject = false | { [key: string]: any }
+type FalseOrObject = false | { [key: string]: unknown }
 
 export const select = (...args: any[]): any => {
     for (let i = 0, l = args.length; i < l; i++) {
@@ -10,7 +10,13 @@ export const select = (...args: any[]): any => {
         }
     }
 };
-
+const toCamel = (s: string): string => {
+    return s.replace(/([-_][a-z])/ig, ($1) => {
+        return $1.toUpperCase()
+            .replace('-', '')
+            .replace('_', '');
+    });
+};
 export const split = (v: string | string[] = []): string[] => (Array.isArray(v) ? v : v.split(/,\s*/)).filter(Boolean);
 
 
@@ -64,16 +70,32 @@ const parse = (value: string, name: string) => {
 };
 
 
-export const mergeEnv = (plugin: string, env = process.env): FalseOrObject => {
+export const mergeEnv = (plugin: string, env = process.env): unknown => {
     const upperPlugin = envify(plugin);
+    let ret: unknown;
     if (upperPlugin in env) {
         const value = configOrBool(env[upperPlugin]);
         if (value === false || value === true) {
             return value;
         }
-        return parse(value, plugin);
+        ret = parse(value, plugin);
     }
-    return {};
+    Object.entries(env).forEach(([key, value]) => {
+        const parts = key.split('__');
+        if (parts[0] === upperPlugin) {
+            if (ret == null || typeof ret !== 'object') {
+                ret = {};
+            }
+            let cur: any = ret || (ret = {});
+            for (let i = 1; i < parts.length - 1; i++) {
+                const camelName = toCamel(parts[i])
+                cur[camelName] = cur[camelName] || {};
+            }
+            cur[toCamel(parts[parts.length - 1])] = parse(value, key);
+        }
+    });
+
+    return ret;
 };
 
 export const fixName = (name: string, sep = '-'): string => name.replace(/^@/, '').replace(/[^\w]{1,}/g, sep);
