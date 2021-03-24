@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/optionsmanager",
-  "version": "4.4.0",
+  "version": "4.4.4",
   "bin": {
     "mrbuilder-options-debug": "./bin/mrbuilder-options-debug.js"
   },
