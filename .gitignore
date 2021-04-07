@@ -4,6 +4,7 @@
 /examples/*/tsconfig.json
 test-out
 .idea
+.vscode
 dist
 lerna-debug.log
 *.log
