@@ -1,17 +1,31 @@
-const {optionsManager, Info}     = require('@mrbuilder/cli');
-const {enhancedResolve, asArray} = require('@mrbuilder/utils');
-const fs                         = require('fs');
-const path                       = require('path');
-const server                     = require("@storybook/core/server");
+const { optionsManager, Info } = require('@mrbuilder/cli');
+const { enhancedResolve, asArray } = require('@mrbuilder/utils');
+const fs = require('fs');
+const path = require('path');
+const server = require("@storybook/core/server");
 
 if (Info.isDevServer) {
     process.env.NODE_ENV = 'development';
 }
 
+const tryRequire = (...places) => {
+    for (const loc of places) {
+        try {
+            const res = require(loc);
+            if (res) {
+                return res.default || res;
+            }
+        } catch (e) {
+            if (e.code !== 'MODULE_NOT_FOUND') {
+                throw e;
+            }
+        }
+    }
+}
 
 const mrb = (key, def) => optionsManager.config(`@mrbuilder/plugin-storybook.${key}`, def);
 
-const options = require(`@storybook/${mrb('type', 'react')}/dist/server/options`).default;
+const options = tryRequire(`@storybook/${mrb('type', 'react')}/dist/server/options`, `@storybook/${mrb('type', 'react')}/dist/cjs/server/options`);
 
 const serverOptions = {
     ...options,
