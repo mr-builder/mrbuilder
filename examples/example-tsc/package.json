@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "mrbuilder-clean app",
     "test": "mrbuilder-jest",
-    "prepare": "mrbuilder-typescript"
+    "prepare": "tsc"
   },
   "mrbuilder": {
     "plugins": [
