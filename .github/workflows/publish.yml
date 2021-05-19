@@ -38,6 +38,7 @@ jobs:
       run: |
         git config --global user.email "speajus@gmail.com"
         git config --global user.name "ci@$GITHUB_ACTOR"
+        git remote add upstream git@github.com:mr-builder/mrbuilder.git
 
     - name: Install dependencies
       run: yarn install
