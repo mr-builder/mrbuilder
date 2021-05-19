@@ -57,8 +57,10 @@ const nameConfig = (v: string | PluginNameConfig): PluginNameConfig => typeof v 
 type ResolvedOption = false | OptionType;
 
 /**
- * So checks if the message is the message for the expected
- * module, if it is bit jbiwb than returns true
+ * It checks if the message is the message for the expected module.
+ * 
+ * If it is the correct module or no module it returns false.
+ * if it is an incorrect module it returns true.
  * @param key 
  * @param message 
  * @returns 
@@ -69,7 +71,7 @@ function isIncorrectModule(key:string, message:string):boolean {
     if (!re){
         return false;
     }
-    return !re[1]?.startsWith(key);
+    return !re[1]?.includes(key);
 }
 export default class OptionsManager implements OptionsManagerType {
 
