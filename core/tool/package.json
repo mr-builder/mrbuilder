@@ -6,7 +6,7 @@
   "source": "src",
   "scripts": {
     "test": "mrbuilder-mocha",
-    "prepare": "mrbuilder-typescript"
+    "prepare": "tsc"
   },
   "bin": {
     "mr-muck": "./lib/muck.js"
