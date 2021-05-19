@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/plugin-version",
-  "version": "4.4.6-alpha.1",
+  "version": "4.4.6",
   "description": "Expose version information for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",
   "dependencies": {
-    "@mrbuilder/utils": "^4.4.6-alpha.1"
+    "@mrbuilder/utils": "^4.4.6"
   },
   "keywords": [
     "mrbuilder"
