@@ -66,7 +66,10 @@ type ResolvedOption = false | OptionType;
 function isIncorrectModule(key:string, message:string):boolean {
     //message 'Cannot find module '@mrbuilder/plugin-webpack''
     const re = /Cannot find module '(.+?)'/.exec(message);
-    return re?.[1] !== key;
+    if (!re){
+        return false;
+    }
+    return !re[1]?.startsWith(key);
 }
 export default class OptionsManager implements OptionsManagerType {
 
