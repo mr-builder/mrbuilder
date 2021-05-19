@@ -56,6 +56,18 @@ const nameConfig = (v: string | PluginNameConfig): PluginNameConfig => typeof v 
 
 type ResolvedOption = false | OptionType;
 
+/**
+ * So checks if the message is the message for the expected
+ * module, if it is bit jbiwb than returns true
+ * @param key 
+ * @param message 
+ * @returns 
+ */
+function isIncorrectModule(key:string, message:string):boolean {
+    //message 'Cannot find module '@mrbuilder/plugin-webpack''
+    const re = /Cannot find module '(.+?)'/.exec(message);
+    return re?.[1] !== key;
+}
 export default class OptionsManager implements OptionsManagerType {
 
     readonly plugins = new Map<string, ResolvedOption>();
@@ -454,15 +466,17 @@ export default class OptionsManager implements OptionsManagerType {
                 continue;
             }
             let plugin: Function;
+            const pluginName = Array.isArray(option.plugin) ? option.plugin[0] : option.plugin || key;
             try {
-                plugin = this.require(Array.isArray(option.plugin) ? option.plugin[0] : option.plugin || key);
+                plugin = this.require(pluginName);
                 this.debug(key, 'found plugin');
 
             } catch (e) {
-                if (e.code !== 'MODULE_NOT_FOUND') {
+                if (e.code !== 'MODULE_NOT_FOUND' || isIncorrectModule(pluginName, e.message)) {
                     throw e;
                 }
                 this.warn(key, `was not found from '${option && option.plugin}'`);
+                this.debug(e);
                 worker(1);
                 continue;
             }
