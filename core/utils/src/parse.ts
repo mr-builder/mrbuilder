@@ -64,7 +64,11 @@ export function objToConf(obj: any): any {
 
 }
 
-export function parseValue(value: string): any {
+export function parseValue(value: unknown): unknown {
+    if (typeof value !== 'string') {
+        return value;
+    }
+
     if (/^".*"$/.test(value)) {
         return JSON5.parse(value, parseRe)
     }

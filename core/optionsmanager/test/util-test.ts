@@ -64,6 +64,14 @@ describe('@mrbuilder/optionsmanager/util', function () {
         it('should parse env with obj', () => {
             expect(mergeEnv('@tester/my-plugin', {TESTER_MY_PLUGIN: JSON.stringify({"stuff": 1})})).to.eql({stuff: 1});
         });
-
+        it('should parse env with __ obj', () => {
+            expect(mergeEnv('@tester/my-plugin', { TESTER_MY_PLUGIN__STUFF: '1' })).to.eql({ stuff: 1 });
+        });
+        it('should parse env with __ nested obj', () => {
+            expect(mergeEnv('@tester/my-plugin', { TESTER_MY_PLUGIN__STUFF__WHAT: '1' })).to.eql({ stuff: { what: 1 } });
+        });
+        it('should parse env with _ camelCase nested obj', () => {
+            expect(mergeEnv('@tester/my-plugin', { TESTER_MY_PLUGIN__STUFF_WHAT: '1' })).to.eql({ stuffWhat: 1 });
+        });
     });
 });
