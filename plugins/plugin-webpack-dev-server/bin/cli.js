@@ -19,7 +19,9 @@ const tryResolve = (...locations) => {
     throw new Error(`Could not resolve in :${locations}`);
 }
 
-const devServer = tryResolve('webpack-cli/bin/cli',
+const devServer = tryResolve(
+    '@webpack-cli/serve',
+    'webpack-cli/bin/cli',
     'node_modules/.bin/webpack',
     '@mrbuilder/plugin-webpack/node_modules/webpack-cli/bin/cli'
 );
