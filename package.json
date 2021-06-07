@@ -19,7 +19,7 @@
     "create/*"
   ],
   "dependencies": {
-    "lerna": "^3.22.1",
+    "lerna": "^4.0.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
