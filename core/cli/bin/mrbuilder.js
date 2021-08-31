@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 //for better yarn/npm compatibility.
 
-if (require('in-publish').inInstall()) {
-    process.exit(0);
-}
 const profileRe = /^(?:.*\/)?mrbuilder-([^/]+?)(?:\.js)?$/;
 const {env, argv} = process;
 const profile = env.MRBUILDER_PROFILE || ((idx) => {
