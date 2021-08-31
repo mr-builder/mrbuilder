@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-env",
-  "version": "4.3.0",
+  "version": "4.4.6",
   "main": "src",
   "source": "src",
   "mrbuilder": {

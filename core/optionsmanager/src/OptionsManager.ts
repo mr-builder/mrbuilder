@@ -17,7 +17,6 @@ import {
     OptionValueObj,
     Package,
     PluginNameConfig,
-    PluginValue,
     RequireFn,
     InitFn
 } from "./types";
@@ -55,6 +54,7 @@ type LogLevel = 'warn' | 'info' | 'debug';
 const nameConfig = (v: string | PluginNameConfig): PluginNameConfig => typeof v === 'string' ? [v] : v;
 
 type ResolvedOption = false | OptionType;
+
 
 export default class OptionsManager implements OptionsManagerType {
 
@@ -453,19 +453,21 @@ export default class OptionsManager implements OptionsManagerType {
                 worker(1);
                 continue;
             }
-            let plugin: Function;
+            const pluginName = Array.isArray(option.plugin) ? option.plugin[0] : option.plugin || key;
+            let pluginPath:string;
             try {
-                plugin = this.require(Array.isArray(option.plugin) ? option.plugin[0] : option.plugin || key);
-                this.debug(key, 'found plugin');
-
-            } catch (e) {
-                if (e.code !== 'MODULE_NOT_FOUND') {
-                    throw e;
-                }
-                this.warn(key, `was not found from '${option && option.plugin}'`);
-                worker(1);
+                //resolvee the file, it's ok if its not  there, if its there and it
+                //doesn't load thats a big problem
+                pluginPath = this.require.resolve(pluginName);
+            }catch(e){
+                this.warn(key, `'${pluginName}' was not found from '${option && option.plugin}'`);
                 continue;
+
             }
+            this.debug(key, 'loading plugin %s', pluginPath);
+            const plugin = this.require(pluginPath)
+            this.debug(key, 'found plugin');
+
             if (typeof plugin === 'function') {
                 try {
                     let ret;

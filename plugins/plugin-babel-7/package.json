@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-babel-7",
-  "version": "4.4.0",
+  "version": "4.4.6",
   "description": "Tools for developing babel 7 with mrbuilder",
   "scripts": {
     "clean": "mrbuilder-clean"
@@ -31,8 +31,8 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/register": "^7.9.0",
     "@babel/runtime": "^7.9.2",
-    "@mrbuilder/optionsmanager": "^4.4.0",
-    "@mrbuilder/plugin-browserslist": "^4.4.0",
+    "@mrbuilder/optionsmanager": "^4.4.6",
+    "@mrbuilder/plugin-browserslist": "^4.4.6",
     "babel-loader": "^8.1.0",
     "babel-plugin-istanbul": "^6.0.0"
   },

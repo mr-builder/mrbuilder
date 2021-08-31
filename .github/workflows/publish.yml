@@ -1,0 +1,48 @@
+name: Publish 
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      version:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Version to publish (major,minor,patch,prerelease)'
+        # Default value if no value is explicitly provided
+        default: 'prerelease'
+        # Input has to be provided for the workflow to run
+        required: true
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+
+    # 1. provide Personal Access Token for checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+          submodules: recursive
+          token: ${{ secrets.PUBLISH_PAT }}
+
+    # 2. setup .npmrc it uses NODE_AUTH_TOKEN
+    - name: Setup .npmrc file for publish
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12.x'
+        registry-url: 'https://registry.npmjs.org'
+
+    # 3. configure git user used to push tag
+    - name: Configure Git User
+      run: |
+        git config --global user.email "speajus@gmail.com"
+        git config --global user.name "ci@$GITHUB_ACTOR"
+        git remote add upstream git@github.com:mr-builder/mrbuilder.git
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Publish
+      run: |
+        lerna publish  --yes ${{ github.event.inputs.version }}
