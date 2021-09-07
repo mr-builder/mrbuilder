@@ -5,7 +5,7 @@
   "dependencies": {
     "@mrbuilder/plugin-css": "^4.4.6",
     "postcss-loader": "^3.0.0",
-    "tailwindcss": "^2.2.11"
+    "tailwindcss": "^1.9.6"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
