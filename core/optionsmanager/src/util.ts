@@ -1,7 +1,7 @@
 import {configOrBool, parseValue, set, splitRest} from '@mrbuilder/utils';
 import {AliasObj, NameOrPluginNameConfig, OptionsConfig, PluginNameConfig, PresetsPlugins} from "./types";
 
-type FalseOrObject = false | { [key: string]: any }
+type FalseOrObject = false | { [key: string]: unknown } | unknown[]
 
 export const select = (...args: any[]): any => {
     for (let i = 0, l = args.length; i < l; i++) {
@@ -10,6 +10,7 @@ export const select = (...args: any[]): any => {
         }
     }
 };
+const fromHyphenToCamel = (s: string): string => s.toLowerCase().replace(/([-_][a-z])/ig, ($1) => $1.toUpperCase().replace('-', '').replace('_', ''));
 
 export const split = (v: string | string[] = []): string[] => (Array.isArray(v) ? v : v.split(/,\s*/)).filter(Boolean);
 
@@ -19,7 +20,7 @@ export const split = (v: string | string[] = []): string[] => (Array.isArray(v) 
  *
  * @type {function(*): *}
  */
-export const mergeOptions = (options: FalseOrObject[]): FalseOrObject => {
+export const mergeOptions = (options: unknown[]): FalseOrObject => {
     let ret = {};
     for (let i = options.length - 1; i > -1; i--) {
         const opt = options[i];
@@ -54,9 +55,9 @@ export const mergePlugins = (...mergedPlugins: NameOrPluginNameConfig[][]): Plug
 export const camel = (v = '', idx?: number): string => !v ? v : `${idx > 0 ? v[0].toUpperCase()
     : v[0].toLowerCase()}${v.substring(1).toLowerCase()}`;
 
-const parse = (value: string, name: string) => {
+const parse = (value: string, name: string): FalseOrObject => {
     try {
-        return parseValue(value);
+        return parseValue(value) as FalseOrObject;
     } catch (e) {
         console.warn('error parsing "%s" in [%s]', value, name, e);
         return;
@@ -64,16 +65,32 @@ const parse = (value: string, name: string) => {
 };
 
 
-export const mergeEnv = (plugin: string, env = process.env): FalseOrObject => {
+export const mergeEnv = (plugin: string, env = process.env): unknown => {
     const upperPlugin = envify(plugin);
+    let ret: unknown = {};
     if (upperPlugin in env) {
         const value = configOrBool(env[upperPlugin]);
         if (value === false || value === true) {
             return value;
         }
-        return parse(value, plugin);
+        ret = parse(value, plugin);
     }
-    return {};
+    Object.entries(env).forEach(([key, value]) => {
+        const parts = key.split('__');
+        if (parts.length > 1 && parts[0] === upperPlugin) {
+            if (ret == null || typeof ret !== 'object') {
+                ret = {};
+            }
+            let cur: any = ret || (ret = {});
+            for (let i = 1; i < parts.length - 1; i++) {
+                const camelName = fromHyphenToCamel(parts[i])
+                cur = cur[camelName] || (cur[camelName] = {});
+            }
+            cur[fromHyphenToCamel(parts[parts.length - 1])] = parse(value, key);
+        }
+    });
+
+    return ret;
 };
 
 export const fixName = (name: string, sep = '-'): string => name.replace(/^@/, '').replace(/[^\w]{1,}/g, sep);
@@ -142,7 +159,7 @@ export const mergeArgs = (plugin: string, argv = process.argv): FalseOrObject =>
                     set(ret, parts[0], parts.length ? parse(parts[1], argPart) : true);
                 } else {
 
-                    const collect = [];
+                    const collect: FalseOrObject[] = [];
                     for (let j = i + 1; j < l && !argv[j].startsWith('-'); i++, j++) {
                         collect.push(parse(argv[j], arg));
                     }
