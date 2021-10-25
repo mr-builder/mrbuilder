@@ -1,14 +1,14 @@
 {
   "name": "@mrbuilder/plugin-storybook",
-  "version": "4.4.6",
+  "version": "4.4.7-alpha.0",
   "description": "Provides mrbuilder wrapper for storybook",
   "dependencies": {
     "@storybook/addon-docs": "^6.3.12",
     "@storybook/addon-knobs": "^6.3.1",
     "@storybook/addons": "^6.3.12",
+    "@storybook/core": "^6.3.12",
     "@storybook/react": "^6.3.12",
-    "@storybook/core":"^6.3.12",
-    "babel-plugin-polyfill-corejs2":"^0.2.2"
+    "babel-plugin-polyfill-corejs2": "^0.2.2"
   },
   "source": "src",
   "main": "src",
@@ -20,7 +20,7 @@
   },
   "mrbuilder": {
     "options": {
-      "outputDir":"storybook-static",
+      "outputDir": "storybook-static",
       "@babel": [
         "babel-plugin-react-docgen",
         {
@@ -59,7 +59,6 @@
       }
     },
     "plugins": [
-    
       "@mrbuilder/plugin-react",
       [
         "@mrbuilder/plugin-html",
