@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-typescript",
-  "version": "4.4.7-alpha.0",
+  "version": "4.4.7-alpha.1",
   "description": "Typescript plugin for mrbuilder",
   "main": "./src",
   "author": "Justin Spears <speajus@gmail.com>",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.12.7",
-    "@mrbuilder/cli": "^4.4.7-alpha.0",
+    "@mrbuilder/cli": "^4.4.7-alpha.1",
     "@types/node": "^13.9.8",
     "@types/react": "^16.9.27",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
