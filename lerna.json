@@ -4,6 +4,7 @@
   "useWorkspaces": true,
   "command": {
     "publish": {
+      "npmClient":"npm",
       "registry": "https://registry.npmjs.org",
       "allowBranch": "master"
     }
