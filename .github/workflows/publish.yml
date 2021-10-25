@@ -31,10 +31,10 @@ jobs:
     # 2. setup .npmrc it uses NODE_AUTH_TOKEN
     - name: Setup .npmrc file for publish
       run: |
-        echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
+        echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" > .npmrc
         echo '@mrbuilder:registry=https://npm.pkg.github.com' >> .npmrc
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     # 3. configure git user used to push tag
     - name: Configure Git User
       run: |
