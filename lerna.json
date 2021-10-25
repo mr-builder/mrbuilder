@@ -1,11 +1,5 @@
 {
   "version": "4.4.6",
   "npmClient": "yarn",
-  "useWorkspaces": true,
-  "command": {
-    "publish": {
-      "gitRemote": "upstream",
-      "registry": "https://registry.npmjs.org"
-    }
-  }
+  "useWorkspaces": true
 }
