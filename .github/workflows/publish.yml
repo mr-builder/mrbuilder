@@ -25,6 +25,7 @@ jobs:
       with:
           submodules: recursive
           token: ${{ secrets.PUBLISH_PAT }}
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     # 2. setup .npmrc it uses NODE_AUTH_TOKEN
     - name: Setup .npmrc file for publish
@@ -38,8 +39,17 @@ jobs:
       run: |
         git config --global user.email "speajus@gmail.com"
         git config --global user.name "ci@$GITHUB_ACTOR"
-        git remote add upstream git@github.com:mr-builder/mrbuilder.git
-
+        git remote set-url git@github.com:mr-builder/mrbuilder.git
+   # 4. install ssh key     
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_KEY }}
+        name: id_rsa # optional
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        config: ${{ secrets.CONFIG }} # ssh_config; optional
+        if_key_exists: fail 
+        
     - name: Install dependencies
       run: yarn install
 
