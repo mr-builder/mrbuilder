@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/upgrade",
-  "version": "4.4.7-alpha.2",
+  "version": "4.4.7-alpha.3",
   "description": "Tool for upgrading mrbuilder",
   "main": "lib",
   "source": "source",
