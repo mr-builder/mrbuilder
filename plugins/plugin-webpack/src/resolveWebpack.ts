@@ -7,7 +7,7 @@ import {initialConfig} from './initialConfig';
 const scope = optionsManager.logger('@mrbuilder/plugin-webpack');
 
 if (!optionsManager.enabled('@mrbuilder/plugin-webpack')) {
-    throw new Error(`@mrbuilder/plugin-webpack needs to be enabled for this function to work correctly`);
+    scope.warn(`@mrbuilder/plugin-webpack needs to be enabled for this function to execute correctly`);
 }
 const {info} = scope;
 const SOURCE_MAIN_FIELDS = ['source', 'browser', 'module', 'main'];
