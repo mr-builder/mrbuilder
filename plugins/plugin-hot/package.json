@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-hot",
-  "version": "4.4.7-alpha.7",
+  "version": "4.4.7-alpha.8",
   "description": "hmr for mrbuilder",
   "source": "src",
   "main": "src",

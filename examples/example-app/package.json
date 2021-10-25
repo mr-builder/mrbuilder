@@ -1,20 +1,20 @@
 {
   "name": "@mrbuilder/example-app",
   "description": "Sample application using mrbuilder components",
-  "version": "4.4.7-alpha.7",
+  "version": "4.4.7-alpha.8",
   "private": true,
   "dependencies": {
-    "@mrbuilder/example-lib": "^4.4.7-alpha.7",
-    "@mrbuilder/example-lib-everything": "^4.4.7-alpha.7",
-    "@mrbuilder/example-lib-webpack": "^4.4.7-alpha.7",
-    "@mrbuilder/plugin-babel": "^4.4.7-alpha.7"
+    "@mrbuilder/example-lib": "^4.4.7-alpha.8",
+    "@mrbuilder/example-lib-everything": "^4.4.7-alpha.8",
+    "@mrbuilder/example-lib-webpack": "^4.4.7-alpha.8",
+    "@mrbuilder/plugin-babel": "^4.4.7-alpha.8"
   },
   "devDependencies": {
-    "@mrbuilder/cli": "^4.4.7-alpha.7",
-    "@mrbuilder/plugin-jest": "^4.4.7-alpha.7",
-    "@mrbuilder/plugin-version": "^4.4.7-alpha.7",
-    "@mrbuilder/preset-app": "^4.4.7-alpha.7",
-    "@mrbuilder/preset-dev": "^4.4.7-alpha.7"
+    "@mrbuilder/cli": "^4.4.7-alpha.8",
+    "@mrbuilder/plugin-jest": "^4.4.7-alpha.8",
+    "@mrbuilder/plugin-version": "^4.4.7-alpha.8",
+    "@mrbuilder/preset-app": "^4.4.7-alpha.8",
+    "@mrbuilder/preset-dev": "^4.4.7-alpha.8"
   },
   "scripts": {
     "prepare": "mrbuilder",

@@ -1,12 +1,12 @@
 {
   "name": "@mrbuilder/example-multi-app",
   "description": "Shows how you can have multiple entry points",
-  "version": "4.4.7-alpha.7",
+  "version": "4.4.7-alpha.8",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.4.7-alpha.7",
-    "@mrbuilder/plugin-sass": "^4.4.7-alpha.7",
-    "@mrbuilder/preset-app": "^4.4.7-alpha.7"
+    "@mrbuilder/cli": "^4.4.7-alpha.8",
+    "@mrbuilder/plugin-sass": "^4.4.7-alpha.8",
+    "@mrbuilder/preset-app": "^4.4.7-alpha.8"
   },
   "scripts": {
     "start": "mrbuilder",

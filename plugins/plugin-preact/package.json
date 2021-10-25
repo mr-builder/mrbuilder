@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-preact",
-  "version": "4.4.7-alpha.7",
+  "version": "4.4.7-alpha.8",
   "source": "src",
   "main": "src",
   "dependencies": {

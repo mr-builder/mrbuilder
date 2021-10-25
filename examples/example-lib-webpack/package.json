@@ -1,10 +1,10 @@
 {
   "name": "@mrbuilder/example-lib-webpack",
   "description": "Example showing a lib build for webpack",
-  "version": "4.4.7-alpha.7",
+  "version": "4.4.7-alpha.8",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.4.7-alpha.7"
+    "@mrbuilder/cli": "^4.4.7-alpha.8"
   },
   "scripts": {
     "prepare": "mrbuilder",
@@ -24,6 +24,6 @@
     ]
   },
   "dependencies": {
-    "@mrbuilder/preset-lib": "^4.4.7-alpha.7"
+    "@mrbuilder/preset-lib": "^4.4.7-alpha.8"
   }
 }
