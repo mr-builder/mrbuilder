@@ -1,5 +1,11 @@
 {
-  "version": "4.4.7-alpha.0",
+  "version": "4.4.6",
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "registry": "https://npm.pkg.github.com",
+      "allowBranch": "master"
+    }
+  }
 }
