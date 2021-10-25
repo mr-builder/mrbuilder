@@ -5,7 +5,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master, fix-*, improve-* ]
-
+    tags-ignore: [ * ]
 jobs:
   pull-request:
 
