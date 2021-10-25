@@ -1,9 +1,9 @@
 {
   "name": "@mrbuilder/cli",
-  "version": "4.4.7-alpha.6",
+  "version": "4.4.7-alpha.7",
   "description": "Tools for developing with mrbuilder",
   "dependencies": {
-    "@mrbuilder/optionsmanager": "^4.4.7-alpha.6",
+    "@mrbuilder/optionsmanager": "^4.4.7-alpha.7",
     "npmlog": "^4.1.2"
   },
   "main": "lib",
