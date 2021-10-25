@@ -6,6 +6,9 @@ import {initialConfig} from './initialConfig';
 
 const scope = optionsManager.logger('@mrbuilder/plugin-webpack');
 
+if (!optionsManager.enabled('@mrbuilder/plugin-webpack')) {
+    scope.warn(`@mrbuilder/plugin-webpack needs to be enabled for this function to execute correctly`);
+}
 const {info} = scope;
 const SOURCE_MAIN_FIELDS = ['source', 'browser', 'module', 'main'];
 
@@ -29,10 +32,11 @@ const publicPath = optionsManager.config('@mrbuilder/plugin-webpack.public',
     optionsManager.config('@mrbuilder/cli.publicUrl', './')
 ) + '';
 
+
 const OPTS = {
     ...info,
     publicPath,
-    outputPath: optionsManager.cwd(optionsManager.config('@mrbuilder/plugin-webpack.outputPath','lib')),
+    outputPath: optionsManager.cwd(optionsManager.config('@mrbuilder/plugin-webpack.outputPath', optionsManager.config('@mrbuilder/cli.outputDir', 'lib'))),
     outputFilename: optionsManager.config('@mrbuilder/plugin-webpack.outputFilename', '[name].js'),
     useScopeHoist: optionsManager.config('@mrbuilder/plugin-webpack.useScopeHoist', true),
     useTarget: optionsManager.config('@mrbuilder/plugin-webpack.target', 'web')
