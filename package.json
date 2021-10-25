@@ -6,8 +6,8 @@
   "author": "Justin Spears <speajus@gmail.com>",
   "homepage": "mr-builder.github.io",
   "repository": {
-    "type": "git",
-    "url": "git@github.com:mr-builder/mrbuilder.git"
+    "type": "git+https",
+    "url": "https://github.com/mr-builder/mrbuilder.git"
   },
   "license": "MIT",
   "workspaces": [
