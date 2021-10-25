@@ -87,12 +87,14 @@ if (tryResolve(customAddons)) {
     addons.push(customAddons);
 }
 
+const stories = [
+    ...asArray(optionsManager.config('@mrbuilder/plugin-storybook.stories', []))
+        .filter(Boolean).map(v => optionsManager.cwd(v)),
+];
+logger.info('stories', stories);
 module.exports = {
     entries: [],
     webpackFinal,
     addons,
-    stories: [
-        ...asArray(optionsManager.config('@mrbuilder/plugin-storybook.stories', []))
-            .filter(Boolean).map(v => optionsManager.cwd(v)),
-    ],
+    stories
 };
