@@ -1,9 +1,9 @@
 {
   "name": "@mrbuilder/plugin-tailwindcss",
-  "version": "4.4.7-alpha.1",
+  "version": "4.4.7-alpha.2",
   "description": "CSS support for mbuilder",
   "dependencies": {
-    "@mrbuilder/plugin-css": "^4.4.7-alpha.1",
+    "@mrbuilder/plugin-css": "^4.4.7-alpha.2",
     "postcss-loader": "^3.0.0",
     "tailwindcss": "^1.2.0"
   },
