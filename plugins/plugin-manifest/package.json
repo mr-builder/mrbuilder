@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-manifest",
-  "version": "4.4.7-alpha.4",
+  "version": "4.4.7-alpha.5",
   "license": "MIT",
   "publishConfig": {
     "access": "public",
