@@ -1,9 +1,9 @@
 {
   "name": "@mrbuilder/plugin-prettier",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "description": "Provides prettier cli wrapper",
   "dependencies": {
-    "@mrbuilder/plugin-eslint": "^4.4.7-alpha.8",
+    "@mrbuilder/plugin-eslint": "^4.4.7-alpha.9",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "eslint-config-prettier": "^6.11.0",

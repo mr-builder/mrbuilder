@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/example-app-cra",
   "description": "This shows how to use cra to ",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "private": true,
   "dependencies": {
     "react": "^16.13.1",
@@ -9,7 +9,7 @@
     "react-scripts": "3.4.1"
   },
   "devDependencies": {
-    "@mrbuilder/preset-cra": "^4.4.7-alpha.8"
+    "@mrbuilder/preset-cra": "^4.4.7-alpha.9"
   },
   "scripts": {
     "start": "mrbuilder-react-scripts start",

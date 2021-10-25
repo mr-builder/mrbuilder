@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-react",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "description": "React plugin for mrbuilder",
   "main": "./src/index",
   "author": "Justin Spears <speajus@gmail.com>",

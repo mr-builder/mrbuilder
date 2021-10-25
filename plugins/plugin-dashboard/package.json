@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-dashboard",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "main": "src",
   "dependencies": {
     "webpack-dashboard": "^3.2.0"

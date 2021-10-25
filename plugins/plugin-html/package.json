@@ -1,10 +1,10 @@
 {
   "name": "@mrbuilder/plugin-html",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "description": "html plugin for mrbuilder",
   "dependencies": {
-    "@mrbuilder/plugin-babel": "^4.4.7-alpha.8",
-    "@mrbuilder/utils": "^4.4.7-alpha.8",
+    "@mrbuilder/plugin-babel": "^4.4.7-alpha.9",
+    "@mrbuilder/utils": "^4.4.7-alpha.9",
     "html-webpack-plugin": "^4.0.4",
     "html-webpack-template": "^6.2.0"
   },

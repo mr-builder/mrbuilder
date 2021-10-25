@@ -1,20 +1,20 @@
 {
   "name": "@mrbuilder/example-lib-everything",
   "description": "An everything example",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-env": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-graphql": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-lodash": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-markdown": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-moment": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-prettier": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-stylus": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-typescript": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-worker": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-yaml": "^4.4.7-alpha.8"
+    "@mrbuilder/cli": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-env": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-graphql": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-lodash": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-markdown": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-moment": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-prettier": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-stylus": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-typescript": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-worker": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-yaml": "^4.4.7-alpha.9"
   },
   "scripts": {
     "analyze": "mrbuilder",

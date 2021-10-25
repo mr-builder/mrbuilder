@@ -1,20 +1,20 @@
 {
   "name": "@mrbuilder/preset-lib",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "dependencies": {
-    "@mrbuilder/plugin-babel": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-babel-7": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-browserslist": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-css": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-env": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-enzyme": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-eslint": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-filetypes": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-fonts": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-html": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-less": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-react": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-webpack": "^4.4.7-alpha.8"
+    "@mrbuilder/plugin-babel": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-babel-7": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-browserslist": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-css": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-env": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-enzyme": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-eslint": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-filetypes": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-fonts": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-html": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-less": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-react": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-webpack": "^4.4.7-alpha.9"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"

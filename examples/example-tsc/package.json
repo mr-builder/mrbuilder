@@ -1,12 +1,12 @@
 {
   "name": "@mrbuilder/example-tsc",
   "description": "Shows how you can use cli to configure mrbuilder to build typescript and use the tsconfig",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "private": true,
   "main": "lib",
   "source": "src",
   "devDependencies": {
-    "@mrbuilder/cli": "^4.4.7-alpha.8"
+    "@mrbuilder/cli": "^4.4.7-alpha.9"
   },
   "scripts": {
     "clean": "mrbuilder-clean app",

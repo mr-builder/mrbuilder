@@ -1,8 +1,8 @@
 {
   "name": "@mrbuilder/plugin-browserslist",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "dependencies": {
-    "@mrbuilder/utils": "^4.4.7-alpha.8"
+    "@mrbuilder/utils": "^4.4.7-alpha.9"
   },
   "main": "src",
   "source": "src",

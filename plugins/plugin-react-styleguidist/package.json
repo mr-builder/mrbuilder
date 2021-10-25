@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/plugin-react-styleguidist",
-  "version": "4.4.7-alpha.8",
+  "version": "4.4.7-alpha.9",
   "description": "Mrbuilder Plugin for styleguidist",
   "main": "src",
   "dependencies": {
-    "@mrbuilder/plugin-doc-prop-types": "^4.4.7-alpha.8",
-    "@mrbuilder/plugin-webpack": "^4.4.7-alpha.8",
+    "@mrbuilder/plugin-doc-prop-types": "^4.4.7-alpha.9",
+    "@mrbuilder/plugin-webpack": "^4.4.7-alpha.9",
     "react-styleguidist": "^11.0.5"
   },
   "peerDependencies": {
