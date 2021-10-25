@@ -14,9 +14,5 @@
     "@mrbuilder/preset-lib": "^4.4.7-alpha.8",
     "@mrbuilder/preset-test": "^4.4.7-alpha.8"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "license": "MIT"
 }

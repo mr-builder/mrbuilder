@@ -19,10 +19,6 @@
   "source": "src",
   "types": "src",
   "main": "lib",
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "scripts": {
     "test": "mocha -r ts-node/register test/**",
     "prepare": "tsc"

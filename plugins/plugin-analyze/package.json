@@ -16,9 +16,5 @@
   "devDependencies": {
     "@mrbuilder/plugin-enzyme": "^4.4.7-alpha.8"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "license": "MIT"
 }

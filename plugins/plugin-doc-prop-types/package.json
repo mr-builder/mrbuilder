@@ -12,9 +12,5 @@
   "scripts": {
     "test": "mrbuilder-mocha"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "license": "MIT"
 }

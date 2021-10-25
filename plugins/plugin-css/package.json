@@ -21,10 +21,6 @@
   },
   "main": "src",
   "source": "src",
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "mrbuilder": {
     "options": {
       "test": "/\\.css$/",

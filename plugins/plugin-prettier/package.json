@@ -14,10 +14,6 @@
   "bin": {
     "mrbuilder-prettier": "./bin/cli.js"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "license": "MIT",
   "mrbuilder": {
     "plugin": false,

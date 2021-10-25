@@ -2,10 +2,6 @@
   "name": "@mrbuilder/plugin-manifest",
   "version": "4.4.7-alpha.8",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "author": "<Justin Spears> speajus@gmail.com",
   "main": "src",
   "dependencies": {

@@ -16,9 +16,5 @@
     "test": "mocha ./test/**/*-test.js",
     "prepare": "tsc"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "license": "MIT"
 }

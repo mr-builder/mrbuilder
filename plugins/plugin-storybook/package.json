@@ -87,9 +87,5 @@
       "@mrbuilder/preset-app"
     ]
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "license": "MIT"
 }

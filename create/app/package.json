@@ -32,9 +32,5 @@
     "@mrbuilder/preset-test": "^4.4.7-alpha.8",
     "chalk": "^4.0.0"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "license": "MIT"
 }

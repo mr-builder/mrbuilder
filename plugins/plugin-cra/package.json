@@ -2,10 +2,6 @@
   "name": "@mrbuilder/plugin-cra",
   "version": "4.4.7-alpha.8",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "bin": {
     "mrbuilder-react-scripts": "./bin/cli.js",
     "cra-start": "./bin/cra-start.js",

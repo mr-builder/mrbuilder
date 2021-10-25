@@ -28,10 +28,6 @@
   "devDependencies": {
     "lerna": "^3.18.4"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "http://registry.npmjs.org"
-  },
   "mrbuilder": {
     "plugins": [
       "@mrbuilder/plugin-babel"
