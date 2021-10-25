@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-storybook",
-  "version": "4.4.7-alpha.3",
+  "version": "4.4.7-alpha.4",
   "description": "Provides mrbuilder wrapper for storybook",
   "dependencies": {
     "@storybook/addon-docs": "^6.3.12",

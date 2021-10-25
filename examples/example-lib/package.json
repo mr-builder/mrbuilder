@@ -1,13 +1,13 @@
 {
   "name": "@mrbuilder/example-lib",
   "description": "Shows how to build a simple lib without webpack",
-  "version": "4.4.7-alpha.3",
+  "version": "4.4.7-alpha.4",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/cli": "^4.4.7-alpha.3",
-    "@mrbuilder/plugin-storybook": "^4.4.7-alpha.3",
-    "@mrbuilder/plugin-typescript": "^4.4.7-alpha.3",
-    "@mrbuilder/preset-babel-7": "^4.4.7-alpha.3"
+    "@mrbuilder/cli": "^4.4.7-alpha.4",
+    "@mrbuilder/plugin-storybook": "^4.4.7-alpha.4",
+    "@mrbuilder/plugin-typescript": "^4.4.7-alpha.4",
+    "@mrbuilder/preset-babel-7": "^4.4.7-alpha.4"
   },
   "source": "src",
   "main": "lib",

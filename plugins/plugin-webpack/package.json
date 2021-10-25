@@ -1,6 +1,6 @@
 {
   "name": "@mrbuilder/plugin-webpack",
-  "version": "4.4.7-alpha.3",
+  "version": "4.4.7-alpha.4",
   "description": "Tools for developing with mrbuilder and webpack",
   "scripts": {
     "clean": "mrbuilder-clean",
@@ -13,17 +13,17 @@
   "types": "src",
   "source": "src",
   "dependencies": {
-    "@mrbuilder/cli": "^4.4.7-alpha.3",
-    "@mrbuilder/optionsmanager": "^4.4.7-alpha.3",
-    "@mrbuilder/plugin-browserslist": "^4.4.7-alpha.3",
-    "@mrbuilder/utils": "^4.4.7-alpha.3",
+    "@mrbuilder/cli": "^4.4.7-alpha.4",
+    "@mrbuilder/optionsmanager": "^4.4.7-alpha.4",
+    "@mrbuilder/plugin-browserslist": "^4.4.7-alpha.4",
+    "@mrbuilder/utils": "^4.4.7-alpha.4",
     "raw-loader": "^4.0.2",
     "val-loader": "^2.1.2",
     "webpack": "^4.46.0",
     "webpack-cli": "^4.3.1"
   },
   "devDependencies": {
-    "@mrbuilder/plugin-typescript": "^4.4.7-alpha.3",
+    "@mrbuilder/plugin-typescript": "^4.4.7-alpha.4",
     "@types/webpack": "^4.41.26",
     "@types/webpack-env": "^1.16.0",
     "@types/webpack-sources": "^2.1.0"
