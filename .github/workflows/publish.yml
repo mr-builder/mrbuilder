@@ -39,7 +39,7 @@ jobs:
       run: |
         git config --global user.email "speajus@gmail.com"
         git config --global user.name "ci@$GITHUB_ACTOR"
-        git remote set-url git@github.com:mr-builder/mrbuilder.git
+        git remote set-url origin git@github.com:mr-builder/mrbuilder.git
    # 4. install ssh key     
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
