@@ -1,7 +1,7 @@
 {
   "name": "@mrbuilder/plugin-compress",
   "description": "Compress output files",
-  "version": "4.4.7-alpha.0",
+  "version": "4.4.7-alpha.1",
   "main": "src",
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
