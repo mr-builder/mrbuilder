@@ -1,11 +1,11 @@
 {
   "name": "@mrbuilder/example-app-svelte",
   "description": "This shows how to use svelte plugin",
-  "version": "4.4.7-alpha.5",
+  "version": "4.4.7-alpha.6",
   "private": true,
   "devDependencies": {
-    "@mrbuilder/plugin-svelte": "^4.4.7-alpha.5",
-    "@mrbuilder/preset-app": "^4.4.7-alpha.5"
+    "@mrbuilder/plugin-svelte": "^4.4.7-alpha.6",
+    "@mrbuilder/preset-app": "^4.4.7-alpha.6"
   },
   "scripts": {
     "start": "mrbuilder",
