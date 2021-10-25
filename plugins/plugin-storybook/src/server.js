@@ -1,4 +1,4 @@
-const { optionsManager, Info } = require('@mrbuilder/cli');
+const { optionsManager, Info, logger } = require('@mrbuilder/cli');
 const { enhancedResolve, asArray } = require('@mrbuilder/utils');
 const fs = require('fs');
 const path = require('path');
@@ -54,10 +54,12 @@ const serverOptions = {
 if (!Info.isDevServer) {
     serverOptions.outputDir = enhancedResolve(mrb('outputDir', optionsManager.config('@mrbuilder/cli.outputDir', 'storybook-static')));
 }
-const staticDir = mrb('staticDir', mrb('staticDir', optionsManager.config('@mrbuilder/cli.publicDir', optionsManager.cwd('public'))));
-const configDir = mrb('configDir')
 
-if (staticDir && fs.existsSync(staticDir)) {
+const _staticDir = mrb('staticDir', mrb('staticDir', optionsManager.config('@mrbuilder/cli.publicDir', optionsManager.cwd('public'))));
+const configDir = mrb('configDir')
+const staticDir = (Array.isArray(_staticDir) ? _staticDir : [_staticDir]).filter(Boolean).filter(v=>fs.existsSync(v));
+
+if (staticDir.length){
     serverOptions.staticDir = staticDir;
 }
 
@@ -70,5 +72,6 @@ serverOptions.configDir = configDir ? enhancedResolve(configDir)
 if (!process.argv.includes('--config-dir', 2)) {
     process.argv.splice(2, 0, '--config-dir', serverOptions.configDir);
 }
+optionsManager.log('info', '@mrbuilder/plugin-storybook', serverOptions);
 
 server[Info.isDevServer ? 'buildDev' : 'buildStatic'](serverOptions);
