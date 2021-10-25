@@ -1,22 +1,22 @@
 {
   "name": "@mrbuilder/preset-app",
-  "version": "4.4.7-alpha.1",
+  "version": "4.4.7-alpha.5",
   "dependencies": {
-    "@mrbuilder/plugin-babel": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-babel-7": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-browserslist": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-chunk": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-css": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-env": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-filetypes": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-fonts": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-hot": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-html": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-less": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-react": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-uglify": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-webpack": "^4.4.7-alpha.1",
-    "@mrbuilder/plugin-webpack-dev-server": "^4.4.7-alpha.1"
+    "@mrbuilder/plugin-babel": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-babel-7": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-browserslist": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-chunk": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-css": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-env": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-filetypes": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-fonts": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-hot": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-html": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-less": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-react": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-uglify": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-webpack": "^4.4.7-alpha.5",
+    "@mrbuilder/plugin-webpack-dev-server": "^4.4.7-alpha.5"
   },
   "peerDependencies": {
     "@mrbuilder/cli": "^4.0.0"
